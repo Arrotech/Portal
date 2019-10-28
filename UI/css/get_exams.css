@@ -1,0 +1,71 @@
+body{
+  /*background:-webkit-linear-gradient(#82B4D5,#fff);*/
+  font-family:'Trebuchet MS';
+  /*color:#fff;*/
+  height:100vh;
+  background-image: url('bookshop2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+}
+.main-content{
+  border-radius: 5px;
+  padding-top: 20px;
+}
+
+.main-content .left{
+  border-radius: 5px;
+  position: relative;
+  color: #000000;
+  font-size: 18px;
+}
+input{
+  text-align:center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width:15%;
+  height:30px;
+  margin-bottom:10px;
+  border:none;
+  border:1px solid #F8F8F8;
+  background-color:#F8F8F8;
+  border-radius:25px;
+}
+input:focus{
+  outline:none;
+}
+::-webkit-input-placeholder{
+  color:grey;
+  letter-spacing: 1px;
+}
+
+input[type="submit"]{
+  background-color:#d65050;
+  color:#fff;
+  font-weight: bold;
+}
+/*snack bar css*/
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: rgb(230, 78, 78);
+  color: #000000;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 15px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}

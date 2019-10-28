@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fees</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/get_books.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<body>
+<div class="leftnav">
+    <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
+    <hr>
+    <a class="far fa-clone" href="get_fees.html"> Fees</a><br>
+    <a class="far fa-clone" href="exams.html"> Exams</a><br>
+    <a class=" fas fa-align-justify" href="subjects.html"> Subjects</a><br>
+    <a class="fas fa-book-open" href="library.html">Library</a><br>
+    <a class="far fa-address-card" href="student-id.html"> Student ID</a><br>
+    <a class="fas fa-sticky-note" href="pastpapers.html"> Past Papers</a><br>
+    <a class="fas fa-user-edit" href="#"> Profile</a><br>
+    <a class="  fas fa-users" href="#"> Help</a><br>
+    <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
+    <a class="  fas fa-wrench" href="#"> Settings</a><br>
+    <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
+</div>
+<div class="main">
+    <header>
+        <div class="header">
+            <img src="img/logo.png">
+            <h1>SECONDARY SCHOOLS</h1>
+        </div>
+    </header>
+    <nav>
+        <div>
+            <ul>
+                <li><a href="get_fees.html">Fees</a></li>
+                <li><a href="exams.html">Exams</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="library.html">Library</a></li>
+                <li><a href="student-id.html">Student ID</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-content">
+        <div class="left">
+            <div>
+                <div>
+                    <input type="submit" id="getFees" value="Fees">
+                    <div style="overflow-x:auto;">
+                        <p id="output"></p>
+                    </div>
+                    <div id="snackbar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/get_fees.js"></script>
+    <footer>
+        <!-- <div class="footer-divide"> -->
+            <div class="divide">
+            <h3>PROJECTS</h3>
+            <div class="main-coln">
+                <div class="coln1">
+                <h5>WEB APP's</h5>
+                <h6>PORTAL</h6>
+                <h6>TO-DO</h6>
+                <h6>E-COMMERCE</h6>
+                <h6>PORTFOLIO</h6>
+                <h6>BLOG</h6>
+                <h6>SHIPPING</h6>
+                </div>
+                <div class="coln2">
+                <h5>PLUS+</h5>
+                <h6>HOME AUTOMATION</h6>
+                </div>
+            </div>
+            <h3>INTAKE</h3>
+            <div class="main-coln">
+                <div class="coln1">
+                <h5>SOFTWARE APP's</h5>
+                <h6>MESSAGING APP</h6>
+                <h6>IMAGE RECOGNITION</h6>
+                <h6>PASSWORD GENERATOR</h6>
+                <h6>BLOCKCHAIN</h6>
+                </div>
+                <div class="coln2">
+                </div>
+            </div>
+            </div>
+            <div class="divide">
+            <h3>ABOUT US</h3>
+            <div class="main-coln">
+                <div class="coln1">
+                <h5>QUALIFICATIONS</h5>
+                <h6>BSC. MATHS & COMPUTER</h6>
+                <h6>CURRICULUM VITAE</h6>
+                </div>
+                <div class="coln2">
+                </div>
+            </div>
+            </div>
+            <div class="divide">
+            <h3>CURRICULUM</h3>
+            <div class="main-coln">
+                <div class="coln1">
+                <h5>BACK-END</h5>
+                <h6>PYTHON</h6>
+                <h6>FLASK</h6>
+                <h6>DJANGO</h6>
+                <h6>NODE</h6>
+                <h6>POSTGRES</h6>
+                <h6>SQL</h6>
+                </div>
+                <div class="coln2">
+                <h5>FRONT-END</h5>
+                <h6>HTML</h6>
+                <h6>CSS</h6>
+                <h6>JAVASCRIPT</h6>
+                <h6>REACT</h6>
+                <h6>VUE</h6>
+                <h6>ANGULAR</h6>
+                </div>
+            </div>
+            <h3>CO-CURRICULUM</h3>
+            <div class="main-coln">
+                <div class="coln1">
+                <h5>SOFTWARE APP's</h5>
+                <h6>RUBY ON RAILS</h6>
+                <h6>FLASK</h6>
+                <h6>DJANGO</h6>
+                <h6>BLOCKCHAIN</h6>
+                <h6>AJAX</h6>
+                <h6>JQUERY</h6>
+                <h6>BOOTSTRAP</h6>
+                </div>
+                <div class="coln2">
+                </div>
+            </div>
+            </div>
+            <div class="divide">
+            <h3 id="contact">CONTACT</h3>
+            <div class="main-coln">
+                <div class="coln1">
+                <h5>INSTITUTION</h5>
+                <h6>EMAIL: <i>arrotechdesign@gmail.com</i></h6>
+                <h6>PHONE: <i>+254 797 568 564</i></h6>
+                </div>
+                <div class="coln2">
+                <h5>LEADERSHIP</h5>
+                <h6>PHONE: <i>+254 711 371 265</i></h6>
+                <h6>EMAIL: <i>arrotechdesign@gmail.com</i></h6>
+                <h6>TWITTER: <i>@Arrotech</i></h6>
+                <h6>INSTAGRAM: <i>arrotech</i></h6>
+                <h6>FACEBOOK PAGE: <i>Arrotech</i></h6>
+                <h6>TWITTER: <i>@Arrotech</i></h6>
+                </div>
+            </div>
+            <h3>SOCIAL MEDIA</h3>
+            <div class="sharethis-inline-follow-buttons"></div>
+            </div>
+        <!-- </div> -->
+    </footer>
+    </div>
+</body>
+</html>
