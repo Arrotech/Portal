@@ -1,6 +1,6 @@
 
 
-**SCHOOL PORTAL**
+#SCHOOL PORTAL
 
 This project is meant to Create a school portal with Python, Flask, HTML, Node, CSS and JavaScript. The project is built on Linux.
 
