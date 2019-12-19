@@ -1,0 +1,160 @@
+FORMAT: 1A
+HOST: https://arrotech-school-portal.herokuapp.com
+
+# School-Portal
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Create Account [/api/v1/auth/register]
+
+### REGISTER [POST]
+
++ Request (application/json)
+
+        {
+            "firstname": "Harun",
+            "lastname": "Gachanja",
+            "surname": "Gitundu",
+            "admission_no": "NA",
+            "email": "admin@admin.com",
+            "password": "Admin20930988",
+            "form": "4"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+            Location: /api/v1/auth/register
+
+    + Body
+
+            {
+                "message": "Successfully logged in!",
+                "status": "200",
+                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkzMDI0MjUsIm5iZiI6MTU1OTMwMjQyNSwianRpIjoiZjFjYTg0YmYtNzBlYS00NDk0LThkYjAtZWYyODMxNTEwZTNhIiwiZXhwIjoxNTU5MzAzMzI1LCJpZGVudGl0eSI6ImFkbWluQGFkbWluLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.ARkkzVOM7K_zqlC8CShrEHonfrWSfPmqMdVhlXQIBn0",
+                "user": {
+                    "admission_no": "NA",
+                    "email": "admin@admin.com",
+                    "firstname": "Harun",
+                    "form": "5",
+                    "lastname": "Gachanja",
+                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
+                    "role": "admin",
+                    "surname": "Gitundu",
+                    "user_id": 1
+                }
+            }
+            
+## Login [/api/v1/auth/login]
+
+### Login [POST]
+
++ Request (application/json)
+
+        {
+            "email": "admin@admin.com",
+            "password": "Admin20930988"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+            Location: /api/v1/auth/login
+
+    + Body
+
+            {
+                "message": "Successfully logged in!",
+                "status": "200",
+                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkzMDIxMDEsIm5iZiI6MTU1OTMwMjEwMSwianRpIjoiMDA2M2Y5MTgtODdiZi00MjRjLWEwOTAtZTI1MDgxOGMzNWUzIiwiZXhwIjoxNTU5MzAzMDAxLCJpZGVudGl0eSI6ImFkbWluQGFkbWluLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.-TI_lo74WBx2VZV6bLSLdu7RFA7i-sfR-4QBkGmlA70",
+                "user": {
+                    "admission_no": "NA",
+                    "email": "admin@admin.com",
+                    "firstname": "Harun",
+                    "form": "5",
+                    "lastname": "Gachanja",
+                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
+                    "role": "admin",
+                    "surname": "Gitundu",
+                    "user_id": 1
+                }
+            }
+            
+## Get all Users [/api/v1/auth/users]    
+            
+### Get Users  [GET]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+            Location: /api/v1/auth/users
+            
+    + Body
+
+            {
+                "Users": [
+                    {
+                        "admission_no": "NA",
+                        "email": "admin@admin.com",
+                        "firstname": "Harun",
+                        "form": "5",
+                        "lastname": "Gachanja",
+                        "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
+                        "role": "admin",
+                        "surname": "Gitundu",
+                        "user_id": 1
+                    },
+                    {
+                        "admission_no": "NJCF1001",
+                        "email": "gitundu.mercy@students.jcs.ac.ke",
+                        "firstname": "Mercy",
+                        "form": "1",
+                        "lastname": "Wairimu",
+                        "password": "pbkdf2:sha256:50000$jYhBbvV1$20ac92d6541c7df4ec10dd6e342428bb9aea3e4539256acbac2df69721217c07",
+                        "role": "student",
+                        "surname": "Gitundu",
+                        "user_id": 2
+                    }
+                ],
+                "message": "successfully retrieved",
+                "status": "200"
+            }
+            
+## Specific User [/api/v1/auth/users/{user_id}]
+
++ Parameters
+    + user_id (number)
+
+### Get User  [GET]
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/auth/users/{user_id}
+    
+    + Body
+
+            {
+                "message": "successfully retrieved",
+                "status": "200",
+                "user": {
+                    "admission_no": "NA",
+                    "email": "admin@admin.com",
+                    "firstname": "Harun",
+                    "form": "5",
+                    "lastname": "Gachanja",
+                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
+                    "role": "admin",
+                    "surname": "Gitundu",
+                    "user_id": 1
+                }
+            }

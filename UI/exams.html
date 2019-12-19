@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Exams</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/get_exams.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<body background="bookshop2.jpg">
+<div class="leftnav">
+    <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
+    <hr>
+    <a class="far fa-clone" href="get_fees.html"> Fees</a><br>
+    <a class="far fa-clone" href="exams.html"> Exams</a><br>
+    <a class=" fas fa-align-justify" href="subjects.html"> Subjects</a><br>
+    <a class="fas fa-book-open" href="library.html">Library</a><br>
+    <a class="far fa-address-card" href="student-id.html"> Student ID</a><br>
+    <a class="fas fa-sticky-note" href="pastpapers.html"> Past Papers</a><br>
+    <a class="fas fa-user-edit" href="#"> Profile</a><br>
+    <a class="  fas fa-users" href="#"> Help</a><br>
+    <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
+    <a class="  fas fa-wrench" href="#"> Settings</a><br>
+    <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
+</div>
+<div class="main">
+    <header>
+      <div class="logo">
+        <img src="img/logo.png">
+        <div>
+            <div>
+              <p id="output"></p>
+            </div>
+            <br>
+            <div id="snackbar"></div>
+        </div>
+        <h1>SECONDARY SCHOOLS</h1>
+      </div>
+    </header>
+    <nav>
+        <div>
+            <ul>
+                <li><a href="get_fees.html">Fees</a></li>
+                <li><a href="exams.html">Exams</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="library.html">Library</a></li>
+                <li><a href="student-id.html">Student ID</a></li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="main-content">
+      <div class="left">
+        <div>
+            <input type="submit" id="mybtn" value="Results">
+            <div style="overflow-x:auto;">
+              <p id="rank"></p>
+            </div>
+            <br>
+            <div id="snackbar"></div>
+        </div>
+        <script type="text/javascript" src="js/rank.js"></script>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
