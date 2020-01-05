@@ -26,18 +26,33 @@ ul{
   background-color: #d65050;
   width: 100%;
   left: 0;
+  color: #fff;
 }
 li{
   float: left;
 }
 li a{
   display: block;
-  color: #000;
+  color: #fff;
   font-size: 18px;
   font-style: bold;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+}
+
+.index-nav li {
+  display: inline;
+  float: left;
+  font-size: 14px;
+}
+
+.index-nav li a {
+  display: inline-block;
+  padding: 14px 16px;
+	width: 225.1px;
+  text-decoration: none;
+  color: #efefef;
 }
 li a:hover{
   background-color: #000000;
@@ -157,20 +172,23 @@ header img{
 }
 
 #btn-1{
-  border-radius: 5px;
+  border-radius: 3px;
   background: #d65050;
   border: none;
   width: 230px;
   height: 50px;
+  color: #fff;
+  font-weight: bold;
 }
 
 #btn-2{
-  border-radius: 5px;
+  border-radius: 3px;
   background: #000000;
   border: none;
   width: 180px;
   height: 50px;
   color: #fff;
+  font-weight: bold;
 }
 
 #btn-1:hover {
@@ -185,14 +203,24 @@ header img{
 
 
 .header-content {
-  color: red;
+  color: #d65050;
+  font-family: Arial, Helvetica, sans-serif;
   position: relative;
+  text-align: center;
   -webkit-animation-name: example;  /* Safari 4.0 - 8.0 */
-  -webkit-animation-duration: 3s;  /* Safari 4.0 - 8.0 */  
+  -webkit-animation-duration: 3s;  /* Safari 4.0 - 8.0 */
   -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
   animation-name: example;
-  animation-duration: 3s;  
+  animation-duration: 3s;
   animation-fill-mode: forwards;
+}
+
+.align{
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-size: 20px;
 }
 
 /* Safari 4.0 - 8.0 */
@@ -266,8 +294,12 @@ h1{
   text-align: center;
 }
 
-h3{
+.header-content h2{
+  font-size: 30px;
+}
 
+.header-content h3{
+  font-size: 26px;
 }
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FOOTER SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
@@ -320,20 +352,39 @@ footer h3, h5{
 
 @media (max-width: 600px){
 	footer{
-		display: inline;
-		padding-left:10px;
+    display: block;
 		margin-left: auto;
 		margin-right: auto;
 	}
 	.divide{
-		width: 150px;
-	}
-
-	.skills-divide{
-		display: inline;
-
-	}
-	.main-coln{
-		display: inline;
-		float: left;
-	}
+		width: 100%;
+  }
+  ul{
+    list-style-type: none;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 47%;
+    padding: 0;
+    overflow: hidden;
+    background-color: #d65050;
+    border-radius: 5px;
+    left: 0;
+  }
+  li{
+    float: left;
+    width: 100%;
+  }
+  li a{
+    display: inline-block;
+    color: #fff;
+    width: 100%;
+    font-size: 18px;
+    font-style: bold;
+    text-align: left;
+    text-decoration: none;
+  }
+  li a:hover{
+    background-color: #000000;
+    color: white;
+  }
+}

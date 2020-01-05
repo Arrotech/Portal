@@ -27,6 +27,29 @@ new_account = {
     "role": "student"
 }
 
+teachers_account = {
+    "firstname": "Thomas",
+    "lastname": "Masibo",
+    "email": "masibo.thomas@students.jcs.ac.ke",
+    "password": "Thomas20930988",
+    "form": "1",
+    "role": "admin"
+}
+
+new_teachers_account = {
+    "firstname": "Bravin",
+    "lastname": "Odhiambo",
+    "email": "odhiambo.bravin@students.jcs.ac.ke",
+    "password": "Bravin20930988",
+    "form": "1",
+    "role": "admin"
+}
+
+teachers_login = {
+    "email": "masibo.thomas@students.jcs.ac.ke",
+    "password": "Mercy20930988"
+}
+
 wrong_password_login = {
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Mercy20930988"

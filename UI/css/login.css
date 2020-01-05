@@ -169,3 +169,61 @@ body{
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
+
+/*==================== MEDIA QUERIES SECTION =====================*/
+
+@media (max-width: 600px){
+  .main{
+    width:478px;
+    margin: 0;
+    margin-top: 10px;
+  }
+  .main div{
+    display: inline-block;
+    border:none;
+  }
+  .left p.or{
+    color:grey;
+    font-size:15px;
+    border:1px solid #f8f8f8;
+    width:40px;
+    font-weight:200;
+    height:30px;
+    padding-top:10px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 97%;
+    left: 42%;
+    z-index:10;
+    /*text-align:center;*/
+  }
+
+  .main .left{
+    margin-left: 32px;
+    width: 85%;
+    /* float:left; */
+    /*border-right:1px solid #fff;*/
+    height:100%;
+    /*padding:15px 0 0 0;*/
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 5px;
+    position: relative;
+    color: white;
+  }
+
+  .main .right{
+    /*height:100%;*/
+    width: 85%;
+    height:100%;
+    margin-top:-5px;
+    margin-left: 32px;
+    padding-right:5px;
+    background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
+    background-color:#fff;
+    background-size: cover;
+    text-align:center;
+    border-radius: 5px;
+    color: #000000;
+  }
+}
