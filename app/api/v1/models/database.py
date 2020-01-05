@@ -31,6 +31,17 @@ class Database:
                 role varchar NOT NULL
             )""",
             """
+            CREATE TABLE IF NOT EXISTS teachers(
+                teacher_id serial PRIMARY KEY,
+                firstname varchar NOT NULL,
+                lastname varchar NOT NULL,
+                email varchar NOT NULL,
+                password varchar NOT NULL,
+                form numeric NOT NULL,
+                role varchar NOT NULL
+            )
+            """,
+            """
             CREATE TABLE IF NOT EXISTS revoked_tokens(
                 id serial PRIMARY KEY,
                 jti varchar NOT NULL
@@ -122,7 +133,7 @@ class Database:
     def create_admin(self):
         """Create a deafult admin user."""
         query = "INSERT INTO users(firstname,lastname,surname,admission_no,email, password,form,role)\
-        VALUES('Harun','Gachanja','Gitundu','ADMF1001','harun@admin.com','pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8','1','admin')"
+        VALUES('Harun','Gachanja','Gitundu','NA','harun@admin.com','pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8','1','admin')"
 
         self.curr.execute(query)
         self.conn.commit()
@@ -131,7 +142,7 @@ class Database:
     def create_bursar(self):
         """Create a deafult admin user."""
         query = "INSERT INTO users(firstname,lastname,surname,admission_no,email, password,form,role)\
-        VALUES('Samuel','Njoroge','Gitundu','ADMF2001','samuel@admin.com','pbkdf2:sha256:50000$MrtmQD9F$02db7419b111987ece6fae387f432bf875b4a34a4161c8e9ebf99f02c56258eb','2','admin')"
+        VALUES('Samuel','Njoroge','NA','NA','samuel@admin.com','pbkdf2:sha256:50000$MrtmQD9F$02db7419b111987ece6fae387f432bf875b4a34a4161c8e9ebf99f02c56258eb','2','admin')"
 
         self.curr.execute(query)
         self.conn.commit()
@@ -141,12 +152,13 @@ class Database:
         """Destroy tables"""
         exams = "DROP TABLE IF EXISTS  exams CASCADE"
         users = "DROP TABLE IF EXISTS  users CASCADE"
+        teachers = "DROP TABLE IF EXISTS  teachers CASCADE"
         evaluation = "DROP TABLE IF EXISTS evaluation CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
         library = "DROP TABLE IF EXISTS library CASCADE"
         studentId = "DROP TABLE IF EXISTS studentId CASCADE"
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
-        queries = [exams, users, evaluation, fees, library, studentId, subjects]
+        queries = [exams, users, teachers, evaluation, fees, library, studentId, subjects]
         try:
             for query in queries:
                 self.curr.execute(query)

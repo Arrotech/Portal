@@ -32,7 +32,7 @@ function postSignup(event){
             let form = document.getElementById('form').value;
             let role = document.getElementById('role').value;
 
-            fetch('https://arrotech-school-portal.herokuapp.com/api/v1/auth/register', {
+            fetch('http://localhost:5000/api/v1/auth/register', {
                 method: 'POST',
                 headers : {
                     Accept: 'application/json',
@@ -50,6 +50,9 @@ function postSignup(event){
                     if (user.role === 'admin'){
                         localStorage.setItem("user", JSON.stringify(data[0]));
                         localStorage.setItem('user', data.user);
+                        localStorage.setItem('firstname', data.user.firstname);
+                        localStorage.setItem('lastname', data.user.lastname);
+                        localStorage.setItem('surname', data.user.surname);
                         localStorage.setItem('admission_no', data.user.admission_no);
                         localStorage.setItem('email', data.user.email);
                         onSuccess('Account created successfully!');
