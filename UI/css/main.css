@@ -318,11 +318,11 @@ footer h3, h5{
   color: #d65050;
 }
 
-.footer-divide{
+/* .footer-divide{
 	margin: 0;
 	display: flex;
 	padding: 0;
-}
+} */
 
 .divide{
 	width: 25%;
