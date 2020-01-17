@@ -4,7 +4,7 @@ import json
 
 from app import exam_app
 from app.api.v1.models.database import Database
-from utils.dummy import bursar_login, bursar_account, admin_login, admin_account, create_account, teachers_account, user_login, teachers_login
+from utils.dummy import staff_account, staff_login, accountant_login, accountant_account, create_account, user_login
 
 
 class BaseTest(unittest.TestCase):
@@ -33,15 +33,6 @@ class BaseTest(unittest.TestCase):
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
-    def get_teachers_token(self):
-        self.client.post('/api/v1/auth/register', data=json.dumps(teachers_account),
-                            content_type='application/json')
-        resp = self.client.post('/api/v1/auth/login', data=json.dumps(teachers_login),
-                            content_type='application/json')
-        access_token = json.loads(resp.get_data(as_text=True))['token']
-        auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
-        return auth_header
-
     def get_refresh_token(self):
         self.client.post('/api/v1/auth/register', data=json.dumps(create_account),
                             content_type='application/json')
@@ -52,19 +43,38 @@ class BaseTest(unittest.TestCase):
         return auth_header
 
     def get_admin_token(self):
-        self.client.post('/api/v1/auth/register', data=json.dumps(admin_account),
+        self.client.post('/api/v1/auth/staff/register', data=json.dumps(staff_account),
                             content_type='application/json')
-        resp = self.client.post('/api/v1/auth/login', data=json.dumps(admin_login),
+        resp = self.client.post('/api/v1/auth/staff/login', data=json.dumps(staff_login),
                             content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
-    def get_bursar_token(self):
-        self.client.post('/api/v1/auth/register', data=json.dumps(bursar_account),
+    def get_staff_refresh_token(self):
+        self.client.post('/api/v1/auth/staff/register', data=json.dumps(staff_account),
                             content_type='application/json')
-        resp = self.client.post('/api/v1/auth/login', data=json.dumps(bursar_login),
+        resp = self.client.post('/api/v1/auth/staff/login', data=json.dumps(staff_login),
+                            content_type='application/json')
+        refresh_token = json.loads(resp.get_data(as_text=True))['refresh_token']
+        auth_header = {'Authorization': 'Bearer {}'.format(refresh_token)}
+        return auth_header
+
+
+    def get_bursar_token(self):
+        self.client.post('/api/v1/auth/accountant/register', data=json.dumps(accountant_account),
+                            content_type='application/json')
+        resp = self.client.post('/api/v1/auth/accountant/login', data=json.dumps(accountant_login),
                             content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
+        return auth_header
+
+    def get_accountant_refresh_token(self):
+        self.client.post('/api/v1/auth/accountant/register', data=json.dumps(accountant_account),
+                            content_type='application/json')
+        resp = self.client.post('/api/v1/auth/accountant/login', data=json.dumps(accountant_login),
+                            content_type='application/json')
+        refresh_token = json.loads(resp.get_data(as_text=True))['refresh_token']
+        auth_header = {'Authorization': 'Bearer {}'.format(refresh_token)}
         return auth_header

@@ -3,7 +3,8 @@ body{
   font-family:'Trebuchet MS';
   /*color:#fff;*/
   height:100vh;
-  background-image: url('bookshop2.jpg');
+  background-color: #fff;
+  /* background-image: url('bookshop2.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -13,7 +14,7 @@ img{
   width: 100%;
 }
 .main{
-  height:660px;
+  height:600px;
   width:400px;
   /*border:1px solid #fff;*/
   margin:1% auto;

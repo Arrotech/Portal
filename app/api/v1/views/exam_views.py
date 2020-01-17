@@ -102,63 +102,6 @@ def get_exam(admission_no):
         "message": "Exam Not Found"
     }), 404)
 
-@exams_v1.route('/exams/<string:admission_no>', methods=['PUT'])
-@jwt_required
-@admin_required
-def put(admission_no):
-    """Update an exam scores for a specific student by Admission Number."""
-    errors = check_exams_keys(request)
-    if errors:
-        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
-    details = request.get_json()
-    admission_no = details['admission_no']
-    term = details['term']
-    form = details['form']
-    type = details['type']
-    maths = details['maths']
-    english = details['english']
-    kiswahili = details['kiswahili']
-    chemistry = details['chemistry']
-    biology = details['biology']
-    physics = details['physics']
-    history = details['history']
-    geography = details['geography']
-    cre = details['cre']
-    agriculture = details['agriculture']
-    business = details['business']
-    if (form_restrictions(form) is False):
-        return raise_error(400, "Form should be 1, 2, 3 or 4")
-    if (term_restrictions(term) is False):
-        return raise_error(400, "Term should be either 1st, 2nd, 3rd, 1ST, 2ND, or 3RD")
-    if (type_restrictions(type) is False):
-        return raise_error(400, "Type should be either MAIN, main, CAT, or cat")
-    exam = ExamsModel(admission_no,
-                        term,
-                        form,
-                        type,
-                        maths,
-                        english,
-                        kiswahili,
-                        chemistry,
-                        biology,
-                        physics,
-                        history,
-                        geography,
-                        cre,
-                        agriculture,
-                        business).update_scores()
-    exam = json.loads(exam)
-    if exam:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "Scores successfully updated",
-            "exam": exam
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Exam not found!"
-    }), 404)
-
 @exams_v1.route('/exams/<string:admission_no>', methods=['DELETE'])
 @jwt_required
 @admin_required

@@ -26,34 +26,15 @@ document.getElementById('postLogin').addEventListener('submit', postLogin);
             }).then((res) => res.json())
             .then((data) =>  {
                 console.log(data);
-                let user = data['user'];
                 let status = data['status'];
                 let message = data['message'];
                 if (status === '200'){
-                    if (user.role === 'admin'){
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('user', data.user);
-                        localStorage.setItem('admission_no', data.user.admission_no);
-                        localStorage.setItem('email', data.user.email);
-                        onSuccess('Signed in successfully!');
-                        window.location.replace('admin.html');
-                    }
-                    else if (user.role === 'bursar') {
-                        localStorage.setItem('user', data.user);
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('admission_no', data.user.admission_no);
-                        localStorage.setItem('email', data.user.email);
-                        onSuccess('Signed in successfully!');
-                        window.location.replace('bursar.html');
-                    }
-                    else {
-                        localStorage.setItem('user', data.user);
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('admission_no', data.user.admission_no);
-                        localStorage.setItem('email', data.user.email);
-                        onSuccess('Signed in successfully!');
-                        window.location.replace('user.html');
-                    }
+                    localStorage.setItem('user', data.user);
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('admission_no', data.user.admission_no);
+                    localStorage.setItem('email', data.user.email);
+                    onSuccess('Signed in successfully!');
+                    window.location.replace('user.html');
                 }else{
                     raiseError(message);
                 }

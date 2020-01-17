@@ -6,9 +6,6 @@ from datetime import datetime
 from app.api.v1.models.database import Database
 
 
-Database().create_table()
-
-
 class ExamsModel(Database):
     """Initiallization."""
 
@@ -80,18 +77,6 @@ class ExamsModel(Database):
     def get_exam_by_admission_no(self, admission_no):
         """Fetch an exam by Admission Number."""
         self.curr.execute(""" SELECT * FROM exams WHERE admission_no='{}'""".format(admission_no))
-        exam = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(exam, default=str)
-
-    def update_scores(self, admission_no):
-        """Update an exam by Admission Number."""
-        self.curr.execute("""UPDATE exams\
-            SET admission_no='{}', term='{}', form='{}', type='{}', maths={}, english={}, kiswahili={}, chemistry={}, biology={}, physics={}, history={}, geography={}, cre={}, agriculture={}, business={}\
-            WHERE admission_no='{}' RETURNING admission_no, term, form, type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business""" \
-            .format(self.admission_no, self.term, self.form, self.type, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics,
-            self.history, self.geography, self.cre, self.agriculture, self.business))
         exam = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

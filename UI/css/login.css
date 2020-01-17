@@ -1,17 +1,16 @@
 body{
-  background-color: grey;
-  /*background:-webkit-linear-gradient(#82B4D5,#fff);*/
+  background:-webkit-linear-gradient(#fff, #dd7373);
   font-family:'Trebuchet MS';
-  /*color:#fff;*/
-  height:100vh;
-  background-image: url('bookshop.jpg');
+  color:#fff;
+  height:150vh;
+  /* background-image: url('bookshop.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  /* background-position: 50% 50%; */
+  background-position: 50% 50%; */
 }
 .main{
-  height:500px;
+  height:400px;
   width:700px;
   /*border:1px solid #fff;*/
   margin:7% auto;
@@ -26,10 +25,10 @@ body{
   /*border-right:1px solid #fff;*/
   height:100%;
   /*padding:15px 0 0 0;*/
-  background-color: rgba(255, 0, 0, 0.3);
+  background-color: rgba(214, 38, 38, 0.3);
   border-radius: 5px;
   position: relative;
-  color: white;
+  color: #000000;
 }
 .left h1{
   text-align: center;
@@ -40,7 +39,7 @@ body{
 .left p{
   margin-top:0;
   text-align:center;
-  color:white;
+  color:#333;
 }
 .left form{
   text-align: center;
@@ -67,10 +66,14 @@ body{
   color:#fff;
   font-weight: bold;
 }
+.left form input[type="submit"]:hover{
+  background-color: #000000;
+  color: #fff;
+}
 .left p.forgot{
-  color:#fff;
+  color:#333;
   font-size:12px;
-  padding-top:140px;
+  padding-top:40px;
 }
 .left p.or{
   color:grey;
@@ -99,11 +102,11 @@ body{
   margin-left:-5px;
   padding-right:5px;
   background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
-  background-color:#fff;
+  background-color:#000000;
   background-size: cover;
   text-align:center;
   border-radius: 5px;
-  color: #000000;
+  color: #fff;
 }
 .right h1{
   padding-top:100px;
@@ -218,12 +221,14 @@ body{
     height:100%;
     margin-top:-5px;
     margin-left: 32px;
+    margin-bottom: 10px;
     padding-right:5px;
     background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
-    background-color:#fff;
+    background-color:#000000;
     background-size: cover;
     text-align:center;
     border-radius: 5px;
-    color: #000000;
+    color: #fff;
   }
 }
+

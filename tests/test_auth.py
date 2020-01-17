@@ -103,7 +103,7 @@ class TestUsersAccount(BaseTest):
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(
-            result['message'], 'length of password should be atleast eight characters')
+            result['message'], 'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!')
         assert response.status_code == 400
 
     def test_email_exists(self):
@@ -187,16 +187,6 @@ class TestUsersAccount(BaseTest):
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Form should be 1, 2, 3 or 4')
-        assert response.status_code == 400
-
-    def test_wrong_role(self):
-        """Test role input."""
-
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(wrong_role), content_type='application/json',
-            headers=self.get_token())
-        result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'role is in wrong format')
         assert response.status_code == 400
 
     def test_wrong_email(self):

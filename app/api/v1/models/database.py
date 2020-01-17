@@ -31,20 +31,27 @@ class Database:
                 role varchar NOT NULL
             )""",
             """
-            CREATE TABLE IF NOT EXISTS teachers(
-                teacher_id serial PRIMARY KEY,
+            CREATE TABLE IF NOT EXISTS staff(
+                staff_id serial PRIMARY KEY,
                 firstname varchar NOT NULL,
                 lastname varchar NOT NULL,
+                form varchar NOT NULL,
+                username varchar NOT NULL,
                 email varchar NOT NULL,
                 password varchar NOT NULL,
-                form numeric NOT NULL,
-                role varchar NOT NULL
-            )
-            """,
+                role varchar NOT NULL,
+                date TIMESTAMP
+            )""",
             """
-            CREATE TABLE IF NOT EXISTS revoked_tokens(
-                id serial PRIMARY KEY,
-                jti varchar NOT NULL
+            CREATE TABLE IF NOT EXISTS accountants(
+                accountant_id serial PRIMARY KEY,
+                firstname varchar NOT NULL,
+                lastname varchar NOT NULL,
+                username varchar NOT NULL,
+                email varchar NOT NULL,
+                password varchar NOT NULL,
+                role varchar NOT NULL,
+                date TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS exams(
@@ -130,35 +137,18 @@ class Database:
         except Exception as e:
             return e
 
-    def create_admin(self):
-        """Create a deafult admin user."""
-        query = "INSERT INTO users(firstname,lastname,surname,admission_no,email, password,form,role)\
-        VALUES('Harun','Gachanja','Gitundu','NA','harun@admin.com','pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8','1','admin')"
-
-        self.curr.execute(query)
-        self.conn.commit()
-        self.curr.close()
-
-    def create_bursar(self):
-        """Create a deafult admin user."""
-        query = "INSERT INTO users(firstname,lastname,surname,admission_no,email, password,form,role)\
-        VALUES('Samuel','Njoroge','NA','NA','samuel@admin.com','pbkdf2:sha256:50000$MrtmQD9F$02db7419b111987ece6fae387f432bf875b4a34a4161c8e9ebf99f02c56258eb','2','admin')"
-
-        self.curr.execute(query)
-        self.conn.commit()
-        self.curr.close()
-
     def destroy_table(self):
         """Destroy tables"""
         exams = "DROP TABLE IF EXISTS  exams CASCADE"
         users = "DROP TABLE IF EXISTS  users CASCADE"
-        teachers = "DROP TABLE IF EXISTS  teachers CASCADE"
+        staff = "DROP TABLE IF EXISTS  staff CASCADE"
+        accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
         evaluation = "DROP TABLE IF EXISTS evaluation CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
         library = "DROP TABLE IF EXISTS library CASCADE"
         studentId = "DROP TABLE IF EXISTS studentId CASCADE"
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
-        queries = [exams, users, teachers, evaluation, fees, library, studentId, subjects]
+        queries = [exams, users, staff, accountants, evaluation, fees, library, studentId, subjects]
         try:
             for query in queries:
                 self.curr.execute(query)
@@ -167,9 +157,23 @@ class Database:
         except Exception as e:
             return e
 
+    def fetch(self, query):
+        """Fetch all query."""
+        self.curr.execute(query)
+        fetch_all = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return fetch_all
+
+    def fetch_one(self, query):
+        """Fetch one query."""
+        self.curr.execute(query)
+        fetch_one = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return fetch_one
+
 if __name__ == '__main__':
     Database().destroy_table()
     Database().create_table()
-    Database().create_admin()
-    Database().create_bursar()
 

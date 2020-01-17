@@ -5,11 +5,12 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
 from app.api.v1.views.auth_views import auth_v1
+from app.api.v1.views.staff import auth
+from app.api.v1.views.accountant import accountant
 from app.api.v1.views.exam_views import exams_v1
 from app.api.v1.views.library_views import books_v1
 from app.api.v1.views.studentId_views import id_v1
 from app.api.v1.views.fees_views import fees_v1
-from app.api.v1.views.teachers_views import teachers_v1
 from app.api.v1.views.subjects_view import subjects_v1
 from app.config import app_config
 
@@ -40,9 +41,10 @@ def exam_app(config_name):
     api = Api(app)
 
     app.register_blueprint(auth_v1, url_prefix='/api/v1/auth/')
+    app.register_blueprint(auth, url_prefix='/api/v1/auth/staff/')
+    app.register_blueprint(accountant, url_prefix='/api/v1/auth/accountant/')
     app.register_blueprint(exams_v1, url_prefix='/api/v1/')
     app.register_blueprint(fees_v1, url_prefix='/api/v1/')
-    app.register_blueprint(teachers_v1, url_prefix='/api/v1/auth/')
     app.register_blueprint(books_v1, url_prefix='/api/v1/')
     app.register_blueprint(subjects_v1, url_prefix='/api/v1/')
     app.register_blueprint(id_v1, url_prefix='/api/v1/')

@@ -13,16 +13,6 @@ def create():
 
 
 @app.cli.command()
-def admin():
-    Database().create_admin()
-
-
-@app.cli.command()
-def bursar():
-    Database().create_bursar()
-
-
-@app.cli.command()
 def destroy():
     Database().destroy_table()
 
