@@ -5,7 +5,7 @@ from flask_restful import Resource
 
 from app.api.v1.models.fees_models import FeesModels
 from app.api.v1.models.users_model import UsersModel
-from utils.bursar import bursar_required
+from utils.bursar import accountant_required
 from flask_jwt_extended import jwt_required
 
 fees_v1 = Blueprint('fees_v1', __name__)
@@ -13,7 +13,7 @@ fees_v1 = Blueprint('fees_v1', __name__)
 
 @fees_v1.route('/fees', methods=['POST'])
 @jwt_required
-@bursar_required
+@accountant_required
 def add_fees():
     """Accountant can add a new fee entry."""
     details = request.get_json()
@@ -42,7 +42,7 @@ def add_fees():
 
 @fees_v1.route('/fees', methods=['GET'])
 @jwt_required
-@bursar_required
+@accountant_required
 def get_fees():
     """The Accountant can view the fees structures."""
     return make_response(jsonify({

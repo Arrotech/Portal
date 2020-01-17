@@ -42,67 +42,6 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'], 'Please add a number less than 100')
         assert response.status_code == 400
 
-    def test_edit_exam_keys(self):
-        """Test the vote json keys."""
-
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.post(
-            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
-            headers=self.get_admin_token())
-        response2 = self.client.put(
-            '/api/v1/exams/NJCF4001', data=json.dumps(wrong_exam_keys), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Invalid maths key')
-        assert response2.status_code == 400
-
-    def test_edit_exams_term_restrictions(self):
-        """Test that term restrictions."""
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.post(
-            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
-            headers=self.get_admin_token())
-        response2 = self.client.put(
-            '/api/v1/exams/NJCF4001', data=json.dumps(term_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Term should be either 1st, 2nd, 3rd, 1ST, 2ND, or 3RD')
-        assert response2.status_code == 400
-
-    def test_edit_exams_form_restrictions(self):
-        """Test that term restrictions."""
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.post(
-            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
-            headers=self.get_admin_token())
-        response2 = self.client.put(
-            '/api/v1/exams/NJCF4001', data=json.dumps(form_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Form should be 1, 2, 3 or 4')
-        assert response2.status_code == 400
-
-    def test_edit_exams_type_restrictions(self):
-        """Test that term restrictions."""
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.post(
-            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
-            headers=self.get_admin_token())
-        response2 = self.client.put(
-            '/api/v1/exams/NJCF4001', data=json.dumps(type_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Type should be either MAIN, main, CAT, or cat')
-        assert response2.status_code == 400
-
     def test_exam_keys(self):
         """Test the vote json keys."""
 
@@ -186,7 +125,7 @@ class TestExams(BaseTest):
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
         response2 = self.client.get(
-            '/api/v1/auth/users/NJCF4001', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/exams/NJCF4001', content_type='application/json', headers=self.get_token())
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'successfully retrieved')
         assert response2.status_code == 200

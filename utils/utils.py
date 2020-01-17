@@ -4,7 +4,36 @@ from flask import jsonify, make_response
 
 
 def check_register_keys(request):
-    res_keys = ['firstname', 'lastname', 'surname', 'admission_no', 'email', 'password', 'form', 'role']
+    res_keys = ['firstname', 'lastname', 'surname', 'admission_no', 'email', 'password', 'form']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+def check_staff_keys(request):
+    """Check that registration json keys match the required ones."""
+    res_keys = ['firstname', 'lastname',
+                'form', 'username', 'email', 'password']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+def check_accountant_keys(request):
+    """Check that registration json keys match the required ones."""
+    res_keys = ['firstname', 'lastname', 'username', 'email', 'password']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+
+def check_login_keys(request):
+    """Check that login json keys match the required ones."""
+    res_keys = ['email', 'password']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -42,7 +71,7 @@ def is_valid_email(variable):
 
 def is_valid_password(variable):
     """Check if password is a valid password."""
-    if re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', variable):
+    if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", variable):
         return True
     return False
 

@@ -23,7 +23,7 @@ document.getElementById('getFees').onclick = () => {
         token = window.localStorage.getItem('token');
         admission = window.localStorage.getItem('admission_no');
 
-        fetch('https://arrotech-school-portal.herokuapp.com/api/v1/fees/' + admission ,{
+        fetch('http://localhost:5000/api/v1/fees/' + admission ,{
             method: 'GET',
             path: admission,
             headers : {

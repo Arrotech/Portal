@@ -1,29 +1,43 @@
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ LAYOUT SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
+
 * {
-  box-sizing: border-box;
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-font-smoothing:antialiased;
+	-moz-font-smoothing:antialiased;
+	-o-font-smoothing:antialiased;
+	font-smoothing:antialiased;
+	text-rendering:optimizeLegibility;
 }
 
-body{
-  font-family: Verdana, Helvetica, sans-serif Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 14px;
-  margin: 0;
-  padding: 0;
+body {
+	font-family:"Open Sans", Helvetica, Arial, sans-serif;
+	font-weight:300;
+	font-size: 12px;
+	line-height:30px;
+	background:#fff;
 }
 
 header{
   background-color: #000000;
   color: white;
-  font-size: 20px;
+  font-size: 10px;
   text-align:center;
   padding: 20px;
 }
 
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: #333;
+  background-color: #000000;
   overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 1px;
+  margin-left: 1px;
+  margin-right: 1px;
+  border-radius: 2px;
 }
 
 /* Style the links inside the navigation bar */
@@ -34,6 +48,7 @@ header{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  width: 12.5%;
   font-size: 17px;
 }
 
@@ -41,6 +56,7 @@ header{
 .topnav a:hover {
   background-color: #d65050;
   color: #fff;
+  border-radius: 3px;
 }
 
 /* Add an active class to highlight the current page */
@@ -67,51 +83,6 @@ header{
   background-color: #666;
   color: white;
 }
-
-/* ul{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #d65050;
-  width: 100%;
-  left: 0;
-  color: #fff;
-} */
-/*
-li{
-  float: left;
-}
-li a{
-  display: block;
-  color: #fff;
-  font-size: 18px;
-  font-style: bold;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.index-nav li {
-  display: inline;
-  float: left;
-  font-size: 14px;
-}
-
-.index-nav li a {
-  display: inline-block;
-  padding: 14px 16px;
-	width: 225.1px;
-  text-decoration: none;
-  color: #efefef;
-}
-li a:hover{
-  background-color: #000000;
-  color: white;
-}
-.active{
-  background-color: #000000;
-} */
 
 table {
   border-collapse: collapse;
@@ -149,6 +120,29 @@ tr:hover {
   background-color: #fff;
 }
 
+.row-one{
+  height: 500px;
+  background: #333;
+  color: #fff;
+}
+
+.row-two{
+  height: 500px;
+  background: #fff;
+  color: #000000;
+}
+
+.row-three{
+  height: 500px;
+  background: #333;
+  color: #fff;
+}
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BUTTONS SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+.fees-btn{
+  width: 100%;
+}
+
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ IMAGES SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
 header img{
@@ -175,7 +169,7 @@ header img{
 
 .leftnav a {
   padding: 6px 8px 6px 16px;
-  text-decoration: none;
+  text-decoration:none;
   font-size: 16px;
   color: #818181;
   display: block;
@@ -192,7 +186,7 @@ header img{
 
 .leftnav a:hover {
   color: #d65050;
-}
+}                    
 
 .main {
   margin-left: 190px;
@@ -217,14 +211,14 @@ header img{
 .school{
   background: #fff;
   margin: 5px;
-  border-radius: 5px;
+  height: 370px;
   padding: 20px;
   text-align: center;
 }
 
 #btn-1{
-  border-radius: 3px;
-  background: #d65050;
+  border-radius: 4px;
+  background: #000000;
   border: none;
   width: 230px;
   height: 50px;
@@ -233,8 +227,8 @@ header img{
 }
 
 #btn-2{
-  border-radius: 3px;
-  background: #000000;
+  border-radius: 4px;
+  background: #333;
   border: none;
   width: 180px;
   height: 50px;
@@ -243,13 +237,13 @@ header img{
 }
 
 #btn-1:hover {
-  background-color: #000000; /* Green */
+  background-color: #d65050; /* Green */
   color: white;
 }
 
 #btn-2:hover {
   background-color: #d65050; /* Green */
-  color: #000000;
+  color: #fff;
 }
 
 
@@ -276,12 +270,12 @@ header img{
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
-  from {top: -40px;}
+  from {top: -30px;}
   to {top: 10px; color: #25252525;}
 }
 
 @keyframes example {
-  from {top: -40px;}
+  from {top: -30px;}
   to {top: 10px; color: #000000;}
 }
 
@@ -338,11 +332,24 @@ header img{
   margin: 5px;
   border-radius: 5px;
 }
+
+
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ HEADING SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
-h1{
-  font-size: 14px;
-  text-align: center;
+
+.row-one h1{
+  font-size: 18px;
+  padding: 20px;
+}
+
+.row-two h1{
+  font-size: 18px;
+  padding: 20px;
+}
+
+.row-three h1{
+  font-size: 18px;
+  padding: 20px;
 }
 
 .header-content h2{
@@ -357,7 +364,7 @@ h1{
 
 
 footer{
-	background-color:#d65050;
+	background-color:#fff;
 	padding: 0px;
 	margin: 0px;
 	clear: both;
@@ -366,14 +373,8 @@ footer{
 }
 
 footer h3, h5{
-  color: #d65050;
+  color: #fff;
 }
-
-/* .footer-divide{
-	margin: 0;
-	display: flex;
-	padding: 0;
-} */
 
 .divide{
 	width: 25%;
@@ -402,13 +403,16 @@ footer h3, h5{
 /*==================== MEDIA QUERIES SECTION =====================*/
 
 @media (max-width: 600px){
-	footer{
+  footer{
     display: block;
 		margin-left: auto;
 		margin-right: auto;
 	}
 	.divide{
 		width: 100%;
+  }
+  .fees-btn{
+    width: 230%;
   }
 
 }
@@ -429,10 +433,67 @@ footer h3, h5{
     position: absolute;
     right: 0;
     top: 0;
+    width: 40px;
   }
   .topnav.responsive a {
     float: none;
     display: block;
     text-align: left;
+    width: 100%;
+    border-radius: 0px;
+  }
+}
+
+.wrap {
+  border: solid 1px #000000; 
+  overflow: hidden;
+  height: 40px;
+  position: relative;
+  margin: 1px;
+  background-color: #333;
+  border-radius: 1px;
+}
+
+.breaking-news-headline {
+  text-decoration: none;
+  background-color: #333;
+  height: 40px;
+  color: #fff;
+  display: block;
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+.breaking-news-title {
+  background-color: #d65050;
+  display: block;
+  text-decoration: none;
+  height: 40px;
+  color: #fff;
+  width: 120px;
+  text-align: center;
+  padding-top: 10px;
+  font-weight: bold;
+  position: absolute;
+  z-index: 20;
+}
+
+.marquee {
+  margin: 0;
+  padding-left:100%;
+  display: inline-block;
+  white-space: nowrap;
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate(0%);
+  }
+  99%, to {
+    transform: translate(-100%);
   }
 }

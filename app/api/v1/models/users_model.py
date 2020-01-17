@@ -31,11 +31,9 @@ class UsersModel(Database):
         return json.dumps(user, default=str)
 
     def get_users(self):
-        """Request for all users."""
-        self.curr.execute(''' SELECT * FROM users''')
-        users = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        """Fetch all users"""
+        query = "SELECT * from users"
+        users = Database().fetch(query)
         return json.dumps(users, default=str)
 
     def get_admission_no(self, admission_no):
