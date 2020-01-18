@@ -4,64 +4,6 @@ body {
   background-color: #fcfcfc;
 }
 
-/*header style*/
-.headercontainer {
-  max-height: 100px;
-  width: 100%;
-  background-color: white;
-  margin: auto;
-  margin-top: -10px;
-}
-
-.titlemenu {
-  min-height: 100px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.sinalogo {
-  padding: 10px 10px 0 0px;
-  width: 80px;
-  display: inline-block;
-  margin-top: 20px;
-}
-
-.maintitle {
-  color: #424242;
-  font-family: Ubuntu;
-  font-size: 25px;
-  display: inline-block;
-}
-
-.menutwo {
-  margin-top: -40px;
-}
-
-.navstyle {
-  float: right;
-  clear: both;
-  display: inline-block;
-  font-family: Karla;
-  font-weight: medium 500;
-  margin: auto;
-  vertical-align: middle;
-  overflow: hidden;
-}
-
-a.space {
-  padding: 10px 10px 10px 10px;
-  text-decoration: none;
-  color: #424242;
-  margin: auto;
-  font-size: 16px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-a.space:hover {
-  color: #d65050;
-}
-
 /*body styles*/
 
 .cpbody {
@@ -81,7 +23,7 @@ a.space:hover {
 }
 
 .containimage {
-  height: 500px;
+  /* height: 500px; */
   overflow: hidden;
 }
 
@@ -111,7 +53,7 @@ a.space:hover {
   background-color: white;
   opacity: 0.5;
   margin: auto;
-  padding: 40px;
+  padding: 20px;
   min-width: 20%;
   position: absolute;
 }
@@ -137,7 +79,7 @@ p {
 }
 
 .careercontent {
-  width: 1000px;
+  width:74%;
   margin: auto;
   font-family: Karla;
   color: #424242;
@@ -235,7 +177,7 @@ p.shc {
 /*beliefs*/
 
 .beliefcon {
-  width: 1000px;
+  width: 74%;
   margin: auto;
 }
 
@@ -254,8 +196,19 @@ p.shc {
   margin-top: 200px;
   text-align: center;
   color: white;
-  width: 1000px;
+  width: 100%;
 }
+
+/*==================== MEDIA QUERIES SECTION =====================*/
+
+@media (max-width: 600px){
+  bdiv{
+    display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
 p.bcards {
   line-height: 2em;
   font-size: 10em;
@@ -288,7 +241,7 @@ h3.bdiv {
 /*widget*/
 
 .widgetcnt {
-  width: 1000px;
+  width: 74%;
   margin: auto;
   background-color: white;
 }
@@ -299,7 +252,7 @@ h3.bdiv {
 
 #whr_embed_hook {
   margin-left: -50px;
-  width: 1000px;
+  width: 74%;
 }
 
 h3.whr-title,
@@ -377,7 +330,7 @@ li {
 
 .footercontainer {
   max-height: 200px;
-  width: 1000px;
+  width: 74%;
   background-color: white;
   margin: auto;
   display: inline-block;
