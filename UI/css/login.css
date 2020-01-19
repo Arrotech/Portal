@@ -11,7 +11,7 @@ body{
 }
 .main{
   height:400px;
-  width:700px;
+  width:50%;
   /*border:1px solid #fff;*/
   margin:7% auto;
 }
@@ -177,9 +177,8 @@ body{
 
 @media (max-width: 600px){
   .main{
-    width:478px;
-    margin: 0;
-    margin-top: 10px;
+    width:80%;
+    margin:7% auto;
   }
   .main div{
     display: inline-block;
