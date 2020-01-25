@@ -165,14 +165,6 @@ class Database:
         self.curr.close()
         return fetch_all
 
-    def fetch_one(self, query):
-        """Fetch one query."""
-        self.curr.execute(query)
-        fetch_one = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return fetch_one
-
 if __name__ == '__main__':
     Database().destroy_table()
     Database().create_table()

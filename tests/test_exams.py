@@ -1,6 +1,6 @@
 import json
 
-from utils.dummy import greater_than, less_than, entry, new_entry, edit_exams, new_account, wrong_exam_keys, admin_account_test, term_restrictions, form_restrictions, type_restrictions
+from utils.dummy import greater_than, less_than, entry, new_entry, edit_exams, new_account, wrong_exam_keys, admin_account_test, term_restrictions, form_restrictions, type_restrictions, edit_exams_keys
 from .base_test import BaseTest
 
 
@@ -176,3 +176,48 @@ class TestExams(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Exam not found')
         assert response1.status_code == 404
+
+    def test_edit_exams(self):
+        """Test edit exams."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/exams/1', data=json.dumps(edit_exams), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'exam updated successfully')
+        assert response2.status_code == 200
+
+    def test_edit_exams_keys(self):
+        """Test edit exams keys."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/exams/1', data=json.dumps(edit_exams_keys), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Invalid maths key')
+        assert response2.status_code == 400
+
+    def test_edit_unexisting_exams(self):
+        """Test edit unexisting exams."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/exams/1000', data=json.dumps(edit_exams), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'exam not found')
+        assert response2.status_code == 404

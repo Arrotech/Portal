@@ -1,4 +1,4 @@
-document.getElementById('updateBooks').addEventListener('submit', updateBooks);
+document.getElementById('updateFees').addEventListener('submit', updateFees);
 
     function callToast() {
 
@@ -19,35 +19,33 @@ document.getElementById('updateBooks').addEventListener('submit', updateBooks);
         callToast();
     }
 
-    function updateBooks(event){
+    function updateFees(event){
             event.preventDefault();
 
             token = window.localStorage.getItem('token');
 
-
             let admission_no = document.getElementById('admission_no').value;
-            let author = document.getElementById('author').value;
-            let title = document.getElementById('title').value;
-            let subject = document.getElementById('subject').value;
+            let transaction_type = document.getElementById('transaction_type').value;
+            let transaction_no = document.getElementById('transaction_no').value;
+            let description = document.getElementById('description').value;
+            let amount = document.getElementById('amount').value;
 
-
-            fetch('http://localhost:5000/api/v1/books/' + admission_no, {
+            fetch('http://localhost:5000/api/v1/fees/', {
                 method: 'PUT',
-                path: admission_no,
                 headers : {
                 Accept: 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token,
                 },
-                body:JSON.stringify({admission_no:admission_no, author:author, title:title, subject:subject})
+                body:JSON.stringify({admission_no:admission_no, transaction_type:transaction_type, transaction_no:transaction_no, description:description, amount:amount})
             }).then((res) => res.json())
             .then((data) =>  {
 
                 console.log(data);
                 let status = data['status'];
                 let message = data['message'];
-                if (status === '200'){
-                    onSuccess('Books updated successfully!');
+                if (status === '201'){
+                    onSuccess('Fees added successsfully');
                 }else{
                     raiseError(message);
                 }

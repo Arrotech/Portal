@@ -2,7 +2,7 @@ import json
 
 from utils.dummy import new_staff_account, wrong_staff_account_keys, wrong_staff_account_firstname,\
     wrong_staff_account_lastname,\
-    wrong_staff_account_email,\
+    wrong_staff_account_email, invalid_staff_login_password,\
     wrong_staff_account_password, username_staff_exists,\
     email_staff_exists, wrong_staff_login_keys, wrong_staff_password_login, wrong_staff_email_login, invalid_email_password
 from .base_test import BaseTest
@@ -171,6 +171,16 @@ class TestStaffAccount(BaseTest):
 
         response = self.client.post(
             '/api/v1/auth/staff/login', data=json.dumps(invalid_email_password), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Invalid Email or Password')
+        assert response.status_code == 401
+
+    def test_invalid_staff_login_password(self):
+        """Test the vote json keys."""
+
+        response = self.client.post(
+            '/api/v1/auth/staff/login', data=json.dumps(invalid_staff_login_password), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid Email or Password')

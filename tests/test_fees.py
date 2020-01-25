@@ -1,6 +1,6 @@
 import json
 
-from utils.dummy import add_fees, new_account, bursar_account_test
+from utils.dummy import add_fees, new_account, bursar_account_test, edit_fees
 from .base_test import BaseTest
 
 
@@ -63,3 +63,33 @@ class TestFees(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Fees Not Found')
         assert response1.status_code == 404
+
+    def test_edit_fees(self):
+        """Test edit fees."""
+
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
+            headers=self.get_bursar_token())
+        response2 = self.client.put(
+            '/api/v1/fees/1', data=json.dumps(edit_fees), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'fees updated successfully')
+        assert response2.status_code == 200
+
+    def test_edit_unexisting_fees(self):
+        """Test edit unexisting fees."""
+
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
+            headers=self.get_bursar_token())
+        response2 = self.client.put(
+            '/api/v1/fees/1000', data=json.dumps(edit_fees), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'fees not found')
+        assert response2.status_code == 404

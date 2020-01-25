@@ -1,9 +1,8 @@
 body{
-  /*background:-webkit-linear-gradient(#82B4D5,#fff);*/
+  background:-webkit-linear-gradient(#000000,#fff);
   font-family:'Trebuchet MS';
   /*color:#fff;*/
   height:100vh;
-  background-color: #fff;
   /* background-image: url('bookshop2.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;

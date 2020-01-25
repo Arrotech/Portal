@@ -49,3 +49,15 @@ class FeesModels(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(fees, default=str)
+
+    def edit_fees(self, fee_id, admission_no, transaction_type, transaction_no, description, amount):
+        """Edit fees."""
+
+        self.curr.execute("""UPDATE fees\
+			SET admission_no='{}', transaction_type='{}', transaction_no='{}', description='{}', amount='{}'\
+			WHERE fee_id={} RETURNING admission_no, transaction_type, transaction_no, description, amount"""
+            .format(fee_id, admission_no, transaction_type, transaction_no, description, amount))
+        fee = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(fee, default=str)

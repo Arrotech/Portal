@@ -1,5 +1,5 @@
 body{
-  background:-webkit-linear-gradient(#fff, #dd7373);
+  background:-webkit-linear-gradient(#fff, #000000);
   font-family:'Trebuchet MS';
   color:#fff;
   height:150vh;
@@ -71,7 +71,7 @@ body{
   color: #fff;
 }
 .left p.forgot{
-  color:#333;
+  color:#fff;
   font-size:12px;
   padding-top:40px;
 }
