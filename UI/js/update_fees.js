@@ -24,14 +24,16 @@ document.getElementById('updateFees').addEventListener('submit', updateFees);
 
             token = window.localStorage.getItem('token');
 
+            let fee_id = document.getElementById('fee_id').value;
             let admission_no = document.getElementById('admission_no').value;
             let transaction_type = document.getElementById('transaction_type').value;
             let transaction_no = document.getElementById('transaction_no').value;
             let description = document.getElementById('description').value;
             let amount = document.getElementById('amount').value;
 
-            fetch('http://localhost:5000/api/v1/fees/', {
+            fetch('http://localhost:5000/api/v1/fees/' + fee_id, {
                 method: 'PUT',
+                path: fee_id,
                 headers : {
                 Accept: 'application/json',
                     'Content-Type': 'application/json',
