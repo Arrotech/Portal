@@ -1,148 +1,152 @@
-* {
-  outline: none;
+body{
+  background:-webkit-linear-gradient(#000000, #fff);
+  font-family:'Trebuchet MS';
+  color:#fff;
+  height:150vh;
+  /* background-image: url('bookshop.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 50% 50%; */
 }
-
-body {
-  background: -webkit-linear-gradient(#fff, #dd7373);
+.main{
+  height:400px;
+  width:50%;
+  /*border:1px solid #fff;*/
+  margin:7% auto;
 }
-
-body,
-input,
-button {
-  font-family: "Muli", sans-serif;
+.main div{
+  display: inline-block;
+  border:none;
 }
-
-#cover {
-  width: 722px;
-  height: 522px;
-  padding: 45px;
-  margin: 0 auto;
-  margin-bottom: 40px;
-}
-
-#form-ui,
-form,
-#close-form {
+.main .left{
+  width:50%;
+  float:left;
+  /*border-right:1px solid #fff;*/
+  height:100%;
+  /*padding:15px 0 0 0;*/
+  background-color: rgba(214, 38, 38, 0.3);
+  border-radius: 5px;
   position: relative;
+  color: #000000;
 }
-
-#cover form {
-  width: 282px;
-  height: 487px;
-  padding: 25px;
-  background-color: #fff;
-  box-shadow: 0px 15px 60px #b6354e;
-  border-radius: 20px;
-}
-
-#close-form {
-  position: absolute;
-  top: 23px;
-  right: 25px;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-#close-form:before,
-#close-form:after {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: 10px;
-  width: 5px;
-  height: 28px;
-  background-color: rgba(0, 0, 0, 0.06);
-  border-radius: 10px;
-}
-
-#close-form:before {
-  transform: rotateZ(-45deg);
-}
-
-#close-form:after {
-  transform: rotateZ(45deg);
-}
-
-#form-body {
-  position: absolute;
-  top: 50%;
-  right: 25px;
-  left: 25px;
-  width: 230px;
-  margin: -156px auto 0 auto;
-}
-
-#welcome-lines {
+.left h1{
   text-align: center;
-  line-height: 1;
+  /*padding-left:120px;*/
+  padding-top:100px;
+  margin-bottom: 0;
 }
-
-#w-line-1 {
-  color: #7f7f7f;
-  font-size: 40px;
+.left p{
+  margin-top:0;
+  text-align:center;
+  color:#333;
 }
-
-#w-line-2 {
-  color: #9c9c9c;
-  font-size: 28px;
-  margin-top: 17px;
+.left form{
+  text-align: center;
 }
-
-#input-area {
-  margin-top: 40px;
+.left form input{
+  text-align:center;
+  width:70%;
+  height:35px;
+  margin-bottom:10px;
+  border:none;
+  border:1px solid #F8F8F8;
+  background-color:#F8F8F8;
+  border-radius:25px;
 }
-
-.f-inp {
-  padding: 11px 25px;
-  border: 1px solid #e3e3e3;
-  line-height: 1;
-  border-radius: 20px;
+.left form input:focus{
+  outline:none;
 }
-
-.f-inp:first-child {
-  margin-bottom: 15px;
+::-webkit-input-placeholder{
+  color:grey;
+  letter-spacing: 1px;
 }
-
-.f-inp input {
-  width: 100%;
-  font-size: 13.4px;
-  padding: 0;
-  margin: 0;
-  border: 0;
+.left form input[type="submit"]{
+  background-color:#d65050;
+  color:#fff;
+  font-weight: bold;
 }
-
-.f-inp input::placeholder {
-  color: #b9b9b9;
-}
-
-#submit-button-cvr {
-  margin-top: 20px;
-}
-
-#submit-button {
-  display: block;
-  width: 100%;
+.left form input[type="submit"]:hover{
+  background-color: #000000;
   color: #fff;
-  font-size: 14px;
-  margin: 0;
-  padding: 14px 13px 12px 13px;
-  border: 0;
-  background-color: #f5506e;
-  border-radius: 25px;
-  line-height: 1;
-  cursor: pointer;
 }
-
-#forgot-pass {
-  text-align: center;
-  margin-top: 10px;
+.left p.forgot{
+  color:#fff;
+  font-size:12px;
+  padding-top:40px;
 }
-
-#forgot-pass a {
-  color: #868686;
-  font-size: 12px;
-  text-decoration: none;
+.left p.or{
+  color:grey;
+  font-size:15px;
+  border:1px solid #f8f8f8;
+  width:40px;
+  font-weight:200;
+  height:30px;
+  padding-top:10px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 42%;
+  left: 94%;
+  z-index:10;
+  /*text-align:center;*/
+}
+/*.left .form{
+  border:1px solid;
+}*/
+.main .right{
+  /*height:100%;*/
+  width:50%;
+  float:left;
+  height:100%;
+  margin-left:-5px;
+  padding-right:5px;
+  background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
+  background-color:#000000;
+  background-size: cover;
+  text-align:center;
+  border-radius: 5px;
+  color: #fff;
+}
+.right h1{
+  padding-top:100px;
+  margin-bottom:10px;
+}
+.right{
+  color:#fff;
+}
+.right p{
+  margin:0;
+}
+.right .social{
+  margin-top:40px;
+  width:100%;
+}
+.social button{
+  border:none;
+  padding:15px;
+  width:50px;
+  font-size:18px;
+  background-color:#fff;
+  margin-left:10px;
+  margin-right:10px;
+  border-radius:50%;
+}
+.social .twitter{
+  color:#55ACEE;
+}
+.social .facebook{
+  color:#012677;
+}
+.social .google{
+  color:#D50F25;
+}
+.social p{
+  font-size:12px;
+}
+.social p.dont{
+  padding-top:165px;
+  font-size:13px;
 }
 
 /*snack bar css*/
@@ -169,34 +173,61 @@ form,
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-#img-box {
-  position: absolute;
-  top: 50%;
-  left: 281px;
-  width: 394px;
-  height: 460px;
-  margin-top: -230.5px;
-  padding-right: 16px;
-  background-color: #fff;
-  border-radius: 0 20px 20px 0;
-  overflow: hidden;
+/*==================== MEDIA QUERIES SECTION =====================*/
+
+@media (max-width: 600px){
+  .main{
+    width:80%;
+    margin:7% auto;
+  }
+  .main div{
+    display: inline-block;
+    border:none;
+  }
+  .left p.or{
+    color:grey;
+    font-size:15px;
+    border:1px solid #f8f8f8;
+    width:40px;
+    font-weight:200;
+    height:30px;
+    padding-top:10px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 97%;
+    left: 42%;
+    z-index:10;
+    /*text-align:center;*/
+  }
+
+  .main .left{
+    margin-left: 32px;
+    width: 85%;
+    /* float:left; */
+    /*border-right:1px solid #fff;*/
+    height:100%;
+    /*padding:15px 0 0 0;*/
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 5px;
+    position: relative;
+    color: white;
+  }
+
+  .main .right{
+    /*height:100%;*/
+    width: 85%;
+    height:100%;
+    margin-top:-5px;
+    margin-left: 32px;
+    margin-bottom: 10px;
+    padding-right:5px;
+    background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
+    background-color:#000000;
+    background-size: cover;
+    text-align:center;
+    border-radius: 5px;
+    color: #fff;
+  }
 }
 
-#img-box img {
-  display: block;
-  height:80vh;
-  background-image: url("bookshop.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-}
-
-@media (max-width: 600px) {
-  #cover form {
-    margin-left: 50px;
-  }
-  #img-box {
-    display: none;
-  }
-}

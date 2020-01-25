@@ -2,7 +2,7 @@ import json
 
 from utils.dummy import new_accountant_account, wrong_accountant_account_keys, wrong_accountant_account_firstname,\
     wrong_accountant_account_lastname,\
-    wrong_accountant_account_email,\
+    wrong_accountant_account_email, invalid_accountant_password,\
     wrong_accountant_account_password, username_accountant_exists,\
     email_accountant_exists, wrong_accountant_login_keys, wrong_accountant_password_login, wrong_accountant_email_login, invalid_accountant_email_password
 from .base_test import BaseTest
@@ -175,6 +175,15 @@ class TestAccountantAccount(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid Email or Password')
         assert response.status_code == 401
+
+    def test_invalid_login_password(self):
+        """Test the vote json keys."""
+
+        response = self.client.post(
+            '/api/v1/auth/accountant/login', data=json.dumps(invalid_accountant_password), content_type='application/json',
+            headers=self.get_bursar_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Invalid Email or Password')
 
     def test_unexisting_Url(self):
         """Test when unexisting url is provided."""

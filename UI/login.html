@@ -30,35 +30,29 @@
       <i class="fa fa-bars"></i>
     </a>
   </div>
-  <div id="cover">
-    <div id="form-ui">
-        <form id="postLogin">
-            <div id="close-form"></div>
-            <div id="form-body">
-                <div id="welcome-lines">
-                    <div id="w-line-1">Hi,Student</div>
-                    <div id="w-line-2">Welcome Back</div>
-                </div>
-                <div id="input-area">
-                    <div class="f-inp">
-                        <input id="email" type="text" placeholder="Email Address">
-                    </div>
-                    <div class="f-inp">
-                        <input id="password" type="password" placeholder="Password">
-                    </div>
-                </div>
-                <div id="snackbar">Just a moment...</div>
-                <div id="submit-button-cvr">
-                    <button type="submit" id="submit-button">LOGIN</button>
-                </div>
-                <div id="forgot-pass">
-                    <a href="password_reset.html">Forgot password?</a>
-                </div>
-                <div id="snackbar">Just a moment...</div>
-            </div>
+  <div class="main">
+    <div class="left">
+        <h1>Login</h1>
+        <p><i>To your Account</i></p>
+        <p class="or"><i>or</i></p>
+        <form id="staffLogin">
+            <input id="email" type="text" placeholder="Email">
+            <input id="password" type="password" placeholder="Password">
+            <input type="submit" value="LOG IN" onclick="callToast()"><br>
+            <div id="snackbar">Just a moment...</div>
         </form>
-        <div id="img-box">
-            <img src="bookshop.jpg" alt="UI Image">
+        <p class="forgot">forgot password? <a href="password_reset.html"> Reset</a></p>
+    </div>
+    <div class="right">
+        <h1>Social Media</h1>
+        <p><i>with one of your social</i></p>
+        <p><i>profiles</i></p>
+        <div class="social">
+            <button class="twitter"><i class="fa fa-twitter"></i></button>
+            <button class="facebook"><i class="fa fa-facebook"></i></button>
+            <button class="google"><i class="fa fa-google-plus"></i></button>
+            <!-- <p class="dont"><i>Don't have an account?</i></p>
+            <p><u><a href="register.html">Register</a></u></p> -->
         </div>
     </div>
 </div>

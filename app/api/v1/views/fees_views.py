@@ -67,3 +67,35 @@ def get_fee(admission_no):
         "status": "404",
         "message": "Fees Not Found"
     }), 404)
+
+
+@fees_v1.route('/fees/<int:fee_id>', methods=['PUT'])
+@jwt_required
+@accountant_required
+def put(fee_id):
+    """Edit fees."""
+
+    details = request.get_json()
+    admission_no = details['admission_no']
+    transaction_type = details['transaction_type']
+    transaction_no = details['transaction_no']
+    description = details['description']
+    amount = details['amount']
+
+    fee = FeesModels().edit_fees(admission_no,
+                            transaction_type,
+                            transaction_no,
+                            description,
+                            amount,
+                            fee_id)
+    fee = json.loads(fee)
+    if fee:
+        return make_response(jsonify({
+            "status": "200",
+            "message": "fees updated successfully",
+            "new_party": fee
+        }), 200)
+    return make_response(jsonify({
+        "status": "404",
+        "message": "fees not found"
+    }), 404)

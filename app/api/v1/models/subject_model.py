@@ -41,7 +41,7 @@ class SubjectsModel(Database):
         self.curr.execute(
             ''' INSERT INTO subjects(admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business)\
             VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')\
-             RETURNING admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business''' \
+            RETURNING admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business''' \
                 .format(self.admission_no, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics, self.history, self.geography, self.cre, self.agriculture,
                         self.business))
         subjects = self.curr.fetchone()
@@ -60,6 +60,18 @@ class SubjectsModel(Database):
     def get_admission_no(self, admission_no):
         """Get an exam with specific admission no."""
         self.curr.execute(""" SELECT * FROM subjects WHERE admission_no=%s""", (admission_no,))
+        subject = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(subject, default=str)
+
+    def edit_subjects(self, subject_id, admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business):
+        """Edit subjects."""
+
+        self.curr.execute("""UPDATE subjects\
+			SET admission_no='{}', maths='{}', english='{}', kiswahili='{}', chemistry='{}', biology='{}', physics='{}', history='{}', geography='{}', cre='{}', agriculture='{}', business='{}'\
+			WHERE subject_id={} RETURNING admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business"""
+            .format(subject_id, admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business))
         subject = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

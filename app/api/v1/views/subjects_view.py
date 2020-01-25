@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
 from app.api.v1.models.subject_model import SubjectsModel
+from app.api.v1.models.users_model import UsersModel
 
 subjects_v1 = Blueprint('subjects_v1', __name__)
 
@@ -26,24 +27,29 @@ def register_subjects():
     cre = details['cre']
     agriculture = details['agriculture']
     business = details['business']
-
-    res = SubjectsModel(admission_no,
-                        maths,
-                        english,
-                        kiswahili,
-                        chemistry,
-                        biology,
-                        physics,
-                        history,
-                        geography,
-                        cre,
-                        agriculture,
-                        business).save()
+    user = json.loads(UsersModel().get_admission_no(admission_no))
+    if user:
+        res = SubjectsModel(admission_no,
+                            maths,
+                            english,
+                            kiswahili,
+                            chemistry,
+                            biology,
+                            physics,
+                            history,
+                            geography,
+                            cre,
+                            agriculture,
+                            business).save()
+        return make_response(jsonify({
+            "status": "201",
+            "message": "Subjects registered successfully!",
+            "subjects": res
+        }), 201)
     return make_response(jsonify({
-        "status": "201",
-        "message": "Subjects registered successfully!",
-        "subjects": res
-    }), 201)
+        "status": "404",
+        "message": "Student with that Admission Number does not exitst."
+    }), 404)
 
 @subjects_v1.route('/subjects', methods=['GET'])
 @jwt_required
@@ -70,4 +76,48 @@ def get_subject(admission_no):
     return make_response(jsonify({
         "status": "404",
         "message": "Subject Not Found"
+    }), 404)
+
+@subjects_v1.route('/subjects/<int:subject_id>', methods=['PUT'])
+@jwt_required
+def put(subject_id):
+    """Edit subjects."""
+
+    details = request.get_json()
+    admission_no = details['admission_no']
+    maths = details['maths']
+    english = details['english']
+    kiswahili = details['kiswahili']
+    chemistry = details['chemistry']
+    biology = details['biology']
+    physics = details['physics']
+    history = details['history']
+    geography = details['geography']
+    cre = details['cre']
+    agriculture = details['agriculture']
+    business = details['business']
+
+    subjects = SubjectsModel().edit_subjects(admission_no,
+                                maths,
+                                english,
+                                kiswahili,
+                                chemistry,
+                                biology,
+                                physics,
+                                history,
+                                geography,
+                                cre,
+                                agriculture,
+                                business,
+                                subject_id)
+    subjects = json.loads(subjects)
+    if subjects:
+        return make_response(jsonify({
+            "status": "200",
+            "message": "subjects updated successfully",
+            "new_party": subjects
+        }), 200)
+    return make_response(jsonify({
+        "status": "404",
+        "message": "subjects not found"
     }), 404)

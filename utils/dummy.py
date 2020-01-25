@@ -343,6 +343,11 @@ invalid_email_password = {
     "password": "Peter20930988!"
 }
 
+invalid_staff_login_password = {
+    "email": "petergitundu94@gmail.com",
+    "password": "Peter209309"
+}
+
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Accountant Information @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 accountant_account = {
@@ -442,6 +447,11 @@ invalid_accountant_email_password = {
     "password": "Peter20930988!"
 }
 
+invalid_accountant_password = {
+    "email": "petergitundu94@gmail.com",
+    "password": "Peter209309"
+}
+
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Exams Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -469,6 +479,24 @@ edit_exams = {
 "form": "4",
 "type": "main",
 "maths": 87,
+"english": 87,
+"kiswahili": 90,
+"chemistry": 78,
+"biology": 86,
+"physics": 76,
+"history": 89,
+"geography": 81,
+"cre": 94,
+"agriculture": 85,
+"business": 88
+}
+
+edit_exams_keys = {
+"admission_no": "NJCF4001",
+"term": "1st",
+"form": "4",
+"type": "main",
+"mat": 87,
 "english": 87,
 "kiswahili": 90,
 "chemistry": 78,
@@ -625,9 +653,32 @@ new_subject = {
 "business": "R"
 }
 
+edit_subjects = {
+"admission_no": "NJCF4001",
+"maths": "R",
+"english": "R",
+"kiswahili": "R",
+"chemistry": "R",
+"biology": "NR",
+"physics": "R",
+"history": "R",
+"geography": "R",
+"cre": "NR",
+"agriculture": "NR",
+"business": "R"
+}
+
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Books Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_book = {
+"admission_no": "NJCF4001",
+"book_no": "KISF1001/19",
+"author": "Ken Walibora",
+"title": "Damu Nyeusi",
+"subject": "kiswahili"
+}
+
+edit_books = {
 "admission_no": "NJCF4001",
 "book_no": "KISF1001/19",
 "author": "Ken Walibora",
@@ -648,6 +699,14 @@ add_student_info = {
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_fees = {
+"admission_no": "NJCF4001",
+"transaction_type": "ADP",
+"transaction_no": "176276",
+"description": "HELB",
+"amount": 25640
+}
+
+edit_fees = {
 "admission_no": "NJCF4001",
 "transaction_type": "ADP",
 "transaction_no": "176276",

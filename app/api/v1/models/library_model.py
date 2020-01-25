@@ -51,3 +51,15 @@ class LibraryModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(book, default=str)
+
+    def edit_books(self, book_id, admission_no, book_no, author, title, subject):
+        """Edit books."""
+
+        self.curr.execute("""UPDATE library\
+			SET admission_no='{}', book_no='{}', author='{}', title='{}', subject='{}'\
+			WHERE book_id={} RETURNING admission_no, book_no, author, title, subject"""
+            .format(book_id, admission_no, book_no, author, title, subject))
+        book = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(book, default=str)

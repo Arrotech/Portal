@@ -1,16 +1,15 @@
 body{
-  /*background:-webkit-linear-gradient(#82B4D5,#fff);*/
+  background:-webkit-linear-gradient(#000000,#fff);
   font-family:'Trebuchet MS';
   /*color:#fff;*/
   height:100vh;
-  background-image: url('bookshop2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: 50% 50%;
 }
 .main-content{
-  height:400px;
+  height:500px;
   width:400px;
   /*border:1px solid #fff;*/
   margin:1% auto;

@@ -39,10 +39,9 @@ document.getElementById('updateExams').addEventListener('submit', updateExams);
             let cre = document.getElementById('cre').value;
             let agriculture = document.getElementById('agriculture').value;
             let business = document.getElementById('business').value;
-            https://arrotech.githuhttps://arrotech.github.io/Portal/b.io/Portal/
 
 
-            fetch('https://arrotech-school-portal.herokuapp.com/api/v1/exams/' + admission_no, {
+            fetch('http://localhost:5000/api/v1/exams/' + admission_no, {
                 method: 'PUT',
                 path: admission_no,
                 headers : {

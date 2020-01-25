@@ -39,7 +39,7 @@ document.getElementById('updateSubjects').addEventListener('submit', updateSubje
             let business = document.getElementById('business').value;
 
 
-            fetch('https://arrotech-school-portal.herokuapp.com/api/v1/subjects/' + admission_no, {
+            fetch('http://localhost:5000/api/v1/subjects/' + admission_no, {
                 method: 'PUT',
                 path: admission_no,
                 headers : {
