@@ -42,7 +42,7 @@ class TestFees(BaseTest):
         assert response2.status_code == 200
 
     def test_get_fees_by_admission(self):
-        """Test fetching all fees that have been created."""
+        """Test fetching all fees by admission no."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -59,7 +59,7 @@ class TestFees(BaseTest):
         """Test getting unexisting specific fee by admission_no."""
 
         response1 = self.client.get(
-            '/api/v1/fees/NJCF4057', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/fees/NJCF4057', content_type='application/json', headers=self.get_bursar_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Fees Not Found')
         assert response1.status_code == 404

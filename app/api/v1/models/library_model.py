@@ -14,22 +14,24 @@ class LibraryModel(Database):
             book_no=None,
             author=None,
             title=None,
-            subject=None):
+            subject=None,
+            form=None):
         super().__init__()
         self.admission_no = admission_no
         self.book_no = book_no
         self.author = author
         self.title = title
         self.subject = subject
+        self.form = form
 
     def save(self):
         """Add a new book."""
 
         self.curr.execute(
-            ''' INSERT INTO library(admission_no, book_no, author, title, subject)\
-            VALUES('{}','{}','{}','{}','{}')\
-             RETURNING admission_no, book_no, author, title, subject''' \
-                .format(self.admission_no, self.book_no, self.author, self.title, self.subject))
+            ''' INSERT INTO library(admission_no, book_no, author, title, subject, form)\
+            VALUES('{}','{}','{}','{}','{}','{}')\
+             RETURNING admission_no, book_no, author, title, subject, form''' \
+                .format(self.admission_no, self.book_no, self.author, self.title, self.subject, self.form))
         book = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -52,13 +54,13 @@ class LibraryModel(Database):
         self.curr.close()
         return json.dumps(book, default=str)
 
-    def edit_books(self, book_id, admission_no, book_no, author, title, subject):
+    def edit_books(self, book_id, admission_no, book_no, author, title, subject, form):
         """Edit books."""
 
         self.curr.execute("""UPDATE library\
-			SET admission_no='{}', book_no='{}', author='{}', title='{}', subject='{}'\
-			WHERE book_id={} RETURNING admission_no, book_no, author, title, subject"""
-            .format(book_id, admission_no, book_no, author, title, subject))
+			SET admission_no='{}', book_no='{}', author='{}', title='{}', subject='{}', form='{}'\
+			WHERE book_id={} RETURNING admission_no, book_no, author, title, subject, form"""
+            .format(book_id, admission_no, book_no, author, title, subject, form))
         book = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

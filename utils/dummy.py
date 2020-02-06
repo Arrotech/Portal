@@ -675,7 +675,8 @@ add_book = {
 "book_no": "KISF1001/19",
 "author": "Ken Walibora",
 "title": "Damu Nyeusi",
-"subject": "kiswahili"
+"subject": "kiswahili",
+"form": "1"
 }
 
 edit_books = {
@@ -683,7 +684,8 @@ edit_books = {
 "book_no": "KISF1001/19",
 "author": "Ken Walibora",
 "title": "Damu Nyeusi",
-"subject": "kiswahili"
+"subject": "kiswahili",
+"form": "1"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Id Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -703,6 +705,7 @@ add_fees = {
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
+"form": "4",
 "amount": 25640
 }
 
@@ -711,5 +714,6 @@ edit_fees = {
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
+"form": "4",
 "amount": 25640
 }
