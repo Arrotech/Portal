@@ -52,14 +52,6 @@ class FeesModels(Database):
         self.curr.close()
         return json.dumps(fees, default=str)
 
-    def get_form(self, form):
-        """Get an exam with specific class/form."""
-        self.curr.execute(""" SELECT * FROM fees WHERE form=%s""", (form,))
-        fees = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(fees, default=str)
-
     def edit_fees(self, fee_id, admission_no, transaction_type, transaction_no, description, form, amount):
         """Edit fees."""
 
