@@ -24,16 +24,16 @@ document.getElementById('updateBooks').addEventListener('submit', updateBooks);
 
             token = window.localStorage.getItem('token');
 
-
+            let book_id = document.getElementById('book_id').value;
             let admission_no = document.getElementById('admission_no').value;
             let author = document.getElementById('author').value;
             let title = document.getElementById('title').value;
             let subject = document.getElementById('subject').value;
 
 
-            fetch('http://localhost:5000/api/v1/books/' + admission_no, {
+            fetch('http://localhost:5000/api/v1/books/' + book_id, {
                 method: 'PUT',
-                path: admission_no,
+                path: book_id,
                 headers : {
                 Accept: 'application/json',
                     'Content-Type': 'application/json',

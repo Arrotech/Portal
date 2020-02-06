@@ -90,6 +90,7 @@ class Database:
                 transaction_type varchar NOT NULL,
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
+                form varchar NOT NULL,
                 amount numeric NOT NULL
             )
             """,
@@ -100,7 +101,8 @@ class Database:
                 book_no varchar NOT NULL,
                 author varchar NOT NULL,
                 title varchar NOT NULL,
-                subject varchar NOT NULL
+                subject varchar NOT NULL,
+                form varchar NOT NULL
             )""",
             """
             CREATE TABLE IF NOT EXISTS studentId(
