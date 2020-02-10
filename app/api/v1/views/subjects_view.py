@@ -6,6 +6,7 @@ from flask_restful import Resource
 
 from app.api.v1.models.subject_model import SubjectsModel
 from app.api.v1.models.users_model import UsersModel
+from utils.utils import check_subjects_keys, raise_error
 
 subjects_v1 = Blueprint('subjects_v1', __name__)
 
@@ -14,6 +15,9 @@ subjects_v1 = Blueprint('subjects_v1', __name__)
 @jwt_required
 def register_subjects():
     """Create a new exam entry."""
+    errors = check_subjects_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
     maths = details['maths']
@@ -82,7 +86,9 @@ def get_subject(admission_no):
 @jwt_required
 def put(subject_id):
     """Edit subjects."""
-
+    errors = check_subjects_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
     maths = details['maths']
