@@ -74,16 +74,6 @@ class Database:
                 date TIMESTAMP
             )""",
             """
-            CREATE TABLE IF NOT EXISTS evaluation(
-                comment_id serial PRIMARY KEY,
-                name varchar NOT NULL,
-                subject varchar NOT NULL,
-                attendance varchar NOT NULL,
-                homework varchar NOT NULL,
-                rate varchar NOT NULL,
-                comment varchar NOT NULL
-            )""",
-            """
             CREATE TABLE IF NOT EXISTS fees(
                 fee_id serial PRIMARY KEY,
                 admission_no varchar NOT NULL,
@@ -104,15 +94,6 @@ class Database:
                 subject varchar NOT NULL,
                 form varchar NOT NULL
             )""",
-            """
-            CREATE TABLE IF NOT EXISTS studentId(
-                student_id serial PRIMARY KEY,
-                surname varchar NOT NULL,
-                first_name varchar NOT NULL,
-                last_name varchar NOT NULL,
-                admission_no varchar NOT NULL
-            )
-            """,
             """
             CREATE TABLE IF NOT EXISTS subjects(
                 subject_id serial PRIMARY KEY,
@@ -145,12 +126,10 @@ class Database:
         users = "DROP TABLE IF EXISTS  users CASCADE"
         staff = "DROP TABLE IF EXISTS  staff CASCADE"
         accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
-        evaluation = "DROP TABLE IF EXISTS evaluation CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
         library = "DROP TABLE IF EXISTS library CASCADE"
-        studentId = "DROP TABLE IF EXISTS studentId CASCADE"
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
-        queries = [exams, users, staff, accountants, evaluation, fees, library, studentId, subjects]
+        queries = [exams, users, staff, accountants, fees, library, subjects]
         try:
             for query in queries:
                 self.curr.execute(query)

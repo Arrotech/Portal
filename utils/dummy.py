@@ -653,6 +653,20 @@ new_subject = {
 "business": "R"
 }
 
+new_subject_keys = {
+"admission_no": "NJCF4001",
+"maths": "R",
+"english": "R",
+"kiswahili": "R",
+"chemistry": "R",
+"biology": "NR",
+"physics": "R",
+"history": "R",
+"geography": "R",
+"cre": "NR",
+"agriculture": "NR"
+}
+
 edit_subjects = {
 "admission_no": "NJCF4001",
 "maths": "R",
@@ -668,6 +682,20 @@ edit_subjects = {
 "business": "R"
 }
 
+edit_subjects_keys = {
+"admission_no": "NJCF4001",
+"maths": "R",
+"english": "R",
+"kiswahili": "R",
+"chemistry": "R",
+"biology": "NR",
+"physics": "R",
+"history": "R",
+"geography": "R",
+"cre": "NR",
+"agriculture": "NR"
+}
+
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Books Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_book = {
@@ -679,6 +707,14 @@ add_book = {
 "form": "1"
 }
 
+add_book_keys = {
+"admission_no": "NJCF4001",
+"book_no": "KISF1001/19",
+"author": "Ken Walibora",
+"title": "Damu Nyeusi",
+"subject": "kiswahili"
+}
+
 edit_books = {
 "admission_no": "NJCF4001",
 "book_no": "KISF1001/19",
@@ -688,14 +724,12 @@ edit_books = {
 "form": "1"
 }
 
-# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Id Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
-add_student_info = {
-"surname": "Gitundu",
-"first_name": "Harun",
-"last_name": "Gachanja",
-"admission_no": "NJCF4001"
+edit_books_keys = {
+"admission_no": "NJCF4001",
+"book_no": "KISF1001/19",
+"author": "Ken Walibora",
+"title": "Damu Nyeusi",
+"subject": "kiswahili"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -709,11 +743,27 @@ add_fees = {
 "amount": 25640
 }
 
+add_fees_keys = {
+"admission_no": "NJCF4001",
+"transaction_type": "ADP",
+"transaction_no": "176276",
+"description": "HELB",
+"amount": 25640
+}
+
 edit_fees = {
 "admission_no": "NJCF4001",
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
 "form": "4",
+"amount": 25640
+}
+
+edit_fees_keys = {
+"admission_no": "NJCF4001",
+"transaction_type": "ADP",
+"transaction_no": "176276",
+"description": "HELB",
 "amount": 25640
 }

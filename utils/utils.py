@@ -56,6 +56,30 @@ def check_exams_keys(request):
             errors.append(key)
     return errors
 
+def check_fees_keys(request):
+    res_keys = ['admission_no', 'transaction_type', 'transaction_no', 'description', 'form', 'amount']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+def check_library_keys(request):
+    res_keys = ['admission_no', 'book_no', 'author', 'title', 'subject', 'form']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+def check_subjects_keys(request):
+    res_keys = ['admission_no', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 def raise_error(status, msg):
     return make_response(jsonify({
         "status": "400",

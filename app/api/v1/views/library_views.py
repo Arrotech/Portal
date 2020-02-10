@@ -7,6 +7,7 @@ from flask_restful import Resource
 from app.api.v1.models.library_model import LibraryModel
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
+from utils.utils import check_library_keys, raise_error
 
 books_v1 = Blueprint('books_v1', __name__)
 
@@ -16,6 +17,9 @@ books_v1 = Blueprint('books_v1', __name__)
 @admin_required
 def add_book():
     """Add a new book."""
+    errors = check_library_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
     book_no = details['book_no']
@@ -74,7 +78,9 @@ def get_book(admission_no):
 @admin_required
 def put(book_id):
     """Edit books."""
-
+    errors = check_library_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
     book_no = details['book_no']

@@ -1,6 +1,6 @@
 import json
 
-from utils.dummy import new_subject, new_account, edit_subjects
+from utils.dummy import new_subject, new_account, edit_subjects, edit_subjects_keys, new_subject_keys
 from .base_test import BaseTest
 
 
@@ -17,6 +17,18 @@ class TestSubjects(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Subjects registered successfully!')
         assert response.status_code == 201
+
+    def test_add_subjects_keys(self):
+        """Test that the add subjects endpoint works."""
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/subjects', data=json.dumps(new_subject_keys), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Invalid business key')
+        assert response.status_code == 400
 
     def test_add_subjects_for_unexisting_user(self):
         """Test that the add subjects for unexisting user endpoint works."""
@@ -83,6 +95,21 @@ class TestSubjects(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'subjects updated successfully')
         assert response2.status_code == 200
+
+    def test_edit_subjects_keys(self):
+        """Test edit subjects."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.put(
+            '/api/v1/subjects/1', data=json.dumps(edit_subjects_keys), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Invalid business key')
+        assert response2.status_code == 400
 
     def test_edit_unexisting_subjects(self):
         """Test edit unexisting subjects."""

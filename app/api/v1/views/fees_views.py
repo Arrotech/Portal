@@ -6,6 +6,7 @@ from flask_restful import Resource
 from app.api.v1.models.fees_models import FeesModels
 from app.api.v1.models.users_model import UsersModel
 from utils.bursar import accountant_required
+from utils.utils import check_fees_keys, raise_error
 from flask_jwt_extended import jwt_required
 
 fees_v1 = Blueprint('fees_v1', __name__)
@@ -16,6 +17,9 @@ fees_v1 = Blueprint('fees_v1', __name__)
 @accountant_required
 def add_fees():
     """Accountant can add a new fee entry."""
+    errors = check_fees_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
     transaction_type = details['transaction_type']
@@ -24,6 +28,8 @@ def add_fees():
     form = details['form']
     amount = details['amount']
     user = json.loads(UsersModel().get_admission_no(admission_no))
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(user)
     if user:
         deposit = FeesModels(admission_no,
                                 transaction_type,
@@ -76,7 +82,9 @@ def get_fee(admission_no):
 @accountant_required
 def put(fee_id):
     """Edit fees."""
-
+    errors = check_fees_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
     transaction_type = details['transaction_type']
