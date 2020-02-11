@@ -16,7 +16,7 @@ document.getElementById('staffLogin').addEventListener('submit', staffLogin);
             event.preventDefault();
             let email = document.getElementById('email').value;
             let password = document.getElementById('password').value;
-            fetch('http://localhost:5000/api/v1/auth/staff/login', {
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/staff/login', {
                 method: 'POST',
                 headers : {
                 Accept: 'application/json',

@@ -31,7 +31,7 @@ function postSignup(event){
             let password = document.getElementById('password').value;
             let form = document.getElementById('form').value;
 
-            fetch('http://localhost:5000/api/v1/auth/register', {
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/register', {
                 method: 'POST',
                 headers : {
                     Accept: 'application/json',
