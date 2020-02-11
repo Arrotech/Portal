@@ -23,7 +23,7 @@
             token = window.localStorage.getItem('token');
             admission = window.localStorage.getItem('admission_no');
 
-            fetch('http://localhost:5000/api/v1/subjects/' + admission ,{
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/subjects/' + admission ,{
                 method: 'GET',
                 path: admission,
                 headers : {

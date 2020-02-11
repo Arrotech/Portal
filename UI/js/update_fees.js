@@ -31,7 +31,7 @@ document.getElementById('updateFees').addEventListener('submit', updateFees);
             let description = document.getElementById('description').value;
             let amount = document.getElementById('amount').value;
 
-            fetch('http://localhost:5000/api/v1/fees/' + fee_id, {
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/fees/' + fee_id, {
                 method: 'PUT',
                 path: fee_id,
                 headers : {

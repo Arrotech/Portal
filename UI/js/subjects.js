@@ -38,7 +38,7 @@ document.getElementById('postSubjects').addEventListener('submit', postSubjects)
             let business = document.getElementById('business').value;
 
 
-            fetch('http://localhost:5000/api/v1/exams', {
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/exams', {
                 method: 'POST',
                 headers : {
                 Accept: 'application/json',

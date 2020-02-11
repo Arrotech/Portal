@@ -30,7 +30,7 @@ function staffSignup(event){
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
 
-        fetch('http://localhost:5000/api/v1/auth/staff/register', {
+        fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/staff/register', {
             method: 'POST',
             headers : {
                 Accept: 'application/json',

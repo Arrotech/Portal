@@ -30,7 +30,7 @@ document.getElementById('postBooks').addEventListener('submit', postBooks);
             let title = document.getElementById('title').value;
             let subject = document.getElementById('subject').value;
 
-            fetch('http://localhost:5000/api/v1/books', {
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/books', {
                 method: 'POST',
                 headers : {
                 Accept: 'application/json',
