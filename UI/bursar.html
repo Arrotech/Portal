@@ -7,7 +7,7 @@
 <title>Add-Fees</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" media="screen" href="css/main.css"/>
-<link rel="stylesheet" type="text/css" media="screen" href="css/add_books.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="css/add_fees.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
@@ -50,18 +50,33 @@
                             <label><b>Registration Number:</b></label><br>
                             <input id="admission_no" type="text" placeholder="i.e NJCF4001" name="" required><br>
                         </div>
-                        <div>
-                            <label><b>Transaction type:</b></label><br>
-                            <input id="transaction_type" type="text" placeholder="i.e MOCK" name="" required><br>
-                        </div>
+                        <label><b>Transaction Type:</b></label><br>
+                        <select id="transaction_type" onchange="change(value)">
+                          <option value="" selected disabled hidden>Select...</option>
+                          <option value="RECEIPT">RECEIPT</option>
+                          <option value="ADJUSTMENT">ADJUSTMENT</option>
+                          <option value="INVOICE">INVOICE</option>
+                          <option value="DEBIT NOTE">DEBIT NOTE</option>
+                          <option value="CREDIT NOTE">CREDIT NOTE</option>
+                        </select>
+                        <br>
                         <div>
                             <label><b>Transaction Number:</b></label><br>
                             <input id="transaction_no" type="text" placeholder="i.e ADP678165" name="" required><br>
                         </div>
-                        <div>
-                            <label><b>Description:</b></label><br>
-                            <input id="description" type="text" placeholder="i.e Term 1" name="" required><br>
-                        </div>
+                        <label><b>Description:</b></label><br>
+                        <select id="description" onchange="change(value)">
+                          <option value="" selected disabled hidden>Select...</option>
+                          <option value="1st Term">1st Term</option>
+                          <option value="2nd Term">2nd Term</option>
+                          <option value="3rd Term">3rd Term</option>
+                        </select>
+                        <br>
+                        <label><b>Form:</b></label><br>
+                        <select id="form">
+                          <option value="" selected disabled hidden>Select...</option>
+                        </select>
+                        <br>
                         <div>
                             <label><b>Amount:</b></label><br>
                             <input id="amount" type="text" placeholder="i.e 25000" name="" required><br>
@@ -80,6 +95,9 @@
             </div>
             </div>
         <script type="text/javascript" src="js/add_fees.js"></script>
+        <script type="text/javascript" src="js/select_books.js"></script>
+        <script type="text/javascript" src="js/select_term.js"></script>
+        <script type="text/javascript" src="js/transaction_type.js"></script>
         <footer>
             <!-- <div class="footer-divide"> -->
               <div class="divide">

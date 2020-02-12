@@ -1,4 +1,3 @@
-
 document.getElementById('postExams').addEventListener('submit', postExams);
 
     function callToast() {
@@ -41,6 +40,7 @@ document.getElementById('postExams').addEventListener('submit', postExams);
             let agriculture = document.getElementById('agriculture').value;
             let business = document.getElementById('business').value;
 
+
             fetch('https://njc-school-portal.herokuapp.com/api/v1/exams', {
                 method: 'POST',
                 headers : {
@@ -51,12 +51,12 @@ document.getElementById('postExams').addEventListener('submit', postExams);
                 body:JSON.stringify({admission_no:admission_no, term:term, form:form, type:type, maths:maths, english:english, kiswahili:kiswahili, chemistry:chemistry, biology:biology, physics:physics, history:history, geography:geography, cre:cre, agriculture:agriculture, business:business})
             }).then((res) => res.json())
             .then((data) =>  {
-
+                console.log(admission_no);
                 console.log(data);
                 let status = data['status'];
                 let message = data['message'];
-                if (status === '201'){
-                    onSuccess('Exam entry successful');
+                if (status === '200'){
+                    onSuccess('Exam added successfully!');
                 }else{
                     raiseError(message);
                 }

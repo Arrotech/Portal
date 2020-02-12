@@ -28,6 +28,7 @@ document.getElementById('postFees').addEventListener('submit', postFees);
             let transaction_type = document.getElementById('transaction_type').value;
             let transaction_no = document.getElementById('transaction_no').value;
             let description = document.getElementById('description').value;
+            let form = document.getElementById('form').value;
             let amount = document.getElementById('amount').value;
 
             fetch('https://njc-school-portal.herokuapp.com/api/v1/fees', {
@@ -37,7 +38,7 @@ document.getElementById('postFees').addEventListener('submit', postFees);
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token,
                 },
-                body:JSON.stringify({admission_no:admission_no, transaction_type:transaction_type, transaction_no:transaction_no, description:description, amount:amount})
+                body:JSON.stringify({admission_no:admission_no, transaction_type:transaction_type, transaction_no:transaction_no, description:description, form:form, amount:amount})
             }).then((res) => res.json())
             .then((data) =>  {
 
