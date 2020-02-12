@@ -26,9 +26,11 @@ document.getElementById('updateBooks').addEventListener('submit', updateBooks);
 
             let book_id = document.getElementById('book_id').value;
             let admission_no = document.getElementById('admission_no').value;
+            let book_no = document.getElementById('book_no').value;
             let author = document.getElementById('author').value;
             let title = document.getElementById('title').value;
             let subject = document.getElementById('subject').value;
+            let form = document.getElementById('form').value;
 
 
             fetch('https://njc-school-portal.herokuapp.com/api/v1/books/' + book_id, {
@@ -39,7 +41,7 @@ document.getElementById('updateBooks').addEventListener('submit', updateBooks);
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token,
                 },
-                body:JSON.stringify({admission_no:admission_no, author:author, title:title, subject:subject})
+                body:JSON.stringify({admission_no:admission_no, book_no:book_no, author:author, title:title, subject:subject, form:form})
             }).then((res) => res.json())
             .then((data) =>  {
 

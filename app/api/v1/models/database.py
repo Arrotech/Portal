@@ -81,7 +81,8 @@ class Database:
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
                 form varchar NOT NULL,
-                amount numeric NOT NULL
+                amount numeric NOT NULL,
+                date TIMESTAMP
             )
             """,
             """

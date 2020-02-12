@@ -1,5 +1,6 @@
 import json
 
+from datetime import datetime
 from app.api.v1.models.database import Database
 
 Database().create_table()
@@ -23,14 +24,15 @@ class FeesModels(Database):
         self.description = description
         self.form = form
         self.amount = amount
+        self.date = datetime.now()
 
     def save(self):
         """Create a new fee entry."""
         self.curr.execute(
-            ''' INSERT INTO fees(admission_no, transaction_type, transaction_no, description, form, amount)\
-            VALUES('{}','{}','{}','{}','{}',{})\
-            RETURNING admission_no, transaction_type, transaction_no, description, form, amount''' \
-                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.form, self.amount))
+            ''' INSERT INTO fees(admission_no, transaction_type, transaction_no, description, form, amount, date)\
+            VALUES('{}','{}','{}','{}','{}',{},'{}')\
+            RETURNING admission_no, transaction_type, transaction_no, description, form, amount, date''' \
+                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.form, self.amount, self.date))
         fees = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

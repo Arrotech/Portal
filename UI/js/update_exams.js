@@ -24,6 +24,7 @@ document.getElementById('updateExams').addEventListener('submit', updateExams);
 
             token = window.localStorage.getItem('token');
 
+            let exam_id = document.getElementById('exam_id').value;
             let admission_no = document.getElementById('admission_no').value;
             let term = document.getElementById('term').value;
             let form = document.getElementById('form').value;
@@ -41,9 +42,9 @@ document.getElementById('updateExams').addEventListener('submit', updateExams);
             let business = document.getElementById('business').value;
 
 
-            fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + admission_no, {
+            fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + exam_id, {
                 method: 'PUT',
-                path: admission_no,
+                path: exam_id,
                 headers : {
                 Accept: 'application/json',
                     'Content-Type': 'application/json',

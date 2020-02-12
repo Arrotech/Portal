@@ -56,6 +56,10 @@
                         <input id="admission_no" type="text" placeholder="i.e NJCF4001" name="" required><br>
                     </div>
                     <div>
+                      <label><b>Book Number:</b></label><br>
+                      <input id="book_no" type="text" placeholder="i.e KISF1001/19" name="" required><br>
+                  </div>
+                    <div>
                         <label><b>Author:</b></label><br>
                         <input id="author" type="text" placeholder="i.e Ken Walibora" name="" required><br>
                     </div>
@@ -63,11 +67,28 @@
                         <label><b>Title:</b></label><br>
                         <input id="title" type="text" placeholder="i.e Damu Nyeusi" name="" required><br>
                     </div>
-                    <div>
-                        <label><b>Subject:</b></label><br>
-                        <input id="subject" type="text" placeholder="i.e Kiswahili" name="" required><br>
-                        <br>
-                    </div>
+                    <label><b>Subject:</b></label><br>
+                    <select id="subject" onchange="change(value)">
+                      <option value="" selected disabled hidden>Select Subject...</option>
+                      <option value="Agriculture">Agriculture</option>
+                      <option value="Biology">Biology</option>
+                      <option value="Business">Business</option>
+                      <option value="Chemistry">Chemistry</option>
+                      <option value="CRE">CRE</option>
+                      <option value="English">English</option>
+                      <option value="Geography">Geography</option>
+                      <option value="History">History</option>
+                      <option value="Kiswahili">Kiswahili</option>
+                      <option value="Maths">Maths</option>
+                      <option value="Physics">Physics</option>
+                    </select>
+                    <br>
+                    <label><b>Form:</b></label><br>
+                    <select id="form">
+                      <option value="" selected disabled hidden>Select form...</option>
+                    </select>
+                    <br>
+                    <br>
                     <div>
                         <input type="submit" value="Update">
                     </div>
@@ -81,6 +102,8 @@
       </div>
     </div>
     <script type="text/javascript" src="js/update_books.js"></script>
+    <script type="text/javascript" src="js/select_books.js"></script>
+    <script type="text/javascript" src="js/select_subject.js"></script>
     <footer>
       <!-- <div class="footer-divide"> -->
         <div class="divide">

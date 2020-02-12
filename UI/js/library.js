@@ -37,7 +37,7 @@
                 data.Book.forEach(book => {
                     let status = data['status'];
                     let message = data['message'];
-                    const { admission_no, book_no, author, title, subject } = book;
+                    const { admission_no, book_no, author, title, subject, form } = book;
                     output += `
                         <div>
                             <table>
@@ -46,12 +46,14 @@
                                     <th>Author</th>
                                     <th>Title</th>
                                     <th>Subject</th>
+                                    <th>Form</th>
                                 </tr>
                                 <tr>
                                     <td>${book.book_no}</td>
                                     <td>${book.author}</td>
                                     <td>${book.title}</td>
                                     <td>${book.subject}</td>
+                                    <td>${book.form}</td>
                                 </tr>
                             </table>
                         </div>
