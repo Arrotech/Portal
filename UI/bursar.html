@@ -64,14 +64,11 @@
                             <label><b>Transaction Number:</b></label><br>
                             <input id="transaction_no" type="text" placeholder="i.e ADP678165" name="" required><br>
                         </div>
-                        <label><b>Description:</b></label><br>
-                        <select id="description" onchange="change(value)">
-                          <option value="" selected disabled hidden>Select...</option>
-                          <option value="1st Term">1st Term</option>
-                          <option value="2nd Term">2nd Term</option>
-                          <option value="3rd Term">3rd Term</option>
-                        </select>
-                        <br>
+                        <div>
+                          <label><b>Description:</b></label><br>
+                          <textarea id="description" type="text" placeholder="Enter the description..." name="" required></textarea>
+                      </div>
+                      <br>
                         <label><b>Form:</b></label><br>
                         <select id="form">
                           <option value="" selected disabled hidden>Select...</option>
@@ -96,7 +93,6 @@
             </div>
         <script type="text/javascript" src="js/add_fees.js"></script>
         <script type="text/javascript" src="js/select_books.js"></script>
-        <script type="text/javascript" src="js/select_term.js"></script>
         <script type="text/javascript" src="js/transaction_type.js"></script>
         <footer>
             <!-- <div class="footer-divide"> -->

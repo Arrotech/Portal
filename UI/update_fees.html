@@ -54,22 +54,30 @@
                             <label><b>Registration Number:</b></label><br>
                             <input id="admission_no" type="text" placeholder="i.e NJCF4001" name="" required><br>
                         </div>
-                        <div>
-                            <label><b>Transaction type:</b></label><br>
-                            <input id="transaction_type" type="text" placeholder="i.e MOCK" name="" required><br>
-                        </div>
+                        <label><b>Transaction Type:</b></label><br>
+                        <select id="transaction_type" onchange="change(value)">
+                          <option value="" selected disabled hidden>Select...</option>
+                          <option value="RECEIPT">RECEIPT</option>
+                          <option value="ADJUSTMENT">ADJUSTMENT</option>
+                          <option value="INVOICE">INVOICE</option>
+                          <option value="DEBIT NOTE">DEBIT NOTE</option>
+                          <option value="CREDIT NOTE">CREDIT NOTE</option>
+                        </select>
+                        <br>
                         <div>
                             <label><b>Transaction Number:</b></label><br>
                             <input id="transaction_no" type="text" placeholder="i.e ADP678165" name="" required><br>
                         </div>
                         <div>
                             <label><b>Description:</b></label><br>
-                            <input id="description" type="text" placeholder="i.e Term 1" name="" required><br>
+                            <textarea id="description" type="text" placeholder="Enter the description..." name="" required></textarea>
                         </div>
-                        <div>
-                          <label><b>Form:</b></label><br>
-                          <input id="form" type="text" placeholder="i.e 1" name="" required><br>
-                      </div>
+                        <br>
+                        <label><b>Form:</b></label><br>
+                        <select id="form">
+                          <option value="" selected disabled hidden>Select...</option>
+                        </select>
+                        <br>
                         <div>
                             <label><b>Amount:</b></label><br>
                             <input id="amount" type="text" placeholder="i.e 25000" name="" required><br>
@@ -88,6 +96,7 @@
             </div>
             </div>
         <script type="text/javascript" src="js/update_fees.js"></script>
+        <script type="text/javascript" src="js/select_books.js"></script>
         <footer>
             <!-- <div class="footer-divide"> -->
               <div class="divide">

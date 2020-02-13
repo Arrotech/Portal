@@ -54,17 +54,35 @@
     <script type="text/javascript" src="js/nav.js"></script>
     <br>
     <div class="main-content">
-      <div class="left">
-        <div class="fees-btn">
-            <input type="submit" id="mybtn" value="Results">
-            <div style="overflow-x:auto;">
-              <p id="rank"></p>
-            </div>
-            <br>
-            <div id="snackbar"></div>
-        </div>
-        <script type="text/javascript" src="js/rank.js"></script>
-      </div>
+        <div class="container" style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>TERM</th>
+                  <th>FORM</th>
+                  <th>TYPE</th>
+                  <th>MATHS</th>
+                  <th>ENGLISH</th>
+                  <th>KISWAHILI</th>
+                  <th>CHEMISTRY</th>
+                  <th>BIOLOGY</th>
+                  <th>PHYSICS</th>
+                  <th>HISTORY</th>
+                  <th>GEOGRAPHY</th>
+                  <th>CRE</th>
+                  <th>AGRICULTURE</th>
+                  <th>BUSINESS</th>
+                  <th>TOTAL</th>
+                  <th>AVERAGE</th>
+                  <th>GRADE</th>
+                  <th>POINTS</th>
+                </tr>
+              </thead>
+              <tbody id="data"></tbody>
+              <div id="snackbar"></div>
+            </table>
+          </div>
+          <script type="text/javascript" src="js/rank.js"></script>
     </div>
     <footer>
       <!-- <div class="footer-divide"> -->
