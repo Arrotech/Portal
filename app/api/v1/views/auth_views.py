@@ -109,7 +109,6 @@ def get_users():
 
 @auth_v1.route('/users/<string:admission_no>', methods=['GET'])
 @jwt_required
-@admin_required
 def get_user(admission_no):
     """An admin can fetch a single user."""
     user = json.loads(UsersModel().get_admission_no(admission_no))

@@ -2,73 +2,58 @@ function callToast() {
 
     var x = document.getElementById("snackbar");
     x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }
 
-function onSuccess(msg){
+function onSuccess(msg) {
 
     document.getElementById('snackbar').innerText = msg
     callToast();
 }
 
-function raiseError(msg){
+function raiseError(msg) {
 
     document.getElementById('snackbar').innerText = msg
     callToast();
 }
 
-document.getElementById('getFees').onclick = () => {
-        event.preventDefault();
+token = window.localStorage.getItem('token');
+admission = window.localStorage.getItem('admission_no');
 
-        token = window.localStorage.getItem('token');
-        admission = window.localStorage.getItem('admission_no');
+fetch('https://njc-school-portal.herokuapp.com/api/v1/fees/' + admission, {
+    method: 'GET',
+    path: admission,
+    headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+    },
+})
+    .then((res) => res.json())
+    .then((data) => {
+        let status = data['status'];
+        let message = data['message'];
+        if (status === "200") {
+            var temp = "";
+            data.Fee.forEach((fee) => {
+                temp += "<tr>";
+                temp += "<td>" + fee.admission_no + "</td>";
+                temp += "<td>" + fee.transaction_type + "</td>";
+                temp += "<td>" + fee.transaction_no + "</td>";
+                temp += "<td>" + fee.description + "</td>";
+                temp += "<td>" + fee.form + "</td>";
+                temp += "<td>" + fee.amount + "</td>";
+                temp += "<td>" + fee.date + "</td></tr>";
+            })
+            document.getElementById("data").innerHTML = temp;
+        }
+        else {
+            raiseError(message);
+        }
 
-        fetch('https://njc-school-portal.herokuapp.com/api/v1/fees/' + admission ,{
-            method: 'GET',
-            path: admission,
-            headers : {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token,
-            },
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            data.Fee.forEach(fee => {
-                let status = data['status'];
-                let message = data['message'];
-                const { admission_no, transaction_type, transaction_no, description, form, amount, date } = fee;
-                output += `
-                    <div>
-                        <table>
-                            <tr>
-                                <th>Transaction type</th>
-                                <th>Transaction No.</th>
-                                <th>Description</th>
-                                <th>Form</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                            </tr>
-                            <tr>
-                                <td>${fee.transaction_type}</td>
-                                <td>${fee.transaction_no}</td>
-                                <td>${fee.description}</td>
-                                <td>${fee.form}</td>
-                                <td>${fee.amount}</td>
-                                <td>${fee.date}</td>
-                            </tr>
-                        </table>
-                    </div>
-                `;
-                if (status === '200'){
-                    document.getElementById('output').innerHTML = output;
-                }else{
-                    raiseError(message);
-                }
-                });
-                })
-        .catch((err)=>{
-            raiseError("Please check your internet connection and try again!");
-            console.log(err);
-        })
-}
+    })
+    .catch((err) => {
+        raiseError("Please check your internet connection and try again!");
+        console.log(err);
+    })
+

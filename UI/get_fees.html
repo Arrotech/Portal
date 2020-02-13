@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="css/get_books.css"/>
+    <link rel="stylesheet" href="css/printfees.css" media="print" />
+    <link rel="alternate stylesheet" href="css/yourprintcss-preview.css" media="screen" title="Print Preview" />
+    <script src="print.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
@@ -46,15 +49,23 @@
     </div>
     <script type="text/javascript" src="js/nav.js"></script>
     <div class="main-content">
-        <div class="left">
-            <div class="fees-btn">
-                  <input type="submit" id="getFees" value="Fees">
-                  <div style="overflow-x:auto;">
-                      <p id="output"></p>
-                  </div>
-                  <div id="snackbar"></div>
-            </div>
-        </div>
+      <div class="container">
+        <table>
+          <thead>
+            <tr>
+              <th>ADMISSION NO</th>
+              <th>TRANSACTION TYPE</th>
+              <th>TRANSACTION NO</th>
+              <th>DESCRIPTION</th>
+              <th>FORM</th>
+              <th>AMOUNT</th>
+              <th>DATE</th>
+            </tr>
+          </thead>
+          <tbody id="data"></tbody>
+          <div id="snackbar"></div>
+        </table>
+      </div>
     </div>
     <script type="text/javascript" src="js/get_fees.js"></script>
     <footer>

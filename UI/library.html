@@ -46,17 +46,21 @@
   </div>
   <script type="text/javascript" src="js/nav.js"></script>
     <div class="main-content">
-      <div class="left">
-        <div class="fees-btn">
-            <div>
-                <input type="submit" id="getBooks" value="Books">
-                <div style="overflow-x:auto;">
-                  <p id="output"></p>
-                </div>
-                <div id="snackbar"></div>
-            </div>
-        </div>
-      </div>
+        <div class="container">
+            <table>
+              <thead>
+                <tr>
+                  <th>BOOK NO</th>
+                  <th>AUTHOR</th>
+                  <th>TITLE</th>
+                  <th>SUBJECT</th>
+                  <th>FORM</th>
+                </tr>
+              </thead>
+              <tbody id="data"></tbody>
+              <div id="snackbar"></div>
+            </table>
+          </div>
     </div>
     <script type="text/javascript" src="js/library.js"></script>
     <footer>
