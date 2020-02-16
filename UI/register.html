@@ -60,11 +60,17 @@
             </div>
             <div>
               <label for="psw"><b>Required*</b></label><br>
-              <input id="password" type="password" placeholder="Password" name="" required><br>
+              <div class="pswd">
+                <input id="password" type="password" placeholder="Password" name="pswd" required>
+                <span toggle="#password-field" onclick="myFunction()" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>
             </div>
             <div>
               <label for="psw"><b>Required*</b></label><br>
-              <input id="confirm_password" type="password" placeholder="Confirm Password" name="" required><br>
+              <div class="pswd">
+                <input id="confirm_password" type="password" placeholder="Confirm Password" name="pswd" required>
+                <span toggle="#password-field" onclick="viewConfirmPassword()" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>
             </div>
             <label><b>Required*:</b></label><br>
             <select id="form">
@@ -83,6 +89,8 @@
   </div>
   <script type="text/javascript" src="js/signup.js"></script>
   <script type="text/javascript" src="js/select_books.js"></script>
+  <script type="text/javascript" src="js/view_password.js"></script>
+  <script type="text/javascript" src="js/view_confirm_password.js"></script>
   <footer>
     <!-- <div class="footer-divide"> -->
     <div class="divide">

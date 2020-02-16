@@ -47,12 +47,26 @@ body{
 .left form input{
   text-align:center;
   width:70%;
-  height:35px;
+  height:25px;
   margin-bottom:10px;
   border:none;
   border:1px solid #F8F8F8;
   background-color:#F8F8F8;
   border-radius:25px;
+}
+.left .pswd {
+  display: flex;
+}
+.left .pswd #password{
+  margin-left: 15%;
+  width: 70%;
+}
+.field-icon {
+  margin-left: -25px;
+  position: relative;
+  z-index: 2;
+  padding: 5px;
+  color: #000000;
 }
 .left form input:focus{
   outline:none;
