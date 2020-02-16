@@ -2,79 +2,85 @@
 <html>
 
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Staff Register</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/staff_register.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Staff Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/staff_register.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-<header>
+  <header>
     <div class="header">
       <img src="img/logo.png">
       <h1>SECONDARY SCHOOLS</h1>
     </div>
-</header>
-<div class="topnav" id="myTopnav">
-  <a href="index.html">Home</a>
-  <a href="careers.html">Careers</a>
-  <a href="about.html">About Us</a>
-  <a href="contact.html">Contact Us</a>
-  <a class="active-btn" href="login.html">Student Login</a>
-  <a class="active-btn" href="staff_login.html">Staff Login</a>
-  <a class="active-btn" href="accountant_login.html">Accountant Login</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
-</div>
-<script type="text/javascript" src="js/nav.js"></script>
-<div class="main">
-  <div class="left">
-    <form id="staffSignup">
-        <div class="container">
-            <div class="wrap-register">
-                <h2>Create a New Account</h2>
-                <hr>
-                <div>
-                    <label><b>Required*</b></label><br>
-                    <input id="firstname" type="text" placeholder="Firstname" name="" required><br>
-                </div>
-                <div>
-                    <label><b>Required*</b></label><br>
-                    <input id="lastname" type="text" placeholder="Lastname" name="" required><br>
-                </div>
-                <div>
-                    <label><b>Required*</b></label><br>
-                    <input id="form" type="text" placeholder="Form" name="" required><br>
-                </div>
-                <div>
-                    <label><b>Required*</b></label><br>
-                    <input id="username" type="text" placeholder="Username" name="" required><br>
-                </div>
-                <div>
-                    <label><b>Required*</b></label><br>
-                    <input id="email" type="text" placeholder="Email" name="" required><br>
-                </div>
-                <div>
-                    <label for="psw"><b>Required*</b></label><br>
-                    <input id="password" type="password" placeholder="Password" name="" required><br>
-                </div>
-                <div>
-                    <input type="submit" value="SIGN UP">
-                </div>
-                <div id="snackbar">Just a moment...</div>
-                <p class="forgot">Already have an account?<a href="staff_login.html">Login</a></p>
-            </div>
-        </div>
-    </form>
+  </header>
+  <div class="topnav" id="myTopnav">
+    <a href="index.html">Home</a>
+    <a href="careers.html">Careers</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a class="active-btn" href="login.html">Student Login</a>
+    <a class="active-btn" href="staff_login.html">Staff Login</a>
+    <a class="active-btn" href="accountant_login.html">Accountant Login</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
   </div>
-</div>
-<script type="text/javascript" src="js/staff_signup.js"></script>
-<footer>
-  <!-- <div class="footer-divide"> -->
+  <script type="text/javascript" src="js/nav.js"></script>
+  <div class="main">
+    <div class="left">
+      <form id="staffSignup">
+        <div class="container">
+          <div class="wrap-register">
+            <h2>Create a New Account</h2>
+            <hr>
+            <div>
+              <label><b>Required*</b></label><br>
+              <input id="firstname" type="text" placeholder="Firstname" name="" required><br>
+            </div>
+            <div>
+              <label><b>Required*</b></label><br>
+              <input id="lastname" type="text" placeholder="Lastname" name="" required><br>
+            </div>
+            <label><b>Required*:</b></label><br>
+            <select id="form">
+              <option value="" selected disabled hidden>Select form...</option>
+            </select>
+            <br>
+            <div>
+              <label><b>Required*</b></label><br>
+              <input id="username" type="text" placeholder="Username" name="" required><br>
+            </div>
+            <div>
+              <label><b>Required*</b></label><br>
+              <input id="email" type="text" placeholder="Email" name="" required><br>
+            </div>
+            <div>
+              <label for="psw"><b>Required*</b></label><br>
+              <input id="password" type="password" placeholder="Password" name="" required><br>
+            </div>
+            <div>
+              <label for="psw"><b>Required*</b></label><br>
+              <input id="confirm_password" type="password" placeholder="Confirm Password" name="" required><br>
+            </div>
+            <div>
+              <input type="submit" value="SIGN UP">
+            </div>
+            <div id="snackbar">Just a moment...</div>
+            <p class="forgot">Already have an account?<a href="staff_login.html">Login</a></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/staff_signup.js"></script>
+  <script type="text/javascript" src="js/select_books.js"></script>
+  <footer>
+    <!-- <div class="footer-divide"> -->
     <div class="divide">
       <h3>PROJECTS</h3>
       <div class="main-coln">
@@ -147,7 +153,8 @@
         </div>
       </div>
     </div>
-  <!-- </div> -->
-</footer>
+    <!-- </div> -->
+  </footer>
 </body>
+
 </html>

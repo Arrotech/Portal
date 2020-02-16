@@ -129,8 +129,20 @@ select{
   padding: 2px;
 }
 
+.view-password{
+  display: table-cell
+}
+
 option{
   background-color: #d65050;
+}
+
+.wrap-register select{
+  width: 240px;
+  height: 22px;
+  border-radius: 15px;
+  background: #fff;
+  padding: 2px;
 }
 
 @media print{
@@ -162,6 +174,16 @@ textarea{
   height: 500px;
   background: #333;
   color: #fff;
+}
+
+.view form input[name='password'] {
+  width: 22%;
+  display: inline !important;
+  background: #F9F9F9;
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  line-height: 1.4;
+  padding: 6px;
 }
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BUTTONS SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 

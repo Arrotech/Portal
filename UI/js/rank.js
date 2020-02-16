@@ -33,6 +33,7 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + admission, {
   .then((data) => {
     let status = data['status'];
     let message = data['message'];
+    console.log(data);
     if (status === "200") {
       var temp = "";
       data.Exam.forEach((exam) => {
