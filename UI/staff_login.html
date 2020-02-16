@@ -37,7 +37,11 @@
               <p class="or"><i>or</i></p>
               <form id="staffLogin">
                   <input id="email" type="text" placeholder="Email">
-                  <input id="password" type="password" placeholder="Password">
+                  <div class="pswd">
+                      <input id="password" type="password" placeholder="Password">
+                      <span toggle="#password-field" onclick="myFunction()"
+                        class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    </div>
                   <input type="submit" value="LOG IN" onclick="callToast()"><br>
                   <div id="snackbar">Just a moment...</div>
               </form>
@@ -58,6 +62,7 @@
       </div>
 <script type="text/javascript" src="js/staff_login.js"></script>
 <script type="text/javascript" src="js/nav.js"></script>
+<script type="text/javascript" src="js/view_password.js"></script>
 <footer>
   <!-- <div class="footer-divide"> -->
     <div class="divide">

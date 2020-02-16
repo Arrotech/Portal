@@ -55,13 +55,19 @@
               <input id="email" type="text" placeholder="Email" name="" required><br>
             </div>
             <div>
-              <label for="psw"><b>Required*</b></label><br>
-              <input id="password" type="password" placeholder="Password" name="" required><br>
-            </div>
-            <div>
-              <label for="psw"><b>Required*</b></label><br>
-              <input id="confirm_password" type="password" placeholder="Confirm Password" name="" required><br>
-            </div>
+                <label for="psw"><b>Required*</b></label><br>
+                <div class="pswd">
+                  <input id="password" type="password" placeholder="Password" name="pswd" required>
+                  <span toggle="#password-field" onclick="myFunction()" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+              </div>
+              <div>
+                <label for="psw"><b>Required*</b></label><br>
+                <div class="pswd">
+                  <input id="confirm_password" type="password" placeholder="Confirm Password" name="pswd" required>
+                  <span toggle="#password-field" onclick="viewConfirmPassword()" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+              </div>
             <div>
               <input type="submit" value="SIGN UP">
             </div>
@@ -73,6 +79,8 @@
     </div>
   </div>
   <script type="text/javascript" src="js/accountant_signup.js"></script>
+  <script type="text/javascript" src="js/view_password.js"></script>
+  <script type="text/javascript" src="js/view_confirm_password.js"></script>
   <footer>
     <!-- <div class="footer-divide"> -->
     <div class="divide">
