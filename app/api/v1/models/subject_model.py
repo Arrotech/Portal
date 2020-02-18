@@ -44,10 +44,10 @@ class SubjectsModel(Database):
             RETURNING admission_no, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business''' \
                 .format(self.admission_no, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics, self.history, self.geography, self.cre, self.agriculture,
                         self.business))
-        subjects = self.curr.fetchone()
+        subject = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return subjects
+        return json.dumps(subject, default=str)
 
     def get_subjects(self):
         """Fetch all registered subjects."""

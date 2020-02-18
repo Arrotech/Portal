@@ -33,7 +33,7 @@ def register_subjects():
     business = details['business']
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
-        res = SubjectsModel(admission_no,
+        subject = SubjectsModel(admission_no,
                             maths,
                             english,
                             kiswahili,
@@ -45,10 +45,11 @@ def register_subjects():
                             cre,
                             agriculture,
                             business).save()
+        subject = json.loads(subject)
         return make_response(jsonify({
             "status": "201",
             "message": "Subjects registered successfully!",
-            "subjects": res
+            "subjects": subject
         }), 201)
     return make_response(jsonify({
         "status": "404",
