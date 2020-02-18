@@ -34,18 +34,16 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, 
     .then((data) => {
         let status = data['status'];
         let message = data['message'];
+        let user = data.user;
         console.log(data);
         if (status === "200") {
-            console.log(status);
             var temp = "";
-            data.User.forEach((user) => {
-                console.log(user);
-                temp += "<tr>";
-                temp += "<td>" + user.admission_no + "</td>";
-                temp += "<td>" + user.surname + "</td>";
-                temp += "<td>" + user.email + "</td></tr>";
-            })
-            console.log(user);
+
+            temp += "<tr>";
+            temp += "<td>" + user.admission_no + "</td>";
+            temp += "<td>" + user.surname + " " + user.firstname + " " + user.lastname +"</td>";
+            temp += "<td>" + user.email + "</td></tr>";
+
             document.getElementById("data").innerHTML = temp;
         }
         else {
