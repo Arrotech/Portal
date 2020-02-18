@@ -97,8 +97,8 @@ def put(fee_id):
                             transaction_type,
                             transaction_no,
                             description,
-                            amount,
                             form,
+                            amount,
                             fee_id)
     fee = json.loads(fee)
     if fee:
