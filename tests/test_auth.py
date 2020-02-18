@@ -1,7 +1,7 @@
 import json
 
 from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname, \
-    wrong_lastname, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
+    wrong_lastname, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
 from .base_test import BaseTest
 
 
@@ -137,6 +137,30 @@ class TestUsersAccount(BaseTest):
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Successfully logged in!')
+        assert response.status_code == 200
+
+    def test_forgot_password(self):
+        """Test the vote json keys."""
+
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account1), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/auth/forgot', data=json.dumps(student_email_token), content_type='application/json')
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        assert response.status_code == 200
+
+    def test_wrong_forgot_password_email(self):
+        """Test the vote json keys."""
+
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account1), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/auth/forgot', data=json.dumps(wrong_student_email_token), content_type='application/json')
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
         assert response.status_code == 200
 
     def test_invalid_email_login(self):
