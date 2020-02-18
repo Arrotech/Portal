@@ -42,12 +42,6 @@ def add_exam():
         return raise_error(400, "Please add a number greater than 0")
     if ((details['maths'] > 100) or (details['english'] > 100) or (details['kiswahili'] > 100) or (details['chemistry'] > 100) or (details['biology'] > 100) or (details['physics'] > 100) or (details['history'] > 100) or (details['geography'] > 100) or (details['cre'] > 100) or (details['agriculture'] > 100) or (details['business'] > 100)):
         return raise_error(400, "Please add a number less than 100")
-    if (form_restrictions(form) is False):
-        return raise_error(400, "Form should be 1, 2, 3 or 4")
-    if (term_restrictions(term) is False):
-        return raise_error(400, "Term should be either 1st, 2nd, 3rd, 1ST, 2ND, or 3RD")
-    if (type_restrictions(type) is False):
-        return raise_error(400, "Type should be either MAIN, main, CAT, or cat")
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
         exam = ExamsModel(admission_no,
