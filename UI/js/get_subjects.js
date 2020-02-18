@@ -33,22 +33,25 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/subjects/' + admission, {
     .then((data) => {
         let status = data['status'];
         let message = data['message'];
+        let sub = data.subject;
+
         if (status === "200") {
             var temp = "";
-            data.Subject.forEach((subject) => {
-                temp += "<tr>";
-                temp += "<td>" + subject.maths + "</td>";
-                temp += "<td>" + subject.english + "</td>";
-                temp += "<td>" + subject.kiswahili + "</td>";
-                temp += "<td>" + subject.chemistry + "</td>";
-                temp += "<td>" + subject.biology + "</td>";
-                temp += "<td>" + subject.physics + "</td>";
-                temp += "<td>" + subject.history + "</td>";
-                temp += "<td>" + subject.geography + "</td>";
-                temp += "<td>" + subject.cre + "</td>";
-                temp += "<td>" + subject.agriculture + "</td>";
-                temp += "<td>" + subject.business + "</td></tr>";
-            })
+
+            temp += "<tr>";
+            temp += "<td>" + sub.admission_no + "</td>";
+            temp += "<td>" + sub.maths + "</td>";
+            temp += "<td>" + sub.english + "</td>";
+            temp += "<td>" + sub.kiswahili + "</td>";
+            temp += "<td>" + sub.chemistry + "</td>";
+            temp += "<td>" + sub.biology + "</td>";
+            temp += "<td>" + sub.physics + "</td>";
+            temp += "<td>" + sub.history + "</td>";
+            temp += "<td>" + sub.geography + "</td>";
+            temp += "<td>" + sub.cre + "</td>";
+            temp += "<td>" + sub.agriculture + "</td>";
+            temp += "<td>" + sub.business + "</td></tr>";
+
             document.getElementById("data").innerHTML = temp;
         }
         else {
