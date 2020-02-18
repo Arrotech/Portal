@@ -21,12 +21,14 @@ def page_not_found(e):
         "message": "resource not found"
     }), 404)
 
+
 def method_not_allowed(e):
     """Capture Not Found error."""
     return make_response(jsonify({
         "status": "405",
         "message": "method not allowed"
     }), 405)
+
 
 def exam_app(config_name):
     """Create the app."""
@@ -36,7 +38,6 @@ def exam_app(config_name):
     app.config.from_pyfile('config.py')
     app.config["SECRET_KEY"] = 'schoolportal'
     jwt = JWTManager(app)
-
     api = Api(app)
 
     app.register_blueprint(auth_v1, url_prefix='/api/v1/auth/')

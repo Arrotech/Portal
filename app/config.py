@@ -10,7 +10,14 @@ class Config:
     DB_HOST = os.getenv('DB_HOST')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
     SECRET_KEY = os.getenv('SECRET_KEY')
+    # email server
+    MAIL_SERVER = 'your.mailserver.com'
+    MAIL_PORT = 25
+    MAIL_USERNAME = None
+    MAIL_PASSWORD = None
 
+    # administrator list
+    ADMINS = ['you@example.com']
 
 class DevelopmentConfig(Config):
     """Allow debug to restart after changes."""

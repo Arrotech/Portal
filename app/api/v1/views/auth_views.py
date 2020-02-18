@@ -1,5 +1,5 @@
 import json
-from flask import make_response, jsonify, request, Blueprint
+from flask import make_response, jsonify, request, Blueprint, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
@@ -42,12 +42,14 @@ def signup():
         return raise_error(400, "Email Already Exists!")
     if (form_restrictions(form) is False):
         return raise_error(400, "Form should be 1, 2, 3 or 4")
-    user = json.loads(UsersModel(firstname, lastname, surname, admission_no, email, password, form).save())
+    user = json.loads(UsersModel(firstname, lastname, surname,
+                      admission_no, email, password, form).save())
     return make_response(jsonify({
         "message": "Account created successfully!",
         "status": "201",
         "user": user
     }), 201)
+
 
 @auth_v1.route('/login', methods=['POST'])
 def login():
@@ -61,7 +63,8 @@ def login():
         if check_password_hash(password_db, password):
             expires = datetime.timedelta(days=365)
             token = create_access_token(identity=email, expires_delta=expires)
-            refresh_token = create_refresh_token(identity=email, expires_delta=expires)
+            refresh_token = create_refresh_token(
+                identity=email, expires_delta=expires)
             return make_response(jsonify({
                 "status": "200",
                 "message": "Successfully logged in!",
@@ -77,6 +80,27 @@ def login():
         "status": "401",
         "message": "Invalid Email or Password"
     }), 401)
+
+
+@auth_v1.route('/forgot', methods=['POST'])
+def forgot():
+    url = request.host_url + 'reset/'
+    details = request.get_json()
+    email = details['email']
+    user = json.loads(UsersModel().get_email(email))
+    if user:
+        expires = datetime.timedelta(days=1)
+        email_token = create_access_token(identity=email, expires_delta=expires)
+        return make_response(jsonify({
+            "status": "200",
+            "message": "Check Your Email for the Password Reset Link",
+            "token": email_token
+        }), 200)
+
+    return make_response(jsonify({
+        "status": "200",
+        "message": "Check Your Email for the Password Reset Link"
+    }), 200)
 
 @auth_v1.route('/refresh', methods=['POST'])
 @jwt_refresh_token_required

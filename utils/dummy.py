@@ -11,6 +11,14 @@ create_account = {
     "role": "student"
 }
 
+student_email_token = {
+    "email": "gitundu.samuel@students.jcs.ac.ke"
+}
+
+wrong_student_email_token = {
+    "email": "gitundu@gmail.com"
+}
+
 user_login = {
     "email": "gitundu.mercy@students.jcs.ac.ke",
     "password": "Mercy20930988!"
