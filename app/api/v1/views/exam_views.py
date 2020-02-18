@@ -26,7 +26,7 @@ def add_exam():
     admission_no = details['admission_no']
     term = details['term']
     form = details['form']
-    type = details['type']
+    exam_type = details['exam_type']
     maths = details['maths']
     english = details['english']
     kiswahili = details['kiswahili']
@@ -47,7 +47,7 @@ def add_exam():
         exam = ExamsModel(admission_no,
                         term,
                         form,
-                        type,
+                        exam_type,
                         maths,
                         english,
                         kiswahili,
@@ -132,7 +132,7 @@ def put(exam_id):
     admission_no = details['admission_no']
     term = details['term']
     form = details['form']
-    type = details['type']
+    exam_type = details['exam_type']
     maths = details['maths']
     english = details['english']
     kiswahili = details['kiswahili']
@@ -148,7 +148,7 @@ def put(exam_id):
     exam = ExamsModel().edit_exams(admission_no,
                                 term,
                                 form,
-                                type,
+                                exam_type,
                                 maths,
                                 english,
                                 kiswahili,

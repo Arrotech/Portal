@@ -49,7 +49,7 @@ def check_teachers_keys(request):
     return errors
 
 def check_exams_keys(request):
-    res_keys = ['admission_no', 'term', 'form', 'type', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
+    res_keys = ['admission_no', 'term', 'form', 'exam_type', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
     errors = []
     for key in res_keys:
         if not key in request.json:

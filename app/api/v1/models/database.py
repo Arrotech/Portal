@@ -59,7 +59,7 @@ class Database:
                 admission_no varchar NOT NULL,
                 term varchar NOT NULL,
                 form numeric NOT NULL,
-                type varchar NOT NULL,
+                exam_type varchar NOT NULL,
                 maths numeric NOT NULL,
                 english numeric NOT NULL,
                 kiswahili numeric NOT NULL,
