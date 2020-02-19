@@ -13,7 +13,12 @@
 <body background="bookshop2.jpg">
 <div class="leftnav">
     <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
+    <div class="profile_name">
+        <p>Welcome,</p>
+        <p id="profile_name"></p>
+      </div>
     <hr>
+    <div class="leftnav-bar">
     <a class="far fa-clone" href="get_fees.html"> Fees</a><br>
     <a class="far fa-clone" href="exams.html"> Exams</a><br>
     <a class=" fas fa-align-justify" href="subjects.html"> Subjects</a><br>
@@ -24,7 +29,8 @@
     <a class="  fas fa-users" href="#"> Help</a><br>
     <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
     <a class="  fas fa-wrench" href="#"> Settings</a><br>
-    <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
+    <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>c
+    </div>
 </div>
 <div class="main">
     <header>
@@ -52,6 +58,7 @@
         </a>
     </div>
     <script type="text/javascript" src="js/nav.js"></script>
+    <script type="text/javascript" src="js/profile_name.js"></script>
     <br>
     <div class="main-content">
         <div class="container" style="overflow-x:auto;">
