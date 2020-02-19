@@ -102,7 +102,7 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + admission, {
         temp += "<tr>";
         temp += "<td>" + exam.term + "</td>";
         temp += "<td>" + exam.form + "</td>";
-        temp += "<td>" + exam.type + "</td>";
+        temp += "<td>" + exam.exam_type + "</td>";
         temp += "<td>" + exam.maths + "</td>";
         temp += "<td>" + exam.english + "</td>";
         temp += "<td>" + exam.kiswahili + "</td>";

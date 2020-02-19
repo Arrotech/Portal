@@ -81,6 +81,22 @@ def get_exams():
         "exams": json.loads(ExamsModel().get_all_exams())
     }), 200)
 
+@exams_v1.route('/exams/<string:form>/<string:term>', methods=['GET'])
+@jwt_required
+def get_exams_form(form, term):
+    """Get all exams entries for all students by form."""
+    exam = ExamsModel().get_exams_by_form_and_term(form, term)
+    exam = json.loads(exam)
+    if exam:
+        return make_response(jsonify({
+            "status": "200",
+            "message": "successfully retrieved",
+            "Exam": exam
+        }), 200)
+    return make_response(jsonify({
+        "status": "404",
+        "message": "Exam Not Found"
+    }), 404)
 
 @exams_v1.route('/exams/<string:admission_no>', methods=['GET'])
 @jwt_required

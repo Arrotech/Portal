@@ -51,6 +51,7 @@ function staffSignup(event) {
                 if (status === '201') {
                     localStorage.setItem("user", JSON.stringify(data[0]));
                     localStorage.setItem('user', data.user);
+                    localStorage.setItem('token', data.token);
                     localStorage.setItem('firstname', data.user.firstname);
                     localStorage.setItem('lastname', data.user.lastname);
                     localStorage.setItem('username', data.user.username);
