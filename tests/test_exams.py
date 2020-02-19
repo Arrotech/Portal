@@ -98,10 +98,33 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'], 'successfully retrieved')
         assert response2.status_code == 200
 
+    def test_get_exam_by_form_and_term(self):
+        """Test getting a specific party by id."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/exams/4/1st', content_type='application/json', headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'successfully retrieved')
+        assert response2.status_code == 200
+
     def test_get_unexisting_exam(self):
         """Test getting unexisting specific exam by admission_no."""
         response1 = self.client.get(
             '/api/v1/exams/NJCF4057', content_type='application/json', headers=self.get_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Exam Not Found')
+        assert response1.status_code == 404
+
+    def test_get_unexisting_exam_by_form_and_term(self):
+        """Test getting unexisting specific exam by form and term."""
+        response1 = self.client.get(
+            '/api/v1/exams/2/2nd', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Exam Not Found')
         assert response1.status_code == 404

@@ -70,10 +70,10 @@ class ExamsModel(Database):
         """Fetch an exam by Admission Number."""
         self.curr.execute(
             """ SELECT * FROM exams WHERE admission_no='{}'""".format(admission_no))
-        exam = self.curr.fetchall()
+        exams = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(exam, default=str)
+        return json.dumps(exams, default=str)
 
     def get_exam_by_admission_no(self, admission_no):
         """Fetch an exam by Admission Number."""
@@ -83,6 +83,15 @@ class ExamsModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(exam, default=str)
+
+    def get_exams_by_form_and_term(self, form, term):
+        """Fetch exams by form"""
+        self.curr.execute(
+            """ SELECT * FROM exams WHERE form='{}' and term='{}'""".format(form, term))
+        exams = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(exams, default=str)
 
     def delete_exam(self, admission_no):
         ''' Delete an exam by Admission Number.'''
