@@ -16,10 +16,6 @@ from app.api.v1.views.fees_views import fees_v1
 from app.api.v1.views.subjects_view import subjects_v1
 from app.config import app_config
 
-app = Flask(__name__, template_folder='../templates')
-app.config["IMAGE_UPLOADS"] = "/mnt/c/wsl/projects/pythonise/tutorials/flask_series/app/app/static/img/uploads"
-app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
-app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 
 
 def page_not_found(e):
@@ -40,8 +36,16 @@ def method_not_allowed(e):
 
 def exam_app(config_name):
     """Create the app."""
+    app = Flask(__name__, template_folder='../templates')
+
+    app.config["IMAGE_UPLOADS"] = "/mnt/c/wsl/projects/pythonise/tutorials/flask_series/app/app/static/img/uploads"
+    app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
+    app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 
     CORS(app)
+
+    jwt = JWTManager(app)
+    api = Api(app)
 
     app.config.from_pyfile('config.py')
     app.config["SECRET_KEY"] = 'schoolportal'
@@ -59,60 +63,60 @@ def exam_app(config_name):
     return app
 
 
-def allowed_image(filename):
+# def allowed_image(filename):
 
-    if not "." in filename:
-        return False
+#     if not "." in filename:
+#         return False
 
-    ext = filename.rsplit(".", 1)[1]
+#     ext = filename.rsplit(".", 1)[1]
 
-    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
-
-
-def allowed_image_filesize(filesize):
-
-    if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
-        return True
-    else:
-        return False
+#     if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+#         return True
+#     else:
+#         return False
 
 
-@app.route("/upload-image", methods=["GET", "POST"])
-def upload_image():
+# def allowed_image_filesize(filesize):
 
-    if request.method == "POST":
-        print(request.files)
+#     if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
+#         return True
+#     else:
+#         return False
 
-        if request.files:
 
-            if "filesize" in request.cookies:
+# @app.route("/upload-image", methods=["GET", "POST"])
+# def upload_image():
 
-                if not allowed_image_filesize(request.cookies["filesize"]):
-                    print("Filesize exceeded maximum limit")
-                    return redirect(request.url)
+#     if request.method == "POST":
+#         print(request.files)
 
-                image = request.files["image"]
-                print(image.filename)
+#         if request.files:
 
-                if image.filename == "":
-                    print("No filename")
-                    return redirect(request.url)
+#             if "filesize" in request.cookies:
 
-                if allowed_image(image.filename):
-                    filename = secure_filename(image.filename)
+#                 if not allowed_image_filesize(request.cookies["filesize"]):
+#                     print("Filesize exceeded maximum limit")
+#                     return redirect(request.url)
 
-                    image.save(os.path.join(
-                        app.config["IMAGE_UPLOADS"], filename))
+#                 image = request.files["image"]
+#                 print(image.filename)
 
-                    print("Image saved")
+#                 if image.filename == "":
+#                     print("No filename")
+#                     return redirect(request.url)
 
-                    return redirect(request.url)
+#                 if allowed_image(image.filename):
+#                     filename = secure_filename(image.filename)
 
-                else:
-                    print("That file extension is not allowed")
-                    return redirect(request.url)
+#                     image.save(os.path.join(
+#                         app.config["IMAGE_UPLOADS"], filename))
 
-    return render_template("upload_image.html")
+#                     print("Image saved")
+
+#                     return redirect(request.url)
+
+#                 else:
+#                     print("That file extension is not allowed")
+#                     return redirect(request.url)
+
+#     return render_template("upload_image.html")
