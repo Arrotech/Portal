@@ -4,63 +4,46 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>File-Upload</title>
+    <title>Update-Subjects</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/upload.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="leftnav">
-        <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
-        <div class="profile_name">
-            <p>Welcome,</p>
-            <p id="profile_name"></p>
+    <header>
+        <div class="header">
+            <img src="img/logo.png">
+            <h1>SECONDARY SCHOOLS</h1>
         </div>
-        <hr>
-        <div class="leftnav-bar">
-            <a class="far fa-clone" href="get_fees.html"> Fees</a><br>
-            <a class="far fa-clone" href="exams.html"> Exams</a><br>
-            <a class=" fas fa-align-justify" href="subjects.html"> Subjects</a><br>
-            <a class="fas fa-book-open" href="library.html">Library</a><br>
-            <a class="far fa-address-card" href="student-id.html"> Student ID</a><br>
-            <a class="fas fa-sticky-note" href="pastpapers.html"> Past Papers</a><br>
-            <a class="fas fa-user-edit" href="#"> Profile</a><br>
-            <a class="  fas fa-users" href="#"> Help</a><br>
-            <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
-            <a class="  fas fa-wrench" href="#"> Settings</a><br>
-            <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <h1>Upload an image</h1>
+                <hr>
+
+                <form action="/upload-image" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Select image</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="image">
+                            <label class="custom-file-label" for="image">Select image...</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Upload</button>
+
+                </form>
+
+            </div>
         </div>
     </div>
-    <div class="main">
-        <header>
-            <div class="header">
-                <img src="img/logo.png">
-                <h1>SECONDARY SCHOOLS</h1>
-            </div>
-        </header>
-        <div class="topnav" id="myTopnav">
-            <a href="index.html">Home</a>
-            <a href="get_fees.html">Fees</a>
-            <a href="exams.html">Exams</a>
-            <a href="subjects.html">Subjects</a>
-            <a href="library.html">Library</a>
-            <a href="student-id.html">Student ID</a>
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
-        <form id="uploadFile" method="POST" action="/upload" enctype="multipart/form-data">
-            <label for="inputFile">File Input</label>
-            <input id="name" type="file" name="inputFile">
-            <input type="submit" value="Upload">
-            <div id="snackbar">Just a moment...</div>
-        </form>
-        <script type="text/javascript" src="js/profile_name.js"></script>
-        <script type="text/javascript" src="js/upload_file.js"></script>
-        <script type="text/javascript" src="js/nav.js"></script>
+    <div class="portal-footer">
         <footer>
             <!-- <div class="footer-divide"> -->
             <div class="divide">

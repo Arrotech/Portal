@@ -1,0 +1,50 @@
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FOOTER SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+.portal-footer footer {
+  background-color: #fff;
+  padding: 0px;
+  margin: 0px;
+  clear: both;
+  color: white;
+  display: flex;
+}
+
+.portal-footer footer h3,
+h5 {
+  color: #fff;
+}
+
+.portal-footer .divide {
+  width: 25%;
+  background-color: #000000;
+  margin: 1px;
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
+}
+
+.portal-footer .main-coln {
+  display: flex;
+  padding-top: 0;
+}
+
+.portal-footer .coln2 {
+  padding-left: 40px;
+}
+
+.portal-footer .main-coln2 {
+  padding-top: 1px;
+}
+
+/*==================== MEDIA QUERIES SECTION =====================*/
+
+@media (max-width: 600px) {
+  .portal-footer footer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .portal-footer .divide {
+    width: 100%;
+  }
+}

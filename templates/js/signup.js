@@ -36,7 +36,7 @@ function postSignup(event) {
         let password = document.getElementById('password').value;
         let form = document.getElementById('form').value;
 
-        fetch('http://localhost:5000/api/v1/auth/register', {
+        fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/register', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -55,7 +55,7 @@ function postSignup(event) {
                     localStorage.setItem('admission_no', data.user.admission_no);
                     localStorage.setItem('email', data.user.email);
                     onSuccess('Account created successfully!');
-                    window.location.replace('user.html');
+                    window.location.replace('login.html');
                 }
                 else {
                     raiseError(message);
