@@ -19,6 +19,7 @@ function raiseError(msg) {
 
 
 token = window.localStorage.getItem('token');
+user = window.localStorage.getItem('user');
 admission = window.localStorage.getItem('admission_no');
 
 fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, {

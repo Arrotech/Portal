@@ -49,7 +49,8 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + admission, {
         let agric = Number(exam.agriculture);
         let bus = Number(exam.business);
         const total = math + eng + kis + chem + bio + phyc + hist + geo + c + agric + bus;
-        const average = total / 11;
+        const avg = total / 11;
+        const average = avg.toFixed(2);
         if (average >= 80 && average <= 100) {
           grade = 'A';
           points = '12';
@@ -100,9 +101,6 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + admission, {
         }
 
         temp += "<tr>";
-        temp += "<td>" + exam.term + "</td>";
-        temp += "<td>" + exam.form + "</td>";
-        temp += "<td>" + exam.exam_type + "</td>";
         temp += "<td>" + exam.maths + "</td>";
         temp += "<td>" + exam.english + "</td>";
         temp += "<td>" + exam.kiswahili + "</td>";

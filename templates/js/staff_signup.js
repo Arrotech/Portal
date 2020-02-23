@@ -57,7 +57,7 @@ function staffSignup(event) {
                     localStorage.setItem('username', data.user.username);
                     localStorage.setItem('email', data.user.email);
                     onSuccess('Account created successfully!');
-                    window.location.replace('admin.html');
+                    window.location.replace('staff_login.html');
                 } else {
                     raiseError(message);
                 }
