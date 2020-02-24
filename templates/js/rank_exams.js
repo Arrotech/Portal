@@ -19,12 +19,11 @@ function raiseError(msg) {
 
 token = window.localStorage.getItem('token');
 admission = window.localStorage.getItem('admission_no');
-let form = document.getElementById('form').value;
+exam_form = window.localStorage.getItem('form');
 let term = document.getElementById('term').value;
 
-fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + form + term, {
+fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + exam_form + '/' + term, {
     method: 'GET',
-    path: {form, term},
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -122,7 +121,7 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/exams/' + form + term, {
                 temp += "<td>" + points + "</td></tr>";
 
             })
-            document.getElementById("rank").innerHTML = temp;
+            document.getElementById("data").innerHTML = temp;
         }
         else {
             raiseError(message);

@@ -54,6 +54,7 @@ function staffSignup(event) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('firstname', data.user.firstname);
                     localStorage.setItem('lastname', data.user.lastname);
+                    localStorage.setItem('form', data.user.form);
                     localStorage.setItem('username', data.user.username);
                     localStorage.setItem('email', data.user.email);
                     onSuccess('Account created successfully!');

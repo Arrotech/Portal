@@ -1,5 +1,3 @@
-document.getElementById('postExams').addEventListener('submit', postExams);
-
 function callToast() {
 
     var x = document.getElementById("snackbar");
