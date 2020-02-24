@@ -9,27 +9,19 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="css/student-login.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous">
+    </script>
+  <script>
+    $(function () {
+      $("#header").load("header.html");
+      $("#footer").load("footer.html");
+    });
+  </script>
 </head>
 
-<body background="bookshop.jpg">
-  <header>
-    <div class="header">
-      <img src="img/logo.png">
-      <h1>SECONDARY SCHOOLS</h1>
-    </div>
-  </header>
-  <div class="topnav" id="myTopnav">
-    <a href="index.html">Home</a>
-    <a href="careers.html">Careers</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact Us</a>
-    <a class="active-btn" href="login.html">Student Login</a>
-    <a class="active-btn" href="staff_login.html">Staff Login</a>
-    <a class="active-btn" href="accountant_login.html">Accountant Login</a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
+<body>
+  <div id="header"></div>
   <div class="main">
     <div class="left">
       <h1>Login</h1>
@@ -55,90 +47,13 @@
         <button class="twitter"><i class="fa fa-twitter"></i></button>
         <button class="facebook"><i class="fa fa-facebook"></i></button>
         <button class="google"><i class="fa fa-google-plus"></i></button>
-        <!-- <p class="dont"><i>Don't have an account?</i></p>
-            <p><u><a href="register.html">Register</a></u></p> -->
       </div>
     </div>
   </div>
   <script type="text/javascript" src="js/auth.js"></script>
   <script type="text/javascript" src="js/nav.js"></script>
   <script type="text/javascript" src="js/view_password.js"></script>
-  <footer>
-    <!-- <div class="footer-divide"> -->
-    <div class="divide">
-      <h3>PROJECTS</h3>
-      <div class="main-coln">
-        <div class="coln1">
-          <h5>WEB APP's</h5>
-          <h6>PORTAL</h6>
-          <h6>TO-DO</h6>
-          <h6>E-COMMERCE</h6>
-          <h6>PORTFOLIO</h6>
-          <h6>BLOG</h6>
-          <h6>SHIPPING</h6>
-        </div>
-        <div class="coln2">
-          <h5>PLUS+</h5>
-          <h6>HOME AUTOMATION</h6>
-        </div>
-      </div>
-    </div>
-    <div class="divide">
-      <h3>ABOUT US</h3>
-      <div class="main-coln">
-        <div class="coln1">
-          <h5>QUALIFICATIONS</h5>
-          <h6>BSC. MATHS & COMPUTER</h6>
-          <h6>CURRICULUM VITAE</h6>
-        </div>
-        <div class="coln2">
-        </div>
-      </div>
-    </div>
-    <div class="divide">
-      <h3>CURRICULUM</h3>
-      <div class="main-coln">
-        <div class="coln1">
-          <h5>BACK-END</h5>
-          <h6>PYTHON</h6>
-          <h6>FLASK</h6>
-          <h6>DJANGO</h6>
-          <h6>NODE</h6>
-          <h6>POSTGRES</h6>
-          <h6>SQL</h6>
-        </div>
-        <div class="coln2">
-          <h5>FRONT-END</h5>
-          <h6>HTML</h6>
-          <h6>CSS</h6>
-          <h6>JAVASCRIPT</h6>
-          <h6>REACT</h6>
-          <h6>VUE</h6>
-          <h6>ANGULAR</h6>
-        </div>
-      </div>
-    </div>
-    <div class="divide">
-      <h3 id="contact">CONTACT</h3>
-      <div class="main-coln">
-        <div class="coln1">
-          <h5>INSTITUTION</h5>
-          <h6>EMAIL: <i>arrotechdesign@gmail.com</i></h6>
-          <h6>PHONE: <i>+254 797 568 564</i></h6>
-        </div>
-        <div class="coln2">
-          <h5>LEADERSHIP</h5>
-          <h6>PHONE: <i>+254 711 371 265</i></h6>
-          <h6>EMAIL: <i>arrotechdesign@gmail.com</i></h6>
-          <h6>TWITTER: <i>@Arrotech</i></h6>
-          <h6>INSTAGRAM: <i>arrotech</i></h6>
-          <h6>FACEBOOK PAGE: <i>Arrotech</i></h6>
-          <h6>TWITTER: <i>@Arrotech</i></h6>
-        </div>
-      </div>
-    </div>
-    <!-- </div> -->
-  </footer>
+  <div id="footer"></div>
 </body>
 
 </html>

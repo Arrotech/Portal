@@ -19,11 +19,12 @@ function raiseError(msg) {
 
 
 token = window.localStorage.getItem('token');
-admission = window.localStorage.getItem('admission_no');
+user = window.localStorage.getItem('user');
+uname = window.localStorage.getItem('username');
 
-fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, {
+fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/accountant/users/' + uname, {
     method: 'GET',
-    path: admission,
+    path: uname,
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -35,7 +36,6 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, 
         let status = data['status'];
         let message = data['message'];
         let user = data.user;
-        console.log(data);
         if (status === "200") {
             var temp = "";
 
