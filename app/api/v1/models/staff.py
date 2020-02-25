@@ -7,11 +7,12 @@ from datetime import datetime
 class StaffModel(Database):
     """Add a new user and retrieve User(s) by Id, Username or Email."""
 
-    def __init__(self, firstname=None, lastname=None, form=None, username=None, email=None, password=None, role='teacher', date=None):
+    def __init__(self, firstname=None, lastname=None, form=None, stream=None, username=None, email=None, password=None, role='teacher', date=None):
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
         self.form = form
+        self.stream = stream
         self.username = username
         self.email = email
         if password:
@@ -22,9 +23,9 @@ class StaffModel(Database):
     def save(self):
         """Save information of the new user."""
         self.curr.execute(
-            ''' INSERT INTO staff(firstname, lastname, form, username, email, password, role, date)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, form, username, email, password, role, date'''
-            .format(self.firstname, self.lastname, self.form, self.username, self.email, self.password, self.role,
+            ''' INSERT INTO staff(firstname, lastname, form, stream, username, email, password, role, date)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, form, stream, username, email, password, role, date'''
+            .format(self.firstname, self.lastname, self.form, self.stream, self.username, self.email, self.password, self.role,
                     self.date))
         user = self.curr.fetchone()
         self.conn.commit()

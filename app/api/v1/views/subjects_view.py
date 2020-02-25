@@ -20,6 +20,8 @@ def register_subjects():
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
+    form = details['form']
+    stream = details['stream']
     maths = details['maths']
     english = details['english']
     kiswahili = details['kiswahili']
@@ -34,6 +36,8 @@ def register_subjects():
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
         subject = SubjectsModel(admission_no,
+                            form,
+                            stream,
                             maths,
                             english,
                             kiswahili,
@@ -92,6 +96,8 @@ def put(subject_id):
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
+    form = details['form']
+    stream = details['stream']
     maths = details['maths']
     english = details['english']
     kiswahili = details['kiswahili']
@@ -105,6 +111,8 @@ def put(subject_id):
     business = details['business']
 
     subjects = SubjectsModel().edit_subjects(admission_no,
+                                form,
+                                stream,
                                 maths,
                                 english,
                                 kiswahili,

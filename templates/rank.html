@@ -41,7 +41,23 @@
     </div>
     <div class="main">
         <div id="admin_header"></div>
-        <div class="main-content">
+        <div class="main-content" id="rankExams">
+            <div class="left">
+                <form>
+                    <div class="container">
+                        <div>
+                            <label><b>Term:</b></label><br>
+                            <select id="term" onchange="change(value)" onclick="rankExams()">
+                                <option value="1st" selected disabled hidden>Select...</option>
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="container" style="overflow-x:auto;">
                 <table>
                     <thead>
@@ -70,9 +86,9 @@
                     <div id="snackbar"></div>
                 </table>
             </div>
-            <script type="text/javascript" src="js/rank.js"></script>
         </div>
         <script type="text/javascript" src="js/nav.js"></script>
+        <script type="text/javascript" src="js/select_term.js"></script>
         <script type="text/javascript" src="js/rank_exams.js"></script>
         <script type="text/javascript" src="js/staff_profile_name.js"></script>
         <div id="footer"></div>

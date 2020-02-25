@@ -4,7 +4,7 @@ from flask import jsonify, make_response
 
 
 def check_register_keys(request):
-    res_keys = ['firstname', 'lastname', 'surname', 'admission_no', 'email', 'password', 'form']
+    res_keys = ['firstname', 'lastname', 'surname', 'admission_no', 'email', 'password', 'form', 'stream']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -14,7 +14,7 @@ def check_register_keys(request):
 def check_staff_keys(request):
     """Check that registration json keys match the required ones."""
     res_keys = ['firstname', 'lastname',
-                'form', 'username', 'email', 'password']
+                'form', 'stream', 'username', 'email', 'password']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -40,16 +40,8 @@ def check_login_keys(request):
             errors.append(key)
     return errors
 
-def check_teachers_keys(request):
-    res_keys = ['firstname', 'lastname', 'email', 'password', 'form']
-    errors = []
-    for key in res_keys:
-        if not key in request.json:
-            errors.append(key)
-    return errors
-
 def check_exams_keys(request):
-    res_keys = ['admission_no', 'term', 'form', 'exam_type', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
+    res_keys = ['admission_no', 'term', 'form', 'stream', 'exam_type', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -57,7 +49,7 @@ def check_exams_keys(request):
     return errors
 
 def check_fees_keys(request):
-    res_keys = ['admission_no', 'transaction_type', 'transaction_no', 'description', 'form', 'amount']
+    res_keys = ['admission_no', 'transaction_type', 'transaction_no', 'description', 'form', 'stream', 'amount']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -65,7 +57,7 @@ def check_fees_keys(request):
     return errors
 
 def check_library_keys(request):
-    res_keys = ['admission_no', 'book_no', 'author', 'title', 'subject', 'form']
+    res_keys = ['admission_no', 'book_no', 'author', 'title', 'subject', 'form', 'stream']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -73,7 +65,7 @@ def check_library_keys(request):
     return errors
 
 def check_subjects_keys(request):
-    res_keys = ['admission_no', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
+    res_keys = ['admission_no', 'form', 'stream', 'maths', 'english', 'kiswahili', 'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
     errors = []
     for key in res_keys:
         if not key in request.json:

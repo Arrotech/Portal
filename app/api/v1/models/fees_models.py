@@ -16,6 +16,7 @@ class FeesModels(Database):
             transaction_no=None,
             description=None,
             form=None,
+            stream=None,
             amount=None):
         super().__init__()
         self.admission_no = admission_no
@@ -23,16 +24,17 @@ class FeesModels(Database):
         self.transaction_no = transaction_no
         self.description = description
         self.form = form
+        self.stream = stream
         self.amount = amount
         self.date = datetime.now()
 
     def save(self):
         """Create a new fee entry."""
         self.curr.execute(
-            ''' INSERT INTO fees(admission_no, transaction_type, transaction_no, description, form, amount, date)\
-            VALUES('{}','{}','{}','{}','{}',{},'{}')\
-            RETURNING admission_no, transaction_type, transaction_no, description, form, amount, date''' \
-                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.form, self.amount, self.date))
+            ''' INSERT INTO fees(admission_no, transaction_type, transaction_no, description, form, stream, amount, date)\
+            VALUES('{}','{}','{}','{}','{}','{}',{},'{}')\
+            RETURNING admission_no, transaction_type, transaction_no, description, form, stream, amount, date''' \
+                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.form, self.stream, self.amount, self.date))
         fees = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -54,13 +56,13 @@ class FeesModels(Database):
         self.curr.close()
         return json.dumps(fees, default=str)
 
-    def edit_fees(self, fee_id, admission_no, transaction_type, transaction_no, description, form, amount):
+    def edit_fees(self, fee_id, admission_no, transaction_type, transaction_no, description, form, stream, amount):
         """Edit fees."""
 
         self.curr.execute("""UPDATE fees\
-			SET admission_no='{}', transaction_type='{}', transaction_no='{}', description='{}', form='{}', amount='{}'\
-			WHERE fee_id={} RETURNING admission_no, transaction_type, transaction_no, description, form, amount"""
-            .format(fee_id, admission_no, transaction_type, transaction_no, description, form, amount))
+			SET admission_no='{}', transaction_type='{}', transaction_no='{}', description='{}', form='{}', stream='{}', amount='{}'\
+			WHERE fee_id={} RETURNING admission_no, transaction_type, transaction_no, description, form, stream, amount"""
+            .format(fee_id, admission_no, transaction_type, transaction_no, description, form, stream, amount))
         fee = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

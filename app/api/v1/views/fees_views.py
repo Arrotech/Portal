@@ -26,16 +26,16 @@ def add_fees():
     transaction_no = details['transaction_no']
     description = details['description']
     form = details['form']
+    stream = details['stream']
     amount = details['amount']
     user = json.loads(UsersModel().get_admission_no(admission_no))
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    print(user)
     if user:
         deposit = FeesModels(admission_no,
                                 transaction_type,
                                 transaction_no,
                                 description,
                                 form,
+                                stream,
                                 amount).save()
         deposit = json.loads(deposit)
         return make_response(jsonify({
@@ -91,6 +91,7 @@ def put(fee_id):
     transaction_no = details['transaction_no']
     description = details['description']
     form = details['form']
+    stream = details['stream']
     amount = details['amount']
 
     fee = FeesModels().edit_fees(admission_no,
@@ -98,6 +99,7 @@ def put(fee_id):
                             transaction_no,
                             description,
                             form,
+                            stream,
                             amount,
                             fee_id)
     fee = json.loads(fee)

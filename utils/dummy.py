@@ -8,6 +8,7 @@ create_account = {
     "email": "gitundu.mercy@students.jcs.ac.ke",
     "password": "Mercy20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -32,6 +33,7 @@ new_account = {
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Kevin20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -48,6 +50,7 @@ wrong_account_keys = {
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Kevin20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -59,6 +62,7 @@ admin_account = {
     "email": "admin@admin.com",
     "password": "Admin20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "admin"
 }
 
@@ -70,6 +74,7 @@ bursar_account = {
     "email": "bursar@admin.com",
     "password": "Bursar20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "bursar"
 }
 
@@ -91,6 +96,7 @@ admin_account_test = {
     "email": "admin@admin.com",
     "password": "Kevin20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "admin"
 }
 
@@ -113,6 +119,7 @@ email_already_exists = {
     "email": "gitundu.mercy@students.jcs.ac.ke",
     "password": "Miriam20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -124,6 +131,7 @@ Invalid_register_key = {
     "email": "gitundu.peter@students.njcs.ac.ke",
     "password": "Peter20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -140,6 +148,7 @@ password_length = {
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Kevin",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -151,6 +160,7 @@ new_account1 = {
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -167,6 +177,7 @@ wrong_firstname = {
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -178,6 +189,7 @@ wrong_lastname = {
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -189,6 +201,7 @@ wrong_surname = {
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -200,6 +213,7 @@ wrong_form = {
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
     "form": "four",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -211,6 +225,7 @@ wrong_email = {
     "email": "gitundu",
     "password": "Samuel20930988!",
     "form": "4",
+    "stream": "1A",
     "role": "student"
 }
 
@@ -222,6 +237,7 @@ wrong_role = {
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
     "form": "1",
+    "stream": "1A",
     "role": "stude hui9876b )nt"
 }
 
@@ -231,6 +247,7 @@ staff_account = {
     "firstname": "Peter",
     "lastname": "Gitundu",
     "form": "1",
+    "stream": "1A",
     "username": "Peter254",
     "email": "petergitundu94@gmail.com",
     "password": "Peter20930988!"
@@ -240,6 +257,7 @@ new_staff_account = {
     "firstname": "Harun",
     "lastname": "Gachanja",
     "form": "2",
+    "stream": "1A",
     "username": "Arrotech",
     "email": "harungachanjagitundu@gmail.com",
     "password": "Harun20930988!"
@@ -249,6 +267,7 @@ wrong_staff_account_keys = {
     "firstname": "Harun",
     "lastname": "Gachanja",
     "form": "2",
+    "stream": "1A",
     "usname": "Arrotech",
     "email": "harungachanjagitundu@gmail.com",
     "password": "Harun20930988!"
@@ -258,6 +277,7 @@ wrong_staff_account_firstname = {
     "firstname": "Ha  run",
     "lastname": "Gachanja",
     "form": "2",
+    "stream": "1A",
     "username": "Arrotech",
     "email": "harungachanjagitundu@gmail.com",
     "password": "Harun20930988!"
@@ -267,6 +287,7 @@ wrong_staff_account_lastname = {
     "firstname": "Harun",
     "lastname": "Gacha nja",
     "form": "2",
+    "stream": "1A",
     "username": "Arrotech",
     "email": "harungachanjagitundu@gmail.com",
     "password": "Harun20930988!"
@@ -285,6 +306,7 @@ wrong_staff_account_email = {
     "firstname": "Harun",
     "lastname": "Gachanja",
     "form": "2",
+    "stream": "1A",
     "username": "Arrotech",
     "email": "harungachanjagitundugmailcom",
     "password": "Harun20930988!"
@@ -294,6 +316,7 @@ wrong_staff_account_password = {
     "firstname": "Harun",
     "lastname": "Gachanja",
     "form": "2",
+    "stream": "1A",
     "username": "Arrotech",
     "email": "harungachanjagitundu@gmail.com",
     "password": "H"
@@ -312,6 +335,7 @@ username_staff_exists = {
     "firstname": "Harun",
     "lastname": "Gachanja",
     "form": "3",
+    "stream": "1A",
     "username": "Arrotech",
     "email": "gitundugachanja94@gmail.com",
     "password": "Harun20930988!"
@@ -321,6 +345,7 @@ email_staff_exists = {
     "firstname": "Harun",
     "lastname": "Gachanja",
     "form": "3",
+    "stream": "1A",
     "username": "Arrotech2547",
     "email": "harungachanjagitundu@gmail.com",
     "password": "Harun20930988!"
@@ -467,6 +492,7 @@ new_entry = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "maths": 87,
 "english": 87,
@@ -485,6 +511,7 @@ edit_exams = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "maths": 87,
 "english": 87,
@@ -503,6 +530,7 @@ edit_exams_keys = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "mat": 87,
 "english": 87,
@@ -521,6 +549,7 @@ term_restrictions = {
 "admission_no": "NJCF4001",
 "term": "first",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "maths": 87,
 "english": 87,
@@ -539,6 +568,7 @@ form_restrictions = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "5",
+"stream": "1A",
 "exam_type": "main",
 "maths": 87,
 "english": 87,
@@ -557,6 +587,7 @@ type_restrictions = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "test",
 "maths": 87,
 "english": 87,
@@ -575,6 +606,7 @@ wrong_exam_keys = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "mhs": 87,
 "english": 87,
@@ -593,6 +625,7 @@ entry = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "maths": 87,
 "english": 87,
@@ -611,6 +644,7 @@ greater_than = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "maths": 870,
 "english": 87,
@@ -629,6 +663,7 @@ less_than = {
 "admission_no": "NJCF4001",
 "term": "1st",
 "form": "4",
+"stream": "1A",
 "exam_type": "main",
 "maths": -87,
 "english": 87,
@@ -648,6 +683,8 @@ less_than = {
 
 new_subject = {
 "admission_no": "NJCF4001",
+"form": "4",
+"stream": "1A",
 "maths": "R",
 "english": "R",
 "kiswahili": "R",
@@ -663,6 +700,8 @@ new_subject = {
 
 new_subject_keys = {
 "admission_no": "NJCF4001",
+"form": "4",
+"stream": "1A",
 "maths": "R",
 "english": "R",
 "kiswahili": "R",
@@ -677,6 +716,8 @@ new_subject_keys = {
 
 edit_subjects = {
 "admission_no": "NJCF4001",
+"form": "4",
+"stream": "1A",
 "maths": "R",
 "english": "R",
 "kiswahili": "R",
@@ -692,6 +733,8 @@ edit_subjects = {
 
 edit_subjects_keys = {
 "admission_no": "NJCF4001",
+"form": "4",
+"stream": "1A",
 "maths": "R",
 "english": "R",
 "kiswahili": "R",
@@ -712,7 +755,8 @@ add_book = {
 "author": "Ken Walibora",
 "title": "Damu Nyeusi",
 "subject": "kiswahili",
-"form": "1"
+"form": "1",
+"stream": "1A"
 }
 
 add_book_keys = {
@@ -720,7 +764,8 @@ add_book_keys = {
 "book_no": "KISF1001/19",
 "author": "Ken Walibora",
 "title": "Damu Nyeusi",
-"subject": "kiswahili"
+"subject": "kiswahili",
+"stream": "1A"
 }
 
 edit_books = {
@@ -729,7 +774,8 @@ edit_books = {
 "author": "Ken Walibora",
 "title": "Damu Nyeusi",
 "subject": "kiswahili",
-"form": "1"
+"form": "1",
+"stream": "1A"
 }
 
 edit_books_keys = {
@@ -737,7 +783,8 @@ edit_books_keys = {
 "book_no": "KISF1001/19",
 "author": "Ken Walibora",
 "title": "Damu Nyeusi",
-"subject": "kiswahili"
+"subject": "kiswahili",
+"stream": "1A"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -748,6 +795,7 @@ add_fees = {
 "transaction_no": "176276",
 "description": "HELB",
 "form": "4",
+"stream": "1A",
 "amount": 25640
 }
 
@@ -756,6 +804,7 @@ add_fees_keys = {
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
+"stream": "1A",
 "amount": 25640
 }
 
@@ -765,6 +814,7 @@ edit_fees = {
 "transaction_no": "176276",
 "description": "HELB",
 "form": "4",
+"stream": "1A",
 "amount": 25640
 }
 
@@ -773,5 +823,6 @@ edit_fees_keys = {
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
+"stream": "1A",
 "amount": 25640
 }
