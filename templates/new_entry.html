@@ -1,133 +1,148 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Add-Exams</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-  <link rel="stylesheet" type="text/css" media="screen" href="css/new_entry.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add-Exam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/new_entry.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+        </script>
+    <script>
+        $(function () {
+            $("#admin_header").load("admin_header.html");
+            $("#footer").load("footer.html");
+        });
     </script>
-  <script>
-    $(function () {
-      $("#admin_header").load("admin_header.html");
-      $("#footer").load("footer.html");
-    });
-  </script>
 </head>
 
 <body>
-  <div class="leftnav">
-    <img src="img/avatar.png" alt="Avatar" class="avatar">
-    <div class="profile_name">
-      <p>Welcome,</p>
-      <p id="profile_name"></p>
+    <div class="leftnav">
+        <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
+        <div class="profile_name">
+            <p>Welcome,</p>
+            <p id="profile_name"></p>
+        </div>
+        <hr>
+        <div class="leftnav-bar">
+            <a class="  fas fa-pencil-alt" href="new_entry.html"> Add-Exam</a><br>
+            <a class="  far fa-edit" href="update_exams.html"> Update-Exam</a><br>
+            <a class="fas fa-user-edit" href="#"> Profile</a><br>
+            <a class="  fas fa-users" href="#"> Help</a><br>
+            <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
+            <a class="  fas fa-wrench" href="#"> settings</a><br>
+            <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
+        </div>
     </div>
-    <hr>
-    <div class="leftnav-bar">
-      <a class="  fas fa-pencil-alt" href="new_entry.html"> Add-Exam</a><br>
-      <a class="  far fa-edit" href="update_exams.html"> Update-Exam</a><br>
-      <a class="fas fa-user-edit" href="#"> Profile</a><br>
-      <a class="  fas fa-users" href="#"> Help</a><br>
-      <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
-      <a class="  fas fa-wrench" href="#"> settings</a><br>
-      <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
+    <div class="main">
+        <div id="admin_header"></div>
+        <script type="text/javascript" src="js/nav.js"></script>
+        <div class="main-content">
+            <div class="left">
+                <form id="postExams">
+                    <div class="container">
+                        <h2>Enter the Marks</h2>
+                        <hr>
+                        <div>
+                            <label><b>Registration Number:</b></label><br>
+                            <input id="admission_no" type="text" placeholder="i.e NJCF4001" name="" required><br>
+                        </div>
+                        <label><b>Term:</b></label><br>
+                        <select id="term" onchange="change(value)">
+                            <option value="" selected disabled hidden>Select...</option>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                        </select>
+                        <br>
+                        <label><b>Form:</b></label><br>
+                        <select id="form">
+                            <option value="" selected disabled hidden>Select...</option>
+                        </select>
+                        <br>
+                        <div>
+                            <label><b>Stream:</b></label><br>
+                            <input id="stream" type="text" placeholder="i.e 1A" name="" required><br>
+                        </div>
+                        <label><b>Type:</b></label><br>
+                        <select id="exam_type" onchange="change(value)">
+                            <option value="" selected disabled hidden>Select...</option>
+                            <option value="CAT">CAT</option>
+                            <option value="MAIN">MAIN</option>
+                            <option value="MID-TERM">MID-TERM</option>
+                            <option value="MOCK">MOCK</option>
+                            <option value="OPENER">OPENER</option>
+                        </select>
+                        <br>
+                        <div>
+                            <label><b>Mathematics:</b></label><br>
+                            <input id="maths" type="text" placeholder="i.e 78" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>English:</b></label><br>
+                            <input id="english" type="text" placeholder="i.e 78" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Kiswahili:</b></label><br>
+                            <input id="kiswahili" type="text" placeholder="i.e 78" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Chemistry:</b></label><br>
+                            <input id="chemistry" type="text" placeholder="i.e 78" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Biology:</b></label><br>
+                            <input id="biology" type="text" placeholder="i.e 78" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Physics:</b></label><br>
+                            <input id="physics" type="text" placeholder="i.e 78" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>History:</b></label><br>
+                            <input id="history" type="text" placeholder="i.e 4" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Geography:</b></label><br>
+                            <input id="geography" type="text" placeholder="i.e 4" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>CRE:</b></label><br>
+                            <input id="cre" type="text" placeholder="i.e 4" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Agriculture:</b></label><br>
+                            <input id="agriculture" type="text" placeholder="i.e 4" name="" required><br>
+                        </div>
+                        <div>
+                            <label><b>Business:</b></label><br>
+                            <input id="business" type="text" placeholder="i.e 4" name="" required><br>
+                        </div>
+                        <br>
+                        <div>
+                            <input type="submit" value="Add">
+                        </div>
+                        <div id="snackbar"></div>
+                        <div class="lnk">
+                            <p>Not entered marks yet? <a href="update_exams.html">Update</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/new_entry.js"></script>
+        <script type="text/javascript" src="js/select_books.js"></script>
+        <script type="text/javascript" src="js/select_term.js"></script>
+        <script type="text/javascript" src="js/select_type.js"></script>
+        <script type="text/javascript" src="js/staff_profile_name.js"></script>
+        <div id="footer"></div>
     </div>
-  </div>
-  <div class="main">
-    <div id="admin_header"></div>
-    <script type="text/javascript" src="js/nav.js"></script>
-    <div class="main-content">
-      <div class="left">
-        <form id="postExams">
-          <div class="container">
-            <h2>Enter Marks</h2>
-            <hr>
-            <div>
-              <label><b>Registration Number:</b></label><br>
-              <input id="admission_no" type="text" placeholder="i.e NJCF4001" name="" required><br>
-            </div>
-            <div>
-              <label><b>Term:</b></label><br>
-              <input id="term" type="text" placeholder="i.e 1st" name="" required><br>
-            </div>
-            <div>
-              <label><b>Form:</b></label><br>
-              <input id="form" type="text" placeholder="i.e 1" name="" required><br>
-            </div>
-            <div>
-              <label><b>Type:</b></label><br>
-              <input id="exam_type" type="text" placeholder="i.e Main" name="" required><br>
-            </div>
-            <div>
-              <label><b>Mathematics:</b></label><br>
-              <input id="maths" type="text" placeholder="i.e 78" name="" required><br>
-            </div>
-            <div>
-              <label><b>English:</b></label><br>
-              <input id="english" type="text" placeholder="i.e 78" name="" required><br>
-            </div>
-            <div>
-              <label><b>Kiswahili:</b></label><br>
-              <input id="kiswahili" type="text" placeholder="i.e 78" name="" required><br>
-            </div>
-            <div>
-              <label><b>Chemistry:</b></label><br>
-              <input id="chemistry" type="text" placeholder="i.e 78" name="" required><br>
-            </div>
-            <div>
-              <label><b>Biology:</b></label><br>
-              <input id="biology" type="text" placeholder="i.e 78" name="" required><br>
-            </div>
-            <div>
-              <label><b>Physics:</b></label><br>
-              <input id="physics" type="text" placeholder="i.e 78" name="" required><br>
-            </div>
-            <div>
-              <label><b>History:</b></label><br>
-              <input id="history" type="text" placeholder="i.e 4" name="" required><br>
-            </div>
-            <div>
-              <label><b>Geography:</b></label><br>
-              <input id="geography" type="text" placeholder="i.e 4" name="" required><br>
-            </div>
-            <div>
-              <label><b>CRE:</b></label><br>
-              <input id="cre" type="text" placeholder="i.e 4" name="" required><br>
-            </div>
-            <div>
-              <label><b>Agriculture:</b></label><br>
-              <input id="agriculture" type="text" placeholder="i.e 4" name="" required><br>
-            </div>
-            <div>
-              <label><b>Business:</b></label><br>
-              <input id="business" type="text" placeholder="i.e 4" name="" required><br>
-            </div>
-            <div>
-              <input type="submit" value="Add">
-            </div>
-            <div id="snackbar"></div>
-            <div class="lnk">
-              <p>Already entered the marks? <a href="update_exams.html">Update</a></p>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div id="footer"></div>
-    <script type="text/javascript" src="js/new_entry.js"></script>
-    <script type="text/javascript" src="js/select_term.js"></script>
-    <script type="text/javascript" src="js/select_type.js"></script>
-    <script type="text/javascript" src="js/staff_profile_name.js"></script>
-  </div>
-
 </body>
 
 </html>

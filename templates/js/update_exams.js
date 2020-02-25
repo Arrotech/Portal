@@ -28,6 +28,7 @@ document.getElementById('updateExams').addEventListener('submit', updateExams);
             let admission_no = document.getElementById('admission_no').value;
             let term = document.getElementById('term').value;
             let form = document.getElementById('form').value;
+            let stream = document.getElementById('stream').value;
             let exam_type = document.getElementById('exam_type').value;
             let maths = document.getElementById('maths').value;
             let english = document.getElementById('english').value;
@@ -50,7 +51,7 @@ document.getElementById('updateExams').addEventListener('submit', updateExams);
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token,
                 },
-                body:JSON.stringify({admission_no:admission_no, term:term, form:form, exam_type:exam_type, maths:maths, english:english, kiswahili:kiswahili, chemistry:chemistry, biology:biology, physics:physics, history:history, geography:geography, cre:cre, agriculture:agriculture, business:business})
+                body:JSON.stringify({admission_no:admission_no, term:term, form:form, stream:stream, exam_type:exam_type, maths:maths, english:english, kiswahili:kiswahili, chemistry:chemistry, biology:biology, physics:physics, history:history, geography:geography, cre:cre, agriculture:agriculture, business:business})
             }).then((res) => res.json())
             .then((data) =>  {
                 console.log(admission_no);
