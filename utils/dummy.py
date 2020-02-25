@@ -37,6 +37,16 @@ new_account = {
     "role": "student"
 }
 
+promote_user = {
+    "form": "1",
+    "stream": "1A"
+}
+
+promote_user_key = {
+    "fm": "1",
+    "stream": "1A"
+}
+
 wrong_password_login = {
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Mercy20930988!"
