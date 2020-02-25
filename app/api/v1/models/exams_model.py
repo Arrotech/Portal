@@ -26,7 +26,8 @@ class ExamsModel(Database):
             geography=None,
             cre=None,
             agriculture=None,
-            business=None):
+            business=None,
+            date=None):
         """Initialization."""
         super().__init__()
 
@@ -46,15 +47,16 @@ class ExamsModel(Database):
         self.cre = cre
         self.agriculture = agriculture
         self.business = business
+        self.date = datetime.now()
 
     def save(self):
         """Save new exam entry to the exams database."""
         self.curr.execute(
-            ''' INSERT INTO exams(admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business)\
-            VALUES('{}','{}','{}','{}','{}',{},{},{},{},{},{},{},{},{},{},{})\
-            RETURNING admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business'''
+            ''' INSERT INTO exams(admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business, date)\
+            VALUES('{}','{}','{}','{}','{}',{},{},{},{},{},{},{},{},{},{},{},'{}')\
+            RETURNING admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business, date'''
             .format(self.admission_no, self.term, self.form, self.stream, self.exam_type, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics, self.history, self.geography, self.cre,
-                    self.agriculture, self.business))
+                    self.agriculture, self.business, self.date))
         exam = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

@@ -35,6 +35,7 @@ function postSignup(event) {
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
         let form = document.getElementById('form').value;
+        let stream = document.getElementById('stream').value;
 
         fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/register', {
             method: 'POST',
@@ -42,7 +43,7 @@ function postSignup(event) {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ firstname: firstname, lastname: lastname, surname: surname, admission_no: admission_no, email: email, password: password, form: form })
+            body: JSON.stringify({ firstname: firstname, lastname: lastname, surname: surname, admission_no: admission_no, email: email, password: password, form: form, stream: stream })
         }).then((res) => res.json())
             .then((data) => {
                 console.log(data);

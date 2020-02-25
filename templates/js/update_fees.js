@@ -30,6 +30,7 @@ document.getElementById('updateFees').addEventListener('submit', updateFees);
             let transaction_no = document.getElementById('transaction_no').value;
             let description = document.getElementById('description').value;
             let form = document.getElementById('form').value;
+            let stream = document.getElementById('stream').value;
             let amount = document.getElementById('amount').value;
 
             fetch('https://njc-school-portal.herokuapp.com/api/v1/fees/' + fee_id, {
@@ -40,7 +41,7 @@ document.getElementById('updateFees').addEventListener('submit', updateFees);
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token,
                 },
-                body:JSON.stringify({admission_no:admission_no, transaction_type:transaction_type, transaction_no:transaction_no, description:description, form:form, amount:amount})
+                body:JSON.stringify({admission_no:admission_no, transaction_type:transaction_type, transaction_no:transaction_no, description:description, form:form, stream:stream, amount:amount})
             }).then((res) => res.json())
             .then((data) =>  {
 

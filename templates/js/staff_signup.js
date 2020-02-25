@@ -30,6 +30,7 @@ function staffSignup(event) {
         let firstname = document.getElementById('firstname').value;
         let lastname = document.getElementById('lastname').value;
         let form = document.getElementById('form').value;
+        let stream = document.getElementById('stream').value;
         let username = document.getElementById('username').value;
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
@@ -40,7 +41,7 @@ function staffSignup(event) {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ firstname: firstname, lastname: lastname, form: form, username: username, email: email, password: password })
+            body: JSON.stringify({ firstname: firstname, lastname: lastname, form: form, stream: stream, username: username, email: email, password: password })
         }).then((res) => res.json())
             .then((data) => {
 
