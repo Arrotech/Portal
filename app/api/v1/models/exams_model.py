@@ -14,6 +14,7 @@ class ExamsModel(Database):
             admission_no=None,
             term=None,
             form=None,
+            stream=None,
             exam_type=None,
             maths=None,
             english=None,
@@ -32,6 +33,7 @@ class ExamsModel(Database):
         self.admission_no = admission_no
         self.term = term
         self.form = form
+        self.stream = stream
         self.exam_type = exam_type
         self.maths = maths
         self.english = english
@@ -48,10 +50,10 @@ class ExamsModel(Database):
     def save(self):
         """Save new exam entry to the exams database."""
         self.curr.execute(
-            ''' INSERT INTO exams(admission_no, term, form, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business)\
-            VALUES('{}','{}','{}','{}',{},{},{},{},{},{},{},{},{},{},{})\
-            RETURNING admission_no, term, form, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business'''
-            .format(self.admission_no, self.term, self.form, self.exam_type, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics, self.history, self.geography, self.cre,
+            ''' INSERT INTO exams(admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business)\
+            VALUES('{}','{}','{}','{}','{}',{},{},{},{},{},{},{},{},{},{},{})\
+            RETURNING admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business'''
+            .format(self.admission_no, self.term, self.form, self.stream, self.exam_type, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics, self.history, self.geography, self.cre,
                     self.agriculture, self.business))
         exam = self.curr.fetchone()
         self.conn.commit()
@@ -100,13 +102,13 @@ class ExamsModel(Database):
         self.conn.commit()
         self.curr.close()
 
-    def edit_exams(self, exam_id, admission_no, term, form, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business):
+    def edit_exams(self, exam_id, admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business):
         """User can Change exams marks."""
 
         self.curr.execute("""UPDATE exams\
-			SET admission_no='{}', term='{}', form='{}', exam_type='{}', maths='{}', english='{}', kiswahili='{}', chemistry='{}', biology='{}', physics='{}', history='{}', geography='{}', cre='{}', agriculture='{}', business='{}'\
-			WHERE exam_id={} RETURNING admission_no, term, form, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business"""
-            .format(exam_id, admission_no, term, form, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business))
+			SET admission_no='{}', term='{}', form='{}', stream='{}', exam_type='{}', maths='{}', english='{}', kiswahili='{}', chemistry='{}', biology='{}', physics='{}', history='{}', geography='{}', cre='{}', agriculture='{}', business='{}'\
+			WHERE exam_id={} RETURNING admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business"""
+            .format(exam_id, admission_no, term, form, stream, exam_type, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business))
         exam = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

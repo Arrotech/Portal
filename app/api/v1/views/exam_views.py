@@ -26,6 +26,7 @@ def add_exam():
     admission_no = details['admission_no']
     term = details['term']
     form = details['form']
+    stream = details['stream']
     exam_type = details['exam_type']
     maths = details['maths']
     english = details['english']
@@ -47,6 +48,7 @@ def add_exam():
         exam = ExamsModel(admission_no,
                         term,
                         form,
+                        stream,
                         exam_type,
                         maths,
                         english,
@@ -148,6 +150,7 @@ def put(exam_id):
     admission_no = details['admission_no']
     term = details['term']
     form = details['form']
+    stream = details['stream']
     exam_type = details['exam_type']
     maths = details['maths']
     english = details['english']
@@ -164,6 +167,7 @@ def put(exam_id):
     exam = ExamsModel().edit_exams(admission_no,
                                 term,
                                 form,
+                                stream,
                                 exam_type,
                                 maths,
                                 english,

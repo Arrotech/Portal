@@ -6,7 +6,7 @@ from app.api.v1.models.database import Database
 class UsersModel(Database):
     """Add a new user and retrieve User(s) by Id, Admission Number or Email."""
 
-    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, email=None, password=None, form=None, role='student'):
+    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, email=None, password=None, form=None, stream=None, role='student'):
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
@@ -16,15 +16,16 @@ class UsersModel(Database):
         if password:
             self.password = generate_password_hash(password)
         self.form = form
+        self.stream = stream
         self.role = role
 
     def save(self):
         """Save information of the new user."""
         self.curr.execute(
-            ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, form, role)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, role''' \
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, form, stream, role)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, stream, role''' \
                 .format(self.firstname, self.lastname, self.surname, self.admission_no, self.email, self.password,
-                        self.form, self.role))
+                        self.form, self.stream, self.role))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

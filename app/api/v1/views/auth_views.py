@@ -3,7 +3,7 @@ from flask import make_response, jsonify, request, Blueprint, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
-from utils.utils import is_valid_email, raise_error, check_register_keys, form_restrictions, check_teachers_keys, is_valid_password
+from utils.utils import is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password
 import datetime
 from werkzeug.security import check_password_hash
 
@@ -24,6 +24,7 @@ def signup():
     email = details['email']
     password = details['password']
     form = details['form']
+    stream = details['stream']
     if details['firstname'].isalpha() is False:
         return raise_error(400, "firstname is in wrong format")
     if details['lastname'].isalpha() is False:
@@ -43,7 +44,7 @@ def signup():
     if (form_restrictions(form) is False):
         return raise_error(400, "Form should be 1, 2, 3 or 4")
     user = json.loads(UsersModel(firstname, lastname, surname,
-                      admission_no, email, password, form).save())
+                      admission_no, email, password, form, stream).save())
     return make_response(jsonify({
         "message": "Account created successfully!",
         "status": "201",

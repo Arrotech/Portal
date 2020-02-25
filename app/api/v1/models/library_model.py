@@ -15,7 +15,8 @@ class LibraryModel(Database):
             author=None,
             title=None,
             subject=None,
-            form=None):
+            form=None,
+            stream=None):
         super().__init__()
         self.admission_no = admission_no
         self.book_no = book_no
@@ -23,15 +24,16 @@ class LibraryModel(Database):
         self.title = title
         self.subject = subject
         self.form = form
+        self.stream =stream
 
     def save(self):
         """Add a new book."""
 
         self.curr.execute(
-            ''' INSERT INTO library(admission_no, book_no, author, title, subject, form)\
-            VALUES('{}','{}','{}','{}','{}','{}')\
-             RETURNING admission_no, book_no, author, title, subject, form''' \
-                .format(self.admission_no, self.book_no, self.author, self.title, self.subject, self.form))
+            ''' INSERT INTO library(admission_no, book_no, author, title, subject, form, stream)\
+            VALUES('{}','{}','{}','{}','{}','{}','{}')\
+             RETURNING admission_no, book_no, author, title, subject, form, stream''' \
+                .format(self.admission_no, self.book_no, self.author, self.title, self.subject, self.form, self.stream))
         book = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -54,13 +56,13 @@ class LibraryModel(Database):
         self.curr.close()
         return json.dumps(book, default=str)
 
-    def edit_books(self, book_id, admission_no, book_no, author, title, subject, form):
+    def edit_books(self, book_id, admission_no, book_no, author, title, subject, form, stream):
         """Edit books."""
 
         self.curr.execute("""UPDATE library\
-			SET admission_no='{}', book_no='{}', author='{}', title='{}', subject='{}', form='{}'\
-			WHERE book_id={} RETURNING admission_no, book_no, author, title, subject, form"""
-            .format(book_id, admission_no, book_no, author, title, subject, form))
+			SET admission_no='{}', book_no='{}', author='{}', title='{}', subject='{}', form='{}', stream='{}'\
+			WHERE book_id={} RETURNING admission_no, book_no, author, title, subject, form, stream"""
+            .format(book_id, admission_no, book_no, author, title, subject, form, stream))
         book = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

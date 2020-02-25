@@ -28,6 +28,7 @@ class Database:
                 email varchar NOT NULL,
                 password varchar NOT NULL,
                 form numeric NOT NULL,
+                stream varchar NOT NULL,
                 role varchar NOT NULL
             )""",
             """
@@ -36,6 +37,7 @@ class Database:
                 firstname varchar NOT NULL,
                 lastname varchar NOT NULL,
                 form varchar NOT NULL,
+                stream varchar NOT NULL,
                 username varchar NOT NULL,
                 email varchar NOT NULL,
                 password varchar NOT NULL,
@@ -59,6 +61,7 @@ class Database:
                 admission_no varchar NOT NULL,
                 term varchar NOT NULL,
                 form numeric NOT NULL,
+                stream varchar NOT NULL,
                 exam_type varchar NOT NULL,
                 maths numeric NOT NULL,
                 english numeric NOT NULL,
@@ -81,6 +84,7 @@ class Database:
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
                 form varchar NOT NULL,
+                stream varchar NOT NULL,
                 amount numeric NOT NULL,
                 date TIMESTAMP
             )
@@ -93,12 +97,15 @@ class Database:
                 author varchar NOT NULL,
                 title varchar NOT NULL,
                 subject varchar NOT NULL,
-                form varchar NOT NULL
+                form varchar NOT NULL,
+                stream varchar NOT NULL
             )""",
             """
             CREATE TABLE IF NOT EXISTS subjects(
                 subject_id serial PRIMARY KEY,
                 admission_no varchar NOT NULL,
+                form varchar NOT NULL,
+                stream varchar NOT NULL,
                 maths varchar NOT NULL,
                 english varchar NOT NULL,
                 kiswahili varchar NOT NULL,

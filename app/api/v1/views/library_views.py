@@ -27,6 +27,7 @@ def add_book():
     title = details['title']
     subject = details['subject']
     form = details['form']
+    stream = details['stream']
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
         book = LibraryModel(admission_no,
@@ -34,7 +35,8 @@ def add_book():
                             author,
                             title,
                             subject,
-                            form).save()
+                            form,
+                            stream).save()
         book = json.loads(book)
         return make_response(jsonify({
             "status": "201",
@@ -88,6 +90,7 @@ def put(book_id):
     title = details['title']
     subject = details['subject']
     form = details['form']
+    stream = details['stream']
 
     book = LibraryModel().edit_books(admission_no,
                             book_no,
@@ -95,6 +98,7 @@ def put(book_id):
                             title,
                             subject,
                             form,
+                            stream,
                             book_id)
     book = json.loads(book)
     if book:
