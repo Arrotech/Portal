@@ -3,7 +3,7 @@ from flask import make_response, jsonify, request, Blueprint, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
-from utils.utils import is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password
+from utils.utils import is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
 import datetime
 from werkzeug.security import check_password_hash
 
@@ -147,3 +147,28 @@ def get_user(admission_no):
         "status": "404",
         "message": "User Not Found"
     }), 404)
+
+@auth_v1.route('/users/<string:admission_no>/promote', methods=['PUT'])
+@jwt_required
+def promote(admission_no):
+    """An admin can promote a student to another form."""
+    errors = check_promote_student_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+    details = request.get_json()
+    form = details['form']
+    stream = details['stream']
+    user = json.loads(UsersModel().get_admission_no(admission_no))
+    if user:
+        updated_user = json.loads(UsersModel().promote_user(form, stream, admission_no))
+        return make_response(jsonify({
+            "status": "200",
+            "message": "student promoted successfully",
+            "user": updated_user
+        }), 200)
+    return make_response(jsonify({
+        "status": "404",
+        "message": "student not found"
+    }), 404)
+
+

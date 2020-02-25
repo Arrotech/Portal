@@ -52,3 +52,13 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(user, default=str)
+
+    def promote_user(self, admission_no, form, stream):
+        """Promote a student from one form to the next."""
+
+        self.curr.execute("""UPDATE users SET form='{}', stream='{}' WHERE admission_no='{}' RETURNING admission_no, form, stream"""
+        .format(admission_no, form, stream))
+        user = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(user, default=str)

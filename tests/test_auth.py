@@ -1,7 +1,7 @@
 import json
 
 from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname, \
-    wrong_lastname, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
+    wrong_lastname, promote_user, promote_user_key, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
 from .base_test import BaseTest
 
 
@@ -17,6 +17,32 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Account created successfully!')
         assert response.status_code == 201
+
+    def test_promote_user(self):
+        """Test promote user."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.put(
+            '/api/v1/auth/users/NJCF4001/promote', data=json.dumps(promote_user), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'student promoted successfully')
+        assert response1.status_code == 200
+
+    def test_promote_user_unexisting_user(self):
+        """Test promote unexisting user."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.put(
+            '/api/v1/auth/users/NJCF4002/promote', data=json.dumps(promote_user), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'student not found')
+        assert response1.status_code == 404
 
     def test_login_with_wrong_password(self):
         """Test the vote json keys."""
@@ -94,6 +120,19 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid firstname key')
         assert response.status_code == 400
+
+    def test_promote_user_keys(self):
+        """Test the promote user json keys."""
+
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.put(
+            '/api/v1/auth/users/NJCF4001/promote', data=json.dumps(promote_user_key), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Invalid form key')
+        assert response1.status_code == 400
 
     def test_password_length(self):
         """Test the vote json keys."""
