@@ -17,12 +17,6 @@ function raiseError(msg) {
     callToast();
 }
 
-logout.onclick = (event) => {
-    event.preventDefault();
-    window.localStorage.clear();
-    window.location.replace('login.html');
-}
-
 token = window.localStorage.getItem('token');
 admission = window.localStorage.getItem('admission_no');
 
