@@ -16,6 +16,7 @@
     </script>
   <script>
     $(function () {
+      $("#student_leftnav").load("student_leftnav.html");
       $("#student_header").load("student_header.html");
       $("#footer").load("footer.html");
     });
@@ -23,27 +24,7 @@
 </head>
 
 <body>
-  <div class="leftnav">
-    <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
-    <div class="profile_name">
-      <p>Welcome,</p>
-      <p id="profile_name"></p>
-    </div>
-    <hr>
-    <div class="leftnav-bar">
-      <a class="far fa-clone" href="get_fees.html"> Fees</a><br>
-      <a class="far fa-clone" href="exams.html"> Exams</a><br>
-      <a class=" fas fa-align-justify" href="subjects.html"> Subjects</a><br>
-      <a class="fas fa-book-open" href="library.html">Library</a><br>
-      <a class="far fa-address-card" href="student-id.html"> Student ID</a><br>
-      <a class="fas fa-sticky-note" href="pastpapers.html"> Past Papers</a><br>
-      <a class="fas fa-user-edit" href="#"> Profile</a><br>
-      <a class="  fas fa-users" href="#"> Help</a><br>
-      <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
-      <a class="  fas fa-wrench" href="#"> Settings</a><br>
-      <a class="far fa-clock" id="logout" onclick="logout()" href="#"> Sign Out</a><br>
-    </div>
-  </div>
+  <div id="student_leftnav"></div>
   <div class="main">
     <div id="student_header"></div>
     <script type="text/javascript" src="js/nav.js"></script>
