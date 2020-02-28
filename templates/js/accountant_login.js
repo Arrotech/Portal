@@ -34,7 +34,7 @@ document.getElementById('accountantLogin').addEventListener('submit', accountant
                     localStorage.setItem('username', data.user.username);
                     localStorage.setItem('email', data.user.email);
                     onSuccess('Signed in successfully!');
-                    window.location.replace('bursar.html');
+                    window.location.replace('accountant.html');
                 }else{
                     raiseError(message);
                 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Accountant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+        </script>
+    <script>
+        $(function () {
+            $("#bursar_leftnav").load("bursar_leftnav.html");
+            $("#bursar_header").load("bursar_header.html");
+            $("#footer").load("footer.html");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="bursar_leftnav"></div>
+    <div class="main">
+        <div id="bursar_header"></div>
+        <div class="main-content">
+            <div class="container">
+                <table>
+                    <tbody id="data"></tbody>
+                    <thead>
+                        <tr>
+                            <th>USERNAME</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                        </tr>
+                    </thead>
+                    <div id="snackbar"></div>
+                </table>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/nav.js"></script>
+        <script type="text/javascript" src="js/accountant_credentials.js"></script>
+        <script type="text/javascript" src="js/bursar_credentials.js"></script>
+        <div id="footer"></div>
+    </div>
+
+</body>
+
+</html>
