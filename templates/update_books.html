@@ -16,33 +16,17 @@
     </script>
   <script>
     $(function () {
+      $("#admin_leftnav").load("admin_leftnav.html");
       $("#admin_header").load("admin_header.html");
       $("#footer").load("footer.html");
     });
   </script>
 </head>
 
-<body background="bookshop.jpg">
-  <div class="leftnav">
-    <img src="img/avatar.png" alt="Avatar" class="avatar"><br>
-    <div class="profile_name">
-      <p>Welcome,</p>
-      <p id="profile_name"></p>
-    </div>
-    <hr>
-    <div class="leftnav-bar">
-      <a class="  fas fa-pencil-alt" href="add_books.html"> Add-Books</a><br>
-      <a class="  far fa-edit" href="update_books.html"> Update-Books</a><br>
-      <a class="fas fa-user-edit" href="#"> Profile</a><br>
-      <a class="  fas fa-users" href="#"> Help</a><br>
-      <a class="far fa-calendar-alt" href="#"> Calendar</a><br>
-      <a class="  fas fa-wrench" href="#"> settings</a><br>
-      <a class="far fa-clock" id="logout" onclick="on_logout()" href="#"> Sign Out</a><br>
-    </div>
-  </div>
+<body>
+  <div id="admin_leftnav"></div>
   <div class="main">
     <div id="admin_header"></div>
-    <script type="text/javascript" src="js/nav.js"></script>
     <div class="main-content">
       <div class="left">
         <form id="updateBooks">
