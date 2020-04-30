@@ -5,129 +5,170 @@
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.css");
+
 /* TODO - use inline-block and width 40% */
+
+
 /* body { 
     min-width: 960px;
     max-width: 960px;
     margin: 5px auto 5px auto;
     background-color: white; 
   } */
-  
+
+
 /* banner is another row itself */
+
+
 /* TODO - set display block and margin 20px top/bottome and 10px left/right */
+
 .banner {
-  display: inline-block;
-  margin: 20px 10px 20px 10px;
+    display: inline-block;
+    margin: 20px 10px 20px 10px;
 }
+
 
 /* two links/images inthe banner share the row */
+
+
 /* TODO - use inline block */
-.banner > a {
-  display: inline-block;
+
+.banner>a {
+    display: inline-block;
 }
+
 
 /* TODO - set first logo width 30% and 2nd 66% */
-.banner > a:nth-child(1) {
-  width: 30%;
+
+.banner>a:nth-child(1) {
+    width: 30%;
 }
-.banner > a:nth-child(2) {
-  width: 66%;
+
+.banner>a:nth-child(2) {
+    width: 66%;
 }
+
 
 /* TODO - set display block for image since it is the only child and does NOT share the row with anyone under its parent. */
-.banner > a > img {
-  display: inline-block;
-}
-.banner > a2 {
-  padding: 200px;
-}
-.banner > a3 {
-  color: green;
-  font-size: 30px;
-  padding: 800px;
+
+.banner>a>img {
+    display: inline-block;
 }
 
+.banner>a2 {
+    padding: 200px;
+}
+
+.banner>a3 {
+    color: green;
+    font-size: 30px;
+    padding: 800px;
+}
+
+
 /* words*/
+
 .banner h1 {
-  color: #000000;
-  font-size: 40px;
-  text-align: center;
-  line-height: 100px;
-  font-family: Courgette;
+    color: #b22222;
+    font-size: 40px;
+    text-align: center;
+    line-height: 100px;
+    font-family: Courgette;
 }
+
 .words {
-  font-family: Muli;
+    font-family: Muli;
 }
-.words > h2 {
-  color: #333;
-  line-height: 60px;
+
+.words>h2 {
+    color: #333;
+    line-height: 60px;
 }
-.words > ul {
-  color: grey;
+
+.words>ul {
+    color: grey;
 }
-.words > li {
-  color: grey;
-  line-height: 30px;
+
+.words>li {
+    color: grey;
+    line-height: 30px;
 }
 
 .fotorama {
-  display: block;
-  width: 50%;
-  margin: 0 auto;
+    display: block;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .my-footer {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  background-color: ;
-  background-image: url("http://extensionreforms.dacnet.nic.in/images/9.jpg");
-  background-size: contain;
-  background-position: top center;
-  background-repeat: repeat;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-image: url("http://extensionreforms.dacnet.nic.in/images/9.jpg");
+    background-size: contain;
+    background-position: top center;
+    background-repeat: repeat;
 }
 
-.my-footer > span {
-  display: block;
-  color: #dddddd;
-  font-family: sans-serif;
+.my-footer>span {
+    display: block;
+    color: #dddddd;
+    font-family: sans-serif;
 }
 
-.my-footer > span > a {
-  color: steelblue;
-  text-decoration: none;
+.my-footer>span>a {
+    color: steelblue;
+    text-decoration: none;
 }
 
-.my-footer > .name {
-  margin-top: 30px;
-  margin-bottom: 10px;
-  font-size: 200%;
-  font-family: cookie;
-  color: #000000;
+.my-footer>.name {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 200%;
+    font-family: cookie;
+    color: #000000;
 }
 
-.my-footer > .social-media {
-  margin-bottom: 10px;
-}
-.my-footer > .social-media > a {
-  padding: 0 5px;
-  font-size: 38px;
-  color: #333;
+.my-footer>.social-media {
+    margin-bottom: 10px;
 }
 
-.my-footer > .copyright {
-  font-size: 60%;
+.my-footer>.social-media>a {
+    padding: 0 5px;
+    font-size: 38px;
+    color: #3b5998;
 }
 
-.my-footer > .quick-access > a {
-  border-right: 1px solid;
-  padding: 0 1em;
-  font-size: 60%;
+.my-footer>.copyright {
+    font-size: 60%;
 }
-.my-footer > .quick-access > a:last-child {
-  border: 0;
+
+.my-footer>.quick-access>a {
+    border-right: 1px solid;
+    padding: 0 1em;
+    font-size: 60%;
 }
-.my-footer > ul {
-  color: #000000;
+
+.my-footer>.quick-access>a:last-child {
+    border: 0;
+}
+
+.my-footer>ul {
+    color: #b22222;
+}
+
+footer {
+    background-color: #f1f1f1;
+    margin: 0;
+}
+
+footer p a {
+    color: #B22222;
+    text-decoration: none;
+}
+
+footer p a:hover {
+    color: #252525;
+    text-decoration: none;
 }
