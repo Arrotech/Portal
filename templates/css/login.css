@@ -1,247 +1,127 @@
-body{
-  background:-webkit-linear-gradient(#fff, #000000);
-  font-family:'Trebuchet MS';
-  color:#fff;
-  height:150vh;
-  /* background-image: url('bookshop.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: 50% 50%; */
-}
-.main{
-  height:400px;
-  width:50%;
-  /*border:1px solid #fff;*/
-  margin:7% auto;
-}
-.main div{
-  display: inline-block;
-  border:none;
-}
-.main .left{
-  width:50%;
-  float:left;
-  /*border-right:1px solid #fff;*/
-  height:100%;
-  /*padding:15px 0 0 0;*/
-  background-color: rgba(214, 38, 38, 0.3);
-  border-radius: 5px;
-  position: relative;
-  color: #000000;
-}
-.left h1{
-  text-align: center;
-  /*padding-left:120px;*/
-  padding-top:100px;
-  margin-bottom: 0;
-}
-.left p{
-  margin-top:0;
-  text-align:center;
-  color:#333;
-}
-.left form{
-  text-align: center;
-}
-.left form input{
-  text-align:center;
-  width:70%;
-  height:25px;
-  margin-bottom:10px;
-  border:none;
-  border:1px solid #F8F8F8;
-  background-color:#F8F8F8;
-  border-radius:25px;
-}
-.left .pswd {
-  display: flex;
-}
-.left .pswd #password{
-  margin-left: 15%;
-  width: 70%;
-}
-.field-icon {
-  margin-left: -25px;
-  position: relative;
-  z-index: 2;
-  padding: 5px;
-  color: #000000;
-}
-.left form input:focus{
-  outline:none;
-}
-::-webkit-input-placeholder{
-  color:grey;
-  letter-spacing: 1px;
-}
-.left form input[type="submit"]{
-  background-color:#d65050;
-  color:#fff;
-  font-weight: bold;
-}
-.left form input[type="submit"]:hover{
-  background-color: #000000;
-  color: #fff;
-}
-.left p.forgot{
-  color:#fff;
-  font-size:12px;
-  padding-top:40px;
-}
-.left p.or{
-  color:grey;
-  font-size:15px;
-  border:1px solid #f8f8f8;
-  width:40px;
-  font-weight:200;
-  height:30px;
-  padding-top:10px;
-  background-color: #fff;
-  border-radius: 50%;
-  position: absolute;
-  top: 42%;
-  left: 94%;
-  z-index:10;
-  /*text-align:center;*/
-}
-/*.left .form{
-  border:1px solid;
-}*/
-.main .right{
-  /*height:100%;*/
-  width:50%;
-  float:left;
-  height:100%;
-  margin-left:-5px;
-  padding-right:5px;
-  background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
-  background-color:#000000;
-  background-size: cover;
-  text-align:center;
-  border-radius: 5px;
-  color: #fff;
-}
-.right h1{
-  padding-top:100px;
-  margin-bottom:10px;
-}
-.right{
-  color:#fff;
-}
-.right p{
-  margin:0;
-}
-.right .social{
-  margin-top:40px;
-  width:100%;
-}
-.social button{
-  border:none;
-  padding:15px;
-  width:50px;
-  font-size:18px;
-  background-color:#fff;
-  margin-left:10px;
-  margin-right:10px;
-  border-radius:50%;
-}
-.social .twitter{
-  color:#55ACEE;
-}
-.social .facebook{
-  color:#012677;
-}
-.social .google{
-  color:#D50F25;
-}
-.social p{
-  font-size:12px;
-}
-.social p.dont{
-  padding-top:165px;
-  font-size:13px;
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+html,
+body {
+    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
 }
 
+.container {
+    height: 100%;
+    align-content: center;
+}
+
+.card {
+    height: 370px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: #B22222;
+}
+
+.social_icon span:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.card-header h3 {
+    color: white;
+}
+
+.social_icon {
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: #B22222;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.remember {
+    color: white;
+}
+
+.remember input {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.form-group .login_btn {
+    background-color: #B22222;
+    color: #000000;
+    width: 100px;
+}
+
+.login_btn:hover {
+    color: black;
+    background-color: #f1f1f1;
+}
+
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
+
+
 /*snack bar css*/
+
 #snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: rgb(230, 78, 78);
-  color: #000000;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 15px;
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color: #f1f1f1;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 15px;
 }
 
 #snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-/*==================== MEDIA QUERIES SECTION =====================*/
-
-@media (max-width: 600px){
-  .main{
-    width:80%;
-    margin:7% auto;
-  }
-  .main div{
-    display: inline-block;
-    border:none;
-  }
-  .left p.or{
-    color:grey;
-    font-size:15px;
-    border:1px solid #f8f8f8;
-    width:40px;
-    font-weight:200;
-    height:30px;
-    padding-top:10px;
-    background-color: #fff;
-    border-radius: 50%;
-    position: absolute;
-    top: 97%;
-    left: 42%;
-    z-index:10;
-    /*text-align:center;*/
-  }
-
-  .main .left{
-    margin-left: 32px;
-    width: 85%;
-    /* float:left; */
-    /*border-right:1px solid #fff;*/
-    height:100%;
-    /*padding:15px 0 0 0;*/
-    background-color: rgba(255, 0, 0, 0.3);
-    border-radius: 5px;
-    position: relative;
-    color: white;
-  }
-
-  .main .right{
-    /*height:100%;*/
-    width: 85%;
-    height:100%;
-    margin-top:-5px;
-    margin-left: 32px;
-    margin-bottom: 10px;
-    padding-right:5px;
-    background-image:url('https://s4.postimg.org/k8u6q3g8d/baloon.jpg');
-    background-color:#000000;
-    background-size: cover;
-    text-align:center;
-    border-radius: 5px;
-    color: #fff;
-  }
+footer {
+    background-color: #f1f1f1;
 }
 
+footer p a {
+    color: #B22222;
+    text-decoration: none;
+}
+
+footer p a:hover {
+    color: #252525;
+    text-decoration: none;
+}
