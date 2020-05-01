@@ -1,3 +1,7 @@
+.container {
+    padding: 20px;
+}
+
 .container-search {
     background-color: #f1f1f1;
     color: #252525;
@@ -19,22 +23,17 @@
     color: #252525;
 }
 
-.rounded-circle {
-    width: 50px;
-    height: 50px;
-}
-
 .student-container {
     background: #f4f4f4;
     color: #252525;
-    height: 100px;
-    padding: 16px;
+    padding: 20px;
 }
 
-.container {
-    padding: 20px;
-    background-color: #f4f4f4;
-    margin-top: -25px;
+.col-sm {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 2px;
 }
 
 .inf-content {
@@ -69,4 +68,18 @@
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+footer {
+    background-color: #f1f1f1;
+}
+
+footer p a {
+    color: #B22222;
+    text-decoration: none;
+}
+
+footer p a:hover {
+    color: #252525;
+    text-decoration: none;
 }
