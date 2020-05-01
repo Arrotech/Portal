@@ -1,5 +1,6 @@
 .container {
     padding: 20px;
+    background-color: #f1f1f1;
 }
 
 .container-search {
@@ -30,10 +31,37 @@
 }
 
 .col-sm {
-    background-color: #fff;
+    background-color: #f1f1f1;
     border-radius: 5px;
     padding: 10px;
-    margin: 2px;
+    margin: 10px;
+}
+
+.balance h2 {
+    color: #b22222;
+    padding: 8px;
+}
+
+.deadline h5 {
+    color: royalblue;
+    padding: 10px;
+}
+
+.paid h2 {
+    color: green;
+    padding: 8px;
+}
+
+caption {
+    padding: 14px;
+}
+
+.dot {
+    height: 18px;
+    width: 18px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
 }
 
 .inf-content {
