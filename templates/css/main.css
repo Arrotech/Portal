@@ -101,56 +101,6 @@ header {
     cursor: pointer;
 }
 
-
-/* Style the active class (and buttons on mouse-over) */
-
-.active,
-.active-btn:hover {
-    background-color: #666;
-    color: white;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-table,
-th,
-td {
-    border: 1px solid white;
-}
-
-th {
-    text-align: left;
-    padding: 5px;
-    /* border-bottom: 1px solid #ddd; */
-    background-color: #000000;
-    color: white;
-    font-size: 12px;
-}
-
-td {
-    height: 12px;
-    vertical-align: bottom;
-    padding: 5px;
-    text-align: left;
-    font-size: 12px;
-    /* border-bottom: 1px solid #ddd; */
-}
-
-tr:hover {
-    background-color: #d65050;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:hover {
-    background-color: #fff;
-}
-
 select {
     width: 250px;
     height: 22px;
@@ -242,9 +192,23 @@ header img {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #000000;
+    background-color: #b22222;
     overflow-x: hidden;
     padding-top: 20px;
+    color: #f1f1f1;
+    margin-top: 1px;
+}
+
+.leftnav hr {
+    background: #f1f1f1;
+}
+
+.leftnav-bar .fa {
+    padding: 10px;
+}
+
+.leftnav p {
+    color: #f1f1f1;
 }
 
 .leftnav-bar {
@@ -254,8 +218,8 @@ header img {
 .leftnav a {
     padding: 0px 8px 0px 16px;
     text-decoration: none;
-    font-size: 12px;
-    color: #818181;
+    font-size: 14px;
+    color: #f1f1f1;
     display: block;
     font-weight: bold;
     margin-left: 25px;
@@ -269,7 +233,8 @@ header img {
 }
 
 .leftnav a:hover {
-    color: #d65050;
+    color: #fff;
+    text-decoration: none;
 }
 
 .main {
@@ -477,57 +442,21 @@ header img {
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FOOTER SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
 footer {
-    background-color: #fff;
-    padding: 0px;
-    margin: 0px;
-    clear: both;
-    color: white;
-    display: flex;
+    background-color: #f1f1f1;
 }
 
-footer h3,
-h5 {
-    color: #fff;
+footer p a {
+    color: #B22222;
+    text-decoration: none;
 }
 
-.divide {
-    width: 25%;
-    background-color: #000000;
-    margin: 1px;
-    padding: 20px;
-    border-radius: 5px;
-    color: white;
-}
-
-.main-coln {
-    display: flex;
-    padding-top: 0;
-}
-
-.coln2 {
-    padding-left: 40px;
-}
-
-.main-coln2 {
-    padding-top: 1px;
+footer p a:hover {
+    color: #252525;
+    text-decoration: none;
 }
 
 
 /*==================== MEDIA QUERIES SECTION =====================*/
-
-@media (max-width: 600px) {
-    footer {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .divide {
-        width: 100%;
-    }
-    .fees-btn {
-        width: 230%;
-    }
-}
 
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
