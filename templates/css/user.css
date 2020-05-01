@@ -1,0 +1,46 @@
+.container-search {
+    background-color: #f1f1f1;
+    color: #252525;
+    padding: 10px;
+}
+
+.container-search .search-form {
+    margin-left: 8px;
+}
+
+.container-search .fa-search {
+    color: #b22222;
+}
+
+.container-search .user-prof {
+    right: 0;
+    padding: 0;
+    text-align: right;
+    color: #252525;
+}
+
+.rounded-circle {
+    width: 50px;
+    height: 50px;
+}
+
+.student-container {
+    background: #f4f4f4;
+    color: #252525;
+    height: 100px;
+    padding: 16px;
+}
+
+.container {
+    padding: 20px;
+    background-color: #f4f4f4;
+    margin-top: -25px;
+}
+
+.inf-content {
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+}

@@ -40,10 +40,14 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, 
         if (status === "200") {
             var temp = "";
 
-            temp += "<tr>";
-            temp += "<td>" + user.admission_no + "</td>";
-            temp += "<td>" + user.surname + " " + user.firstname + " " + user.lastname +"</td>";
-            temp += "<td>" + user.email + "</td></tr>";
+            temp += "<tr>" + "<th>Admission</th>" + " " + "<td>" + user.admission_no + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Surname</th>" + " " + "<td>" + user.surname + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Firstname</th>" + " " + "<td>" + user.firstname + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Lastname</th>" + " " + "<td>" + user.lastname + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Form</th>" + " " + "<td>" + user.form + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Stream</th>" + " " + "<td>" + user.stream + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Role</th>" + " " + "<td>" + user.role + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Email</th>" + " " + "<td>" + user.email + "</td>" + "</tr>";
 
             document.getElementById("data").innerHTML = temp;
         }
