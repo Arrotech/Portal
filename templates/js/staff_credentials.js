@@ -36,13 +36,18 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/staff/users/' + uname
         let status = data['status'];
         let message = data['message'];
         let user = data.user;
+        console.log(data.user);
         if (status === "200") {
             var temp = "";
 
-            temp += "<tr>";
-            temp += "<td>" + user.username + "</td>";
-            temp += "<td>" + user.firstname + " " + user.lastname +"</td>";
-            temp += "<td>" + user.email + "</td></tr>";
+            temp += "<tr>" + "<th>Username</th>" + " " + "<td>" + user.username + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Firstname</th>" + " " + "<td>" + user.firstname + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Lastname</th>" + " " + "<td>" + user.lastname + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Form</th>" + " " + "<td>" + user.form + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Stream</th>" + " " + "<td>" + user.stream + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Role</th>" + " " + "<td>" + user.role + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Email</th>" + " " + "<td>" + user.email + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Date created</th>" + " " + "<td>" + user.date + "</td>" + "</tr>";
 
             document.getElementById("data").innerHTML = temp;
         }
