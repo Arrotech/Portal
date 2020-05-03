@@ -170,6 +170,13 @@ body {
     color: #b22222;
 }
 
+.student-container {
+    background: #f4f4f4;
+    color: #252525;
+    height: 100px;
+    padding: 16px;
+}
+
 caption {
     padding: 14px;
 }
