@@ -1,69 +1,98 @@
-body{
-  /*background:-webkit-linear-gradient(#82B4D5,#fff);*/
-  font-family:'Trebuchet MS';
-  /*color:#fff;*/
-  height:100vh;
-  background-color: #fff;
-  /* background-image: url('bookshop2.jpg'); */
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-}
-.main-content{
-  border-radius: 5px;
-  padding-top: 20px;
+.container-search {
+    background-color: #f1f1f1;
+    color: #252525;
+    padding: 10px;
 }
 
-.main-content .left{
-  border-radius: 5px;
-  position: relative;
-  color: #000000;
-  font-size: 18px;
-}
-input{
-  text-align:center;
-  width:15%;
-  height:30px;
-  margin-bottom:10px;
-  border:none;
-  border:1px solid #F8F8F8;
-  background-color:#F8F8F8;
-  border-radius:25px;
-}
-input:focus{
-  outline:none;
-}
-::-webkit-input-placeholder{
-  color:grey;
-  letter-spacing: 1px;
+.container-search .search-form {
+    margin-left: 8px;
 }
 
-input[type="submit"]{
-  background-color:#d65050;
-  color:#fff;
-  font-weight: bold;
+.container-search .fa-search {
+    color: #b22222;
 }
+
+.student-container {
+    background: #f4f4f4;
+    color: #252525;
+    padding: 20px;
+}
+
+.col-sm {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.grade h2 {
+    color: #b22222;
+    padding: 8px;
+}
+
+.deviation h5 {
+    color: green;
+    padding: 10px;
+}
+
+.previous-grade h2 {
+    color: royalblue;
+    padding: 8px;
+}
+
+.rank h2 {
+    color: #b22222;
+    padding: 8px;
+}
+
+caption {
+    padding: 14px;
+}
+
+.dot {
+    height: 18px;
+    width: 18px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.container {
+    padding: 20px;
+    background-color: #f4f4f4;
+    margin-top: -25px;
+}
+
+.inf-content {
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+}
+
+
 /*snack bar css*/
+
 #snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: rgb(230, 78, 78);
-  color: #000000;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 15px;
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgb(230, 78, 78);
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 15px;
 }
 
 #snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }

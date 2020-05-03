@@ -225,6 +225,12 @@ header img {
     margin-left: 25px;
 }
 
+.leftnav .profile_name a p {
+    padding: 0;
+    display: inline;
+    margin-left: 0;
+}
+
 .leftnav img {
     display: block;
     margin-left: auto;
