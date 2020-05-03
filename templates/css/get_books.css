@@ -1,1 +1,35 @@
+.student-container {
+    background: #f4f4f4;
+    color: #252525;
+    padding: 20px;
+}
 
+.col-sm {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.returned h2 {
+    color: green;
+    padding: 8px;
+}
+
+.missing h2 {
+    color: #b22222;
+    padding: 10px;
+}
+
+.issued h2 {
+    color: royalblue;
+    padding: 8px;
+}
+
+.dot {
+    height: 18px;
+    width: 18px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
