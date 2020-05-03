@@ -22,26 +22,6 @@ body {
     background: #fff;
 }
 
-header {
-    background-color: #000000;
-    color: white;
-    font-size: 10px;
-    text-align: center;
-    padding: 20px;
-}
-
-
-/* Add a black background color to the top navigation */
-
-.topnav {
-    background-color: #000000;
-    overflow: hidden;
-    margin-top: 1px;
-    margin-left: 1px;
-    margin-right: 1px;
-    border-radius: 2px;
-}
-
 .profile_name {
     color: #F8F8F8;
     display: block;
@@ -57,130 +37,7 @@ header {
 }
 
 
-/* Style the links inside the navigation bar */
-
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    width: 14.285%;
-    font-size: 17px;
-}
-
-
-/* Change the color of links on hover */
-
-.topnav a:hover {
-    background-color: #d65050;
-    color: #fff;
-    border-radius: 3px;
-}
-
-
-/* Add an active class to highlight the current page */
-
-.topnav a.active {
-    background-color: #000000;
-    color: white;
-}
-
-
-/* Hide the link that should open and close the topnav on small screens */
-
-.topnav .icon {
-    display: none;
-}
-
-.active-btn {
-    border: none;
-    outline: none;
-    padding: 10px 16px;
-    cursor: pointer;
-}
-
-select {
-    width: 250px;
-    height: 22px;
-    border-radius: 15px;
-    background: #fff;
-    padding: 2px;
-}
-
-option {
-    background-color: #d65050;
-}
-
-.wrap-register select {
-    width: 240px;
-    height: 22px;
-    border-radius: 15px;
-    background: #fff;
-    padding: 2px;
-}
-
-@media print {
-    body {
-        background-color: #FFFFFF;
-        background-image: none;
-        color: #000000
-    }
-    #ad {
-        display: none;
-    }
-    #leftbar {
-        display: none;
-    }
-    #contentarea {
-        width: 100%;
-    }
-}
-
-textarea {
-    width: 250px;
-    height: 100px;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.row-one {
-    height: 500px;
-    background: #333;
-    color: #fff;
-}
-
-.row-two {
-    height: 500px;
-    background: #fff;
-    color: #000000;
-}
-
-.row-three {
-    height: 500px;
-    background: #333;
-    color: #fff;
-}
-
-
-/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BUTTONS SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-
-.fees-btn {
-    width: 100%;
-}
-
-
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ IMAGES SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-
-header img {
-    display: block;
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 
 /*lfet sidebar*/
@@ -243,13 +100,6 @@ header img {
     text-decoration: none;
 }
 
-.main {
-    margin-left: 190px;
-    font-size: 14px;
-    padding: 0px 10px;
-    text-align: left;
-}
-
 @media screen and (max-height: 450px) {
     .leftnav {
         padding-top: 15px;
@@ -259,189 +109,69 @@ header img {
     }
 }
 
-.avatar {
-    vertical-align: middle;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.school {
-    background: #fff;
-    margin: 5px;
-    height: 370px;
-    padding: 20px;
-    text-align: center;
-}
-
-.btn {
-    margin-bottom: 10px;
-    width: 50%;
-    margin: 7% auto;
-    margin-top: 10px;
-}
-
-#btn-1 {
-    border-radius: 4px;
-    background: #000000;
-    border: none;
-    width: 40%;
-    height: 50px;
-    color: #fff;
-    font-weight: bold;
-}
-
-#btn-2 {
-    border-radius: 4px;
-    background: #333;
-    border: none;
-    width: 30%;
-    height: 50px;
-    color: #fff;
-    font-weight: bold;
-}
-
-#btn-1:hover {
-    background-color: #d65050;
-    /* Green */
-    color: white;
-}
-
-#btn-2:hover {
-    background-color: #d65050;
-    /* Green */
-    color: #fff;
-}
-
-.header-content {
-    color: #d65050;
-    font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-    text-align: center;
-    -webkit-animation-name: example;
-    /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 3s;
-    /* Safari 4.0 - 8.0 */
-    -webkit-animation-fill-mode: forwards;
-    /* Safari 4.0 - 8.0 */
-    animation-name: example;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
-}
-
-.align {
-    width: 450px;
-    margin-left: auto;
-    margin-right: auto;
+.main {
+    margin-left: 190px;
+    font-size: 14px;
+    padding: 0px 10px;
     text-align: left;
-    font-size: 20px;
 }
 
 
-/* Safari 4.0 - 8.0 */
+/*snack bar css*/
 
-@-webkit-keyframes example {
-    from {
-        top: -30px;
-    }
-    to {
-        top: 10px;
-        color: #25252525;
-    }
-}
-
-@keyframes example {
-    from {
-        top: -30px;
-    }
-    to {
-        top: 10px;
-        color: #000000;
-    }
-}
-
-.home-login-form {
-    /* display: inline-block; */
-    background-color: #818181;
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color: #f1f1f1;
     text-align: center;
-    padding: 5px;
-    border-radius: 5px;
-    width: 200px;
-    height: 180px;
-    float: right;
-}
-
-.home-login-form form input {
-    text-align: center;
-    width: 50%;
-    height: 15px;
-    margin-bottom: 10px;
-    border: none;
-    border: 1px solid #F8F8F8;
-    background-color: #F8F8F8;
-    border-radius: 5px;
-    font-size: 10px;
-}
-
-.home-login-form form input:focus {
-    outline: none;
-}
-
-::-webkit-input-placeholder {
-    color: grey;
-    letter-spacing: 1px;
-}
-
-.home-login-form form input[type="submit"] {
-    background-color: #d65050;
-    color: #fff;
     font-weight: bold;
+    border-radius: 10px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 15px;
 }
 
-.courses {
-    background: #f2f2f2;
-    margin: 5px;
-    border-radius: 5px;
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-.leadership {
-    background: rgb(224, 221, 221);
-    margin: 5px;
-    border-radius: 5px;
-}
-
-.testimonials {
-    background: #f2f2f2;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-
-/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ HEADING SECTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-
-.row-one h1 {
-    font-size: 18px;
+.container {
     padding: 20px;
+    background-color: #f4f4f4;
+    margin-top: -25px;
 }
 
-.row-two h1 {
-    font-size: 18px;
-    padding: 20px;
+.inf-content {
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
 }
 
-.row-three h1 {
-    font-size: 18px;
-    padding: 20px;
+.container-search {
+    background-color: #f1f1f1;
+    color: #252525;
+    padding: 10px;
 }
 
-.header-content h2 {
-    font-size: 30px;
+.container-search .search-form {
+    margin-left: 8px;
 }
 
-.header-content h3 {
-    font-size: 26px;
+.container-search .fa-search {
+    color: #b22222;
+}
+
+caption {
+    padding: 14px;
 }
 
 
