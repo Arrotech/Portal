@@ -112,7 +112,6 @@ body {
 .main {
     margin-left: 190px;
     font-size: 14px;
-    padding: 0px 10px;
     text-align: left;
 }
 
@@ -168,13 +167,6 @@ body {
 
 .container-search .fa-search {
     color: #b22222;
-}
-
-.student-container {
-    background: #f4f4f4;
-    color: #252525;
-    height: 100px;
-    padding: 16px;
 }
 
 caption {
