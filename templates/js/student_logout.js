@@ -1,5 +1,7 @@
 function logout() {
-    event.preventDefault();
-    window.localStorage.clear()
-    window.location.replace('login.html')
+    onclick = (event) => {
+        event.preventDefault();
+        window.localStorage.clear();
+        window.location.replace('login.html');
+    }
 }
