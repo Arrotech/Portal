@@ -60,3 +60,9 @@ class UnitsModel(Database):
         self.conn.commit()
         self.curr.close()
         return unit
+    
+    def delete(self, unit_id):
+        """Delete a unit by id."""
+        self.curr.execute("""DELETE FROM units WHERE unit_id={}""".format(unit_id))
+        self.conn.commit()
+        self.curr.close()
