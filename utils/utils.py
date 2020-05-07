@@ -19,6 +19,14 @@ def check_promote_student_keys(request):
             errors.append(key)
     return errors
 
+def check_units_keys(request):
+    res_keys = ['unit_name', 'unit_code']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 def check_staff_keys(request):
     """Check that registration json keys match the required ones."""
     res_keys = ['firstname', 'lastname',
