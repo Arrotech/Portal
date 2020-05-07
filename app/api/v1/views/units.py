@@ -69,3 +69,15 @@ def get_unit_by_code(unit_code):
     if response:
         return Serializer.serialize(response, 200, "Unit successfully retrieved")
     return Serializer.serialize(response, 404, "Unit not found")
+
+
+@units_blueprint_v1.route('/units/<int:unit_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_unit(unit_id):
+    """Delete a unit by id."""
+    response = UnitsModel().get_unit_by_id(unit_id)
+    if response:
+        UnitsModel().delete(unit_id)
+        return Serializer.serialize(response, 200, "Unit deleted successfully")
+    return Serializer.serialize(response, 404, "Unit not found")

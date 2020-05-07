@@ -132,3 +132,27 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Unit not found')
         assert response1.status_code == 404
+        
+    def test_delete_unit(self):
+        """Test that an admin user can delete a unit."""
+        response = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.delete(
+            '/api/v1/units/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Unit deleted successfully')
+        assert response1.status_code == 200
+        
+    def test_delete_unexisting_unit(self):
+        """Test that an admin user cannot delete unexisting unit."""
+        response = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.delete(
+            '/api/v1/units/100', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Unit not found')
+        assert response1.status_code == 404
