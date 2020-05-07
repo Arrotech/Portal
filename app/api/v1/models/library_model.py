@@ -2,6 +2,8 @@ import json
 
 from app.api.v1.models.database import Database
 
+from datetime import datetime
+
 Database().create_table()
 
 
@@ -16,7 +18,8 @@ class LibraryModel(Database):
             title=None,
             subject=None,
             form=None,
-            stream=None):
+            stream=None,
+            date=None):
         super().__init__()
         self.admission_no = admission_no
         self.book_no = book_no
@@ -25,15 +28,16 @@ class LibraryModel(Database):
         self.subject = subject
         self.form = form
         self.stream =stream
+        self.date = datetime.now()
 
     def save(self):
         """Add a new book."""
 
         self.curr.execute(
-            ''' INSERT INTO library(admission_no, book_no, author, title, subject, form, stream)\
-            VALUES('{}','{}','{}','{}','{}','{}','{}')\
-             RETURNING admission_no, book_no, author, title, subject, form, stream''' \
-                .format(self.admission_no, self.book_no, self.author, self.title, self.subject, self.form, self.stream))
+            ''' INSERT INTO library(admission_no, book_no, author, title, subject, form, stream, date)\
+            VALUES('{}','{}','{}','{}','{}','{}','{}','{}')\
+             RETURNING admission_no, book_no, author, title, subject, form, stream, date''' \
+                .format(self.admission_no, self.book_no, self.author, self.title, self.subject, self.form, self.stream, self.date))
         book = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

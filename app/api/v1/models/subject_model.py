@@ -1,6 +1,7 @@
 import json
 
 from app.api.v1.models.database import Database
+from datetime import datetime
 
 Database().create_table()
 
@@ -23,7 +24,8 @@ class SubjectsModel(Database):
             geography=None,
             cre=None,
             agriculture=None,
-            business=None):
+            business=None,
+            date=None):
         super().__init__()
         self.admission_no = admission_no
         self.form = form
@@ -39,15 +41,16 @@ class SubjectsModel(Database):
         self.cre = cre
         self.agriculture = agriculture
         self.business = business
+        self.date = datetime.now()
 
     def save(self):
         """Create a new orders."""
         self.curr.execute(
-            ''' INSERT INTO subjects(admission_no, form, stream, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business)\
-            VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')\
-            RETURNING admission_no, form, stream, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business''' \
+            ''' INSERT INTO subjects(admission_no, form, stream, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business, date)\
+            VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')\
+            RETURNING admission_no, form, stream, maths, english, kiswahili, chemistry, biology, physics, history, geography, cre, agriculture, business, date''' \
                 .format(self.admission_no, self.form, self.stream, self.maths, self.english, self.kiswahili, self.chemistry, self.biology, self.physics, self.history, self.geography, self.cre, self.agriculture,
-                        self.business))
+                        self.business, self.date))
         subject = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
