@@ -58,4 +58,28 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Units succesfully retrieved')
         assert response1.status_code == 200
+        
+    def test_get_unit_by_code(self):
+        """Test that an admin user can fetch a unit by code."""
+        response = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.get(
+            '/api/v1/units/SMA001', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Unit successfully retrieved')
+        assert response1.status_code == 200
+        
+    def test_get_unexisting_unit_by_code(self):
+        """Test that an admin user cannot fetch unexisting unit by code."""
+        response = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.get(
+            '/api/v1/units/SMA005', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Unit not found')
+        assert response1.status_code == 404
     
