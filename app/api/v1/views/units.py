@@ -37,6 +37,18 @@ def get_units():
     response = UnitsModel().get_units()
     return Serializer.serialize(response, 200, 'Units succesfully retrieved')
 
+
+@units_blueprint_v1.route('/units/<int:unit_id>', methods=['GET'])
+@jwt_required
+@admin_required
+def get_unit_by_id(unit_id):
+    """Fetch a unit by id."""
+    response = UnitsModel().get_unit_by_id(unit_id)
+    if response:
+        return Serializer.serialize(response, 200, "Unit successfully retrieved")
+    return Serializer.serialize(response, 404, "Unit not found")
+
+
 @units_blueprint_v1.route('/units/unit_name/<string:unit_name>', methods=['GET'])
 @jwt_required
 @admin_required
@@ -46,6 +58,7 @@ def get_unit_by_name(unit_name):
     if response:
         return Serializer.serialize(response, 200, "Unit successfully retrieved")
     return Serializer.serialize(response, 404, "Unit not found")
+
 
 @units_blueprint_v1.route('/units/unit_code/<string:unit_code>', methods=['GET'])
 @jwt_required
