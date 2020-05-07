@@ -1,4 +1,5 @@
 import os
+import json
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -55,6 +56,13 @@ class Database:
                 email varchar NOT NULL,
                 password varchar NOT NULL,
                 role varchar NOT NULL,
+                date TIMESTAMP
+            )""",
+            """
+            CREATE TABLE IF NOT EXISTS units(
+                unit_id serial PRIMARY KEY,
+                unit_name varchar NOT NULL,
+                unit_code varchar NOT NULL,
                 date TIMESTAMP
             )""",
             """
@@ -138,10 +146,12 @@ class Database:
         users = "DROP TABLE IF EXISTS  users CASCADE"
         staff = "DROP TABLE IF EXISTS  staff CASCADE"
         accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
+        units = "DROP TABLE IF EXISTS units CASCADE"
+        subjects = "DROP TABLE IF EXISTS subjects CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
         library = "DROP TABLE IF EXISTS library CASCADE"
-        subjects = "DROP TABLE IF EXISTS subjects CASCADE"
-        queries = [exams, users, staff, accountants, fees, library, subjects]
+        
+        queries = [exams, users, staff, accountants, subjects, fees, library, units]
         try:
             for query in queries:
                 self.curr.execute(query)
@@ -157,6 +167,14 @@ class Database:
         self.conn.commit()
         self.curr.close()
         return fetch_all
+    
+    def fetch_one(self, query, var):
+        """Fetch one query."""
+        self.curr.execute(query, (var,),)
+        fetch_one = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return fetch_one
 
 
 if __name__ == '__main__':

@@ -495,6 +495,23 @@ invalid_accountant_password = {
     "password": "Peter209309"
 }
 
+# @@@@@@@@@@@@@@@@@@@@@@@@@@ UNITS @@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_unit = {
+    "unit_name": "Calculus 1",
+    "unit_code": "SMA001"
+}
+
+new_unit_code = {
+    "unit_name": "Calculus 2",
+    "unit_code": "SMA001"
+}
+
+unit_keys = {
+    "unitname": "Calculus 3",
+    "unit_code": "SMA002"    
+}
+
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Exams Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

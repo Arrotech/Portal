@@ -14,6 +14,7 @@ from app.api.v1.views.exam_views import exams_v1
 from app.api.v1.views.library_views import books_v1
 from app.api.v1.views.fees_views import fees_v1
 from app.api.v1.views.subjects_view import subjects_v1
+from app.api.v1 import units_blueprint_v1
 from app.config import app_config
 
 
@@ -52,6 +53,7 @@ def exam_app(config_name):
     app.register_blueprint(fees_v1, url_prefix='/api/v1/')
     app.register_blueprint(books_v1, url_prefix='/api/v1/')
     app.register_blueprint(subjects_v1, url_prefix='/api/v1/')
+    app.register_blueprint(units_blueprint_v1, url_prefix='/api/v1/')
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(405, method_not_allowed)
 
