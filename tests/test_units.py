@@ -15,7 +15,7 @@ class TestUnits(BaseTest):
         assert response1.status_code == 201
         
     def test_unit_keys(self):
-        """Test that an admin user can add a new unit."""
+        """Test that an admin user cannot add a new unit with wrong keys."""
         response1 = self.client.post(
             '/api/v1/units', data=json.dumps(unit_keys), content_type='application/json',
             headers=self.get_admin_token())
@@ -46,4 +46,16 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'SMA001 already exists')
         assert response1.status_code == 400
+        
+    def test_get_units(self):
+        """Test that an admin user can fetch all units."""
+        response = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.get(
+            '/api/v1/units', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Units succesfully retrieved')
+        assert response1.status_code == 200
     
