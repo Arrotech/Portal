@@ -60,9 +60,37 @@ class UnitsModel(Database):
         self.conn.commit()
         self.curr.close()
         return unit
-    
+
     def delete(self, unit_id):
         """Delete a unit by id."""
-        self.curr.execute("""DELETE FROM units WHERE unit_id={}""".format(unit_id))
+        self.curr.execute(
+            """DELETE FROM units WHERE unit_id={}""".format(unit_id))
         self.conn.commit()
         self.curr.close()
+
+    def edit(self, unit_id, unit_name, unit_code):
+        """Update a unit by id."""
+        self.curr.execute(
+            """UPDATE units SET unit_name='{}', unit_code='{}' WHERE unit_id={} RETURNING unit_name, unit_code""".format(unit_id, unit_name, unit_code))
+        unit = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return unit
+    
+    def edit_name(self, unit_id, unit_name):
+        """Update a unit name by id."""
+        self.curr.execute(
+            """UPDATE units SET unit_name='{}' WHERE unit_id={} RETURNING unit_name""".format(unit_id, unit_name))
+        unit = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return unit
+    
+    def edit_code(self, unit_id, unit_code):
+        """Update a unit code by id."""
+        self.curr.execute(
+            """UPDATE units SET unit_code='{}' WHERE unit_id={} RETURNING unit_code""".format(unit_id, unit_code))
+        unit = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return unit
