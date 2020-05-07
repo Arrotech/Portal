@@ -27,6 +27,14 @@ class UnitsModel(Database):
         self.curr.close()
         return unit
     
+    def get_units(self):
+        """Fetch all availaable units."""
+        self.curr.execute("""SELECT * FROM units""")
+        units = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return units
+    
     def get_unit_by_name(self, unit_name):
         """Fetch a unit by name."""
         self.curr.execute(""" SELECT * FROM units WHERE unit_name=%s""", (unit_name,))

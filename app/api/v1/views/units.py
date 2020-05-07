@@ -28,4 +28,12 @@ def add_unit():
     response = UnitsModel(unit_name, unit_code).save()
     return Serializer.serialize(response, 201, 'Unit added successfully')
 
+@units_blueprint_v1.route('/units', methods=['GET'])
+@jwt_required
+@admin_required
+def get_units():
+    """Fetch all available units."""
+    response = UnitsModel().get_units()
+    return Serializer.serialize(response, 200, 'Units succesfully retrieved')
+
 
