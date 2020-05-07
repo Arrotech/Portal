@@ -12,7 +12,8 @@ class Database:
         self.db_host = os.getenv('DB_HOST')
         self.db_user = os.getenv('DB_USER')
         self.db_password = os.getenv('DB_PASSWORD')
-        self.conn = psycopg2.connect(database=self.db_name, host=self.db_host, user=self.db_user, password=self.db_password)
+        self.conn = psycopg2.connect(
+            database=self.db_name, host=self.db_host, user=self.db_user, password=self.db_password)
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def create_table(self):
@@ -29,7 +30,8 @@ class Database:
                 password varchar NOT NULL,
                 form numeric NOT NULL,
                 stream varchar NOT NULL,
-                role varchar NOT NULL
+                role varchar NOT NULL,
+                date TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS staff(
@@ -55,6 +57,26 @@ class Database:
                 role varchar NOT NULL,
                 date TIMESTAMP
             )""",
+            """
+            CREATE TABLE IF NOT EXISTS subjects(
+                subject_id serial PRIMARY KEY,
+                admission_no varchar NOT NULL,
+                form varchar NOT NULL,
+                stream varchar NOT NULL,
+                maths varchar NOT NULL,
+                english varchar NOT NULL,
+                kiswahili varchar NOT NULL,
+                chemistry varchar NOT NULL,
+                biology varchar NOT NULL,
+                physics varchar NOT NULL,
+                history varchar NOT NULL,
+                geography varchar NOT NULL,
+                cre varchar NOT NULL,
+                agriculture varchar NOT NULL,
+                business varchar NOT NULL,
+                date TIMESTAMP
+            )
+            """,
             """
             CREATE TABLE IF NOT EXISTS exams(
                 exam_id serial PRIMARY KEY,
@@ -98,27 +120,9 @@ class Database:
                 title varchar NOT NULL,
                 subject varchar NOT NULL,
                 form varchar NOT NULL,
-                stream varchar NOT NULL
-            )""",
-            """
-            CREATE TABLE IF NOT EXISTS subjects(
-                subject_id serial PRIMARY KEY,
-                admission_no varchar NOT NULL,
-                form varchar NOT NULL,
                 stream varchar NOT NULL,
-                maths varchar NOT NULL,
-                english varchar NOT NULL,
-                kiswahili varchar NOT NULL,
-                chemistry varchar NOT NULL,
-                biology varchar NOT NULL,
-                physics varchar NOT NULL,
-                history varchar NOT NULL,
-                geography varchar NOT NULL,
-                cre varchar NOT NULL,
-                agriculture varchar NOT NULL,
-                business varchar NOT NULL
-            )
-            """
+                date TIMESTAMP
+            )"""
         ]
         try:
             for query in queries:
@@ -154,7 +158,7 @@ class Database:
         self.curr.close()
         return fetch_all
 
+
 if __name__ == '__main__':
     Database().destroy_table()
     Database().create_table()
-
