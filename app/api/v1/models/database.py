@@ -67,22 +67,11 @@ class Database:
             )""",
             """
             CREATE TABLE IF NOT EXISTS subjects(
-                subject_id serial PRIMARY KEY,
-                admission_no varchar NOT NULL,
-                form varchar NOT NULL,
-                stream varchar NOT NULL,
-                maths varchar NOT NULL,
-                english varchar NOT NULL,
-                kiswahili varchar NOT NULL,
-                chemistry varchar NOT NULL,
-                biology varchar NOT NULL,
-                physics varchar NOT NULL,
-                history varchar NOT NULL,
-                geography varchar NOT NULL,
-                cre varchar NOT NULL,
-                agriculture varchar NOT NULL,
-                business varchar NOT NULL,
-                date TIMESTAMP
+                subject_id serial,
+                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                unit integer NOT NULL REFERENCES units (unit_id) ON DELETE CASCADE,                                                                                                                                 
+                date TIMESTAMP,
+                PRIMARY KEY (student, unit)
             )
             """,
             """

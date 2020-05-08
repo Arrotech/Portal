@@ -38,6 +38,14 @@ class UsersModel(Database):
         query = "SELECT * from users"
         users = Database().fetch(query)
         return json.dumps(users, default=str)
+    
+    def get_user_id(self, user_id):
+        """Request a single user with specific id."""
+        self.curr.execute(""" SELECT * FROM users WHERE user_id={}""".format(user_id))
+        user = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(user, default=str)
 
     def get_admission_no(self, admission_no):
         """Request a single user with specific Admission Number."""
