@@ -41,6 +41,14 @@ class SubjectsModel(Database):
         self.curr.close()
         return subjects
     
+    def get_subject_by_id(self, subject_id):
+        """Fetch a subject by id."""
+        self.curr.execute("""SELECT * FROM subjects WHERE subject_id={}""".format(subject_id))
+        subject = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return subject
+    
     def get_subjects_for_specific_user_by_id(self, user_id):
         """Fetch all subjects by a single user."""
         self.curr.execute("""
@@ -52,3 +60,10 @@ class SubjectsModel(Database):
         self.conn.commit()
         self.curr.close()
         return subjects
+    
+    def delete(self, subject_id):
+        """Delete a subject by id."""
+        self.curr.execute(
+            """DELETE FROM subjects WHERE subject_id={}""".format(subject_id))
+        self.conn.commit()
+        self.curr.close()

@@ -106,3 +106,41 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'],
                          'Subjects successfull retrieved')
         assert response4.status_code == 200
+        
+    def test_delete_subject_by_id(self):
+        """Test that an admin can delete a subject by id."""
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.delete(
+            '/api/v1/subjects/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Subject deleted successfully')
+        assert response4.status_code == 200
+        
+    def test_delete_non_existing_subject_by_id(self):
+        """Test that an admin cannot delete non existing subject by id."""
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.delete(
+            '/api/v1/subjects/100', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Subject not found')
+        assert response4.status_code == 404
