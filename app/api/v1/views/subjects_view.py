@@ -48,3 +48,14 @@ def get_subjects_for_specific_user_by_id(user_id):
     """Fetch all subjects for a specific user by id."""
     response = SubjectsModel().get_subjects_for_specific_user_by_id(user_id)
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
+
+@subjects_v1.route('/subjects/<int:subject_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_subject(subject_id):
+    """Delete a subject by id."""
+    response = SubjectsModel().get_subject_by_id(subject_id)
+    if response:
+        SubjectsModel().delete(subject_id)
+        return Serializer.serialize(response, 200, "Subject deleted successfully")
+    return Serializer.serialize(response, 404, "Subject not found")
