@@ -12,7 +12,7 @@ class SubjectsModel(Database):
         super().__init__()
         self.user_id = user_id
         self.unit_id = unit_id
-        self.date= datetime.now()
+        self.date = datetime.now()
 
     def save(self):
         """Create a new orders."""
@@ -28,3 +28,27 @@ class SubjectsModel(Database):
             return subject
         except psycopg2.IntegrityError:
             return "error"
+
+    def get_subjects(self):
+        """Fetch all subjects."""
+        self.curr.execute("""
+                          SELECT units.unit_name, units.unit_code, users.admission_no FROM subjects
+                          INNER JOIN units ON subjects.unit = units.unit_id
+                          INNER JOIN users ON subjects.student = users.user_id
+                          """)
+        subjects = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return subjects
+    
+    def get_subjects_for_specific_user_by_id(self, user_id):
+        """Fetch all subjects by a single user."""
+        self.curr.execute("""
+                          SELECT units.unit_name, units.unit_code, users.admission_no FROM subjects
+                          INNER JOIN units ON subjects.unit = units.unit_id
+                          INNER JOIN users ON subjects.student = users.user_id WHERE user_id={}
+                          """.format(user_id))
+        subjects = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return subjects
