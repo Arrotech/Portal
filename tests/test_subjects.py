@@ -68,3 +68,41 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'],
                          'You cannot register for one unit twice')
         assert response4.status_code == 400
+        
+    def test_get_subjects(self):
+        """Test that an admin can fetch all subjects."""
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.get(
+            '/api/v1/subjects', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Subjects successfull retrieved')
+        assert response4.status_code == 200
+        
+    def test_get_subjects_by_id(self):
+        """Test that a student can fetch all subjects that they have registered for."""
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.get(
+            '/api/v1/subjects/1', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Subjects successfull retrieved')
+        assert response4.status_code == 200
