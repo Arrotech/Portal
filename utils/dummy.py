@@ -753,69 +753,18 @@ less_than = {
 
 
 new_subject = {
-"admission_no": "NJCF4001",
-"form": "4",
-"stream": "1A",
-"maths": "R",
-"english": "R",
-"kiswahili": "R",
-"chemistry": "R",
-"biology": "NR",
-"physics": "R",
-"history": "R",
-"geography": "R",
-"cre": "NR",
-"agriculture": "NR",
-"business": "R"
+"user_id": "1",
+"unit_id": "1"
 }
 
 new_subject_keys = {
-"admission_no": "NJCF4001",
-"form": "4",
-"stream": "1A",
-"maths": "R",
-"english": "R",
-"kiswahili": "R",
-"chemistry": "R",
-"biology": "NR",
-"physics": "R",
-"history": "R",
-"geography": "R",
-"cre": "NR",
-"agriculture": "NR"
+"userid": "1",
+"unit_id": "1"
 }
 
-edit_subjects = {
-"admission_no": "NJCF4001",
-"form": "4",
-"stream": "1A",
-"maths": "R",
-"english": "R",
-"kiswahili": "R",
-"chemistry": "R",
-"biology": "NR",
-"physics": "R",
-"history": "R",
-"geography": "R",
-"cre": "NR",
-"agriculture": "NR",
-"business": "R"
-}
-
-edit_subjects_keys = {
-"admission_no": "NJCF4001",
-"form": "4",
-"stream": "1A",
-"maths": "R",
-"english": "R",
-"kiswahili": "R",
-"chemistry": "R",
-"biology": "NR",
-"physics": "R",
-"history": "R",
-"geography": "R",
-"cre": "NR",
-"agriculture": "NR"
+user_does_not_exist = {
+"user_id": "2",
+"unit_id": "2"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Books Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

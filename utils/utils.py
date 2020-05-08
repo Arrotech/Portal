@@ -111,8 +111,7 @@ def check_library_keys(request):
 
 
 def check_subjects_keys(request):
-    res_keys = ['admission_no', 'form', 'stream', 'maths', 'english', 'kiswahili', 'chemistry',
-                'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
+    res_keys = ['user_id', 'unit_id']
     errors = []
     for key in res_keys:
         if not key in request.json:

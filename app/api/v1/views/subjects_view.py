@@ -6,7 +6,9 @@ from flask_restful import Resource
 
 from app.api.v1.models.subject_model import SubjectsModel
 from app.api.v1.models.users_model import UsersModel
+from app.api.v1.models.units import UnitsModel
 from utils.utils import check_subjects_keys, raise_error
+from utils.serializer import Serializer
 
 subjects_v1 = Blueprint('subjects_v1', __name__)
 
@@ -14,125 +16,18 @@ subjects_v1 = Blueprint('subjects_v1', __name__)
 @subjects_v1.route('/subjects', methods=['POST'])
 @jwt_required
 def register_subjects():
-    """Create a new exam entry."""
+    """Register a subject."""
     errors = check_subjects_keys(request)
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    admission_no = details['admission_no']
-    form = details['form']
-    stream = details['stream']
-    maths = details['maths']
-    english = details['english']
-    kiswahili = details['kiswahili']
-    chemistry = details['chemistry']
-    biology = details['biology']
-    physics = details['physics']
-    history = details['history']
-    geography = details['geography']
-    cre = details['cre']
-    agriculture = details['agriculture']
-    business = details['business']
-    user = json.loads(UsersModel().get_admission_no(admission_no))
-    if user:
-        subject = SubjectsModel(admission_no,
-                            form,
-                            stream,
-                            maths,
-                            english,
-                            kiswahili,
-                            chemistry,
-                            biology,
-                            physics,
-                            history,
-                            geography,
-                            cre,
-                            agriculture,
-                            business).save()
-        subject = json.loads(subject)
-        return make_response(jsonify({
-            "status": "201",
-            "message": "Subjects registered successfully!",
-            "subjects": subject
-        }), 201)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Student with that Admission Number does not exitst."
-    }), 404)
-
-@subjects_v1.route('/subjects', methods=['GET'])
-@jwt_required
-def get_subjects():
-    """Fetch all registered subjects."""
-    return make_response(jsonify({
-        "status": "200",
-        "message": "successfully retrieved",
-        "subjects": json.loads(SubjectsModel().get_subjects())
-    }), 200)
-
-@subjects_v1.route('/subjects/<string:admission_no>', methods=['GET'])
-@jwt_required
-def get_subject(admission_no):
-    """Fetch one subject."""
-    subject = SubjectsModel().get_admission_no(admission_no)
-    subject = json.loads(subject)
-    if subject:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "success",
-            "subject": subject
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Subject Not Found"
-    }), 404)
-
-@subjects_v1.route('/subjects/<int:subject_id>', methods=['PUT'])
-@jwt_required
-def put(subject_id):
-    """Edit subjects."""
-    errors = check_subjects_keys(request)
-    if errors:
-        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
-    details = request.get_json()
-    admission_no = details['admission_no']
-    form = details['form']
-    stream = details['stream']
-    maths = details['maths']
-    english = details['english']
-    kiswahili = details['kiswahili']
-    chemistry = details['chemistry']
-    biology = details['biology']
-    physics = details['physics']
-    history = details['history']
-    geography = details['geography']
-    cre = details['cre']
-    agriculture = details['agriculture']
-    business = details['business']
-
-    subjects = SubjectsModel().edit_subjects(admission_no,
-                                form,
-                                stream,
-                                maths,
-                                english,
-                                kiswahili,
-                                chemistry,
-                                biology,
-                                physics,
-                                history,
-                                geography,
-                                cre,
-                                agriculture,
-                                business,
-                                subject_id)
-    subjects = json.loads(subjects)
-    if subjects:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "subjects updated successfully",
-            "new_party": subjects
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "subjects not found"
-    }), 404)
+    user_id = details['user_id']
+    unit_id = details['unit_id']
+    if UsersModel().get_user_id(user_id):
+        if UnitsModel().get_unit_by_id(unit_id):
+            response = SubjectsModel(user_id,unit_id).save()
+            if "error" in response:
+                return raise_error(400, "You cannot register for one unit twice")
+            return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_id))
+        return raise_error(404, "Unit {} not found".format(unit_id))
+    return raise_error(404, "Student {} not found".format(user_id))
