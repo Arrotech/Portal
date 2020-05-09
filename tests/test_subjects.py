@@ -66,7 +66,7 @@ class TestSubjects(BaseTest):
             headers=self.get_token())
         result = json.loads(response4.data.decode())
         self.assertEqual(result['message'],
-                         'You cannot register for one unit twice')
+                         'User does not exist or your are trying to enter marks twice')
         assert response4.status_code == 400
         
     def test_get_subjects(self):

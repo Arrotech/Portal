@@ -10,10 +10,10 @@ from werkzeug.utils import secure_filename
 from app.api.v1.views.auth_views import auth_v1
 from app.api.v1.views.staff import auth
 from app.api.v1.views.accountant import accountant
-from app.api.v1.views.exam_views import exams_v1
+from app.api.v1 import exams_v1
 from app.api.v1.views.library_views import books_v1
 from app.api.v1.views.fees_views import fees_v1
-from app.api.v1.views.subjects_view import subjects_v1
+from app.api.v1 import subjects_v1
 from app.api.v1 import units_blueprint_v1
 from app.config import app_config
 

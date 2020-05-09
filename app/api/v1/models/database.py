@@ -67,7 +67,7 @@ class Database:
             )""",
             """
             CREATE TABLE IF NOT EXISTS subjects(
-                subject_id serial,
+                subject_id serial NOT NULL,
                 student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 unit integer NOT NULL REFERENCES units (unit_id) ON DELETE CASCADE,                                                                                                                                 
                 date TIMESTAMP,
@@ -76,24 +76,12 @@ class Database:
             """,
             """
             CREATE TABLE IF NOT EXISTS exams(
-                exam_id serial PRIMARY KEY,
-                admission_no varchar NOT NULL,
-                term varchar NOT NULL,
-                form numeric NOT NULL,
-                stream varchar NOT NULL,
-                exam_type varchar NOT NULL,
-                maths numeric NOT NULL,
-                english numeric NOT NULL,
-                kiswahili numeric NOT NULL,
-                chemistry numeric NOT NULL,
-                biology numeric NOT NULL,
-                physics numeric NOT NULL,
-                history numeric NOT NULL,
-                geography numeric NOT NULL,
-                cre numeric NOT NULL,
-                agriculture numeric NOT NULL,
-                business numeric NOT NULL,
-                date TIMESTAMP
+                exam_id serial NOT NULL,
+                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                unit integer NOT NULL REFERENCES units (unit_id) ON DELETE CASCADE,   
+                marks varchar NOT NULL,
+                date TIMESTAMP,
+                PRIMARY KEY (student, unit)
             )""",
             """
             CREATE TABLE IF NOT EXISTS fees(
