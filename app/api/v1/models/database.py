@@ -77,6 +77,8 @@ class Database:
             """
             CREATE TABLE IF NOT EXISTS exams(
                 exam_id serial NOT NULL,
+                semester varchar NOT NULL,
+                year varchar NOT NULL,
                 student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 unit integer NOT NULL REFERENCES units (unit_id) ON DELETE CASCADE,   
                 marks varchar NOT NULL,

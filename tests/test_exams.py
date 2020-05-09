@@ -70,3 +70,22 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'],
                          'User does not exist or your are trying to enter marks twice')
         assert response3.status_code == 400
+        
+    def test_get_exams(self):
+        """Test that an admin can fetch all exams."""
+        response1 = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.get(
+            '/api/v1/exams', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Exams successfull retrieved')
+        assert response4.status_code == 200
