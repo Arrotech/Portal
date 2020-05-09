@@ -561,7 +561,7 @@ update_existing_unit_code1 = {
 
 new_entry = {
     "semester": "1",
-    "year": "2014/2015",
+    "year": "2014",
     "user_id": "1",
     "unit_id": "1",
     "marks": "80"
@@ -569,7 +569,7 @@ new_entry = {
 
 invalid_exam_key = {
     "semester": "1",
-    "year": "2014/2015",
+    "year": "2014",
     "userid": "1",
     "unit_id": "1",
     "marks": "80"   
@@ -577,7 +577,7 @@ invalid_exam_key = {
 
 invalid_unit_id = {
     "semester": "1",
-    "year": "2014/2015",
+    "year": "2014",
     "user_id": "1",
     "unit_id": "2",
     "marks": "80"    
@@ -585,7 +585,7 @@ invalid_unit_id = {
 
 invalid_user_id = {
     "semester": "1",
-    "year": "2014/2015",
+    "year": "2014",
     "user_id": "3",
     "unit_id": "1",
     "marks": "80"    

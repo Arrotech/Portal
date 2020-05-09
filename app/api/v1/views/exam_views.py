@@ -24,12 +24,14 @@ def add_exam():
     marks = details['marks']
     if UsersModel().get_user_id(user_id):
         if UnitsModel().get_unit_by_id(unit_id):
-            response = ExamsModel(semester, year, user_id, unit_id, marks).save()
+            response = ExamsModel(semester, year, user_id,
+                                  unit_id, marks).save()
             if "error" in response:
                 return raise_error(400, "User does not exist or your are trying to enter marks twice")
             return Serializer.serialize(response, 201, "You have successfully added {}".format(marks))
         return raise_error(404, "Unit {} not found".format(unit_id))
     return raise_error(404, "Student {} not found".format(user_id))
+
 
 @exams_v1.route('/exams', methods=['GET'])
 @jwt_required
@@ -37,4 +39,12 @@ def add_exam():
 def get_exams():
     """Fetch all exams."""
     response = ExamsModel().get_exams()
+    return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
+
+@exams_v1.route('/exams/<string:year>/<int:user_id>', methods=['GET'])
+@jwt_required
+def get_exams_for_a_student(year, user_id):
+    """Fetch all exams for a specific student in a specific year."""
+    response = ExamsModel().get_exams_for_a_student(year, user_id)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
