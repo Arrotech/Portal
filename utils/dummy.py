@@ -560,193 +560,27 @@ update_existing_unit_code1 = {
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Exams Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 new_entry = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"maths": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
+    "user_id": "1",
+    "unit_id": "1",
+    "marks": "80"
 }
 
-edit_exams = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"maths": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
+invalid_exam_key = {
+    "userid": "1",
+    "unit_id": "1",
+    "marks": "80"   
 }
 
-edit_exams_keys = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"mat": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
+invalid_unit_id = {
+    "user_id": "1",
+    "unit_id": "2",
+    "marks": "80"    
 }
 
-term_restrictions = {
-"admission_no": "NJCF4001",
-"term": "first",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"maths": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
-}
-
-form_restrictions = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "5",
-"stream": "1A",
-"exam_type": "main",
-"maths": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
-}
-
-type_restrictions = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "test",
-"maths": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
-}
-
-wrong_exam_keys = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"mhs": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
-}
-
-entry = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"maths": 87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
-}
-
-greater_than = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"maths": 870,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
-}
-
-less_than = {
-"admission_no": "NJCF4001",
-"term": "1st",
-"form": "4",
-"stream": "1A",
-"exam_type": "main",
-"maths": -87,
-"english": 87,
-"kiswahili": 90,
-"chemistry": 78,
-"biology": 86,
-"physics": 76,
-"history": 89,
-"geography": 81,
-"cre": 94,
-"agriculture": 85,
-"business": 88
+invalid_user_id = {
+    "user_id": "3",
+    "unit_id": "1",
+    "marks": "80"    
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Subjects Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

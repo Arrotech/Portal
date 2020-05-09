@@ -10,8 +10,7 @@ from app.api.v1.models.units import UnitsModel
 from utils.utils import check_subjects_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
-
-subjects_v1 = Blueprint('subjects_v1', __name__)
+from app.api.v1 import subjects_v1
 
 
 @subjects_v1.route('/subjects', methods=['POST'])
@@ -28,7 +27,7 @@ def register_subjects():
         if UnitsModel().get_unit_by_id(unit_id):
             response = SubjectsModel(user_id, unit_id).save()
             if "error" in response:
-                return raise_error(400, "You cannot register for one unit twice")
+                return raise_error(400, "User does not exist or your are trying to enter marks twice")
             return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_id))
         return raise_error(404, "Unit {} not found".format(unit_id))
     return raise_error(404, "Student {} not found".format(user_id))

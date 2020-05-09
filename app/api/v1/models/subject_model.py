@@ -15,7 +15,7 @@ class SubjectsModel(Database):
         self.date = datetime.now()
 
     def save(self):
-        """Create a new orders."""
+        """Register a subject."""
         try:
             self.curr.execute(
                 ''' INSERT INTO subjects(student, unit, date)

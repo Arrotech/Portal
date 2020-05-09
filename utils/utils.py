@@ -81,8 +81,7 @@ def check_login_keys(request):
 
 
 def check_exams_keys(request):
-    res_keys = ['admission_no', 'term', 'form', 'stream', 'exam_type', 'maths', 'english', 'kiswahili',
-                'chemistry', 'biology', 'physics', 'history', 'geography', 'cre', 'agriculture', 'business']
+    res_keys = ['user_id','unit_id','marks']
     errors = []
     for key in res_keys:
         if not key in request.json:
