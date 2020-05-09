@@ -43,3 +43,15 @@ class ExamsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_exams_for_a_student(self, year, user_id):
+        """A student can fetch all his examinations for a specific year."""
+        self.curr.execute("""
+                          SELECT units.unit_name, units.unit_code, users.admission_no, marks FROM exams
+                          INNER JOIN units ON exams.unit = units.unit_id
+                          INNER JOIN users ON exams.student = users.user_id WHERE year='{}' and user_id={}
+                          """.format(year, user_id))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
