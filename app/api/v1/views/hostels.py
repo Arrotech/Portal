@@ -25,3 +25,11 @@ def add_hostel():
         return raise_error(400, '{} already exists'.format(hostel_name))
     response = HostelsModel(hostel_name, rooms, hostel_location).save()
     return Serializer.serialize(response, 201, 'Hostel added successfully')
+
+@hostels_v1.route('/hostels', methods=['GET'])
+@jwt_required
+def get_all_hostels():
+    """Have a user able to view all hostels."""
+    response = HostelsModel().get_all_hostels()
+    return Serializer.serialize(response, 200, "Hostels retrived successfully")
+    

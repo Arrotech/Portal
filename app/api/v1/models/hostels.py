@@ -35,3 +35,14 @@ class HostelsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_all_hostels(self):
+        """Fetch all hostels."""
+        self.curr.execute(
+            """ SELECT * FROM hostels """)
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+    
+
