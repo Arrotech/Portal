@@ -32,4 +32,12 @@ def get_all_hostels():
     """Have a user able to view all hostels."""
     response = HostelsModel().get_all_hostels()
     return Serializer.serialize(response, 200, "Hostels retrived successfully")
-    
+
+@hostels_v1.route('/hostels/<int:hostel_id>', methods=['GET'])
+@jwt_required
+def get_hostel_by_id(hostel_id):
+    """Have a user able to view hostel by id."""
+    response = HostelsModel().get_hostel_by_id(hostel_id)
+    if response:
+        return Serializer.serialize(response, 200, "Hostel retrived successfully")
+    return raise_error(404, 'Hostel not found')

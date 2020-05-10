@@ -40,6 +40,15 @@ class HostelsModel(Database):
         """Fetch all hostels."""
         self.curr.execute(
             """ SELECT * FROM hostels """)
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+    
+    def get_hostel_by_id(self, hostel_id):
+        """Fetch hostel by id."""
+        self.curr.execute(
+            """ SELECT * FROM hostels WHERE hostel_id={}""".format(hostel_id))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
