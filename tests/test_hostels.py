@@ -35,3 +35,15 @@ class TestHostels(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'nyati already exists')
         assert response1.status_code == 400
+        
+    def test_get_all_hostels(self):
+        """Test that a user can fetch all hostels."""
+        response1 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/hostels', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Hostels retrived successfully')
+        assert response2.status_code == 200
