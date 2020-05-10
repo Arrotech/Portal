@@ -26,12 +26,14 @@ def add_hostel():
     response = HostelsModel(hostel_name, rooms, hostel_location).save()
     return Serializer.serialize(response, 201, 'Hostel added successfully')
 
+
 @hostels_v1.route('/hostels', methods=['GET'])
 @jwt_required
 def get_all_hostels():
     """Have a user able to view all hostels."""
     response = HostelsModel().get_all_hostels()
     return Serializer.serialize(response, 200, "Hostels retrived successfully")
+
 
 @hostels_v1.route('/hostels/<int:hostel_id>', methods=['GET'])
 @jwt_required
@@ -41,3 +43,11 @@ def get_hostel_by_id(hostel_id):
     if response:
         return Serializer.serialize(response, 200, "Hostel retrived successfully")
     return raise_error(404, 'Hostel not found')
+
+
+@hostels_v1.route('/hostels/<string:hostel_location>', methods=['GET'])
+@jwt_required
+def get_hostels_by_location(hostel_location):
+    """Have a user able to view all hostels by location."""
+    response = HostelsModel().view_hostel_by_location(hostel_location)
+    return Serializer.serialize(response, 200, "Hostel(s) retrived successfully")
