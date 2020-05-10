@@ -1,11 +1,12 @@
 import os
 
 from app import exam_app
-from flask_jwt_extended import JWTManager
 from app.api.v1.models.database import Database
+from utils.serializer import Serializer
 
 config_name = os.getenv('APP_SETTINGS')
 app = exam_app(config_name)
+
 
 @app.cli.command()
 def create():
@@ -15,6 +16,14 @@ def create():
 @app.cli.command()
 def destroy():
     Database().destroy_table()
+
+
+@app.route('/')
+def index():
+    """Home page."""
+    return Serializer.serialize({
+        "message": "Welcome to our portal"
+    }, 200)
 
 
 if __name__ == '__main__':

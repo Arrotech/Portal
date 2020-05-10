@@ -8,8 +8,7 @@ from app.api.v1.models.library_model import LibraryModel
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
 from utils.utils import check_library_keys, raise_error
-
-books_v1 = Blueprint('books_v1', __name__)
+from app.api.v1 import books_v1
 
 
 @books_v1.route('/books', methods=['POST'])
