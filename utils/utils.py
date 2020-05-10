@@ -108,6 +108,14 @@ def check_library_keys(request):
             errors.append(key)
     return errors
 
+def check_hostels_keys(request):
+    res_keys = ['hostel_name', 'rooms', 'hostel_location']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 
 def check_subjects_keys(request):
     res_keys = ['user_id', 'unit_id']

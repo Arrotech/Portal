@@ -688,3 +688,23 @@ edit_fees_keys = {
 "stream": "1A",
 "amount": 25640
 }
+
+# @@@@@@@@@@@@@@@@@@@@@@ HOSTEL @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_hostel = {
+    "hostel_name": "nyati",
+    "rooms": "400",
+    "hostel_location": "gate c"
+}
+
+hostel_keys = {
+    "hostel_nme": "nyati",
+    "rooms": "400",
+    "hostel_location": "gate c"
+}
+
+hostel_name_exists = {
+    "hostel_name": "nyati",
+    "rooms": "400",
+    "hostel_location": "gate c"
+}

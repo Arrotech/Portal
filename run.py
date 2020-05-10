@@ -18,13 +18,5 @@ def destroy():
     Database().destroy_table()
 
 
-@app.route('/')
-def index():
-    """Home page."""
-    return Serializer.serialize({
-        "message": "Welcome to our portal"
-    }, 200)
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

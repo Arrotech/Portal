@@ -109,6 +109,14 @@ class Database:
                 form varchar NOT NULL,
                 stream varchar NOT NULL,
                 date TIMESTAMP
+            )""",
+            """
+            CREATE TABLE IF NOT EXISTS hostels(
+                hostel_id serial PRIMARY KEY,
+                hostel_name varchar NOT NULL,
+                rooms varchar NOT NULL,
+                hostel_location varchar NOT NULL,
+                date TIMESTAMP
             )"""
         ]
         try:
@@ -129,8 +137,10 @@ class Database:
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
         library = "DROP TABLE IF EXISTS library CASCADE"
+        units = "DROP TABLE IF EXISTS units CASCADE"
+        hostels = "DROP TABLE IF EXISTS hostels CASCADE"
         
-        queries = [exams, users, staff, accountants, subjects, fees, library, units]
+        queries = [exams, users, staff, accountants, subjects, fees, library, units, hostels]
         try:
             for query in queries:
                 self.curr.execute(query)
