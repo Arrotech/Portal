@@ -47,3 +47,27 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostels retrived successfully')
         assert response2.status_code == 200
+        
+    def test_get_hostel_by_id(self):
+        """Test that a user can fetch a hostel by id."""
+        response1 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/hostels/1', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Hostel retrived successfully')
+        assert response2.status_code == 200
+        
+    def test_get_non_existing_hostel_by_id(self):
+        """Test that a user cannot fetch non existing hostel by id."""
+        response1 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/hostels/100', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Hostel not found')
+        assert response2.status_code == 404
