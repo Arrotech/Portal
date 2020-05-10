@@ -174,3 +174,32 @@ def subjects(data):
     if data not in subject:
         return False
     return True
+
+def bad_request(e):
+    """Capture bad request error."""
+    return make_response(jsonify({
+        "status": "400",
+        "message": "bad request"
+    }), 400)
+
+def page_not_found(e):
+    """Capture not found error."""
+    return make_response(jsonify({
+        "status": "404",
+        "message": "resource not found"
+    }), 404)
+
+
+def method_not_allowed(e):
+    """Capture method not allowed error."""
+    return make_response(jsonify({
+        "status": "405",
+        "message": "method not allowed"
+    }), 405)
+    
+def internal_server_error(e):
+    """Capture internal server error."""
+    return make_response(jsonify({
+        "status": "500",
+        "message": "internal server error"
+    }), 500)

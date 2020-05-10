@@ -6,8 +6,7 @@ from utils.authorization import admin_required
 from utils.utils import is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
 import datetime
 from werkzeug.security import check_password_hash
-
-auth_v1 = Blueprint('auth_v1', __name__)
+from app.api.v1 import auth_v1
 
 
 @auth_v1.route('/register', methods=['POST', 'GET'])

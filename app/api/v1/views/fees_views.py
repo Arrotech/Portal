@@ -8,8 +8,7 @@ from app.api.v1.models.users_model import UsersModel
 from utils.bursar import accountant_required
 from utils.utils import check_fees_keys, raise_error
 from flask_jwt_extended import jwt_required
-
-fees_v1 = Blueprint('fees_v1', __name__)
+from app.api.v1 import fees_v1
 
 
 @fees_v1.route('/fees', methods=['POST'])

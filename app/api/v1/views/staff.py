@@ -5,11 +5,10 @@ from app.api.v1.models.staff import StaffModel
 from utils.utils import is_valid_email, raise_error, check_staff_keys, check_login_keys, is_valid_password
 import datetime
 from werkzeug.security import check_password_hash
+from app.api.v1 import staff_v1
 
-auth = Blueprint('auth', __name__)
 
-
-@auth.route('/register', methods=['POST'])
+@staff_v1.route('/register', methods=['POST'])
 def signup():
     """A new user can create a new account."""
     errors = check_staff_keys(request)
@@ -49,7 +48,7 @@ def signup():
     }), 201)
 
 
-@auth.route('/login', methods=['POST'])
+@staff_v1.route('/login', methods=['POST'])
 def login():
     """Already existing user can sign in to their account."""
     errors = check_login_keys(request)
@@ -83,7 +82,7 @@ def login():
     }), 401)
 
 
-@auth.route('/refresh', methods=['POST'])
+@staff_v1.route('/refresh', methods=['POST'])
 @jwt_refresh_token_required
 def refresh():
     """Get the access token."""
@@ -96,7 +95,7 @@ def refresh():
     return jsonify(ret), 200
 
 
-@auth.route('/protected', methods=['GET'])
+@staff_v1.route('/protected', methods=['GET'])
 @jwt_required
 def protected():
     """Access the protected route."""
@@ -104,7 +103,7 @@ def protected():
     return jsonify(logged_in_as=email), 200
 
 
-@auth.route('/users', methods=['GET'])
+@staff_v1.route('/users', methods=['GET'])
 @jwt_required
 def get_users():
     """Get all users."""
@@ -115,7 +114,7 @@ def get_users():
     }), 200)
 
 
-@auth.route('/users/<string:username>', methods=['GET'])
+@staff_v1.route('/users/<string:username>', methods=['GET'])
 @jwt_required
 def get_user(username):
     """Get a specific user by the username."""
