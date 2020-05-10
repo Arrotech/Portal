@@ -71,3 +71,15 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel not found')
         assert response2.status_code == 404
+        
+    def test_view_hostel_by_location(self):
+        """Test that a user can view hostel(s) by location."""
+        response1 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/hostels/gate c', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Hostel(s) retrived successfully')
+        assert response2.status_code == 200

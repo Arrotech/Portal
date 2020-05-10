@@ -54,4 +54,13 @@ class HostelsModel(Database):
         self.curr.close()
         return response
     
+    def view_hostel_by_location(self, hostel_location):
+        """View hostel(s) by location."""
+        self.curr.execute(
+            """ SELECT * FROM hostels WHERE hostel_location=%s""",(hostel_location,),)
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+    
 
