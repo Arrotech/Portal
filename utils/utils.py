@@ -81,7 +81,7 @@ def check_login_keys(request):
 
 
 def check_exams_keys(request):
-    res_keys = ['semester','year','user_id','unit_id','marks']
+    res_keys = ['semester', 'year', 'user_id', 'unit_id', 'marks']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -90,8 +90,18 @@ def check_exams_keys(request):
 
 
 def check_fees_keys(request):
-    res_keys = ['admission_no', 'transaction_type',
-                'transaction_no', 'description', 'form', 'stream', 'amount']
+    res_keys = ['user_id', 'transaction_type',
+                'transaction_no', 'description', 'amount']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+
+def check_edit_fees_keys(request):
+    res_keys = ['transaction_type',
+                'transaction_no', 'description', 'amount']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -100,13 +110,24 @@ def check_fees_keys(request):
 
 
 def check_library_keys(request):
-    res_keys = ['admission_no', 'book_no', 'author',
-                'title', 'subject', 'form', 'stream']
+    res_keys = ['user_id', 'title', 'author',
+                'book_no']
     errors = []
     for key in res_keys:
         if not key in request.json:
             errors.append(key)
     return errors
+
+
+def check_edit_library_keys(request):
+    res_keys = ['title', 'author',
+                'book_no']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 
 def check_hostels_keys(request):
     res_keys = ['hostel_name', 'rooms', 'hostel_location']
@@ -183,12 +204,14 @@ def subjects(data):
         return False
     return True
 
+
 def bad_request(e):
     """Capture bad request error."""
     return make_response(jsonify({
         "status": "400",
         "message": "bad request"
     }), 400)
+
 
 def page_not_found(e):
     """Capture not found error."""
@@ -204,7 +227,8 @@ def method_not_allowed(e):
         "status": "405",
         "message": "method not allowed"
     }), 405)
-    
+
+
 def internal_server_error(e):
     """Capture internal server error."""
     return make_response(jsonify({

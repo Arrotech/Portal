@@ -87,28 +87,25 @@ class Database:
             )""",
             """
             CREATE TABLE IF NOT EXISTS fees(
-                fee_id serial PRIMARY KEY,
-                admission_no varchar NOT NULL,
+                fee_id serial NOT NULL,
+                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 transaction_type varchar NOT NULL,
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
-                form varchar NOT NULL,
-                stream varchar NOT NULL,
-                amount numeric NOT NULL,
-                date TIMESTAMP
+                amount varchar NOT NULL,
+                date TIMESTAMP,
+                PRIMARY KEY (student)
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS library(
-                book_id serial PRIMARY KEY,
-                admission_no varchar NOT NULL,
-                book_no varchar NOT NULL,
-                author varchar NOT NULL,
+                book_id serial NOT NULL,
+                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 title varchar NOT NULL,
-                subject varchar NOT NULL,
-                form varchar NOT NULL,
-                stream varchar NOT NULL,
-                date TIMESTAMP
+                author varchar NOT NULL,
+                book_no varchar NOT NULL,
+                date TIMESTAMP,
+                PRIMARY KEY (student)
             )""",
             """
             CREATE TABLE IF NOT EXISTS hostels(

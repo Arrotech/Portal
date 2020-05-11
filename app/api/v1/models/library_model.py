@@ -1,10 +1,9 @@
 import json
+import psycopg2
 
 from app.api.v1.models.database import Database
 
 from datetime import datetime
-
-Database().create_table()
 
 
 class LibraryModel(Database):
@@ -12,62 +11,62 @@ class LibraryModel(Database):
 
     def __init__(
             self,
-            admission_no=None,
-            book_no=None,
-            author=None,
+            user_id=None,
             title=None,
-            subject=None,
-            form=None,
-            stream=None,
+            author=None,
+            book_no=None,
             date=None):
         super().__init__()
-        self.admission_no = admission_no
-        self.book_no = book_no
-        self.author = author
+        self.user_id = user_id
         self.title = title
-        self.subject = subject
-        self.form = form
-        self.stream =stream
+        self.author = author
+        self.book_no = book_no
         self.date = datetime.now()
 
     def save(self):
         """Add a new book."""
-
-        self.curr.execute(
-            ''' INSERT INTO library(admission_no, book_no, author, title, subject, form, stream, date)\
-            VALUES('{}','{}','{}','{}','{}','{}','{}','{}')\
-             RETURNING admission_no, book_no, author, title, subject, form, stream, date''' \
-                .format(self.admission_no, self.book_no, self.author, self.title, self.subject, self.form, self.stream, self.date))
-        book = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(book, default=str)
+        try:
+            self.curr.execute(
+                ''' INSERT INTO library(student, title, author, book_no, date)
+                VALUES('{}','{}','{}','{}','{}')
+                RETURNING student, title, author, book_no, date'''
+                .format(self.user_id, self.title, self.author, self.book_no, self.date))
+            response = self.curr.fetchone()
+            self.conn.commit()
+            self.curr.close()
+            return response
+        except psycopg2.IntegrityError:
+            return "error"
 
     def get_all_books(self):
         """Fetch all books."""
-
-        self.curr.execute(''' SELECT * FROM library''')
-        books = self.curr.fetchall()
+        self.curr.execute(''' 
+                          SELECT users.admission_no, title, author, book_no FROM library
+                          INNER JOIN users ON library.student = users.user_id
+                          ''')
+        response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(books, default=str)
+        return response
 
-    def get_books_by_admission_no(self, admission_no):
-        """Get an exam with specific admission no."""
-        self.curr.execute(""" SELECT * FROM library WHERE admission_no=%s""", (admission_no,))
-        book = self.curr.fetchall()
+    def get_books_by_user_id(self, user_id):
+        """Get a book with specific user id."""
+        self.curr.execute(""" 
+                          SELECT users.admission_no FROM library
+                          INNER JOIN users ON library.student = users.user_id 
+                          WHERE user_id={}""".format(user_id))
+        response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(book, default=str)
+        return response
 
-    def edit_books(self, book_id, admission_no, book_no, author, title, subject, form, stream):
+    def edit_books(self, book_id, title, author, book_no):
         """Edit books."""
-
-        self.curr.execute("""UPDATE library\
-			SET admission_no='{}', book_no='{}', author='{}', title='{}', subject='{}', form='{}', stream='{}'\
-			WHERE book_id={} RETURNING admission_no, book_no, author, title, subject, form, stream"""
-            .format(book_id, admission_no, book_no, author, title, subject, form, stream))
-        book = self.curr.fetchone()
+        self.curr.execute("""UPDATE library
+			SET title='{}', author='{}', book_no='{}'
+			WHERE book_id={} RETURNING title, author, book_no"""
+                          .format(book_id, title, author, book_no))
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(book, default=str)
+        return response
