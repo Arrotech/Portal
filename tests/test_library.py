@@ -7,16 +7,16 @@ from .base_test import BaseTest
 class TestBooks(BaseTest):
     """Test Library."""
     def test_add_books(self):
-        """Test that the add books endpoint works."""
+        """Test that the admin add books."""
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
-        result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Book awarded successfully')
-        assert response.status_code == 201
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Book added successfully')
+        assert response2.status_code == 201
 
     def test_add_books_keys(self):
         """Test the add books keys."""
@@ -27,7 +27,7 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book_keys), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Invalid form key')
+        self.assertEqual(result['message'], 'Invalid user_id key')
         assert response.status_code == 400
 
     def test_add_books_for_unexisting_user(self):
@@ -36,11 +36,11 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Student with that Admission Number does not exitst.')
+        self.assertEqual(result['message'], 'Student not found')
         assert response.status_code == 404
 
     def test_get_books(self):
-        """Test fetching all books that have been created."""
+        """Test that an admin can fetch all books that have been added."""
         response2 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -51,11 +51,11 @@ class TestBooks(BaseTest):
             '/api/v1/books', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'],
-                         "Retrieved successfully")
+                         "Books retrieved successfully")
         assert response1.status_code == 200
 
     def test_get_book(self):
-        """Test getting a specific book by admission_no."""
+        """Test that a student can fetch all books that were issued."""
         response2 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -63,42 +63,43 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
         response1 = self.client.get(
-            '/api/v1/books/NJCF4001', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/books/1', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'],
-                         'Retrieved successfully')
+                         'Books retrieved successfully')
         assert response1.status_code == 200
 
-    def test_get_unexisting_book(self):
-        """Test getting unexisting specific book by admission_no."""
+    def test_get_books_for_non_existing_user(self):
+        """Test that one cannot get books for non existing user"""
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response1 = self.client.get(
-            '/api/v1/books/NJCF4057', content_type='application/json', headers=self.get_admin_token())
-        result = json.loads(response1.data.decode())
+        response2 = self.client.post(
+            '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.get(
+            '/api/v1/books/10', content_type='application/json', headers=self.get_token())
+        result = json.loads(response3.data.decode())
         self.assertEqual(result['message'],
-                         'Book Not Found')
-        assert response1.status_code == 404
+                         'Student not found')
+        assert response3.status_code == 404
 
     def test_edit_books(self):
         """Test edit books."""
-
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
-        response2 = self.client.put(
+        response3 = self.client.put(
             '/api/v1/books/1', data=json.dumps(edit_books), content_type='application/json', headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'book updated successfully')
-        assert response2.status_code == 200
+        result = json.loads(response3.data.decode())
+        self.assertEqual(result['message'], 'Book updated successfully')
+        assert response3.status_code == 200
 
     def test_edit_books_keys(self):
         """Test edit books keys."""
-
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -108,12 +109,11 @@ class TestBooks(BaseTest):
         response2 = self.client.put(
             '/api/v1/books/1', data=json.dumps(edit_books_keys), content_type='application/json', headers=self.get_admin_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Invalid form key')
+        self.assertEqual(result['message'], 'Invalid title key')
         assert response2.status_code == 400
 
-    def test_edit_unexisting_fees(self):
-        """Test edit unexisting fees."""
-
+    def test_edit_non_existing_book(self):
+        """Test edit non existing book."""
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -121,7 +121,7 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
         response2 = self.client.put(
-            '/api/v1/books/1000', data=json.dumps(edit_books), content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/books/10', data=json.dumps(edit_books), content_type='application/json', headers=self.get_admin_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'book not found')
+        self.assertEqual(result['message'], 'Book not found')
         assert response2.status_code == 404

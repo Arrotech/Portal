@@ -7,7 +7,8 @@ from flask_restful import Resource
 from app.api.v1.models.library_model import LibraryModel
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
-from utils.utils import check_library_keys, raise_error
+from utils.utils import check_library_keys, raise_error, check_edit_library_keys
+from utils.serializer import Serializer
 from app.api.v1 import books_v1
 
 
@@ -20,93 +21,52 @@ def add_book():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    admission_no = details['admission_no']
-    book_no = details['book_no']
-    author = details['author']
+    user_id = details['user_id']
     title = details['title']
-    subject = details['subject']
-    form = details['form']
-    stream = details['stream']
-    user = json.loads(UsersModel().get_admission_no(admission_no))
-    if user:
-        book = LibraryModel(admission_no,
-                            book_no,
-                            author,
-                            title,
-                            subject,
-                            form,
-                            stream).save()
-        book = json.loads(book)
-        return make_response(jsonify({
-            "status": "201",
-            "message": "Book awarded successfully",
-            "book": book
-        }), 201)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Student with that Admission Number does not exitst."
-    }), 404)
+    author = details['author']
+    book_no = details['book_no']
+    if UsersModel().get_user_id(user_id):
+        response = LibraryModel(user_id,
+                                title,
+                                author,
+                                book_no).save()
+        if "error" in response:
+            return raise_error(404, "Student not found")
+        return Serializer.serialize(response, 201, "Book added successfully")
+    return raise_error(404, "Student not found")
+
 
 @books_v1.route('/books', methods=['GET'])
 @jwt_required
 def get_books():
     """Fetch all books."""
-    return make_response(jsonify({
-        "status": "200",
-        "message": "Retrieved successfully",
-        "books": json.loads(LibraryModel().get_all_books())
-    }), 200)
+    response = LibraryModel().get_all_books()
+    return Serializer.serialize(response, 200, "Books retrieved successfully")
 
-@books_v1.route('/books/<string:admission_no>', methods=['GET'])
+
+@books_v1.route('/books/<int:user_id>', methods=['GET'])
 @jwt_required
-def get_book(admission_no):
-    """Fetch a book."""
-    book = LibraryModel().get_books_by_admission_no(admission_no)
-    book = json.loads(book)
-    if book:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "Retrieved successfully",
-            "Book": book
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Book Not Found"
-    }), 404)
+def get_books_for_one_student(user_id):
+    """Fetch books for a single student."""
+    response = LibraryModel().get_books_by_user_id(user_id)
+    if response:
+        return Serializer.serialize(response, 200, "Books retrieved successfully")
+    return raise_error(404, "Student not found")
+
 
 @books_v1.route('/books/<int:book_id>', methods=['PUT'])
 @jwt_required
 @admin_required
 def put(book_id):
     """Edit books."""
-    errors = check_library_keys(request)
+    errors = check_edit_library_keys(request)
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    admission_no = details['admission_no']
-    book_no = details['book_no']
-    author = details['author']
     title = details['title']
-    subject = details['subject']
-    form = details['form']
-    stream = details['stream']
-
-    book = LibraryModel().edit_books(admission_no,
-                            book_no,
-                            author,
-                            title,
-                            subject,
-                            form,
-                            stream,
-                            book_id)
-    book = json.loads(book)
-    if book:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "book updated successfully",
-            "new_party": book
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "book not found"
-    }), 404)
+    author = details['author']
+    book_no = details['book_no']
+    response = LibraryModel().edit_books(title, author, book_no, book_id)
+    if response:
+        return Serializer.serialize(response, 200, "Book updated successfully")
+    return raise_error(404, "Book not found")

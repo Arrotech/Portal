@@ -1,4 +1,5 @@
 import json
+import psycopg2
 
 from datetime import datetime
 from app.api.v1.models.database import Database
@@ -11,59 +12,66 @@ class FeesModels(Database):
 
     def __init__(
             self,
-            admission_no=None,
+            user_id=None,
             transaction_type=None,
             transaction_no=None,
             description=None,
-            form=None,
-            stream=None,
-            amount=None):
+            amount=None,
+            date=None):
         super().__init__()
-        self.admission_no = admission_no
+        self.user_id = user_id
         self.transaction_type = transaction_type
         self.transaction_no = transaction_no
         self.description = description
-        self.form = form
-        self.stream = stream
         self.amount = amount
         self.date = datetime.now()
 
     def save(self):
         """Create a new fee entry."""
-        self.curr.execute(
-            ''' INSERT INTO fees(admission_no, transaction_type, transaction_no, description, form, stream, amount, date)\
-            VALUES('{}','{}','{}','{}','{}','{}',{},'{}')\
-            RETURNING admission_no, transaction_type, transaction_no, description, form, stream, amount, date''' \
-                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.form, self.stream, self.amount, self.date))
-        fees = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(fees, default=str)
+        try:
+            self.curr.execute(
+                ''' INSERT INTO fees(student, transaction_type, transaction_no, description, amount, date)
+                VALUES('{}','{}','{}','{}','{}','{}')
+                RETURNING student, transaction_type, transaction_no, description, amount, date'''
+                .format(self.user_id, self.transaction_type, self.transaction_no, self.description, self.amount, self.date))
+            response = self.curr.fetchone()
+            self.conn.commit()
+            self.curr.close()
+            return response
+        except psycopg2.IntegrityError:
+            return "error"
 
     def get_all_fees(self):
-        """Fetch all comments"""
-        self.curr.execute(''' SELECT * FROM fees''')
-        fees = self.curr.fetchall()
+        """Fetch all fees"""
+        self.curr.execute(''' 
+                          SELECT users.admission_no FROM fees
+                          INNER JOIN users ON fees.student = users.user_id
+                          ''')
+        response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(fees, default=str)
+        return response
 
-    def get_admission_no(self, admission_no):
-        """Get an exam with specific admission no."""
-        self.curr.execute(""" SELECT * FROM fees WHERE admission_no=%s""", (admission_no,))
-        fees = self.curr.fetchall()
+    def get_fee_by_user_id(self, user_id):
+        """Get fees for a specific student by his/her id."""
+        self.curr.execute(
+            """
+            SELECT users.admission_no FROM fees
+            INNER JOIN users ON fees.student = users.user_id
+            WHERE user_id={}
+            """.format(user_id))
+        response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(fees, default=str)
+        return response
 
-    def edit_fees(self, fee_id, admission_no, transaction_type, transaction_no, description, form, stream, amount):
+    def edit_fees(self, fee_id, transaction_type, transaction_no, description, amount):
         """Edit fees."""
-
-        self.curr.execute("""UPDATE fees\
-			SET admission_no='{}', transaction_type='{}', transaction_no='{}', description='{}', form='{}', stream='{}', amount='{}'\
-			WHERE fee_id={} RETURNING admission_no, transaction_type, transaction_no, description, form, stream, amount"""
-            .format(fee_id, admission_no, transaction_type, transaction_no, description, form, stream, amount))
-        fee = self.curr.fetchone()
+        self.curr.execute("""UPDATE fees
+			SET transaction_type='{}', transaction_no='{}', description='{}', amount='{}'
+			WHERE fee_id={} RETURNING transaction_type, transaction_no, description, amount"""
+                          .format(fee_id, transaction_type, transaction_no, description, amount))
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(fee, default=str)
+        return response

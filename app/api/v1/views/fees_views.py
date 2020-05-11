@@ -6,9 +6,10 @@ from flask_restful import Resource
 from app.api.v1.models.fees_models import FeesModels
 from app.api.v1.models.users_model import UsersModel
 from utils.bursar import accountant_required
-from utils.utils import check_fees_keys, raise_error
+from utils.utils import check_fees_keys, raise_error, check_edit_fees_keys
 from flask_jwt_extended import jwt_required
 from app.api.v1 import fees_v1
+from utils.serializer import Serializer
 
 
 @fees_v1.route('/fees', methods=['POST'])
@@ -20,60 +21,40 @@ def add_fees():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    admission_no = details['admission_no']
+    user_id = details['user_id']
     transaction_type = details['transaction_type']
     transaction_no = details['transaction_no']
     description = details['description']
-    form = details['form']
-    stream = details['stream']
     amount = details['amount']
-    user = json.loads(UsersModel().get_admission_no(admission_no))
-    if user:
-        deposit = FeesModels(admission_no,
-                                transaction_type,
-                                transaction_no,
-                                description,
-                                form,
-                                stream,
-                                amount).save()
-        deposit = json.loads(deposit)
-        return make_response(jsonify({
-            "status": "201",
-            "message": "Entry made successsfully",
-            "deposit": deposit
-        }), 201)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Student with that Admission Number does not exitst."
-    }), 404)
+    if UsersModel().get_user_id(user_id):
+        response = FeesModels(user_id,
+                              transaction_type,
+                              transaction_no,
+                              description,
+                              amount).save()
+        if "error" in response:
+            return raise_error(404, "Student not found")
+        return Serializer.serialize(response, 201, "Entry made successfully")
+    return raise_error(404, "Student not found")
+
 
 @fees_v1.route('/fees', methods=['GET'])
 @jwt_required
 @accountant_required
 def get_fees():
-    """The Accountant can view the fees structures."""
-    return make_response(jsonify({
-        "status": "200",
-        "message": "successfully retrieved",
-        "fees": json.loads(FeesModels().get_all_fees())
-    }), 200)
+    """The Accountant can view the all fees."""
+    response = FeesModels().get_all_fees()
+    return Serializer.serialize(response, 200, "Fees retrieved successfully")
 
-@fees_v1.route('/fees/<string:admission_no>', methods=['GET'])
+
+@fees_v1.route('/fees/<int:user_id>', methods=['GET'])
 @jwt_required
-def get_fee(admission_no):
-    """The students can view a specific fee structure by Admission Number."""
-    fee = FeesModels().get_admission_no(admission_no)
-    fee = json.loads(fee)
-    if fee:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "successfully retrieved",
-            "Fee": fee
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "Fees Not Found"
-    }), 404)
+def get_fees_for_one_student(user_id):
+    """The students can view their fees by id."""
+    response = FeesModels().get_fee_by_user_id(user_id)
+    if response:
+        return Serializer.serialize(response, 200, "Fees retrieved successfully")
+    return raise_error(404, "Student not found")
 
 
 @fees_v1.route('/fees/<int:fee_id>', methods=['PUT'])
@@ -81,34 +62,16 @@ def get_fee(admission_no):
 @accountant_required
 def put(fee_id):
     """Edit fees."""
-    errors = check_fees_keys(request)
+    errors = check_edit_fees_keys(request)
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    admission_no = details['admission_no']
     transaction_type = details['transaction_type']
     transaction_no = details['transaction_no']
     description = details['description']
-    form = details['form']
-    stream = details['stream']
     amount = details['amount']
-
-    fee = FeesModels().edit_fees(admission_no,
-                            transaction_type,
-                            transaction_no,
-                            description,
-                            form,
-                            stream,
-                            amount,
-                            fee_id)
-    fee = json.loads(fee)
-    if fee:
-        return make_response(jsonify({
-            "status": "200",
-            "message": "fees updated successfully",
-            "new_party": fee
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "fees not found"
-    }), 404)
+    response = FeesModels().edit_fees(
+        transaction_type, transaction_no, description, amount, fee_id)
+    if response:
+        return Serializer.serialize(response, 200, "Fees updated successfully")
+    return raise_error(404, "Fees not found")

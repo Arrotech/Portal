@@ -612,80 +612,60 @@ user_does_not_exist = {
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Books Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_book = {
-"admission_no": "NJCF4001",
-"book_no": "KISF1001/19",
-"author": "Ken Walibora",
-"title": "Damu Nyeusi",
-"subject": "kiswahili",
-"form": "1",
-"stream": "1A"
+"user_id": "1",
+"title": "Chemistry 1",
+"author": "Einstein",
+"book_no": "FDHGD2356/2019"
 }
 
 add_book_keys = {
-"admission_no": "NJCF4001",
-"book_no": "KISF1001/19",
-"author": "Ken Walibora",
-"title": "Damu Nyeusi",
-"subject": "kiswahili",
-"stream": "1A"
+"userid": "1",
+"title": "Chemistry 1",
+"author": "Einstein",
+"book_no": "FDHGD2356/2019"
 }
 
 edit_books = {
-"admission_no": "NJCF4001",
-"book_no": "KISF1001/19",
-"author": "Ken Walibora",
-"title": "Damu Nyeusi",
-"subject": "kiswahili",
-"form": "1",
-"stream": "1A"
+"title": "Chemistry 2",
+"author": "Einstein",
+"book_no": "FDHGD2356/2019"
 }
 
 edit_books_keys = {
-"admission_no": "NJCF4001",
-"book_no": "KISF1001/19",
-"author": "Ken Walibora",
-"title": "Damu Nyeusi",
-"subject": "kiswahili",
-"stream": "1A"
+"tile": "Chemistry 1",
+"author": "Einstein",
+"book_no": "FDHGD2356/2019"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_fees = {
-"admission_no": "NJCF4001",
+"user_id": "1",
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
-"form": "4",
-"stream": "1A",
 "amount": 25640
 }
 
 add_fees_keys = {
-"admission_no": "NJCF4001",
+"userid": "1",
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
-"stream": "1A",
 "amount": 25640
 }
 
 edit_fees = {
-"admission_no": "NJCF4001",
 "transaction_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
-"form": "4",
-"stream": "1A",
 "amount": 25640
 }
 
 edit_fees_keys = {
-"admission_no": "NJCF4001",
-"transaction_type": "ADP",
+"transacti_type": "ADP",
 "transaction_no": "176276",
 "description": "HELB",
-"stream": "1A",
 "amount": 25640
 }
 

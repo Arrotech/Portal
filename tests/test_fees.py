@@ -11,36 +11,36 @@ class TestFees(BaseTest):
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
-        result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Entry made successsfully')
-        assert response.status_code == 201
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Entry made successfully')
+        assert response2.status_code == 201
 
     def test_add_fees_keys(self):
-        """Test the add fees keyss."""
+        """Test that the bursar cannot add fees with invalid json keys."""
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees_keys), content_type='application/json',
             headers=self.get_bursar_token())
-        result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Invalid form key')
-        assert response.status_code == 400
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Invalid user_id key')
+        assert response2.status_code == 400
 
     def test_add_fees_for_unexisting_student(self):
-        """Test that the add fees endpoint works."""
+        """Test that bursar cannot add fees for non existing student."""
         response = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Student with that Admission Number does not exitst.')
+        self.assertEqual(result['message'], 'Student not found')
         assert response.status_code == 404
 
     def test_get_fees(self):
-        """Test fetching all fees that have been created."""
+        """Test fetch all fees.."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -50,11 +50,11 @@ class TestFees(BaseTest):
         response2 = self.client.get(
             '/api/v1/fees', content_type='application/json', headers=self.get_bursar_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], "successfully retrieved")
+        self.assertEqual(result['message'], "Fees retrieved successfully")
         assert response2.status_code == 200
 
-    def test_get_fees_by_admission(self):
-        """Test fetching all fees by admission no."""
+    def test_get_fees_by_user_id(self):
+        """Test fetching all fees by user id."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -62,61 +62,57 @@ class TestFees(BaseTest):
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
         response2 = self.client.get(
-            '/api/v1/fees/NJCF4001', content_type='application/json', headers=self.get_bursar_token())
+            '/api/v1/fees/1', content_type='application/json', headers=self.get_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], "successfully retrieved")
+        self.assertEqual(result['message'], "Fees retrieved successfully")
         assert response2.status_code == 200
 
-    def test_get_unexisting_fee(self):
-        """Test getting unexisting specific fee by admission_no."""
-
+    def test_get_fees_for_non_existing_student(self):
+        """Test getting fees for a non existing student."""
         response1 = self.client.get(
-            '/api/v1/fees/NJCF4057', content_type='application/json', headers=self.get_bursar_token())
+            '/api/v1/fees/3', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'Fees Not Found')
+        self.assertEqual(result['message'], 'Student not found')
         assert response1.status_code == 404
 
     def test_edit_fees(self):
         """Test edit fees."""
-
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
-        response2 = self.client.put(
+        response3 = self.client.put(
             '/api/v1/fees/1', data=json.dumps(edit_fees), content_type='application/json', headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'fees updated successfully')
-        assert response2.status_code == 200
+        result = json.loads(response3.data.decode())
+        self.assertEqual(result['message'], 'Fees updated successfully')
+        assert response3.status_code == 200
 
     def test_edit_fees_keys(self):
         """Test edit fees keys."""
-
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
-        response2 = self.client.put(
+        response3 = self.client.put(
             '/api/v1/fees/1', data=json.dumps(edit_fees_keys), content_type='application/json', headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Invalid form key')
-        assert response2.status_code == 400
+        result = json.loads(response3.data.decode())
+        self.assertEqual(result['message'], 'Invalid transaction_type key')
+        assert response3.status_code == 400
 
     def test_edit_unexisting_fees(self):
         """Test edit unexisting fees."""
-
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
-        response = self.client.post(
+        response2 = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
-        response2 = self.client.put(
-            '/api/v1/fees/1000', data=json.dumps(edit_fees), content_type='application/json', headers=self.get_admin_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'fees not found')
-        assert response2.status_code == 404
+        response3 = self.client.put(
+            '/api/v1/fees/10', data=json.dumps(edit_fees), content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response3.data.decode())
+        self.assertEqual(result['message'], 'Fees not found')
+        assert response3.status_code == 404
