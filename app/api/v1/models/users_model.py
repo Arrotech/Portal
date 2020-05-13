@@ -81,3 +81,12 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def update_user_password(self, user_id, password):
+        """Update user password by id."""
+        self.curr.execute(
+            """UPDATE users SET password='{}' WHERE user_id={} RETURNING password""".format(user_id, password))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response

@@ -18,6 +18,10 @@ update_user_info = {
     "surname": "Gitundu"
 }
 
+update_user_password  = {
+    "password": "Mercy20930988!"
+}
+
 update_user_info_keys = {
     "fitname": "Mercy",
     "lastname": "Wairimu",
