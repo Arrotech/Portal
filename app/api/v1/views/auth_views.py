@@ -9,6 +9,7 @@ from werkzeug.security import check_password_hash
 from app.api.v1 import auth_v1
 from utils.serializer import Serializer
 
+
 @auth_v1.route('/register', methods=['POST', 'GET'])
 def signup():
     """A new user can create a new account."""
@@ -43,7 +44,7 @@ def signup():
     if (form_restrictions(form) is False):
         return raise_error(400, "Form should be 1, 2, 3 or 4")
     user = json.loads(UsersModel(firstname, lastname, surname,
-                      admission_no, email, password, form, stream).save())
+                                 admission_no, email, password, form, stream).save())
     return make_response(jsonify({
         "message": "Account created successfully!",
         "status": "201",
@@ -90,7 +91,8 @@ def forgot():
     user = json.loads(UsersModel().get_email(email))
     if user:
         expires = datetime.timedelta(days=1)
-        email_token = create_access_token(identity=email, expires_delta=expires)
+        email_token = create_access_token(
+            identity=email, expires_delta=expires)
         return make_response(jsonify({
             "status": "200",
             "message": "Check Your Email for the Password Reset Link",
@@ -101,6 +103,7 @@ def forgot():
         "status": "200",
         "message": "Check Your Email for the Password Reset Link"
     }), 200)
+
 
 @auth_v1.route('/refresh', methods=['POST'])
 @jwt_refresh_token_required
@@ -113,11 +116,13 @@ def refresh():
     }
     return jsonify(ret), 200
 
+
 @auth_v1.route('/protected', methods=['GET'])
 @jwt_required
 def protected():
     email = get_jwt_identity()
     return jsonify(logged_in_as=email), 200
+
 
 @auth_v1.route('/users', methods=['GET'])
 @jwt_required
@@ -130,6 +135,7 @@ def get_users():
         "message": "successfully retrieved",
         "Users": users
     }), 200)
+
 
 @auth_v1.route('/users/<string:admission_no>', methods=['GET'])
 @jwt_required
@@ -147,6 +153,7 @@ def get_user(admission_no):
         "message": "User Not Found"
     }), 404)
 
+
 @auth_v1.route('/users/<string:admission_no>/promote', methods=['PUT'])
 @jwt_required
 def promote(admission_no):
@@ -159,7 +166,8 @@ def promote(admission_no):
     stream = details['stream']
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
-        updated_user = json.loads(UsersModel().promote_user(form, stream, admission_no))
+        updated_user = json.loads(
+            UsersModel().promote_user(form, stream, admission_no))
         return make_response(jsonify({
             "status": "200",
             "message": "student promoted successfully",
@@ -169,7 +177,8 @@ def promote(admission_no):
         "status": "404",
         "message": "student not found"
     }), 404)
-    
+
+
 @auth_v1.route('/users/user_info/<int:user_id>', methods=['PUT'])
 @jwt_required
 def update_user_info(user_id):
@@ -186,4 +195,16 @@ def update_user_info(user_id):
         return Serializer.serialize(response, 200, "User updated successfully")
     return Serializer.serialize(response, 404, "User not found")
 
+
+@auth_v1.route('/users/change_password/<int:user_id>', methods=['PUT'])
+@jwt_required
+def update_password(user_id):
+    """Already existing user can update their password."""
+    details = request.get_json()
+    password = details['password']
+    user = UsersModel().get_user_id(user_id)
+    response = UsersModel().update_user_password(password, user_id)
+    if response:
+        return Serializer.serialize(response, 200, "Password updated successfully")
+    return raise_error(404, "User not found")
 
