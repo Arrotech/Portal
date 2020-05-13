@@ -12,6 +12,18 @@ create_account = {
     "role": "student"
 }
 
+update_user_info = {
+    "firstname": "Mercy",
+    "lastname": "Wairimu",
+    "surname": "Gitundu"
+}
+
+update_user_info_keys = {
+    "fitname": "Mercy",
+    "lastname": "Wairimu",
+    "surname": "Gitundu"
+}
+
 student_email_token = {
     "email": "gitundu.samuel@students.jcs.ac.ke"
 }

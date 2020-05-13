@@ -72,3 +72,12 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(user, default=str)
+    
+    def update_user_info(self, user_id, firstname, lastname, surname ):
+        """Update user information by id."""
+        self.curr.execute(
+            """UPDATE users SET firstname='{}', lastname='{}', surname='{}' WHERE user_id={} RETURNING firstname, lastname, surname""".format(user_id, firstname, lastname, surname))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response

@@ -1,7 +1,7 @@
 import json
 
 from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname, \
-    wrong_lastname, promote_user, promote_user_key, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
+    wrong_lastname, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
 from .base_test import BaseTest
 
 
@@ -270,3 +270,39 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         assert response.status_code == 404
         assert result['message'] == "resource not found"
+        
+    def test_update_user_info(self):
+        """Test that a user can update their information"""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.put(
+            '/api/v1/auth/users/user_info/1', data=json.dumps(update_user_info), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'User updated successfully')
+        assert response2.status_code == 200
+        
+    def test_update_user_info_keys(self):
+        """Test that a user cannot update their information with invalid json keys."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.put(
+            '/api/v1/auth/users/user_info/1', data=json.dumps(update_user_info_keys), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Invalid firstname key')
+        assert response2.status_code == 400
+        
+    def test_update_user_info_for_non_existing_user(self):
+        """Test that a user cannot update their information for non existing user."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.put(
+            '/api/v1/auth/users/user_info/100', data=json.dumps(update_user_info), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'User not found')
+        assert response2.status_code == 404

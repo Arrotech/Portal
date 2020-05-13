@@ -3,11 +3,11 @@ from flask import make_response, jsonify, request, Blueprint, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
-from utils.utils import is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
+from utils.utils import check_update_user_keys, is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
 import datetime
 from werkzeug.security import check_password_hash
 from app.api.v1 import auth_v1
-
+from utils.serializer import Serializer
 
 @auth_v1.route('/register', methods=['POST', 'GET'])
 def signup():
@@ -169,5 +169,21 @@ def promote(admission_no):
         "status": "404",
         "message": "student not found"
     }), 404)
+    
+@auth_v1.route('/users/user_info/<int:user_id>', methods=['PUT'])
+@jwt_required
+def update_user_info(user_id):
+    """Update user information."""
+    errors = check_update_user_keys(request)
+    if errors:
+        return Serializer.serialize(errors, 400, 'Invalid {} key'.format(', '.join(errors)))
+    details = request.get_json()
+    firstname = details['firstname']
+    lastname = details['lastname']
+    surname = details['surname']
+    response = UsersModel().update_user_info(firstname, lastname, surname, user_id)
+    if response:
+        return Serializer.serialize(response, 200, "User updated successfully")
+    return Serializer.serialize(response, 404, "User not found")
 
 

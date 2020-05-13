@@ -13,6 +13,15 @@ def check_register_keys(request):
     return errors
 
 
+def check_update_user_keys(request):
+    res_keys = ['firstname', 'lastname', 'surname']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+
 def check_promote_student_keys(request):
     res_keys = ['form', 'stream']
     errors = []
