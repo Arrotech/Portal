@@ -1,142 +1,117 @@
-body {
-  background: -webkit-linear-gradient(#000000, #fff);
-  font-family: "Trebuchet MS";
-  /*color:#fff;*/
-  height: 100vh;
-  /* background-image: url('bookshop2.jpg'); */
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-}
-img {
-  width: 100%;
-}
-.main {
-  height: 700px;
-  width: 400px;
-  /*border:1px solid #fff;*/
-  margin: 1% auto;
-  margin-top: 50px;
-  clear: both;
-}
-.main div {
-  display: inline;
-  border: none;
-}
-.main .left {
-  width: 100%;
-  float: left;
-  /*border-right:1px solid #fff;*/
-  height: 100%;
-  /*padding:15px 0 0 0;*/
-  background-color: rgba(255, 0, 0, 0.2);
-  border-radius: 5px;
-  position: center;
-  color: white;
-  padding: 20px;
-}
-.left h1 {
-  text-align: center;
-  /*padding-left:120px;*/
-  padding-top: 100px;
-  margin-bottom: 0;
-}
-.left p {
-  margin-top: 0;
-  text-align: center;
-  color: white;
-}
-.left form {
-  text-align: left;
-}
-.left form input {
-  text-align: center;
-  width: 70%;
-  height: 20px;
-  margin-bottom: 10px;
-  border: none;
-  border: 1px solid #f8f8f8;
-  background-color: #f8f8f8;
-  border-radius: 25px;
+.register {
+    background: -webkit-linear-gradient(left, #b22222, #00c6ff);
+    margin-top: 3%;
+    padding: 3%;
 }
 
-.left .pswd {
-  display: flex;
-  flex-flow: row;
-}
-.left .pswd #password{
-  width: 70%;
-}
-.left .pswd #confirm_password{
-  width: 70%;
-}
-.field-icon {
-  margin-left: -25px;
-  position: relative;
-  z-index: 2;
-  padding: 2px;
-  color: #000000;
-}
-.left form input:focus {
-  outline: none;
-}
-::-webkit-input-placeholder {
-  color: grey;
-  letter-spacing: 1px;
-}
-.left form input[type="submit"] {
-  background-color: #d65050;
-  color: #fff;
-  margin-top: 20px;
-  font-weight: bold;
-}
-.left p.forgot {
-  color: grey;
-  font-size: 12px;
-  color: white;
-  text-align: left;
-}
-.left p.or {
-  color: grey;
-  font-size: 15px;
-  border: 1px solid #f8f8f8;
-  width: 40px;
-  font-weight: 200;
-  height: 30px;
-  padding-top: 10px;
-  background-color: #fff;
-  border-radius: 50%;
-  position: absolute;
-  top: 42%;
-  left: 94%;
-  z-index: 10;
-  /*text-align:center;*/
-}
-/*.left .form{
-  border:1px solid;
-}*/
-
-/*snack bar css*/
-#snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: rgb(230, 78, 78);
-  color: #000000;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 15px;
+.register-left {
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
 }
 
-#snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+.register-left input {
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+
+.register-right {
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+
+.register-left img {
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite alternate;
+    animation: mover 1s infinite alternate;
+}
+
+@-webkit-keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+.register-left p {
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+
+.register .register-form {
+    padding: 10%;
+    margin-top: 10%;
+}
+
+.btnRegister {
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+
+.register .nav-tabs {
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+
+.register .nav-tabs .nav-link {
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+
+.register .nav-tabs .nav-link:hover {
+    border: none;
+}
+
+.register .nav-tabs .nav-link.active {
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+
+.register-heading {
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
 }
