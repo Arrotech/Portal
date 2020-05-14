@@ -28,6 +28,14 @@ update_user_info_keys = {
     "surname": "Gitundu"
 }
 
+reset_email = {
+    "email": "gitundu.kevin@students.jcs.ac.ke"
+}
+
+reset_unexisting_email = {
+    "email": "peter@gmail.com"
+}
+
 student_email_token = {
     "email": "gitundu.samuel@students.jcs.ac.ke"
 }
