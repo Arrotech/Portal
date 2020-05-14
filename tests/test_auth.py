@@ -1,7 +1,7 @@
 import json
 
 from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname, \
-    wrong_lastname, update_user_password, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
+    wrong_lastname, reset_email, reset_unexisting_email, update_user_password, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
 from .base_test import BaseTest
 
 
@@ -306,3 +306,27 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'User not found')
         assert response2.status_code == 404
+        
+    def test_send_reset_email(self):
+        """Test sending a password reset email."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/auth/forgot', data=json.dumps(reset_email), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        assert response2.status_code == 200
+        
+    def test_send_reset_unexisting_email(self):
+        """Test sending a password reset for non existing email."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response2 = self.client.post(
+            '/api/v1/auth/forgot', data=json.dumps(reset_unexisting_email), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        assert response2.status_code == 200
