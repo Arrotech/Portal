@@ -1,13 +1,14 @@
 import json
 from flask import make_response, jsonify, request, Blueprint, render_template
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
+from flask_jwt_extended import decode_token, create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
 from utils.utils import check_update_user_keys, is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
 import datetime
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from app.api.v1 import auth_v1
 from utils.serializer import Serializer
+from app.api.v1.services.mails.mail_services import send_email
 
 
 @auth_v1.route('/register', methods=['POST', 'GET'])
@@ -84,25 +85,64 @@ def login():
 
 
 @auth_v1.route('/forgot', methods=['POST'])
-def forgot():
+def send_reset_email():
     url = request.host_url + 'reset/'
     details = request.get_json()
     email = details['email']
+    if not is_valid_email(email):
+        return raise_error(400, "Invalid Email Format!")
     user = json.loads(UsersModel().get_email(email))
     if user:
+        user_id = user['user_id']
+        email = user['email']
         expires = datetime.timedelta(days=1)
-        email_token = create_access_token(
-            identity=email, expires_delta=expires)
+        reset_token = create_access_token(
+            identity=user_id, expires_delta=expires)
+        send_email('Reset your password',
+                   sender='arrotechdesign@gmail.com',
+                   recipients=[email],
+                   text_body=render_template(
+                       'reset_password.txt', url=url + reset_token),
+                   html_body=render_template('reset_password.html', url=url + reset_token))
         return make_response(jsonify({
             "status": "200",
-            "message": "Check Your Email for the Password Reset Link",
-            "token": email_token
+            "message": "Check Your Email for the Password Reset Link"
         }), 200)
-
     return make_response(jsonify({
         "status": "200",
         "message": "Check Your Email for the Password Reset Link"
     }), 200)
+
+
+@auth_v1.route('/reset', methods=['POST'])
+def reset_password():
+    """Already existing user can update their password."""
+    url = request.host_url + 'reset/'
+    details = request.get_json()
+    reset_token = details['reset_token']
+    password = details['password']
+    u_id = decode_token(reset_token)['identity']
+    user = json.loads(UsersModel().get_user_id(user_id=u_id))
+    if user:
+        email = user['email']
+        user_id = user['user_id']
+        hashed_password = generate_password_hash(password)
+        response = json.loads(UsersModel().update_user_password(hashed_password, user_id))
+        send_email('Password reset successful',
+                sender='arrotechdesign@gmail.com',
+                recipients=[email],
+                text_body='Password reset was successful',
+                html_body='<p>Password reset was successful</p>')
+        return make_response(jsonify({
+            "status":"200",
+            "message": "Password reset successful",
+            "user": response
+        }))
+    return make_response(jsonify({
+        "status":"404",
+        "message": "User not found"
+    }))
+    
 
 
 @auth_v1.route('/refresh', methods=['POST'])
@@ -194,17 +234,3 @@ def update_user_info(user_id):
     if response:
         return Serializer.serialize(response, 200, "User updated successfully")
     return Serializer.serialize(response, 404, "User not found")
-
-
-@auth_v1.route('/users/change_password/<int:user_id>', methods=['PUT'])
-@jwt_required
-def update_password(user_id):
-    """Already existing user can update their password."""
-    details = request.get_json()
-    password = details['password']
-    user = UsersModel().get_user_id(user_id)
-    response = UsersModel().update_user_password(password, user_id)
-    if response:
-        return Serializer.serialize(response, 200, "Password updated successfully")
-    return raise_error(404, "User not found")
-

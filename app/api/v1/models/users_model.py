@@ -25,9 +25,9 @@ class UsersModel(Database):
         """Save information of the new user."""
         self.curr.execute(
             ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, form, stream, role, date)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, stream, role, date''' \
-                .format(self.firstname, self.lastname, self.surname, self.admission_no, self.email, self.password,
-                        self.form, self.stream, self.role, self.date))
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, stream, role, date'''
+            .format(self.firstname, self.lastname, self.surname, self.admission_no, self.email, self.password,
+                    self.form, self.stream, self.role, self.date))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -38,10 +38,11 @@ class UsersModel(Database):
         query = "SELECT * from users"
         users = Database().fetch(query)
         return json.dumps(users, default=str)
-    
+
     def get_user_id(self, user_id):
         """Request a single user with specific id."""
-        self.curr.execute(""" SELECT * FROM users WHERE user_id={}""".format(user_id))
+        self.curr.execute(
+            """ SELECT * FROM users WHERE user_id={}""".format(user_id))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -49,7 +50,8 @@ class UsersModel(Database):
 
     def get_admission_no(self, admission_no):
         """Request a single user with specific Admission Number."""
-        self.curr.execute(""" SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
+        self.curr.execute(
+            """ SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -67,13 +69,13 @@ class UsersModel(Database):
         """Promote a student from one form to the next."""
 
         self.curr.execute("""UPDATE users SET form='{}', stream='{}' WHERE admission_no='{}' RETURNING admission_no, form, stream"""
-        .format(admission_no, form, stream))
+                          .format(admission_no, form, stream))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return json.dumps(user, default=str)
-    
-    def update_user_info(self, user_id, firstname, lastname, surname ):
+
+    def update_user_info(self, user_id, firstname, lastname, surname):
         """Update user information by id."""
         self.curr.execute(
             """UPDATE users SET firstname='{}', lastname='{}', surname='{}' WHERE user_id={} RETURNING firstname, lastname, surname""".format(user_id, firstname, lastname, surname))
@@ -81,7 +83,7 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def update_user_password(self, user_id, password):
         """Update user password by id."""
         self.curr.execute(
@@ -89,4 +91,4 @@ class UsersModel(Database):
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return response
+        return json.dumps(response, default=str)

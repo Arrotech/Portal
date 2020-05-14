@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 import os
 from app.api.v1.models.database import Database
+from flask_mail import Mail
 from flask import Flask, flash, request, redirect, url_for, make_response, jsonify, Blueprint, render_template
 from werkzeug.utils import secure_filename
 from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
@@ -22,12 +23,19 @@ from app.config import app_config
 
 def exam_app(config_name):
     """Create the app."""
-    app = Flask(__name__, template_folder='../templates')
+    app = Flask(__name__, template_folder='../../../templates')
     app.config.from_pyfile('config.py')
     app.config["SECRET_KEY"] = 'schoolportal'
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
     CORS(app)
     JWTManager(app)
+    Mail(app)
 
     Database().create_table()
 
