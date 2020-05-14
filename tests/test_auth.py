@@ -306,27 +306,3 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'User not found')
         assert response2.status_code == 404
-        
-    def test_update_user_password(self):
-        """Test that a user can update their password"""
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response2 = self.client.put(
-            '/api/v1/auth/users/change_password/1', data=json.dumps(update_user_password), content_type='application/json',
-            headers=self.get_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Password updated successfully')
-        assert response2.status_code == 200
-        
-    def test_update_user_password_for_non_existing_user(self):
-        """Test that a user cannot update the password if he has not been registered"""
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response2 = self.client.put(
-            '/api/v1/auth/users/change_password/10', data=json.dumps(update_user_password), content_type='application/json',
-            headers=self.get_token())
-        result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'User not found')
-        assert response2.status_code == 404
