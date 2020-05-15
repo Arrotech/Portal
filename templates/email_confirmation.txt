@@ -1,0 +1,9 @@
+
+Your account on Kennedy Family Recipes was successfully created.
+Please click the link below to confirm your email address and
+activate your account:
+  
+{{ confirm_url }}
+ 
+--
+Questions? Comments? Email arrotechdesign@gmail.com.

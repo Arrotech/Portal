@@ -7,7 +7,7 @@ from datetime import datetime
 class UsersModel(Database):
     """Add a new user and retrieve User(s) by Id, Admission Number or Email."""
 
-    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, email=None, password=None, form=None, stream=None, role='student', date=None):
+    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, email=None, password=None, form=None, stream=None, role='student', is_confirmed=False, confirmed_on=None, date=None):
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
@@ -19,15 +19,17 @@ class UsersModel(Database):
         self.form = form
         self.stream = stream
         self.role = role
+        self.is_confirmed = is_confirmed
+        self.confirmed_on = datetime.now()
         self.date = datetime.now()
 
     def save(self):
         """Save information of the new user."""
         self.curr.execute(
-            ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, form, stream, role, date)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, stream, role, date'''
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, form, stream, role, is_confirmed,  date)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, stream, role, is_confirmed, date'''
             .format(self.firstname, self.lastname, self.surname, self.admission_no, self.email, self.password,
-                    self.form, self.stream, self.role, self.date))
+                    self.form, self.stream, self.role, self.is_confirmed, self.date))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -88,6 +90,15 @@ class UsersModel(Database):
         """Update user password by id."""
         self.curr.execute(
             """UPDATE users SET password='{}' WHERE user_id={} RETURNING password""".format(user_id, password))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(response, default=str)
+    
+    def confirm_email(self, user_id, is_confirmed):
+        """Confirm user email."""
+        self.curr.execute(
+            """UPDATE users SET is_confirmed=True WHERE user_id={} RETURNING is_confirmed, confirmed_on""".format(user_id, is_confirmed))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
