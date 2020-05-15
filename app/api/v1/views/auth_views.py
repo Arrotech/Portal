@@ -1,14 +1,22 @@
 import json
-from flask import make_response, jsonify, request, Blueprint, render_template
+import os
+from datetime import datetime
+from flask import make_response, jsonify, request, Blueprint, render_template, url_for, redirect
 from flask_jwt_extended import decode_token, create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
 from utils.utils import check_update_user_keys, is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
-import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.api.v1 import auth_v1
 from utils.serializer import Serializer
+from itsdangerous import URLSafeTimedSerializer
+from app.__init__ import exam_app
 from app.api.v1.services.mails.mail_services import send_email
+
+config_name = os.getenv('APP_SETTINGS')
+app = exam_app(config_name)
+
+ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 
 @auth_v1.route('/register', methods=['POST', 'GET'])
@@ -46,6 +54,17 @@ def signup():
         return raise_error(400, "Form should be 1, 2, 3 or 4")
     user = json.loads(UsersModel(firstname, lastname, surname,
                                  admission_no, email, password, form, stream).save())
+    token = ts.dumps(email, salt='email-confirm-key')
+    confirm_url = url_for(
+        'auth_v1.confirm_email',
+        token=token,
+        _external=True)
+    send_email('Confirm Your Email',
+               sender='arrotechdesign@gmail.com',
+               recipients=[email],
+               text_body=render_template(
+                   'email_confirmation.txt', confirm_url=confirm_url),
+               html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
     return make_response(jsonify({
         "message": "Account created successfully!",
         "status": "201",
@@ -84,8 +103,29 @@ def login():
     }), 401)
 
 
+@auth_v1.route('/confirm/<token>')
+def confirm_email(token):
+    """Confirm email."""
+    try:
+        email = ts.loads(token, salt="email-confirm-key", max_age=86400)
+    except:
+        return raise_error(404, "User not found")
+    user = json.loads(UsersModel().get_email(email))
+    user_id = user['user_id']
+    if user:
+        response = json.loads(UsersModel().confirm_email(
+            user_id, is_confirmed=True))
+        return make_response(jsonify({
+            "status": "200",
+            "message": "You have confirmed your email successfully",
+            "is_confirmed": response
+        }), 200)
+    return raise_error(404, "User not found")
+
+
 @auth_v1.route('/forgot', methods=['POST'])
 def send_reset_email():
+    """Send email for password reset link."""
     url = request.host_url + 'reset/'
     details = request.get_json()
     email = details['email']
@@ -116,6 +156,7 @@ def send_reset_email():
 
 @auth_v1.route('/reset', methods=['POST'])
 def reset_password():
+    """Reset password."""
     """Already existing user can update their password."""
     url = request.host_url + 'reset/'
     details = request.get_json()
@@ -127,22 +168,22 @@ def reset_password():
         email = user['email']
         user_id = user['user_id']
         hashed_password = generate_password_hash(password)
-        response = json.loads(UsersModel().update_user_password(hashed_password, user_id))
+        response = json.loads(
+            UsersModel().update_user_password(hashed_password, user_id))
         send_email('Password reset successful',
-                sender='arrotechdesign@gmail.com',
-                recipients=[email],
-                text_body='Password reset was successful',
-                html_body='<p>Password reset was successful</p>')
+                   sender='arrotechdesign@gmail.com',
+                   recipients=[email],
+                   text_body='Password reset was successful',
+                   html_body='<p>Password reset was successful</p>')
         return make_response(jsonify({
-            "status":"200",
+            "status": "200",
             "message": "Password reset successful",
             "user": response
         }))
     return make_response(jsonify({
-        "status":"404",
+        "status": "404",
         "message": "User not found"
     }))
-    
 
 
 @auth_v1.route('/refresh', methods=['POST'])

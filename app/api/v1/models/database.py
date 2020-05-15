@@ -32,6 +32,8 @@ class Database:
                 form numeric NOT NULL,
                 stream varchar NOT NULL,
                 role varchar NOT NULL,
+                is_confirmed BOOLEAN DEFAULT False,
+                confirmed_on TIMESTAMP,
                 date TIMESTAMP
             )""",
             """
