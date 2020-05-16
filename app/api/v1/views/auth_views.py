@@ -74,8 +74,10 @@ def login():
     if user:
         password_db = user['password']
         if check_password_hash(password_db, password):
-            token = default_encode_token(email, salt='email-login-token-key')
-            refresh_token = default_encode_token(email, salt='email-refresh-token-key')
+            expires = timedelta(days=365)
+            token = create_access_token(identity=email, expires_delta=expires)
+            refresh_token = create_refresh_token(
+                identity=email, expires_delta=expires)
             return make_response(jsonify({
                 "status": "200",
                 "message": "Successfully logged in!",
