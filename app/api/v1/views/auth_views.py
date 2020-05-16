@@ -1,22 +1,17 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import make_response, jsonify, request, Blueprint, render_template, url_for, redirect
 from flask_jwt_extended import decode_token, create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
-from utils.utils import check_update_user_keys, is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
+from utils.utils import default_decode_token, default_encode_token, generate_url, check_update_user_keys, is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.api.v1 import auth_v1
 from utils.serializer import Serializer
 from itsdangerous import URLSafeTimedSerializer
 from app.__init__ import exam_app
 from app.api.v1.services.mails.mail_services import send_email
-
-config_name = os.getenv('APP_SETTINGS')
-app = exam_app(config_name)
-
-ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 
 @auth_v1.route('/register', methods=['POST', 'GET'])
@@ -54,11 +49,8 @@ def signup():
         return raise_error(400, "Form should be 1, 2, 3 or 4")
     user = json.loads(UsersModel(firstname, lastname, surname,
                                  admission_no, email, password, form, stream).save())
-    token = ts.dumps(email, salt='email-confirm-key')
-    confirm_url = url_for(
-        'auth_v1.confirm_email',
-        token=token,
-        _external=True)
+    token = default_encode_token(email, salt='email-confirm-key')
+    confirm_url = generate_url('auth_v1.confirm_email', token=token)
     send_email('Confirm Your Email',
                sender='arrotechdesign@gmail.com',
                recipients=[email],
@@ -82,10 +74,8 @@ def login():
     if user:
         password_db = user['password']
         if check_password_hash(password_db, password):
-            expires = datetime.timedelta(days=365)
-            token = create_access_token(identity=email, expires_delta=expires)
-            refresh_token = create_refresh_token(
-                identity=email, expires_delta=expires)
+            token = default_encode_token(email, salt='email-login-token-key')
+            refresh_token = default_encode_token(email, salt='email-refresh-token-key')
             return make_response(jsonify({
                 "status": "200",
                 "message": "Successfully logged in!",
@@ -107,7 +97,7 @@ def login():
 def confirm_email(token):
     """Confirm email."""
     try:
-        email = ts.loads(token, salt="email-confirm-key", max_age=86400)
+        email = default_decode_token(token, salt='email-confirm-key', expiration=3600)
     except:
         return raise_error(404, "User not found")
     user = json.loads(UsersModel().get_email(email))
@@ -135,7 +125,7 @@ def send_reset_email():
     if user:
         user_id = user['user_id']
         email = user['email']
-        expires = datetime.timedelta(days=1)
+        expires = timedelta(days=1)
         reset_token = create_access_token(
             identity=user_id, expires_delta=expires)
         send_email('Reset your password',
@@ -163,6 +153,8 @@ def reset_password():
     reset_token = details['reset_token']
     password = details['password']
     u_id = decode_token(reset_token)['identity']
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    print(u_id)
     user = json.loads(UsersModel().get_user_id(user_id=u_id))
     if user:
         email = user['email']
@@ -190,7 +182,7 @@ def reset_password():
 @jwt_refresh_token_required
 def refresh():
     current_user = get_jwt_identity()
-    expires = datetime.timedelta(days=365)
+    expires = timedelta(days=365)
     access_token = create_access_token(current_user, expires_delta=expires)
     ret = {
         'access_token': access_token
