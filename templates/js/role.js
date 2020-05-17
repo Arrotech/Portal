@@ -19,7 +19,6 @@ function raiseError(msg) {
 
 
 token = window.localStorage.getItem('token');
-user = window.localStorage.getItem('user');
 admission = window.localStorage.getItem('admission_no');
 
 fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, {
@@ -40,16 +39,10 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, 
         if (status === "200") {
             var temp = "";
 
-            temp += "<tr>" + "<th>Registration No.</th>" + " " + "<td>" + user.admission_no + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Surname</th>" + " " + "<td>" + user.surname + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Firstname</th>" + " " + "<td>" + user.firstname + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Lastname</th>" + " " + "<td>" + user.lastname + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Year</th>" + " " + "<td>" + user.form + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Course</th>" + " " + "<td>" + user.stream + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Role</th>" + " " + "<td>" + user.role + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Email</th>" + " " + "<td>" + user.email + "</td>" + "</tr>";
+            temp += "<div>";
+            temp += "<p>" + user.role + "</p></div>";
 
-            document.getElementById("data").innerHTML = temp;
+            document.getElementById("role").innerHTML = temp;
         }
         else {
             raiseError(message);
