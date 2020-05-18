@@ -29,7 +29,7 @@ class Database:
                 admission_no varchar NOT NULL,
                 email varchar NOT NULL,
                 password varchar NOT NULL,
-                year numeric NOT NULL,
+                current_year numeric NOT NULL,
                 role varchar NOT NULL,
                 is_confirmed BOOLEAN DEFAULT False,
                 confirmed_on TIMESTAMP,

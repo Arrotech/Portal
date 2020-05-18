@@ -165,7 +165,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/auth/users/NJCF4001/promote', data=json.dumps(promote_user_key), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'Invalid year key')
+        self.assertEqual(result['message'], 'Invalid current_year key')
         assert response1.status_code == 400
 
     def test_password_length(self):

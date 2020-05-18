@@ -27,7 +27,7 @@ def signup():
     admission_no = details['admission_no']
     email = details['email']
     password = details['password']
-    year = details['year']
+    current_year = details['current_year']
     if details['firstname'].isalpha() is False:
         return raise_error(400, "firstname is in wrong format")
     if details['lastname'].isalpha() is False:
@@ -45,7 +45,7 @@ def signup():
     if user_email:
         return raise_error(400, "Email Already Exists!")
     user = json.loads(UsersModel(firstname, lastname, surname,
-                                 admission_no, email, password, year).save())
+                                 admission_no, email, password, current_year).save())
     token = default_encode_token(email, salt='email-confirm-key')
     confirm_url = generate_url('auth_v1.confirm_email', token=token)
     send_email('Confirm Your Email',
@@ -232,11 +232,11 @@ def promote(admission_no):
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    year = details['year']
+    current_year = details['current_year']
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
         updated_user = json.loads(
-            UsersModel().promote_user(year, admission_no))
+            UsersModel().promote_user(current_year, admission_no))
         return make_response(jsonify({
             "status": "200",
             "message": "student promoted successfully",

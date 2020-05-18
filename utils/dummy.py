@@ -7,7 +7,7 @@ create_account = {
     "admission_no": "NJCF1001",
     "email": "gitundu.mercy@students.jcs.ac.ke",
     "password": "Mercy20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -65,12 +65,12 @@ new_account = {
     "admission_no": "NJCF4001",
     "email": "arrotechdesign@gmail.com",
     "password": "Harun20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
 promote_user = {
-    "year": "1"
+    "current_year": "1"
 }
 
 promote_user_key = {
@@ -89,7 +89,7 @@ wrong_account_keys = {
     "admission_no": "NJCF4001",
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Kevin20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -100,7 +100,7 @@ admin_account = {
     "admission_no": "NJCF1002",
     "email": "admin@admin.com",
     "password": "Admin20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "admin"
 }
 
@@ -111,7 +111,7 @@ bursar_account = {
     "admission_no": "NJCF1002",
     "email": "bursar@admin.com",
     "password": "Bursar20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "bursar"
 }
 
@@ -132,7 +132,7 @@ admin_account_test = {
     "admission_no": "NJCF4001",
     "email": "admin@admin.com",
     "password": "Kevin20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "admin"
 }
 
@@ -143,7 +143,7 @@ bursar_account_test = {
     "admission_no": "NA",
     "email": "bursar@admin.com",
     "password": "Kevin20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "bursar"
 }
 
@@ -154,7 +154,7 @@ email_already_exists = {
     "admission_no": "NJCF1005",
     "email": "gitundu.mercy@students.jcs.ac.ke",
     "password": "Miriam20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -165,7 +165,7 @@ Invalid_register_key = {
     "admission_no": "NJCF1004",
     "email": "gitundu.peter@students.njcs.ac.ke",
     "password": "Peter20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -181,7 +181,7 @@ password_length = {
     "admission_no": "NJCF1002",
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Kevin",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -192,7 +192,7 @@ new_account1 = {
     "admission_no": "NJCF1003",
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -208,7 +208,7 @@ wrong_firstname = {
     "admission_no": "NJCF1003",
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -219,7 +219,7 @@ wrong_lastname = {
     "admission_no": "NJCF1003",
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -230,7 +230,7 @@ wrong_surname = {
     "admission_no": "NJCF1003",
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -241,7 +241,7 @@ wrong_email = {
     "admission_no": "NJCF1003",
     "email": "gitundu",
     "password": "Samuel20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "student"
 }
 
@@ -252,7 +252,7 @@ wrong_role = {
     "admission_no": "NJCF1003",
     "email": "gitundu.samuel@students.jcs.ac.ke",
     "password": "Samuel20930988!",
-    "year": "1",
+    "current_year": "1",
     "role": "stude hui9876b )nt"
 }
 
