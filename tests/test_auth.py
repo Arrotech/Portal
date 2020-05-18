@@ -1,7 +1,9 @@
 import json
 
-from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname, \
-    wrong_lastname, reset_email, reset_unexisting_email, update_user_password, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token, wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login
+from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname,\
+    wrong_lastname, reset_email, reset_unexisting_email, update_user_password, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token,\
+    wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login,\
+    password_reset_invalid_email_format, reset_password
 from .base_test import BaseTest
 
 
@@ -9,14 +11,46 @@ class TestUsersAccount(BaseTest):
     """Testing the users account endpoint."""
 
     def test_create_account(self):
-        """Test the vote json keys."""
-
+        """Test that the user can create a new account."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Account created successfully!')
         assert response.status_code == 201
+
+    def test_forgot_password_invalid_email_format(self):
+        """Test that a user will get an error message why they provide invalid email format."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/auth/forgot', data=json.dumps(password_reset_invalid_email_format), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Invalid Email Format!')
+        assert response1.status_code == 400
+        
+    def test_reset_user_password(self):
+        """Test that a user can reset their password."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.post(
+            '/api/v1/auth/reset', data=json.dumps(reset_password), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Password reset successful')
+        assert response1.status_code == 200
+        
+    # def test_reset_user_password_for_non_existing_user(self):
+    #     """Test that a user cannot reset their password if they do not exist."""
+    #     response1 = self.client.post(
+    #         '/api/v1/auth/reset', data=json.dumps(reset_password), content_type='application/json',
+    #         headers=self.get_token())
+    #     result = json.loads(response1.data.decode())
+    #     self.assertEqual(result['message'], 'User not found')
+    #     assert response1.status_code == 404
 
     def test_promote_user(self):
         """Test promote user."""
@@ -187,7 +221,8 @@ class TestUsersAccount(BaseTest):
         response = self.client.post(
             '/api/v1/auth/forgot', data=json.dumps(student_email_token), content_type='application/json')
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        self.assertEqual(result['message'],
+                         'Check Your Email for the Password Reset Link')
         assert response.status_code == 200
 
     def test_wrong_forgot_password_email(self):
@@ -199,7 +234,8 @@ class TestUsersAccount(BaseTest):
         response = self.client.post(
             '/api/v1/auth/forgot', data=json.dumps(wrong_student_email_token), content_type='application/json')
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        self.assertEqual(result['message'],
+                         'Check Your Email for the Password Reset Link')
         assert response.status_code == 200
 
     def test_invalid_email_login(self):
@@ -270,7 +306,7 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         assert response.status_code == 404
         assert result['message'] == "resource not found"
-        
+
     def test_update_user_info(self):
         """Test that a user can update their information"""
         response = self.client.post(
@@ -282,7 +318,7 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'User updated successfully')
         assert response2.status_code == 200
-        
+
     def test_update_user_info_keys(self):
         """Test that a user cannot update their information with invalid json keys."""
         response = self.client.post(
@@ -294,7 +330,7 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Invalid firstname key')
         assert response2.status_code == 400
-        
+
     def test_update_user_info_for_non_existing_user(self):
         """Test that a user cannot update their information for non existing user."""
         response = self.client.post(
@@ -306,7 +342,7 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'User not found')
         assert response2.status_code == 404
-        
+
     def test_send_reset_email(self):
         """Test sending a password reset email."""
         response = self.client.post(
@@ -316,9 +352,10 @@ class TestUsersAccount(BaseTest):
             '/api/v1/auth/forgot', data=json.dumps(reset_email), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        self.assertEqual(result['message'],
+                         'Check Your Email for the Password Reset Link')
         assert response2.status_code == 200
-        
+
     def test_send_reset_unexisting_email(self):
         """Test sending a password reset for non existing email."""
         response = self.client.post(
@@ -328,5 +365,6 @@ class TestUsersAccount(BaseTest):
             '/api/v1/auth/forgot', data=json.dumps(reset_unexisting_email), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Check Your Email for the Password Reset Link')
+        self.assertEqual(result['message'],
+                         'Check Your Email for the Password Reset Link')
         assert response2.status_code == 200
