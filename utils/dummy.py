@@ -12,11 +12,21 @@ create_account = {
     "role": "student"
 }
 
+password_reset_invalid_email_format = {
+    "email": "qwgfui17515987"
+}
+
+reset_password = {
+    "reset_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODk3NzcyOTEsIm5iZiI6MTU4OTc3NzI5MSwianRpIjoiMjUyOTA0YTUtZGQ2NS00MjFkLWIwNjktMTVjNWQ2MmUzZDk3IiwiZXhwIjoxNTg5ODYzNjkxLCJpZGVudGl0eSI6MSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.v2hOOOCxcku-JzxPu1DvqkhUfv93Ump7BD6mP4-_674",
+    "password": "Harun20930988!!"
+}
+
 update_user_info = {
     "firstname": "Mercy",
     "lastname": "Wairimu",
     "surname": "Gitundu"
 }
+
 
 update_user_password  = {
     "password": "Mercy20930988!"
@@ -54,8 +64,8 @@ new_account = {
     "lastname": "Njoroge",
     "surname": "Gitundu",
     "admission_no": "NJCF4001",
-    "email": "gitundu.kevin@students.jcs.ac.ke",
-    "password": "Kevin20930988!",
+    "email": "arrotechdesign@gmail.com",
+    "password": "Harun20930988!",
     "form": "1",
     "stream": "1A",
     "role": "student"

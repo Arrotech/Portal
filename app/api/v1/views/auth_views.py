@@ -155,8 +155,6 @@ def reset_password():
     reset_token = details['reset_token']
     password = details['password']
     u_id = decode_token(reset_token)['identity']
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    print(u_id)
     user = json.loads(UsersModel().get_user_id(user_id=u_id))
     if user:
         email = user['email']
