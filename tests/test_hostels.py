@@ -83,3 +83,27 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel(s) retrived successfully')
         assert response2.status_code == 200
+        
+    def test_delete_hostel(self):
+        """Test that an admin user can delete a hostel by id."""
+        response = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.delete(
+            '/api/v1/hostels/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Hostel deleted successfully')
+        assert response1.status_code == 200
+
+    def test_delete_unexisting_hostel(self):
+        """Test that an admin user cannot delete unexisting hostel."""
+        response = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.delete(
+            '/api/v1/hostels/100', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Hostel not found')
+        assert response1.status_code == 404

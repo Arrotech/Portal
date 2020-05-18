@@ -51,3 +51,15 @@ def get_hostels_by_location(hostel_location):
     """Have a user able to view all hostels by location."""
     response = HostelsModel().view_hostel_by_location(hostel_location)
     return Serializer.serialize(response, 200, "Hostel(s) retrived successfully")
+
+
+@hostels_v1.route('/hostels/<int:hostel_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_hostel(hostel_id):
+    """Delete a hostel by id."""
+    response = HostelsModel().get_hostel_by_id(hostel_id)
+    if response:
+        HostelsModel().delete(hostel_id)
+        return Serializer.serialize(response, 200, "Hostel deleted successfully")
+    return Serializer.serialize(response, 404, "Hostel not found")

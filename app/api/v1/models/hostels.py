@@ -63,4 +63,10 @@ class HostelsModel(Database):
         self.curr.close()
         return response
     
+    def delete(self, hostel_id):
+        """Delete a hostel by id."""
+        self.curr.execute(
+            """DELETE FROM hostels WHERE hostel_id={}""".format(hostel_id))
+        self.conn.commit()
+        self.curr.close()
 
