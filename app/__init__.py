@@ -9,15 +9,7 @@ from werkzeug.utils import secure_filename
 from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
 
 
-from app.api.v1 import auth_v1
-from app.api.v1 import staff_v1
-from app.api.v1 import accountant_v1
-from app.api.v1 import exams_v1
-from app.api.v1 import books_v1
-from app.api.v1 import fees_v1
-from app.api.v1 import subjects_v1
-from app.api.v1 import units_blueprint_v1
-from app.api.v1 import hostels_v1
+from app.api.v1 import auth_v1, staff_v1, accountant_v1, exams_v1, books_v1, fees_v1, subjects_v1, units_blueprint_v1, hostels_v1
 from app.config import app_config
 
 
