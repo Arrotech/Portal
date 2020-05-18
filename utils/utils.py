@@ -8,7 +8,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 def check_register_keys(request):
     res_keys = ['firstname', 'lastname', 'surname',
-                'admission_no', 'email', 'password', 'form', 'stream']
+                'admission_no', 'email', 'password', 'current_year']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -26,7 +26,7 @@ def check_update_user_keys(request):
 
 
 def check_promote_student_keys(request):
-    res_keys = ['form', 'stream']
+    res_keys = ['current_year']
     errors = []
     for key in res_keys:
         if not key in request.json:

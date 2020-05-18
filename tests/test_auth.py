@@ -2,7 +2,7 @@ import json
 
 from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname,\
     wrong_lastname, reset_email, reset_unexisting_email, update_user_password, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token,\
-    wrong_surname, wrong_form, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login,\
+    wrong_surname, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login,\
     password_reset_invalid_email_format, reset_password
 from .base_test import BaseTest
 
@@ -30,7 +30,7 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Invalid Email Format!')
         assert response1.status_code == 400
-        
+
     def test_reset_user_password(self):
         """Test that a user can reset their password."""
         response = self.client.post(
@@ -42,7 +42,7 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Password reset successful')
         assert response1.status_code == 200
-        
+
     # def test_reset_user_password_for_non_existing_user(self):
     #     """Test that a user cannot reset their password if they do not exist."""
     #     response1 = self.client.post(
@@ -165,7 +165,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/auth/users/NJCF4001/promote', data=json.dumps(promote_user_key), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'Invalid form key')
+        self.assertEqual(result['message'], 'Invalid current_year key')
         assert response1.status_code == 400
 
     def test_password_length(self):
@@ -276,16 +276,6 @@ class TestUsersAccount(BaseTest):
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'surname is in wrong format')
-        assert response.status_code == 400
-
-    def test_wrong_form(self):
-        """Test the vote json keys."""
-
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(wrong_form), content_type='application/json',
-            headers=self.get_token())
-        result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Form should be 1, 2, 3 or 4')
         assert response.status_code == 400
 
     def test_wrong_email(self):

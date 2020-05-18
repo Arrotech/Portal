@@ -7,7 +7,7 @@ from datetime import datetime
 class UsersModel(Database):
     """Add a new user and retrieve User(s) by Id, Admission Number or Email."""
 
-    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, email=None, password=None, form=None, stream=None, role='student', is_confirmed=False, confirmed_on=None, date=None):
+    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, email=None, password=None, current_year=None, role='student', is_confirmed=False, confirmed_on=None, date=None):
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
@@ -16,8 +16,7 @@ class UsersModel(Database):
         self.email = email
         if password:
             self.password = generate_password_hash(password)
-        self.form = form
-        self.stream = stream
+        self.current_year = current_year
         self.role = role
         self.is_confirmed = is_confirmed
         self.confirmed_on = datetime.now()
@@ -26,10 +25,10 @@ class UsersModel(Database):
     def save(self):
         """Save information of the new user."""
         self.curr.execute(
-            ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, form, stream, role, is_confirmed,  date)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, form, stream, role, is_confirmed, date'''
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, email, password, current_year, role, is_confirmed,  date)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, email, password, current_year, role, is_confirmed, date'''
             .format(self.firstname, self.lastname, self.surname, self.admission_no, self.email, self.password,
-                    self.form, self.stream, self.role, self.is_confirmed, self.date))
+                    self.current_year, self.role, self.is_confirmed, self.date))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -67,11 +66,11 @@ class UsersModel(Database):
         self.curr.close()
         return json.dumps(user, default=str)
 
-    def promote_user(self, admission_no, form, stream):
-        """Promote a student from one form to the next."""
+    def promote_user(self, admission_no, current_year):
+        """Promote a student year to the next."""
 
-        self.curr.execute("""UPDATE users SET form='{}', stream='{}' WHERE admission_no='{}' RETURNING admission_no, form, stream"""
-                          .format(admission_no, form, stream))
+        self.curr.execute("""UPDATE users SET current_year='{}' WHERE admission_no='{}' RETURNING admission_no, current_year"""
+                          .format(admission_no, current_year))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
