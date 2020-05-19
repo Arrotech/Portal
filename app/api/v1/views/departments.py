@@ -29,3 +29,12 @@ def get_all_departments():
     """Get all departments."""
     response = DepartmentsModel().get_all_departments()
     return Serializer.serialize(response, 200, 'Departments successfully retrieved')
+
+@departments_v1.route('/departments/<int:department_id>', methods=['GET'])
+@jwt_required
+def get_department_by_id(department_id):
+    """Get all departments."""
+    response = DepartmentsModel().get_department_by_id(department_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Department successfully retrieved')
+    return raise_error(404, "Department not found")
