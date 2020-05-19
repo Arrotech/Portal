@@ -31,17 +31,17 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'Invalid Email Format!')
         assert response1.status_code == 400
 
-    def test_reset_user_password(self):
-        """Test that a user can reset their password."""
-        response = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.post(
-            '/api/v1/auth/reset', data=json.dumps(reset_password), content_type='application/json',
-            headers=self.get_token())
-        result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'Password reset successful')
-        assert response1.status_code == 200
+    # def test_reset_user_password(self):
+    #     """Test that a user can reset their password."""
+    #     response = self.client.post(
+    #         '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+    #         headers=self.get_token())
+    #     response1 = self.client.post(
+    #         '/api/v1/auth/reset', data=json.dumps(reset_password), content_type='application/json',
+    #         headers=self.get_token())
+    #     result = json.loads(response1.data.decode())
+    #     self.assertEqual(result['message'], 'Password reset successful')
+    #     assert response1.status_code == 200
 
     # def test_reset_user_password_for_non_existing_user(self):
     #     """Test that a user cannot reset their password if they do not exist."""

@@ -60,6 +60,13 @@ class Database:
                 date TIMESTAMP
             )""",
             """
+            CREATE TABLE IF NOT EXISTS departments(
+                department_id serial PRIMARY KEY,
+                department_name varchar NOT NULL,
+                created_on TIMESTAMP
+            )
+            """,
+            """
             CREATE TABLE IF NOT EXISTS units(
                 unit_id serial PRIMARY KEY,
                 unit_name varchar NOT NULL,
@@ -131,6 +138,7 @@ class Database:
         users = "DROP TABLE IF EXISTS  users CASCADE"
         staff = "DROP TABLE IF EXISTS  staff CASCADE"
         accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
+        departments = "DROP TABLE IF EXISTS departments CASCADE"
         units = "DROP TABLE IF EXISTS units CASCADE"
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
@@ -138,7 +146,7 @@ class Database:
         units = "DROP TABLE IF EXISTS units CASCADE"
         hostels = "DROP TABLE IF EXISTS hostels CASCADE"
         
-        queries = [exams, users, staff, accountants, subjects, fees, library, units, hostels]
+        queries = [exams, users, staff, accountants, departments, subjects, fees, library, units, hostels]
         try:
             for query in queries:
                 self.curr.execute(query)
