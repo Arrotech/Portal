@@ -693,3 +693,18 @@ hostel_name_exists = {
     "rooms": "400",
     "hostel_location": "gate c"
 }
+
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@ DEPARTMENTS @@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_department = {
+    "department_name": "mathematics"
+}
+
+department_name_exists = {
+    "department_name": "mathematics"
+}
+
+invalid_department_name_key = {
+    "departmentname": "mathematics"
+}
