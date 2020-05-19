@@ -40,3 +40,11 @@ class DepartmentsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_department_by_id(self, department_id):
+        """Fetch a specific department by id."""
+        self.curr.execute("""SELECT * FROM departments WHERE department_id={}""".format(department_id))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
