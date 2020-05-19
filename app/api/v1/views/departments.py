@@ -58,3 +58,15 @@ def update_department(department_id):
     if response:
         return Serializer.serialize(response, 200, 'Department updated successfully')
     return raise_error(404, "Department not found")
+
+
+@departments_v1.route('/departments/<int:department_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_department(department_id):
+    """Delete department by id."""
+    if DepartmentsModel().get_department_by_id(department_id):
+        response = DepartmentsModel().delete(department_id)
+        return Serializer.serialize(response,200, "Department deleted successfully")
+    return raise_error(404, 'Department not found')
+        
