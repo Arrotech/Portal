@@ -105,3 +105,23 @@ class TestDepartments(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Department not found')
         assert response1.status_code == 404
+        
+    def test_delete_department(self):
+        """Test that an admin user can delete a department."""
+        response = self.client.post('/api/v1/departments', data=json.dumps(new_department),
+                                    content_type='application/json', headers=self.get_admin_token())
+        response1 = self.client.delete('/api/v1/departments/1',
+                                    content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Department deleted successfully')
+        assert response1.status_code == 200
+        
+    def test_delete_non_existing_department(self):
+        """Test that an admin user cannot delete non existing department."""
+        response = self.client.post('/api/v1/departments', data=json.dumps(new_department),
+                                    content_type='application/json', headers=self.get_admin_token())
+        response1 = self.client.delete('/api/v1/departments/10',
+                                    content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Department not found')
+        assert response1.status_code == 404
