@@ -29,4 +29,13 @@ class TestDepartments(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'mathematics department already exists')
         assert response1.status_code == 400
+        
+    def test_get_departments(self):
+        """Test that a user can fetch all departments."""
+        response = self.client.post('/api/v1/departments', data=json.dumps(new_department),
+                                    content_type='application/json', headers=self.get_admin_token())
+        response1 = self.client.get('/api/v1/departments', content_type='application/json', headers=self.get_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'Departments successfully retrieved')
+        assert response1.status_code == 200
 

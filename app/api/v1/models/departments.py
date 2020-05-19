@@ -30,3 +30,13 @@ class DepartmentsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_all_departments(self):
+        """Fetch all departments."""
+        self.curr.execute("""
+                          SELECT * FROM departments
+                          """)
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
