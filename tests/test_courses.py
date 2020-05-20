@@ -66,3 +66,18 @@ class TestCourses(BaseTest):
         self.assertEqual(result['message'],
                          'maths and computer science already exists')
         assert response5.status_code == 400
+        
+    def test_get_courses(self):
+        """Test that users can fetch all courses."""
+        response = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/courses', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Courses successfull retrieved')
+        assert response2.status_code == 200

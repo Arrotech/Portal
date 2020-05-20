@@ -24,3 +24,10 @@ def add_course():
         response = CoursesModel(course_name, department_id).save()
         return Serializer.serialize(response, 201, "{} added successfully".format(course_name))
     return raise_error(404, "Department not found")
+
+@courses_v1.route('/courses', methods=['GET'])
+@jwt_required
+def get_courses():
+    """Fetch all courses."""
+    response = CoursesModel().get_courses()
+    return Serializer.serialize(response, 200, "Courses successfull retrieved")
