@@ -28,6 +28,8 @@ hostels_v1 = Blueprint('hostels_v1', __name__,
 
 departments_v1 = Blueprint('departments_v1', __name__, 
                            template_folder='../../../templates', static_folder='../../../../static')
+courses_v1 = Blueprint('courses_v1', __name__, 
+                           template_folder='../../../templates', static_folder='../../../../static')
 
 
-from app.api.v1.views import exam_views, subjects_view, units, staff, accountant, auth_views, library_views, fees_views, hostels, departments
+from app.api.v1.views import exam_views, subjects_view, units, staff, accountant, auth_views, library_views, fees_views, hostels, departments, courses

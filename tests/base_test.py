@@ -12,12 +12,12 @@ class BaseTest(unittest.TestCase):
 
     def setUp(self):
         """Set up the app for testing."""
-        Database().destroy_table()
-        Database().create_table()
         self.app = exam_app("testing")
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()
+        Database().destroy_table()
+        Database().create_table()
 
     def tearDown(self):
         """Tear down the data models after the tests run."""
