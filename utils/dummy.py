@@ -27,7 +27,7 @@ update_user_info = {
 }
 
 
-update_user_password  = {
+update_user_password = {
     "password": "Mercy20930988!"
 }
 
@@ -514,7 +514,7 @@ new_unit_code = {
 
 unit_keys = {
     "unitname": "Calculus 3",
-    "unit_code": "SMA002"    
+    "unit_code": "SMA002"
 }
 
 update_unit = {
@@ -577,7 +577,7 @@ invalid_exam_key = {
     "year": "2014",
     "userid": "1",
     "unit_id": "1",
-    "marks": "80"   
+    "marks": "80"
 }
 
 invalid_unit_id = {
@@ -585,7 +585,7 @@ invalid_unit_id = {
     "year": "2014",
     "user_id": "1",
     "unit_id": "2",
-    "marks": "80"    
+    "marks": "80"
 }
 
 invalid_user_id = {
@@ -593,85 +593,85 @@ invalid_user_id = {
     "year": "2014",
     "user_id": "3",
     "unit_id": "1",
-    "marks": "80"    
+    "marks": "80"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Subjects Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 new_subject = {
-"user_id": "1",
-"unit_id": "1"
+    "user_id": "1",
+    "unit_id": "1"
 }
 
 new_subject_keys = {
-"userid": "1",
-"unit_id": "1"
+    "userid": "1",
+    "unit_id": "1"
 }
 
 user_does_not_exist = {
-"user_id": "2",
-"unit_id": "2"
+    "user_id": "2",
+    "unit_id": "2"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Books Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_book = {
-"user_id": "1",
-"title": "Chemistry 1",
-"author": "Einstein",
-"book_no": "FDHGD2356/2019"
+    "user_id": "1",
+    "title": "Chemistry 1",
+    "author": "Einstein",
+    "book_no": "FDHGD2356/2019"
 }
 
 add_book_keys = {
-"userid": "1",
-"title": "Chemistry 1",
-"author": "Einstein",
-"book_no": "FDHGD2356/2019"
+    "userid": "1",
+    "title": "Chemistry 1",
+    "author": "Einstein",
+    "book_no": "FDHGD2356/2019"
 }
 
 edit_books = {
-"title": "Chemistry 2",
-"author": "Einstein",
-"book_no": "FDHGD2356/2019"
+    "title": "Chemistry 2",
+    "author": "Einstein",
+    "book_no": "FDHGD2356/2019"
 }
 
 edit_books_keys = {
-"tile": "Chemistry 1",
-"author": "Einstein",
-"book_no": "FDHGD2356/2019"
+    "tile": "Chemistry 1",
+    "author": "Einstein",
+    "book_no": "FDHGD2356/2019"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_fees = {
-"user_id": "1",
-"transaction_type": "ADP",
-"transaction_no": "176276",
-"description": "HELB",
-"amount": 25640
+    "user_id": "1",
+    "transaction_type": "ADP",
+    "transaction_no": "176276",
+    "description": "HELB",
+    "amount": 25640
 }
 
 add_fees_keys = {
-"userid": "1",
-"transaction_type": "ADP",
-"transaction_no": "176276",
-"description": "HELB",
-"amount": 25640
+    "userid": "1",
+    "transaction_type": "ADP",
+    "transaction_no": "176276",
+    "description": "HELB",
+    "amount": 25640
 }
 
 edit_fees = {
-"transaction_type": "ADP",
-"transaction_no": "176276",
-"description": "HELB",
-"amount": 25640
+    "transaction_type": "ADP",
+    "transaction_no": "176276",
+    "description": "HELB",
+    "amount": 25640
 }
 
 edit_fees_keys = {
-"transacti_type": "ADP",
-"transaction_no": "176276",
-"description": "HELB",
-"amount": 25640
+    "transacti_type": "ADP",
+    "transaction_no": "176276",
+    "description": "HELB",
+    "amount": 25640
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@ HOSTEL @@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -719,4 +719,30 @@ updated_department_keys = {
 
 update_department_name_exists = {
     "department_name": "mathematics"
+}
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@ COURSES @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_course = {
+    "course_name": "maths and computer science",
+    "department_id": "1"
+}
+
+add_department = {
+    "department_name": "physics"
+}
+
+add_course_keys = {
+    "coursename": "maths and computer science",
+    "department_id": "1"
+}
+
+add_non_exisitng_department = {
+    "course_name": "computer science",
+    "department_id": "2"
+}
+
+course_name_exists = {
+    "course_name": "maths and computer science",
+    "department_id": "2"    
 }

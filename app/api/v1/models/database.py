@@ -67,6 +67,14 @@ class Database:
             )
             """,
             """
+            CREATE TABLE IF NOT EXISTS courses(
+                course_id serial NOT NULL,
+                course_name varchar NOT NULL,
+                department integer NOT NULL REFERENCES departments (department_id) ON DELETE CASCADE,
+                created_on TIMESTAMP
+            )
+            """,
+            """
             CREATE TABLE IF NOT EXISTS units(
                 unit_id serial PRIMARY KEY,
                 unit_name varchar NOT NULL,
@@ -139,6 +147,7 @@ class Database:
         staff = "DROP TABLE IF EXISTS  staff CASCADE"
         accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
         departments = "DROP TABLE IF EXISTS departments CASCADE"
+        courses = "DROP TABLE IF EXISTS courses CASCADE"
         units = "DROP TABLE IF EXISTS units CASCADE"
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
@@ -146,7 +155,7 @@ class Database:
         units = "DROP TABLE IF EXISTS units CASCADE"
         hostels = "DROP TABLE IF EXISTS hostels CASCADE"
         
-        queries = [exams, users, staff, accountants, departments, subjects, fees, library, units, hostels]
+        queries = [exams, users, staff, accountants, departments, courses, subjects, fees, library, units, hostels]
         try:
             for query in queries:
                 self.curr.execute(query)
