@@ -47,3 +47,15 @@ class CoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_course_by_id(self, course_id):
+        """Get course by id."""
+        self.curr.execute("""
+                          SELECT departments.department_name, courses.course_name FROM courses
+                          INNER JOIN departments ON courses.department = departments.department_id
+                          WHERE course_id={}
+                          """.format(course_id))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response

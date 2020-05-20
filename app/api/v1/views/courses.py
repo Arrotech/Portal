@@ -31,3 +31,12 @@ def get_courses():
     """Fetch all courses."""
     response = CoursesModel().get_courses()
     return Serializer.serialize(response, 200, "Courses successfull retrieved")
+
+@courses_v1.route('/courses/<int:course_id>', methods=['GET'])
+@jwt_required
+def get_course(course_id):
+    """Fetch course by id."""
+    response = CoursesModel().get_course_by_id(course_id)
+    if response:
+        return Serializer.serialize(response, 200, "Course successfull retrieved")
+    return raise_error(404, "Course not found")

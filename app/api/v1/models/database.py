@@ -71,7 +71,9 @@ class Database:
                 course_id serial NOT NULL,
                 course_name varchar NOT NULL,
                 department integer NOT NULL REFERENCES departments (department_id) ON DELETE CASCADE,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (department)
+                
             )
             """,
             """
