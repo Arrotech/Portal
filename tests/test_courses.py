@@ -81,3 +81,33 @@ class TestCourses(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Courses successfull retrieved')
         assert response2.status_code == 200
+        
+    def test_get_course(self):
+        """Test that users can fetch course by id"""
+        response = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/courses/1', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Course successfull retrieved')
+        assert response2.status_code == 200
+        
+    def test_get_course_non_existing_course(self):
+        """Test that users cannot fetch non existing course by id"""
+        response = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/courses/100', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Course not found')
+        assert response2.status_code == 404
