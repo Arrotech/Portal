@@ -8,6 +8,7 @@ from app.api.v1.models.departments import DepartmentsModel
 from utils.utils import raise_error, check_courses_keys
 from utils.authorization import admin_required
 
+
 @courses_v1.route('/courses', methods=['POST'])
 @jwt_required
 def add_course():
@@ -25,12 +26,14 @@ def add_course():
         return Serializer.serialize(response, 201, "{} added successfully".format(course_name))
     return raise_error(404, "Department not found")
 
+
 @courses_v1.route('/courses', methods=['GET'])
 @jwt_required
 def get_courses():
     """Fetch all courses."""
     response = CoursesModel().get_courses()
     return Serializer.serialize(response, 200, "Courses successfull retrieved")
+
 
 @courses_v1.route('/courses/<int:course_id>', methods=['GET'])
 @jwt_required
@@ -40,6 +43,7 @@ def get_course(course_id):
     if response:
         return Serializer.serialize(response, 200, "Course successfull retrieved")
     return raise_error(404, "Course not found")
+
 
 @courses_v1.route('/courses/<int:course_id>', methods=['PUT'])
 @jwt_required
@@ -58,3 +62,14 @@ def update_course(course_id):
     if response:
         return Serializer.serialize(response, 200, 'Course updated successfully')
     return raise_error(404, "Course not found")
+
+
+@courses_v1.route('/courses/<int:course_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_course(course_id):
+    """Delete course by id."""
+    if CoursesModel().get_course_by_id(course_id):
+        response = CoursesModel().delete(course_id)
+        return Serializer.serialize(response, 200, "Course deleted successfully")
+    return raise_error(404, 'Course not found')
