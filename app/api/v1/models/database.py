@@ -140,6 +140,7 @@ class Database:
                 hostel_id serial PRIMARY KEY,
                 hostel_name varchar NOT NULL,
                 rooms varchar NOT NULL,
+                gender varchar NOT NULL,
                 hostel_location varchar NOT NULL,
                 date TIMESTAMP
             )"""

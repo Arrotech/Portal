@@ -695,18 +695,21 @@ edit_fees_keys = {
 new_hostel = {
     "hostel_name": "nyati",
     "rooms": "400",
+    "gender": "male",
     "hostel_location": "gate c"
 }
 
 hostel_keys = {
     "hostel_nme": "nyati",
     "rooms": "400",
+    "gender": "male",
     "hostel_location": "gate c"
 }
 
 hostel_name_exists = {
     "hostel_name": "nyati",
     "rooms": "400",
+    "gender": "male",
     "hostel_location": "gate c"
 }
 
