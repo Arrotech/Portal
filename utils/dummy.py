@@ -757,3 +757,35 @@ update_course_name_exists = {
     "course_name": "maths and computer science",
     "department_id": "1"
 }
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@ APPLY COURSE @@@@@@@@@@@@@@@@@@@@@@
+
+apply_course = {
+    "user_id": "1",
+    "department_id": "1",
+    "course_id": "1"
+}
+
+apply_course_keys = {
+    "userid": "1",
+    "department_id": "1",
+    "course_id": "1"
+}
+
+apply_course_user_not_found = {
+    "user_id": "3",
+    "department_id": "1",
+    "course_id": "1"
+}
+
+apply_course_department_not_found = {
+    "user_id": "1",
+    "department_id": "2",
+    "course_id": "1"
+}
+
+apply_course_not_found = {
+    "user_id": "1",
+    "department_id": "1",
+    "course_id": "2"
+}
