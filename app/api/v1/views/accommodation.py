@@ -30,3 +30,11 @@ def book_hostel():
             return Serializer.serialize(response, 201, "Hostel booked successfully")
         return raise_error(404, "Hostel not found")
     return raise_error(404, "Student not found")
+
+@accommodation_v1.route('/accommodation', methods=['GET'])
+@jwt_required
+@admin_required
+def get_all_booked_hostels():
+    """Fetch all hostels that have been booked."""
+    response = AccommodationModel().get_booked_hostels()
+    return Serializer.serialize(response, 200, "Hostels retrieved successfully")
