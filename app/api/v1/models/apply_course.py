@@ -29,3 +29,19 @@ class ApplyCoursesModel(Database):
             return response
         except psycopg2.IntegrityError:
             return "error"
+        
+    def get_course_by_id(self, application_id):
+        """Get course by id."""
+        self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,
+                          d.department_name, c.course_name
+                          FROM apply_course AS a
+                          INNER JOIN users AS u ON a.student=u.user_id
+                          INNER JOIN departments AS d ON a.department=d.department_id
+                          INNER JOIN courses AS c ON a.course=c.course_id
+                          WHERE application_id={}""".format(application_id))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+        
+        

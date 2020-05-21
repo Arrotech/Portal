@@ -87,3 +87,41 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Course not found')
         assert response4.status_code == 404
+        
+    def test_apply_course_get_course_by_id(self):
+        """Test that a student can fetch course by id."""
+        response2 = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response4 = self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        response5 = self.client.get(
+            '/api/v1/apply_course/1', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response5.data.decode())
+        self.assertEqual(result['message'],
+                         'Course retrieved successfully')
+        assert response5.status_code == 200
+        
+    def test_apply_course_get_non_exisiting_course_by_id(self):
+        """Test that a student cannot fetch course by id if doesn't exists."""
+        response2 = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response4 = self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        response5 = self.client.get(
+            '/api/v1/apply_course/10', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response5.data.decode())
+        self.assertEqual(result['message'],
+                         'Course not found')
+        assert response5.status_code == 404

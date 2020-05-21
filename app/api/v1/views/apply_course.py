@@ -34,3 +34,12 @@ def apply_course():
             return raise_error(404, "Course not found")
         return raise_error(404, "Department not found")
     return raise_error(404, "Student not found")
+
+@apply_course_v1.route('/apply_course/<int:application_id>', methods=['GET'])
+@jwt_required
+def get_course(application_id):
+    """Get course by id."""
+    response = ApplyCoursesModel().get_course_by_id(application_id)
+    if response:
+        return Serializer.serialize(response, 200, "Course retrieved successfully")
+    return raise_error(404, "Course not found")
