@@ -59,3 +59,12 @@ class CoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def edit_course(self, course_id, course_name, department_id):
+        """Update course."""
+        self.curr.execute(
+            """UPDATE courses SET course_name='{}', department='{}' WHERE course_id={} RETURNING course_name, department""".format(course_id, course_name, department_id))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
