@@ -1,7 +1,7 @@
 import json
 
 from utils.dummy import new_course, new_department, add_course_keys, add_non_exisitng_department,\
-    course_name_exists, update_course, update_course_name_exists
+    course_name_exists, update_course, update_course_name_exists, update_course_keys
 from .base_test import BaseTest
 
 
@@ -124,6 +124,21 @@ class TestCourses(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Course updated successfully')
         assert response2.status_code == 200
+        
+    def test_edit_course_by_id_keys(self):
+        """Test that an admin cannot edit course by id with an invalid json key."""
+        response = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/courses/1', data=json.dumps(update_course_keys), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Invalid course_name key')
+        assert response2.status_code == 400
 
     def test_edit_existing_course_name(self):
         """Test that an admin cannot edit course with already existing course name."""

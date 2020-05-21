@@ -748,6 +748,11 @@ update_course = {
     "department_id": "1"
 }
 
+update_course_keys = {
+    "courseame": "chemistry",
+    "department_id": "1"
+}
+
 update_course_name_exists = {
     "course_name": "maths and computer science",
     "department_id": "1"
