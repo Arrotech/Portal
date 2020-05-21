@@ -68,12 +68,21 @@ class Database:
             """,
             """
             CREATE TABLE IF NOT EXISTS courses(
-                course_id serial NOT NULL,
+                course_id serial UNIQUE,
                 course_name varchar NOT NULL,
                 department integer NOT NULL REFERENCES departments (department_id) ON DELETE CASCADE,
                 created_on TIMESTAMP,
                 PRIMARY KEY (department)
-                
+            )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS apply_course(
+                application_id serial,
+                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                department integer NOT NULL REFERENCES departments (department_id) ON DELETE CASCADE,
+                course integer NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE,
+                created_on TIMESTAMP,
+                PRIMARY KEY (student, department, course)
             )
             """,
             """
@@ -150,14 +159,16 @@ class Database:
         accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
         departments = "DROP TABLE IF EXISTS departments CASCADE"
         courses = "DROP TABLE IF EXISTS courses CASCADE"
+        apply_course = "DROP TABLE IF EXISTS apply_course CASCADE"
         units = "DROP TABLE IF EXISTS units CASCADE"
         subjects = "DROP TABLE IF EXISTS subjects CASCADE"
         fees = "DROP TABLE IF EXISTS fees CASCADE"
         library = "DROP TABLE IF EXISTS library CASCADE"
         units = "DROP TABLE IF EXISTS units CASCADE"
         hostels = "DROP TABLE IF EXISTS hostels CASCADE"
-        
-        queries = [exams, users, staff, accountants, departments, courses, subjects, fees, library, units, hostels]
+
+        queries = [exams, users, staff, accountants, departments,
+                   courses, apply_course, subjects, fees, library, units, hostels]
         try:
             for query in queries:
                 self.curr.execute(query)
@@ -173,7 +184,7 @@ class Database:
         self.conn.commit()
         self.curr.close()
         return fetch_all
-    
+
     def fetch_one(self, query, var):
         """Fetch one query."""
         self.curr.execute(query, (var,),)
