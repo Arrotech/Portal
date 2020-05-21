@@ -170,3 +170,33 @@ class TestCourses(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Course not found')
         assert response2.status_code == 404
+        
+    def test_delete_course_by_id(self):
+        """Test that an admin can delete course by id."""
+        response = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.delete(
+            '/api/v1/courses/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Course deleted successfully')
+        assert response2.status_code == 200
+        
+    def test_delete_non_existing_course(self):
+        """Test that an admin cannot delete non existing course."""
+        response = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.delete(
+            '/api/v1/courses/100', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Course not found')
+        assert response2.status_code == 404
