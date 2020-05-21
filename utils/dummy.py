@@ -808,3 +808,25 @@ apply_course_not_found = {
     "department_id": "1",
     "course_id": "2"
 }
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BOOk HOSTEL @@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+book_hostel = {
+    "user_id": "1",
+    "hostel_id": "1"
+}
+
+book_hostel_keys = {
+    "userid": "1",
+    "hostel_id": "1"
+}
+
+book_hostel_user_not_found = {
+    "user_id": "3",
+    "hostel_id": "1"
+}
+
+book_hostel_not_found = {
+    "user_id": "1",
+    "hostel_id": "3"
+}
