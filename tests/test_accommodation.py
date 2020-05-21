@@ -54,7 +54,7 @@ class TestAccommodation(BaseTest):
         self.assertEqual(result['message'], 'User does not exist or your are trying to book twice')
         assert response2.status_code == 404
         
-    def test_get_booked_hostel(self):
+    def test_get_booked_hostels(self):
         """Test that an admin can fetch all booked hostels."""
         response2 = self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
@@ -69,3 +69,35 @@ class TestAccommodation(BaseTest):
         self.assertEqual(result['message'],
                          'Hostels retrieved successfully')
         assert response4.status_code == 200
+        
+    def test_get_booked_hostel_by_id(self):
+        """Test that a student can view the hostel he/she has booked."""
+        response2 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.get(
+            '/api/v1/accommodation/1', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Hostel retrieved successfully')
+        assert response4.status_code == 200
+        
+    def test_get_non_existing_booked_hostel_by_id(self):
+        """Test that a student cannot view non existing hostel he/she hasn't booked."""
+        response2 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.get(
+            '/api/v1/accommodation/10', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Hostel not found')
+        assert response4.status_code == 404

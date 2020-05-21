@@ -38,3 +38,12 @@ def get_all_booked_hostels():
     """Fetch all hostels that have been booked."""
     response = AccommodationModel().get_booked_hostels()
     return Serializer.serialize(response, 200, "Hostels retrieved successfully")
+
+@accommodation_v1.route('/accommodation/<int:accommodation_id>', methods=['GET'])
+@jwt_required
+def get_booked_hostel_by_id(accommodation_id):
+    """Fetch hostel by id."""
+    response = AccommodationModel().get_booked_hostel_by_id(accommodation_id)
+    if response:
+        return Serializer.serialize(response, 200, "Hostel retrieved successfully")
+    return raise_error(404, "Hostel not found")
