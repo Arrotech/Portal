@@ -19,11 +19,12 @@ def add_hostel():
     details = request.get_json()
     hostel_name = details['hostel_name']
     rooms = details['rooms']
+    gender = details['gender']
     hostel_location = details['hostel_location']
     hostelName = HostelsModel().get_hostel_by_name(hostel_name)
     if hostelName:
         return raise_error(400, '{} already exists'.format(hostel_name))
-    response = HostelsModel(hostel_name, rooms, hostel_location).save()
+    response = HostelsModel(hostel_name, rooms, gender, hostel_location).save()
     return Serializer.serialize(response, 201, 'Hostel added successfully')
 
 

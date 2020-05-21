@@ -166,7 +166,7 @@ def check_edit_library_keys(request):
 
 
 def check_hostels_keys(request):
-    res_keys = ['hostel_name', 'rooms', 'hostel_location']
+    res_keys = ['hostel_name', 'rooms', 'gender', 'hostel_location']
     errors = []
     for key in res_keys:
         if not key in request.json:
