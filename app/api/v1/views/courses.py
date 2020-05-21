@@ -40,3 +40,21 @@ def get_course(course_id):
     if response:
         return Serializer.serialize(response, 200, "Course successfull retrieved")
     return raise_error(404, "Course not found")
+
+@courses_v1.route('/courses/<int:course_id>', methods=['PUT'])
+@jwt_required
+@admin_required
+def update_course(course_id):
+    """Update a course by id."""
+    details = request.get_json()
+    errors = check_courses_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+    course_name = details['course_name']
+    department_id = details['department_id']
+    if CoursesModel().get_course_name(course_name):
+        return raise_error(400, "{} already exists".format(course_name))
+    response = CoursesModel().edit_course(course_name, department_id, course_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Course updated successfully')
+    return raise_error(404, "Course not found")

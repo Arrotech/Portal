@@ -728,10 +728,6 @@ new_course = {
     "department_id": "1"
 }
 
-add_department = {
-    "department_name": "physics"
-}
-
 add_course_keys = {
     "coursename": "maths and computer science",
     "department_id": "1"
@@ -745,4 +741,14 @@ add_non_exisitng_department = {
 course_name_exists = {
     "course_name": "maths and computer science",
     "department_id": "2"    
+}
+
+update_course = {
+    "course_name": "chemistry",
+    "department_id": "1"
+}
+
+update_course_name_exists = {
+    "course_name": "maths and computer science",
+    "department_id": "1"
 }
