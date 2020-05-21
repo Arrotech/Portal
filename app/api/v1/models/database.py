@@ -143,6 +143,14 @@ class Database:
                 gender varchar NOT NULL,
                 hostel_location varchar NOT NULL,
                 date TIMESTAMP
+            )""",
+            """
+            CREATE TABLE IF NOT EXISTS accommodation(
+                accommodation_id serial UNIQUE,
+                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                hostel integer NOT NULL REFERENCES hostels (hostel_id) ON DELETE CASCADE,
+                created_on TIMESTAMP,
+                PRIMARY KEY (student, hostel)
             )"""
         ]
         try:
@@ -168,9 +176,10 @@ class Database:
         library = "DROP TABLE IF EXISTS library CASCADE"
         units = "DROP TABLE IF EXISTS units CASCADE"
         hostels = "DROP TABLE IF EXISTS hostels CASCADE"
+        accommodation = "DROP TABLE IF EXISTS accommodation CASCADE"
 
         queries = [exams, users, staff, accountants, departments,
-                   courses, apply_course, subjects, fees, library, units, hostels]
+                   courses, apply_course, subjects, fees, library, units, hostels, accommodation]
         try:
             for query in queries:
                 self.curr.execute(query)
