@@ -53,3 +53,19 @@ class TestAccommodation(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'User does not exist or your are trying to book twice')
         assert response2.status_code == 404
+        
+    def test_get_booked_hostel(self):
+        """Test that an admin can fetch all booked hostels."""
+        response2 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
+            headers=self.get_token())
+        response4 = self.client.get(
+            '/api/v1/accommodation', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Hostels retrieved successfully')
+        assert response4.status_code == 200
