@@ -25,6 +25,7 @@ def signup():
     lastname = details['lastname']
     surname = details['surname']
     admission_no = details['admission_no']
+    gender = details['gender']
     email = details['email']
     password = details['password']
     current_year = details['current_year']
@@ -45,7 +46,7 @@ def signup():
     if user_email:
         return raise_error(400, "Email Already Exists!")
     user = json.loads(UsersModel(firstname, lastname, surname,
-                                 admission_no, email, password, current_year).save())
+                                 admission_no, gender, email, password, current_year).save())
     token = default_encode_token(email, salt='email-confirm-key')
     confirm_url = generate_url('auth_v1.confirm_email', token=token)
     send_email('Confirm Your Email',
