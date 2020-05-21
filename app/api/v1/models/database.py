@@ -27,6 +27,7 @@ class Database:
                 lastname varchar NOT NULL,
                 surname varchar NOT NULL,
                 admission_no varchar NOT NULL,
+                gender varchar NOT NULL,
                 email varchar NOT NULL,
                 password varchar NOT NULL,
                 current_year numeric NOT NULL,
