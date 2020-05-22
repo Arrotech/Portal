@@ -759,7 +759,7 @@ add_non_exisitng_department = {
 
 course_name_exists = {
     "course_name": "maths and computer science",
-    "department_id": "2"    
+    "department_id": "2"
 }
 
 update_course = {

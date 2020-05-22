@@ -31,12 +31,12 @@ class HostelsModel(Database):
     def get_hostel_by_name(self, hostel_name):
         """Fetch hostel by name."""
         self.curr.execute(
-            """ SELECT * FROM hostels WHERE hostel_name=%s""",(hostel_name,),)
+            """ SELECT * FROM hostels WHERE hostel_name=%s""", (hostel_name,),)
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_all_hostels(self):
         """Fetch all hostels."""
         self.curr.execute(
@@ -45,7 +45,7 @@ class HostelsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_hostel_by_id(self, hostel_id):
         """Fetch hostel by id."""
         self.curr.execute(
@@ -54,20 +54,19 @@ class HostelsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def view_hostel_by_location(self, hostel_location):
         """View hostel(s) by location."""
         self.curr.execute(
-            """ SELECT * FROM hostels WHERE hostel_location=%s""",(hostel_location,),)
+            """ SELECT * FROM hostels WHERE hostel_location=%s""", (hostel_location,),)
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def delete(self, hostel_id):
         """Delete a hostel by id."""
         self.curr.execute(
             """DELETE FROM hostels WHERE hostel_id={}""".format(hostel_id))
         self.conn.commit()
         self.curr.close()
-

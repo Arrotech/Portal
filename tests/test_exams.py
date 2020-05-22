@@ -22,7 +22,7 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'],
                          'You have successfully added 80')
         assert response3.status_code == 201
-        
+
     def test_add_exams_keys(self):
         """Test that an admin cannot make a new exam entry with an invalid json key."""
         response1 = self.client.post(
@@ -38,7 +38,7 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'],
                          'Invalid user_id key')
         assert response3.status_code == 400
-        
+
     def test_add_exams_for_non_existing_unit(self):
         """Test that an admin cannot make a new exam entry for a non existing unit"""
         response1 = self.client.post(
@@ -54,7 +54,7 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'],
                          'Unit 2 not found')
         assert response3.status_code == 404
-        
+
     def test_add_exams_for_non_existing_user(self):
         """Test that an admin cannot make a new exam entry for a non existing user"""
         response1 = self.client.post(
@@ -70,7 +70,7 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'],
                          'User does not exist or your are trying to enter marks twice')
         assert response3.status_code == 400
-        
+
     def test_get_exams(self):
         """Test that an admin can fetch all exams."""
         response1 = self.client.post(
@@ -89,7 +89,7 @@ class TestExams(BaseTest):
         self.assertEqual(result['message'],
                          'Exams successfull retrieved')
         assert response4.status_code == 200
-        
+
     def test_get_exams_for_a_student(self):
         """Test that a student can fetch all exams for a specific year."""
         response1 = self.client.post(

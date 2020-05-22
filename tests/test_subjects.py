@@ -68,7 +68,7 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'],
                          'User does not exist or your are trying to enter marks twice')
         assert response4.status_code == 400
-        
+
     def test_get_subjects(self):
         """Test that an admin can fetch all subjects."""
         response1 = self.client.post(
@@ -87,7 +87,7 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'],
                          'Subjects successfull retrieved')
         assert response4.status_code == 200
-        
+
     def test_get_subjects_by_id(self):
         """Test that a student can fetch all subjects that they have registered for."""
         response1 = self.client.post(
@@ -106,7 +106,7 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'],
                          'Subjects successfull retrieved')
         assert response4.status_code == 200
-        
+
     def test_delete_subject_by_id(self):
         """Test that an admin can delete a subject by id."""
         response1 = self.client.post(
@@ -125,7 +125,7 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'],
                          'Subject deleted successfully')
         assert response4.status_code == 200
-        
+
     def test_delete_non_existing_subject_by_id(self):
         """Test that an admin cannot delete non existing subject by id."""
         response1 = self.client.post(

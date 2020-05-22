@@ -27,13 +27,14 @@ def apply_course():
     if UsersModel().get_user_id(user_id):
         if DepartmentsModel().get_department_by_id(department_id):
             if CoursesModel().get_course_by_id(course_id):
-                response = ApplyCoursesModel(user_id, department_id, course_id).save()
+                response = ApplyCoursesModel(
+                    user_id, department_id, course_id).save()
                 if "error" in response:
                     return raise_error(404, "User not found")
                 return Serializer.serialize(response, 201, "Course applied successfully")
             return raise_error(404, "Course not found")
         return raise_error(404, "Department not found")
-    return raise_error(404, "Student not found")
+
 
 @apply_course_v1.route('/apply_course/<int:application_id>', methods=['GET'])
 @jwt_required

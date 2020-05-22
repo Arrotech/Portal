@@ -39,7 +39,7 @@ class AccommodationModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_booked_hostel_by_id(self, accommodation_id):
         """Fetch booked hostel by id."""
         self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,

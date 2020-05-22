@@ -30,7 +30,6 @@ def register_subjects():
                 return raise_error(400, "User does not exist or your are trying to enter marks twice")
             return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_id))
         return raise_error(404, "Unit {} not found".format(unit_id))
-    return raise_error(404, "Student {} not found".format(user_id))
 
 
 @subjects_v1.route('/subjects', methods=['GET'])
@@ -41,12 +40,14 @@ def get_subjects():
     response = SubjectsModel().get_subjects()
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
 
+
 @subjects_v1.route('/subjects/<int:user_id>', methods=['GET'])
 @jwt_required
 def get_subjects_for_specific_user_by_id(user_id):
     """Fetch all subjects for a specific user by id."""
     response = SubjectsModel().get_subjects_for_specific_user_by_id(user_id)
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
+
 
 @subjects_v1.route('/subjects/<int:subject_id>', methods=['DELETE'])
 @jwt_required

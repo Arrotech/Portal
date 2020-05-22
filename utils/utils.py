@@ -5,7 +5,6 @@ from flask import jsonify, make_response, url_for, current_app
 from itsdangerous import URLSafeTimedSerializer
 
 
-
 def check_register_keys(request):
     res_keys = ['firstname', 'lastname', 'surname',
                 'admission_no', 'gender', 'email', 'password', 'current_year']
@@ -24,6 +23,7 @@ def check_update_user_keys(request):
             errors.append(key)
     return errors
 
+
 def check_apply_course_keys(request):
     res_keys = ['user_id', 'department_id', 'course_id']
     errors = []
@@ -32,6 +32,7 @@ def check_apply_course_keys(request):
             errors.append(key)
     return errors
 
+
 def check_department_keys(request):
     res_keys = ['department_name']
     errors = []
@@ -39,6 +40,7 @@ def check_department_keys(request):
         if not key in request.json:
             errors.append(key)
     return errors
+
 
 def check_courses_keys(request):
     res_keys = ['course_name', 'department_id']
@@ -173,6 +175,7 @@ def check_hostels_keys(request):
             errors.append(key)
     return errors
 
+
 def check_accommdation_keys(request):
     res_keys = ['user_id', 'hostel_id']
     errors = []
@@ -279,7 +282,8 @@ def internal_server_error(e):
         "status": "500",
         "message": "internal server error"
     }), 500)
-    
+
+
 def default_encode_token(email, salt='email-confirm-key'):
     """Encode token using email."""
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])

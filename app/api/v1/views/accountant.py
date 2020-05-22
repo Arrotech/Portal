@@ -8,7 +8,6 @@ from werkzeug.security import check_password_hash
 from app.api.v1 import accountant_v1
 
 
-
 @accountant_v1.route('/register', methods=['POST'])
 def signup():
     """A new user can create a new account."""
@@ -35,7 +34,8 @@ def signup():
     user_email = json.loads(AccountantModel().get_email(email))
     if user_email:
         return raise_error(400, "Email already exists!")
-    user = AccountantModel(firstname, lastname, username, email, password).save()
+    user = AccountantModel(firstname, lastname, username,
+                           email, password).save()
     user = json.loads(user)
     return make_response(jsonify({
         "message": "Account created successfully!",

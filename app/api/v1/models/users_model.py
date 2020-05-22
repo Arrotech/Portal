@@ -94,7 +94,7 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(response, default=str)
-    
+
     def confirm_email(self, user_id, is_confirmed):
         """Confirm user email."""
         self.curr.execute(

@@ -31,7 +31,7 @@ class ExamsModel(Database):
             return response
         except psycopg2.IntegrityError:
             return "error"
-        
+
     def get_exams(self):
         """Fetch all exams."""
         self.curr.execute("""
@@ -43,7 +43,7 @@ class ExamsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_exams_for_a_student(self, year, user_id):
         """A student can fetch all his examinations for a specific year."""
         self.curr.execute("""

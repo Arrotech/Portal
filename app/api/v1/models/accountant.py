@@ -47,7 +47,8 @@ class AccountantModel(Database):
 
     def get_email(self, email):
         """Request a single user with specific Email Address."""
-        self.curr.execute(''' SELECT * FROM accountants WHERE email=%s''', (email,))
+        self.curr.execute(
+            ''' SELECT * FROM accountants WHERE email=%s''', (email,))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

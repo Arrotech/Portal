@@ -19,7 +19,7 @@ def admin_required(func):
             user_role = cur_user[0]['role']
             if user_role != 'teacher':
                 return {
-                        'message': 'This activity can only be completed by the class teacher'}, 403  # Forbidden
+                    'message': 'This activity can only be completed by the class teacher'}, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return {"message": e}

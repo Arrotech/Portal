@@ -39,7 +39,8 @@ def signup():
     user_email = json.loads(StaffModel().get_email(email))
     if user_email:
         return raise_error(400, "Email already exists!")
-    user = StaffModel(firstname, lastname, form, stream, username, email, password).save()
+    user = StaffModel(firstname, lastname, form, stream,
+                      username, email, password).save()
     user = json.loads(user)
     return make_response(jsonify({
         "message": "Account created successfully!",

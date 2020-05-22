@@ -6,6 +6,7 @@ from .base_test import BaseTest
 
 class TestFees(BaseTest):
     """Test Fees."""
+
     def test_add_fees(self):
         """Test that the add fees endpoint works."""
         response1 = self.client.post(
