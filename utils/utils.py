@@ -25,7 +25,7 @@ def check_update_user_keys(request):
 
 
 def check_apply_course_keys(request):
-    res_keys = ['user_id', 'department_id', 'course_id']
+    res_keys = ['admission_no', 'department_id', 'course_name']
     errors = []
     for key in res_keys:
         if not key in request.json:

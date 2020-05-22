@@ -49,11 +49,22 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(user, default=str)
+    
+    def get_user_by_admission(self, admission_no):
+        """Get user by admission."""
+        self.curr.execute("""SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return json.dumps(response, default=str)
 
     def get_admission_no(self, admission_no):
         """Request a single user with specific Admission Number."""
         self.curr.execute(
-            """ SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
+            """ SELECT u.firstname, u.lastname, u.surname, u.admission_no,
+            u.gender, u.current_year, u.role, u.email, a.course FROM users AS u
+            LEFT JOIN apply_course AS a ON u.admission_no=a.student
+            WHERE admission_no=%s""", (admission_no,))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -94,7 +105,7 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(response, default=str)
-
+    
     def confirm_email(self, user_id, is_confirmed):
         """Confirm user email."""
         self.curr.execute(

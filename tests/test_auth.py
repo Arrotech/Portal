@@ -128,7 +128,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response1 = self.client.get(
-            '/api/v1/auth/users/NJCF4001', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/auth/users/NJCF4001', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'successfully retrieved')
         assert response1.status_code == 200

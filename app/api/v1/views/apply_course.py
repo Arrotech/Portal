@@ -21,14 +21,14 @@ def apply_course():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    user_id = details['user_id']
+    admission_no = details['admission_no']
     department_id = details['department_id']
-    course_id = details['course_id']
-    if UsersModel().get_user_id(user_id):
+    course_name = details['course_name']
+    if UsersModel().get_user_by_admission(admission_no):
         if DepartmentsModel().get_department_by_id(department_id):
-            if CoursesModel().get_course_by_id(course_id):
+            if CoursesModel().get_course_name(course_name):
                 response = ApplyCoursesModel(
-                    user_id, department_id, course_id).save()
+                    admission_no, department_id, course_name).save()
                 if "error" in response:
                     return raise_error(404, "User not found")
                 return Serializer.serialize(response, 201, "Course applied successfully")

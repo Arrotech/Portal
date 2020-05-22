@@ -780,33 +780,33 @@ update_course_name_exists = {
 # @@@@@@@@@@@@@@@@@@@@@@@@@ APPLY COURSE @@@@@@@@@@@@@@@@@@@@@@
 
 apply_course = {
-    "user_id": "1",
+    "admission_no": "NJCF1001",
     "department_id": "1",
-    "course_id": "1"
+    "course_name": "maths and computer science"
 }
 
 apply_course_keys = {
-    "userid": "1",
+    "admissionno": "NJCF1001",
     "department_id": "1",
-    "course_id": "1"
+    "course_name": "maths and computer science"
 }
 
 apply_course_user_not_found = {
-    "user_id": "3",
+    "admission_no": "NJCF1010",
     "department_id": "1",
-    "course_id": "1"
+    "course_name": "maths and computer science"
 }
 
 apply_course_department_not_found = {
-    "user_id": "1",
+    "admission_no": "NJCF1001",
     "department_id": "2",
-    "course_id": "1"
+    "course_name": "maths and computer science"
 }
 
 apply_course_not_found = {
-    "user_id": "1",
+    "admission_no": "NJCF1001",
     "department_id": "1",
-    "course_id": "2"
+    "course_name": "ICT"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BOOk HOSTEL @@@@@@@@@@@@@@@@@@@@@@@@@@@

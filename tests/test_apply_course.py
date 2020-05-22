@@ -37,7 +37,7 @@ class TestApplyCourse(BaseTest):
             headers=self.get_token())
         result = json.loads(response4.data.decode())
         self.assertEqual(result['message'],
-                         'Invalid user_id key')
+                         'Invalid admission_no key')
         assert response4.status_code == 400
 
     def test_apply_course_user_not_found(self):
