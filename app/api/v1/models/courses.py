@@ -26,7 +26,6 @@ class CoursesModel(Database):
         self.curr.close()
         return response
 
-
     def get_course_name(self, course_name):
         """Get course by name."""
         self.curr.execute("""
@@ -36,7 +35,7 @@ class CoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_courses(self):
         """Get all courses."""
         self.curr.execute("""
@@ -47,7 +46,7 @@ class CoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_course_by_id(self, course_id):
         """Get course by id."""
         self.curr.execute("""
@@ -59,7 +58,7 @@ class CoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def edit_course(self, course_id, course_name, department_id):
         """Update course."""
         self.curr.execute(
@@ -68,9 +67,10 @@ class CoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def delete(self, course_id):
         """Delete course by id."""
-        self.curr.execute("""DELETE FROM courses WHERE course_id={}""".format(course_id))
+        self.curr.execute(
+            """DELETE FROM courses WHERE course_id={}""".format(course_id))
         self.conn.commit()
         self.curr.close()

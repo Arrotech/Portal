@@ -41,7 +41,7 @@ class TestAccommodation(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel not found')
         assert response2.status_code == 404
-        
+
     def test_book_hostel_for_non_existing_user(self):
         """Test that a non existing user cannot book a hostel."""
         response1 = self.client.post(
@@ -51,9 +51,10 @@ class TestAccommodation(BaseTest):
             '/api/v1/accommodation', data=json.dumps(book_hostel_user_not_found), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'User does not exist or your are trying to book twice')
+        self.assertEqual(
+            result['message'], 'User does not exist or your are trying to book twice')
         assert response2.status_code == 404
-        
+
     def test_get_booked_hostels(self):
         """Test that an admin can fetch all booked hostels."""
         response2 = self.client.post(
@@ -69,7 +70,7 @@ class TestAccommodation(BaseTest):
         self.assertEqual(result['message'],
                          'Hostels retrieved successfully')
         assert response4.status_code == 200
-        
+
     def test_get_booked_hostel_by_id(self):
         """Test that a student can view the hostel he/she has booked."""
         response2 = self.client.post(
@@ -85,7 +86,7 @@ class TestAccommodation(BaseTest):
         self.assertEqual(result['message'],
                          'Hostel retrieved successfully')
         assert response4.status_code == 200
-        
+
     def test_get_non_existing_booked_hostel_by_id(self):
         """Test that a student cannot view non existing hostel he/she hasn't booked."""
         response2 = self.client.post(

@@ -23,7 +23,7 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Course applied successfully')
         assert response4.status_code == 201
-        
+
     def test_apply_course_keys(self):
         """Test that a student cannot apply a course with an invalid json key."""
         response2 = self.client.post(
@@ -39,7 +39,7 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Invalid user_id key')
         assert response4.status_code == 400
-        
+
     def test_apply_course_user_not_found(self):
         """Test that a student cannot apply a course if they dont exists."""
         response2 = self.client.post(
@@ -55,7 +55,7 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'User not found')
         assert response4.status_code == 404
-        
+
     def test_apply_course_department_not_found(self):
         """Test that a student cannot apply a course if the department doesn't exists."""
         response2 = self.client.post(
@@ -71,7 +71,7 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Department not found')
         assert response4.status_code == 404
-        
+
     def test_apply_course_not_found(self):
         """Test that a student cannot apply a course if the course doesn't exists."""
         response2 = self.client.post(
@@ -87,7 +87,7 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Course not found')
         assert response4.status_code == 404
-        
+
     def test_apply_course_get_course_by_id(self):
         """Test that a student can fetch course by id."""
         response2 = self.client.post(
@@ -106,7 +106,7 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Course retrieved successfully')
         assert response5.status_code == 200
-        
+
     def test_apply_course_get_non_exisiting_course_by_id(self):
         """Test that a student cannot fetch course by id if doesn't exists."""
         response2 = self.client.post(

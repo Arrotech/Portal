@@ -167,7 +167,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Unit updated successfully')
         assert response1.status_code == 200
-        
+
     def test_edit_unit_keys(self):
         """Test that an admin user cannot edit a unit with an invalid key."""
         response = self.client.post(
@@ -179,7 +179,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Invalid unit_name key')
         assert response1.status_code == 400
-        
+
     def test_edit_unexisting_unit(self):
         """Test that an admin user cannot edit non existing unit."""
         response = self.client.post(
@@ -191,7 +191,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Unit not found')
         assert response1.status_code == 404
-        
+
     def test_edit_existing_unit_name(self):
         """Test that an admin user cannot edit existing unit name."""
         response = self.client.post(
@@ -203,7 +203,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Calculus 1 already exists')
         assert response1.status_code == 400
-        
+
     def test_edit_existing_unit_code(self):
         """Test that an admin user cannot edit existing unit code."""
         response = self.client.post(
@@ -215,7 +215,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'SMA001 already exists')
         assert response1.status_code == 400
-        
+
     def test_edit_unit_name(self):
         """Test that an admin user can edit a unit name."""
         response = self.client.post(
@@ -227,7 +227,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Unit name updated successfully')
         assert response1.status_code == 200
-        
+
     def test_edit_unit_name_key(self):
         """Test that an admin user cannot edit unit name with an invalid key."""
         response = self.client.post(
@@ -239,7 +239,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Invalid unit_name key')
         assert response1.status_code == 400
-        
+
     def test_edit_existing_unit_name1(self):
         """Test that an admin user cannot edit existing unit name."""
         response = self.client.post(
@@ -251,7 +251,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Calculus 1 already exists')
         assert response1.status_code == 400
-        
+
     def test_edit_unexisting_unit2(self):
         """Test that an admin user cannot edit non existing unit."""
         response = self.client.post(
@@ -263,7 +263,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Unit not found')
         assert response1.status_code == 404
-        
+
     def test_edit_unit_code(self):
         """Test that an admin user can edit a unit code."""
         response = self.client.post(
@@ -275,7 +275,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Unit code updated successfully')
         assert response1.status_code == 200
-        
+
     def test_edit_unit_code_key(self):
         """Test that an admin user cannot edit a unit code with an invalid key."""
         response = self.client.post(
@@ -287,7 +287,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Invalid unit_code key')
         assert response1.status_code == 400
-        
+
     def test_edit_existing_unit_code1(self):
         """Test that an admin user cannot edit existing unit code."""
         response = self.client.post(
@@ -299,7 +299,7 @@ class TestUnits(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'SMA001 already exists')
         assert response1.status_code == 400
-        
+
     def test_edit_unexisting_unit3(self):
         """Test that an admin user cannot edit non existing unit."""
         response = self.client.post(

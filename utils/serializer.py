@@ -1,8 +1,9 @@
 from flask import make_response, jsonify
 
+
 class Serializer:
     """This class serializes data."""
-    
+
     @classmethod
     def serialize(cls, response, status_code, message):
         """Serializes data output."""
@@ -11,9 +12,9 @@ class Serializer:
                 "status": status_code,
                 "message": message,
                 "error": response
-            }),status_code)
+            }), status_code)
         return make_response(jsonify({
             "status": status_code,
             "message": message,
             "data": response
-        }),status_code)
+        }), status_code)

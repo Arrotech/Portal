@@ -1,22 +1,13 @@
 import os
 from threading import Thread
-from flask import make_response, jsonify, render_template
 from flask_mail import Message, Mail
-from app.__init__ import exam_app as my_app
+from app.__init__ import exam_app
 from utils.utils import raise_error
 from app.api.v1 import auth_v1
 from app.config import app_config
 
-config_name = os.getenv('APP_SETTINGS')
-app = my_app(config_name)
-app.config.from_pyfile('config.py')
-app.config["SECRET_KEY"] = 'schoolportal'
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+config_name = os.getenv('FLASK_ENV')
+app = exam_app(config_name)
 mail = Mail(app)
 
 
@@ -30,6 +21,7 @@ def send_async_email(app, msg):
 
 
 def send_email(subject, sender, recipients, text_body, html_body):
+    """Message body."""
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = html_body

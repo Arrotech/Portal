@@ -6,6 +6,7 @@ from .base_test import BaseTest
 
 class TestBooks(BaseTest):
     """Test Library."""
+
     def test_add_books(self):
         """Test that the admin add books."""
         response1 = self.client.post(

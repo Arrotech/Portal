@@ -35,7 +35,7 @@ class TestHostels(BaseTest):
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'nyati already exists')
         assert response1.status_code == 400
-        
+
     def test_get_all_hostels(self):
         """Test that a user can fetch all hostels."""
         response1 = self.client.post(
@@ -47,7 +47,7 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostels retrived successfully')
         assert response2.status_code == 200
-        
+
     def test_get_hostel_by_id(self):
         """Test that a user can fetch a hostel by id."""
         response1 = self.client.post(
@@ -59,7 +59,7 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel retrived successfully')
         assert response2.status_code == 200
-        
+
     def test_get_non_existing_hostel_by_id(self):
         """Test that a user cannot fetch non existing hostel by id."""
         response1 = self.client.post(
@@ -71,7 +71,7 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel not found')
         assert response2.status_code == 404
-        
+
     def test_view_hostel_by_location(self):
         """Test that a user can view hostel(s) by location."""
         response1 = self.client.post(
@@ -83,7 +83,7 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel(s) retrived successfully')
         assert response2.status_code == 200
-        
+
     def test_delete_hostel(self):
         """Test that an admin user can delete a hostel by id."""
         response = self.client.post(

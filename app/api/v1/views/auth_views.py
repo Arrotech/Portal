@@ -97,7 +97,8 @@ def login():
 def confirm_email(token):
     """Confirm email."""
     try:
-        email = default_decode_token(token, salt='email-confirm-key', expiration=3600)
+        email = default_decode_token(
+            token, salt='email-confirm-key', expiration=3600)
     except:
         return raise_error(404, "User not found")
     user = json.loads(UsersModel().get_email(email))

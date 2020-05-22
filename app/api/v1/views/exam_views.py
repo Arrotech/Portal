@@ -30,7 +30,6 @@ def add_exam():
                 return raise_error(400, "User does not exist or your are trying to enter marks twice")
             return Serializer.serialize(response, 201, "You have successfully added {}".format(marks))
         return raise_error(404, "Unit {} not found".format(unit_id))
-    return raise_error(404, "Student {} not found".format(user_id))
 
 
 @exams_v1.route('/exams', methods=['GET'])

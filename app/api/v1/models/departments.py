@@ -60,9 +60,10 @@ class DepartmentsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def delete(self, department_id):
         """Delete department by id."""
-        self.curr.execute("""DELETE FROM departments WHERE department_id={}""".format(department_id))
+        self.curr.execute(
+            """DELETE FROM departments WHERE department_id={}""".format(department_id))
         self.conn.commit()
         self.curr.close()

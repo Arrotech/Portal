@@ -82,6 +82,7 @@ def delete_unit(unit_id):
         return Serializer.serialize(response, 200, "Unit deleted successfully")
     return Serializer.serialize(response, 404, "Unit not found")
 
+
 @units_blueprint_v1.route('/units/<int:unit_id>', methods=['PUT'])
 @jwt_required
 @admin_required
@@ -104,6 +105,7 @@ def edit_unit(unit_id):
         return Serializer.serialize(response, 200, "Unit updated successfully")
     return Serializer.serialize(response, 404, "Unit not found")
 
+
 @units_blueprint_v1.route('/units/unit_name/<int:unit_id>', methods=['PUT'])
 @jwt_required
 @admin_required
@@ -121,6 +123,7 @@ def edit_unit_name(unit_id):
     if response:
         return Serializer.serialize(response, 200, "Unit name updated successfully")
     return Serializer.serialize(response, 404, "Unit not found")
+
 
 @units_blueprint_v1.route('/units/unit_code/<int:unit_id>', methods=['PUT'])
 @jwt_required

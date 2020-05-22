@@ -29,7 +29,7 @@ class ApplyCoursesModel(Database):
             return response
         except psycopg2.IntegrityError:
             return "error"
-        
+
     def get_course_by_id(self, application_id):
         """Get course by id."""
         self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,
@@ -43,5 +43,3 @@ class ApplyCoursesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-        
-        

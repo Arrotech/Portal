@@ -124,7 +124,7 @@ class TestCourses(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Course updated successfully')
         assert response2.status_code == 200
-        
+
     def test_edit_course_by_id_keys(self):
         """Test that an admin cannot edit course by id with an invalid json key."""
         response = self.client.post(
@@ -170,7 +170,7 @@ class TestCourses(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Course not found')
         assert response2.status_code == 404
-        
+
     def test_delete_course_by_id(self):
         """Test that an admin can delete course by id."""
         response = self.client.post(
@@ -185,7 +185,7 @@ class TestCourses(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Course deleted successfully')
         assert response2.status_code == 200
-        
+
     def test_delete_non_existing_course(self):
         """Test that an admin cannot delete non existing course."""
         response = self.client.post(

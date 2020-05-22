@@ -33,7 +33,6 @@ def add_book():
         if "error" in response:
             return raise_error(404, "Student not found")
         return Serializer.serialize(response, 201, "Book added successfully")
-    return raise_error(404, "Student not found")
 
 
 @books_v1.route('/books', methods=['GET'])
