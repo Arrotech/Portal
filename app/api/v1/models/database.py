@@ -26,7 +26,7 @@ class Database:
                 firstname varchar NOT NULL,
                 lastname varchar NOT NULL,
                 surname varchar NOT NULL,
-                admission_no varchar NOT NULL,
+                admission_no varchar NOT NULL UNIQUE,
                 gender varchar NOT NULL,
                 email varchar NOT NULL,
                 password varchar NOT NULL,
@@ -69,8 +69,8 @@ class Database:
             """,
             """
             CREATE TABLE IF NOT EXISTS courses(
-                course_id serial UNIQUE,
-                course_name varchar NOT NULL,
+                course_id serial NOT NULL,
+                course_name varchar UNIQUE,
                 department integer NOT NULL REFERENCES departments (department_id) ON DELETE CASCADE,
                 created_on TIMESTAMP,
                 PRIMARY KEY (department)
@@ -78,10 +78,10 @@ class Database:
             """,
             """
             CREATE TABLE IF NOT EXISTS apply_course(
-                application_id serial,
-                student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+                application_id serial UNIQUE,
+                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
                 department integer NOT NULL REFERENCES departments (department_id) ON DELETE CASCADE,
-                course integer NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE,
+                course varchar NOT NULL REFERENCES courses (course_name) ON DELETE CASCADE,
                 created_on TIMESTAMP,
                 PRIMARY KEY (student, department, course)
             )
@@ -95,7 +95,7 @@ class Database:
             )""",
             """
             CREATE TABLE IF NOT EXISTS subjects(
-                subject_id serial NOT NULL,
+                subject_id serial UNIQUE,
                 student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 unit integer NOT NULL REFERENCES units (unit_id) ON DELETE CASCADE,                                                                                                                                 
                 date TIMESTAMP,
@@ -104,7 +104,7 @@ class Database:
             """,
             """
             CREATE TABLE IF NOT EXISTS exams(
-                exam_id serial NOT NULL,
+                exam_id serial UNIQUE,
                 semester varchar NOT NULL,
                 year varchar NOT NULL,
                 student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
@@ -115,7 +115,7 @@ class Database:
             )""",
             """
             CREATE TABLE IF NOT EXISTS fees(
-                fee_id serial NOT NULL,
+                fee_id serial UNIQUE,
                 student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 transaction_type varchar NOT NULL,
                 transaction_no varchar NOT NULL,
@@ -127,7 +127,7 @@ class Database:
             """,
             """
             CREATE TABLE IF NOT EXISTS library(
-                book_id serial NOT NULL,
+                book_id serial UNIQUE,
                 student integer NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
                 title varchar NOT NULL,
                 author varchar NOT NULL,
