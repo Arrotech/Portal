@@ -46,7 +46,7 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, 
             temp += "<tr>" + "<th>Lastname</th>" + " " + "<td>" + user.lastname + "</td>" + "</tr>";
             temp += "<tr>" + "<th>Year</th>" + " " + "<td>" + user.current_year + "</td>" + "</tr>";
             temp += "<tr>" + "<th>Gender</th>" + " " + "<td>" + user.gender + "</td>" + "</tr>";
-            temp += "<tr>" + "<th>Course</th>" + " " + "<td>" + user.stream + "</td>" + "</tr>";
+            temp += "<tr>" + "<th>Course</th>" + " " + "<td>" + user.course + "</td>" + "</tr>";
             temp += "<tr>" + "<th>Role</th>" + " " + "<td>" + user.role + "</td>" + "</tr>";
             temp += "<tr>" + "<th>Email</th>" + " " + "<td>" + user.email + "</td>" + "</tr>";
 
