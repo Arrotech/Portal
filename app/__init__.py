@@ -19,15 +19,9 @@ def exam_app(config_name):
     """Create the app."""
     app = Flask(__name__, template_folder='../../../templates')
     config_name = os.getenv('FLASK_ENV')
-    if config_name == 'development':
-        app.config.from_pyfile('config.py')
-        app.config['SECRET_KEY'] = "schoolportal"
-    elif config_name == 'testing':
-        app.config.from_pyfile('config.py')
-        app.config['SECRET_KEY'] = "schoolportal"
-    else:
-        app.config.from_pyfile('config.py')
-        app.config['SECRET_KEY'] = "schoolportal"
+    app.config.from_pyfile('config.py')
+    app.config['SECRET_KEY'] = "schoolportal"
+ 
 
     CORS(app)
     JWTManager(app)
