@@ -8,10 +8,10 @@ from datetime import datetime
 class AccommodationModel(Database):
     """Initiallization."""
 
-    def __init__(self, user_id=None, hostel_id=None, created_on=None):
+    def __init__(self, admission_no=None, hostel_name=None, created_on=None):
         super().__init__()
-        self.user_id = user_id
-        self.hostel_id = hostel_id
+        self.admission_no = admission_no
+        self.hostel_name = hostel_name
         self.created_on = datetime.now()
 
     def save(self):
@@ -21,7 +21,7 @@ class AccommodationModel(Database):
                 ''' INSERT INTO accommodation(student, hostel, created_on)
                 VALUES('{}','{}','{}')
                 RETURNING student, hostel, created_on'''
-                .format(self.user_id, self.hostel_id, self.created_on))
+                .format(self.admission_no, self.hostel_name, self.created_on))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()
@@ -33,20 +33,20 @@ class AccommodationModel(Database):
         """Fetch all booked hostels."""
         self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,
                           h.hostel_name FROM accommodation AS a
-                          INNER JOIN users AS u ON a.student=u.user_id
-                          INNER JOIN hostels AS h ON a.hostel=h.hostel_id""")
+                          INNER JOIN users AS u ON a.student=u.admission_no
+                          INNER JOIN hostels AS h ON a.hostel=h.hostel_name""")
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
         return response
 
-    def get_booked_hostel_by_id(self, accommodation_id):
-        """Fetch booked hostel by id."""
+    def get_booked_hostel_by_admission(self, admission_no):
+        """Fetch booked hostel by admission."""
         self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,
                           h.hostel_name FROM accommodation AS a
-                          INNER JOIN users AS u ON a.student=u.user_id
-                          INNER JOIN hostels AS h ON a.hostel=h.hostel_id
-                          WHERE accommodation_id={}""".format(accommodation_id))
+                          INNER JOIN users AS u ON a.student=u.admission_no
+                          INNER JOIN hostels AS h ON a.hostel=h.hostel_name
+                          WHERE admission_no=%s""", (admission_no,))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

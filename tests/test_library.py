@@ -28,7 +28,7 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book_keys), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'], 'Invalid user_id key')
+        self.assertEqual(result['message'], 'Invalid admission_no key')
         assert response.status_code == 400
 
     def test_add_books_for_unexisting_user(self):
@@ -49,13 +49,13 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
         response1 = self.client.get(
-            '/api/v1/books', content_type='application/json', headers=self.get_token())
+            '/api/v1/books', content_type='application/json', headers=self.get_admin_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'],
                          "Books retrieved successfully")
         assert response1.status_code == 200
 
-    def test_get_book(self):
+    def test_get_books_for_one_student_by_admission(self):
         """Test that a student can fetch all books that were issued."""
         response2 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
@@ -64,7 +64,7 @@ class TestBooks(BaseTest):
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
         response1 = self.client.get(
-            '/api/v1/books/1', content_type='application/json', headers=self.get_token())
+            '/api/v1/books/NJCF4001', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'],
                          'Books retrieved successfully')
@@ -72,14 +72,11 @@ class TestBooks(BaseTest):
 
     def test_get_books_for_non_existing_user(self):
         """Test that one cannot get books for non existing user"""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
             headers=self.get_admin_token())
         response3 = self.client.get(
-            '/api/v1/books/10', content_type='application/json', headers=self.get_token())
+            '/api/v1/books/NJCF1013', content_type='application/json', headers=self.get_token())
         result = json.loads(response3.data.decode())
         self.assertEqual(result['message'],
                          'Student not found')

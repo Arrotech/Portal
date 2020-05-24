@@ -12,14 +12,14 @@ class FeesModels(Database):
 
     def __init__(
             self,
-            user_id=None,
+            admission_no=None,
             transaction_type=None,
             transaction_no=None,
             description=None,
             amount=None,
             date=None):
         super().__init__()
-        self.user_id = user_id
+        self.admission_no = admission_no
         self.transaction_type = transaction_type
         self.transaction_no = transaction_no
         self.description = description
@@ -33,7 +33,7 @@ class FeesModels(Database):
                 ''' INSERT INTO fees(student, transaction_type, transaction_no, description, amount, date)
                 VALUES('{}','{}','{}','{}','{}','{}')
                 RETURNING student, transaction_type, transaction_no, description, amount, date'''
-                .format(self.user_id, self.transaction_type, self.transaction_no, self.description, self.amount, self.date))
+                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.amount, self.date))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()
@@ -43,23 +43,23 @@ class FeesModels(Database):
 
     def get_all_fees(self):
         """Fetch all fees"""
-        self.curr.execute(''' 
-                          SELECT users.admission_no FROM fees
-                          INNER JOIN users ON fees.student = users.user_id
+        self.curr.execute(''' SELECT f.transaction_type, f.transaction_no, f.description,
+                          f.amount, f.date, u.admission_no, u.firstname, u.lastname, u.surname FROM fees AS f
+                          INNER JOIN users AS u ON f.student = u.admission_no
                           ''')
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
         return response
 
-    def get_fee_by_user_id(self, user_id):
-        """Get fees for a specific student by his/her id."""
+    def get_fee_by_user_admission(self, admission_no):
+        """Get fees for a specific student by his/her admission."""
         self.curr.execute(
-            """
-            SELECT users.admission_no FROM fees
-            INNER JOIN users ON fees.student = users.user_id
-            WHERE user_id={}
-            """.format(user_id))
+            """SELECT f.transaction_type, f.transaction_no, f.description,
+            f.amount, f.date, u.admission_no, u.firstname, u.lastname, u.surname FROM fees AS f
+            INNER JOIN users AS u ON f.student = u.admission_no
+            WHERE admission_no=%s
+            """, (admission_no,))
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()

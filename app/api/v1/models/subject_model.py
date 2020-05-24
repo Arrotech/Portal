@@ -8,10 +8,10 @@ from datetime import datetime
 class SubjectsModel(Database):
     """Initiallization."""
 
-    def __init__(self, user_id=None, unit_id=None, date=None):
+    def __init__(self, admission_no=None, unit_name=None, date=None):
         super().__init__()
-        self.user_id = user_id
-        self.unit_id = unit_id
+        self.admission_no = admission_no
+        self.unit_name = unit_name
         self.date = datetime.now()
 
     def save(self):
@@ -21,7 +21,7 @@ class SubjectsModel(Database):
                 ''' INSERT INTO subjects(student, unit, date)
                 VALUES('{}','{}','{}')
                 RETURNING student, unit, date'''
-                .format(self.user_id, self.unit_id, self.date))
+                .format(self.admission_no, self.unit_name, self.date))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()
@@ -31,10 +31,11 @@ class SubjectsModel(Database):
 
     def get_subjects(self):
         """Fetch all subjects."""
-        self.curr.execute("""
-                          SELECT units.unit_name, units.unit_code, users.admission_no FROM subjects
-                          INNER JOIN units ON subjects.unit = units.unit_id
-                          INNER JOIN users ON subjects.student = users.user_id
+        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
+                          us.lastname, us.surname 
+                          FROM subjects AS s
+                          INNER JOIN units AS un ON s.unit = un.unit_name
+                          INNER JOIN users AS us ON s.student = us.admission_no
                           """)
         response = self.curr.fetchall()
         self.conn.commit()
@@ -50,13 +51,15 @@ class SubjectsModel(Database):
         self.curr.close()
         return response
 
-    def get_subjects_for_specific_user_by_id(self, user_id):
-        """Fetch all subjects by a single user."""
-        self.curr.execute("""
-                          SELECT units.unit_name, units.unit_code, users.admission_no FROM subjects
-                          INNER JOIN units ON subjects.unit = units.unit_id
-                          INNER JOIN users ON subjects.student = users.user_id WHERE user_id={}
-                          """.format(user_id))
+    def get_subjects_for_specific_user_by_admission(self, admission_no):
+        """Fetch all subjects for a single user."""
+        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
+                          us.lastname, us.surname
+                          FROM subjects AS s
+                          INNER JOIN units AS un ON s.unit = un.unit_name
+                          INNER JOIN users AS us ON s.student = us.admission_no
+                          WHERE admission_no=%s
+                          """, (admission_no,))
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()

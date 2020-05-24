@@ -20,11 +20,11 @@ def book_hostel():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    user_id = details['user_id']
-    hostel_id = details['hostel_id']
-    if UsersModel().get_user_id(user_id):
-        if HostelsModel().get_hostel_by_id(hostel_id):
-            response = AccommodationModel(user_id, hostel_id).save()
+    admission_no = details['admission_no']
+    hostel_name = details['hostel_name']
+    if UsersModel().get_user_by_admission(admission_no):
+        if HostelsModel().get_hostel_by_name(hostel_name):
+            response = AccommodationModel(admission_no, hostel_name).save()
             if "error" in response:
                 return raise_error(404, "User does not exist or your are trying to book twice")
             return Serializer.serialize(response, 201, "Hostel booked successfully")
@@ -40,11 +40,11 @@ def get_all_booked_hostels():
     return Serializer.serialize(response, 200, "Hostels retrieved successfully")
 
 
-@accommodation_v1.route('/accommodation/<int:accommodation_id>', methods=['GET'])
+@accommodation_v1.route('/accommodation/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_booked_hostel_by_id(accommodation_id):
-    """Fetch hostel by id."""
-    response = AccommodationModel().get_booked_hostel_by_id(accommodation_id)
+def get_booked_hostel_by_admission(admission_no):
+    """Fetch hostel by admission."""
+    response = AccommodationModel().get_booked_hostel_by_admission(admission_no)
     if response:
         return Serializer.serialize(response, 200, "Hostel retrieved successfully")
     return raise_error(404, "Hostel not found")

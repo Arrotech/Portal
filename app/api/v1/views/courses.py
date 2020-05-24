@@ -18,11 +18,11 @@ def add_course():
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     course_name = details['course_name']
-    department_id = details['department_id']
+    department_name = details['department_name']
     if CoursesModel().get_course_name(course_name):
         return raise_error(400, '{} already exists'.format(course_name))
-    if DepartmentsModel().get_department_by_id(department_id):
-        response = CoursesModel(course_name, department_id).save()
+    if DepartmentsModel().get_department_name(department_name):
+        response = CoursesModel(course_name, department_name).save()
         return Serializer.serialize(response, 201, "{} added successfully".format(course_name))
     return raise_error(404, "Department not found")
 
@@ -55,10 +55,10 @@ def update_course(course_id):
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     course_name = details['course_name']
-    department_id = details['department_id']
+    department_name = details['department_name']
     if CoursesModel().get_course_name(course_name):
         return raise_error(400, "{} already exists".format(course_name))
-    response = CoursesModel().edit_course(course_name, department_id, course_id)
+    response = CoursesModel().edit_course(course_name, department_name, course_id)
     if response:
         return Serializer.serialize(response, 200, 'Course updated successfully')
     return raise_error(404, "Course not found")

@@ -21,15 +21,15 @@ def register_subjects():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    user_id = details['user_id']
-    unit_id = details['unit_id']
-    if UsersModel().get_user_id(user_id):
-        if UnitsModel().get_unit_by_id(unit_id):
-            response = SubjectsModel(user_id, unit_id).save()
+    admission_no = details['admission_no']
+    unit_name = details['unit_name']
+    if UsersModel().get_user_by_admission(admission_no):
+        if UnitsModel().get_unit_by_name(unit_name):
+            response = SubjectsModel(admission_no, unit_name).save()
             if "error" in response:
                 return raise_error(400, "User does not exist or your are trying to enter marks twice")
-            return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_id))
-        return raise_error(404, "Unit {} not found".format(unit_id))
+            return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_name))
+        return raise_error(404, "Unit {} not found".format(unit_name))
 
 
 @subjects_v1.route('/subjects', methods=['GET'])
@@ -41,11 +41,11 @@ def get_subjects():
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
 
 
-@subjects_v1.route('/subjects/<int:user_id>', methods=['GET'])
+@subjects_v1.route('/subjects/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_subjects_for_specific_user_by_id(user_id):
-    """Fetch all subjects for a specific user by id."""
-    response = SubjectsModel().get_subjects_for_specific_user_by_id(user_id)
+def get_subjects_for_specific_user_by_admission(admission_no):
+    """Fetch all subjects for a specific user by admission."""
+    response = SubjectsModel().get_subjects_for_specific_user_by_admission(admission_no)
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
 
 

@@ -9,9 +9,6 @@ class TestSubjects(BaseTest):
 
     def test_add_subjects(self):
         """Test that a student can register for a subject."""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -20,14 +17,11 @@ class TestSubjects(BaseTest):
             headers=self.get_token())
         result = json.loads(response3.data.decode())
         self.assertEqual(result['message'],
-                         'You have successfully registered 1')
+                         'You have successfully registered Calculus 1')
         assert response3.status_code == 201
 
     def test_add_subjects_keys(self):
         """Test that a student cannot register for a subject with an invalid key."""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -35,26 +29,20 @@ class TestSubjects(BaseTest):
             '/api/v1/subjects', data=json.dumps(new_subject_keys), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response3.data.decode())
-        self.assertEqual(result['message'], 'Invalid user_id key')
+        self.assertEqual(result['message'], 'Invalid admission_no key')
         assert response3.status_code == 400
 
     def test_add_subjects_for_unexisting_unit(self):
         """Test that an existing user cannot register for a non existing unit."""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Unit 1 not found')
+        self.assertEqual(result['message'], 'Unit Calculus 1 not found')
         assert response2.status_code == 404
 
     def test_add_register_for_existing_subject(self):
         """Test that a student cannot register for a subject twice."""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -71,9 +59,6 @@ class TestSubjects(BaseTest):
 
     def test_get_subjects(self):
         """Test that an admin can fetch all subjects."""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -88,11 +73,8 @@ class TestSubjects(BaseTest):
                          'Subjects successfull retrieved')
         assert response4.status_code == 200
 
-    def test_get_subjects_by_id(self):
+    def test_get_subjects_by_admission(self):
         """Test that a student can fetch all subjects that they have registered for."""
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -100,7 +82,7 @@ class TestSubjects(BaseTest):
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
         response4 = self.client.get(
-            '/api/v1/subjects/1', content_type='application/json',
+            '/api/v1/subjects/NJCF1001', content_type='application/json',
             headers=self.get_token())
         result = json.loads(response4.data.decode())
         self.assertEqual(result['message'],
