@@ -11,13 +11,13 @@ class LibraryModel(Database):
 
     def __init__(
             self,
-            user_id=None,
+            admission_no=None,
             title=None,
             author=None,
             book_no=None,
             date=None):
         super().__init__()
-        self.user_id = user_id
+        self.admission_no = admission_no
         self.title = title
         self.author = author
         self.book_no = book_no
@@ -30,7 +30,7 @@ class LibraryModel(Database):
                 ''' INSERT INTO library(student, title, author, book_no, date)
                 VALUES('{}','{}','{}','{}','{}')
                 RETURNING student, title, author, book_no, date'''
-                .format(self.user_id, self.title, self.author, self.book_no, self.date))
+                .format(self.admission_no, self.title, self.author, self.book_no, self.date))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()
@@ -40,21 +40,21 @@ class LibraryModel(Database):
 
     def get_all_books(self):
         """Fetch all books."""
-        self.curr.execute(''' 
-                          SELECT users.admission_no, title, author, book_no FROM library
-                          INNER JOIN users ON library.student = users.user_id
+        self.curr.execute(''' SELECT u.admission_no, u.firstname, u.lastname, u.surname,
+                          l.title, l.author, l.book_no FROM library AS l
+                          INNER JOIN users AS u ON l.student = u.admission_no
                           ''')
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
         return response
 
-    def get_books_by_user_id(self, user_id):
-        """Get a book with specific user id."""
-        self.curr.execute(""" 
-                          SELECT users.admission_no FROM library
-                          INNER JOIN users ON library.student = users.user_id 
-                          WHERE user_id={}""".format(user_id))
+    def get_books_by_user_admission(self, admission_no):
+        """Get a book with specific user admission."""
+        self.curr.execute(""" SELECT u.admission_no, u.firstname, u.lastname, u.surname,
+                          l.title, l.author, l.book_no FROM library AS l
+                          INNER JOIN users AS u ON l.student = u.admission_no
+                          WHERE admission_no=%s""", (admission_no,))
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()

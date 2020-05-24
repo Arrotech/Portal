@@ -21,13 +21,13 @@ def add_fees():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    user_id = details['user_id']
+    admission_no = details['admission_no']
     transaction_type = details['transaction_type']
     transaction_no = details['transaction_no']
     description = details['description']
     amount = details['amount']
-    if UsersModel().get_user_id(user_id):
-        response = FeesModels(user_id,
+    if UsersModel().get_user_by_admission(admission_no):
+        response = FeesModels(admission_no,
                               transaction_type,
                               transaction_no,
                               description,
@@ -46,11 +46,11 @@ def get_fees():
     return Serializer.serialize(response, 200, "Fees retrieved successfully")
 
 
-@fees_v1.route('/fees/<int:user_id>', methods=['GET'])
+@fees_v1.route('/fees/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_fees_for_one_student(user_id):
-    """The students can view their fees by id."""
-    response = FeesModels().get_fee_by_user_id(user_id)
+def get_fees_for_one_student_by_admission(admission_no):
+    """The students can view their fees by admission."""
+    response = FeesModels().get_fee_by_user_admission(admission_no)
     if response:
         return Serializer.serialize(response, 200, "Fees retrieved successfully")
     return raise_error(404, "Student not found")

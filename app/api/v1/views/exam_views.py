@@ -19,17 +19,17 @@ def add_exam():
     details = request.get_json()
     semester = details['semester']
     year = details['year']
-    user_id = details['user_id']
-    unit_id = details['unit_id']
+    admission_no = details['admission_no']
+    unit_name = details['unit_name']
     marks = details['marks']
-    if UsersModel().get_user_id(user_id):
-        if UnitsModel().get_unit_by_id(unit_id):
-            response = ExamsModel(semester, year, user_id,
-                                  unit_id, marks).save()
+    if UsersModel().get_user_by_admission(admission_no):
+        if UnitsModel().get_unit_by_name(unit_name):
+            response = ExamsModel(semester, year, admission_no,
+                                  unit_name, marks).save()
             if "error" in response:
                 return raise_error(400, "User does not exist or your are trying to enter marks twice")
-            return Serializer.serialize(response, 201, "You have successfully added {}".format(marks))
-        return raise_error(404, "Unit {} not found".format(unit_id))
+            return Serializer.serialize(response, 201, "Marks added successfully")
+        return raise_error(404, "Unit {} not found".format(unit_name))
 
 
 @exams_v1.route('/exams', methods=['GET'])
@@ -41,9 +41,9 @@ def get_exams():
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
 
-@exams_v1.route('/exams/<string:year>/<int:user_id>', methods=['GET'])
+@exams_v1.route('/exams/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_exams_for_a_student(year, user_id):
-    """Fetch all exams for a specific student in a specific year."""
-    response = ExamsModel().get_exams_for_a_student(year, user_id)
+def get_exams_for_a_student(admission_no):
+    """Fetch all exams for a specific student."""
+    response = ExamsModel().get_exams_for_a_student_by_admission(admission_no)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")

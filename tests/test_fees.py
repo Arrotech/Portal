@@ -9,7 +9,7 @@ class TestFees(BaseTest):
 
     def test_add_fees(self):
         """Test that the add fees endpoint works."""
-        response1 = self.client.post(
+        response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response2 = self.client.post(
@@ -21,14 +21,14 @@ class TestFees(BaseTest):
 
     def test_add_fees_keys(self):
         """Test that the bursar cannot add fees with invalid json keys."""
-        response1 = self.client.post(
+        response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/fees', data=json.dumps(add_fees_keys), content_type='application/json',
             headers=self.get_bursar_token())
         result = json.loads(response2.data.decode())
-        self.assertEqual(result['message'], 'Invalid user_id key')
+        self.assertEqual(result['message'], 'Invalid admission_no key')
         assert response2.status_code == 400
 
     def test_add_fees_for_unexisting_student(self):
@@ -63,7 +63,7 @@ class TestFees(BaseTest):
             '/api/v1/fees', data=json.dumps(add_fees), content_type='application/json',
             headers=self.get_bursar_token())
         response2 = self.client.get(
-            '/api/v1/fees/1', content_type='application/json', headers=self.get_token())
+            '/api/v1/fees/NJCF1001', content_type='application/json', headers=self.get_token())
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], "Fees retrieved successfully")
         assert response2.status_code == 200
@@ -71,7 +71,7 @@ class TestFees(BaseTest):
     def test_get_fees_for_non_existing_student(self):
         """Test getting fees for a non existing student."""
         response1 = self.client.get(
-            '/api/v1/fees/3', content_type='application/json', headers=self.get_token())
+            '/api/v1/fees/NJCF1012', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], 'Student not found')
         assert response1.status_code == 404

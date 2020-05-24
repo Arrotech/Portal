@@ -21,12 +21,12 @@ def add_book():
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
-    user_id = details['user_id']
+    admission_no = details['admission_no']
     title = details['title']
     author = details['author']
     book_no = details['book_no']
-    if UsersModel().get_user_id(user_id):
-        response = LibraryModel(user_id,
+    if UsersModel().get_user_by_admission(admission_no):
+        response = LibraryModel(admission_no,
                                 title,
                                 author,
                                 book_no).save()
@@ -37,17 +37,18 @@ def add_book():
 
 @books_v1.route('/books', methods=['GET'])
 @jwt_required
+@admin_required
 def get_books():
     """Fetch all books."""
     response = LibraryModel().get_all_books()
     return Serializer.serialize(response, 200, "Books retrieved successfully")
 
 
-@books_v1.route('/books/<int:user_id>', methods=['GET'])
+@books_v1.route('/books/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_books_for_one_student(user_id):
-    """Fetch books for a single student."""
-    response = LibraryModel().get_books_by_user_id(user_id)
+def get_books_for_one_student_by_admission(admission_no):
+    """Fetch books for a single student by admission."""
+    response = LibraryModel().get_books_by_user_admission(admission_no)
     if response:
         return Serializer.serialize(response, 200, "Books retrieved successfully")
     return raise_error(404, "Student not found")

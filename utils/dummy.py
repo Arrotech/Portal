@@ -583,32 +583,32 @@ update_existing_unit_code1 = {
 new_entry = {
     "semester": "1",
     "year": "2014",
-    "user_id": "1",
-    "unit_id": "1",
+    "admission_no": "NJCF1001",
+    "unit_name": "Calculus 1",
     "marks": "80"
 }
 
 invalid_exam_key = {
     "semester": "1",
     "year": "2014",
-    "userid": "1",
-    "unit_id": "1",
+    "admissionno": "NJCF1001",
+    "unit_name": "Calculus 1",
     "marks": "80"
 }
 
 invalid_unit_id = {
     "semester": "1",
     "year": "2014",
-    "user_id": "1",
-    "unit_id": "2",
+    "admission_no": "NJCF1001",
+    "unit_name": "Calculus 111",
     "marks": "80"
 }
 
 invalid_user_id = {
     "semester": "1",
     "year": "2014",
-    "user_id": "3",
-    "unit_id": "1",
+    "admission_no": "NJCF1012",
+    "unit_name": "Calculus 1",
     "marks": "80"
 }
 
@@ -616,31 +616,31 @@ invalid_user_id = {
 
 
 new_subject = {
-    "user_id": "1",
-    "unit_id": "1"
+    "admission_no": "NJCF1001",
+    "unit_name": "Calculus 1"
 }
 
 new_subject_keys = {
-    "userid": "1",
-    "unit_id": "1"
+    "admission": "NJCF1001",
+    "unit_name": "Calculus 1"
 }
 
 user_does_not_exist = {
-    "user_id": "2",
-    "unit_id": "2"
+    "admission_no": "NJCF1020",
+    "unit_name": "Calculus III"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Books Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_book = {
-    "user_id": "1",
+    "admission_no": "NJCF4001",
     "title": "Chemistry 1",
     "author": "Einstein",
     "book_no": "FDHGD2356/2019"
 }
 
 add_book_keys = {
-    "userid": "1",
+    "admissionno": "NJCF4001",
     "title": "Chemistry 1",
     "author": "Einstein",
     "book_no": "FDHGD2356/2019"
@@ -661,7 +661,7 @@ edit_books_keys = {
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_fees = {
-    "user_id": "1",
+    "admission_no": "NJCF1001",
     "transaction_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",
@@ -669,7 +669,7 @@ add_fees = {
 }
 
 add_fees_keys = {
-    "userid": "1",
+    "admissionno": "NJCF1001",
     "transaction_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",
@@ -744,89 +744,89 @@ update_department_name_exists = {
 
 new_course = {
     "course_name": "maths and computer science",
-    "department_id": "1"
+    "department_name": "mathematics"
 }
 
 add_course_keys = {
     "coursename": "maths and computer science",
-    "department_id": "1"
+    "department_name": "mathematics"
 }
 
 add_non_exisitng_department = {
     "course_name": "computer science",
-    "department_id": "2"
+    "department_name": "zoology"
 }
 
 course_name_exists = {
     "course_name": "maths and computer science",
-    "department_id": "2"
+    "department_name": "mathematics"
 }
 
 update_course = {
-    "course_name": "chemistry",
-    "department_id": "1"
+    "course_name": "pure maths",
+    "department_name": "mathematics"
 }
 
 update_course_keys = {
-    "courseame": "chemistry",
-    "department_id": "1"
+    "courseame": "pure maths",
+    "department_name": "mathematics"
 }
 
 update_course_name_exists = {
     "course_name": "maths and computer science",
-    "department_id": "1"
+    "department_name": "mathematics"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@ APPLY COURSE @@@@@@@@@@@@@@@@@@@@@@
 
 apply_course = {
     "admission_no": "NJCF1001",
-    "department_id": "1",
+    "department_name": "mathematics",
     "course_name": "maths and computer science"
 }
 
 apply_course_keys = {
     "admissionno": "NJCF1001",
-    "department_id": "1",
+    "department_name": "mathematics",
     "course_name": "maths and computer science"
 }
 
 apply_course_user_not_found = {
     "admission_no": "NJCF1010",
-    "department_id": "1",
+    "department_name": "mathematics",
     "course_name": "maths and computer science"
 }
 
 apply_course_department_not_found = {
     "admission_no": "NJCF1001",
-    "department_id": "2",
+    "department_name": "botany",
     "course_name": "maths and computer science"
 }
 
 apply_course_not_found = {
     "admission_no": "NJCF1001",
-    "department_id": "1",
+    "department_name": "mathematics",
     "course_name": "ICT"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BOOk HOSTEL @@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 book_hostel = {
-    "user_id": "1",
-    "hostel_id": "1"
+    "admission_no": "NJCF1001",
+    "hostel_name": "nyati"
 }
 
 book_hostel_keys = {
-    "userid": "1",
-    "hostel_id": "1"
+    "admission": "NJCF1001",
+    "hostel_name": "nyati"
 }
 
 book_hostel_user_not_found = {
-    "user_id": "3",
-    "hostel_id": "1"
+    "admission_no": "NJCF4012",
+    "hostel_name": "nyati"
 }
 
 book_hostel_not_found = {
-    "user_id": "1",
-    "hostel_id": "3"
+    "admission_no": "NJCF1001",
+    "hostel_name": "ndovu"
 }

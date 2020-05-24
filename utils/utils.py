@@ -25,7 +25,7 @@ def check_update_user_keys(request):
 
 
 def check_apply_course_keys(request):
-    res_keys = ['admission_no', 'department_id', 'course_name']
+    res_keys = ['admission_no', 'department_name', 'course_name']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -43,7 +43,7 @@ def check_department_keys(request):
 
 
 def check_courses_keys(request):
-    res_keys = ['course_name', 'department_id']
+    res_keys = ['course_name', 'department_name']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -119,7 +119,7 @@ def check_login_keys(request):
 
 
 def check_exams_keys(request):
-    res_keys = ['semester', 'year', 'user_id', 'unit_id', 'marks']
+    res_keys = ['semester', 'year', 'admission_no', 'unit_name', 'marks']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -128,7 +128,7 @@ def check_exams_keys(request):
 
 
 def check_fees_keys(request):
-    res_keys = ['user_id', 'transaction_type',
+    res_keys = ['admission_no', 'transaction_type',
                 'transaction_no', 'description', 'amount']
     errors = []
     for key in res_keys:
@@ -148,7 +148,7 @@ def check_edit_fees_keys(request):
 
 
 def check_library_keys(request):
-    res_keys = ['user_id', 'title', 'author',
+    res_keys = ['admission_no', 'title', 'author',
                 'book_no']
     errors = []
     for key in res_keys:
@@ -177,7 +177,7 @@ def check_hostels_keys(request):
 
 
 def check_accommdation_keys(request):
-    res_keys = ['user_id', 'hostel_id']
+    res_keys = ['admission_no', 'hostel_name']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -186,7 +186,7 @@ def check_accommdation_keys(request):
 
 
 def check_subjects_keys(request):
-    res_keys = ['user_id', 'unit_id']
+    res_keys = ['admission_no', 'unit_name']
     errors = []
     for key in res_keys:
         if not key in request.json:
