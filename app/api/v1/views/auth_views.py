@@ -250,9 +250,9 @@ def promote(admission_no):
     }), 404)
 
 
-@auth_v1.route('/users/user_info/<int:user_id>', methods=['PUT'])
+@auth_v1.route('/users/user_info/<string:admission_no>', methods=['PUT'])
 @jwt_required
-def update_user_info(user_id):
+def update_user_info(admission_no):
     """Update user information."""
     errors = check_update_user_keys(request)
     if errors:
@@ -261,7 +261,7 @@ def update_user_info(user_id):
     firstname = details['firstname']
     lastname = details['lastname']
     surname = details['surname']
-    response = UsersModel().update_user_info(firstname, lastname, surname, user_id)
+    response = UsersModel().update_user_info(firstname, lastname, surname, admission_no)
     if response:
         return Serializer.serialize(response, 200, "User updated successfully")
     return Serializer.serialize(response, 404, "User not found")

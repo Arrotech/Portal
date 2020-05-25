@@ -303,7 +303,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response2 = self.client.put(
-            '/api/v1/auth/users/user_info/1', data=json.dumps(update_user_info), content_type='application/json',
+            '/api/v1/auth/users/user_info/NJCF4001', data=json.dumps(update_user_info), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'User updated successfully')
