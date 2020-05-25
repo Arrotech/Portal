@@ -36,6 +36,7 @@ fetch('https://njc-school-portal.herokuapp.com/api/v1/auth/users/' + admission, 
         let status = data['status'];
         let message = data['message'];
         let user = data.user;
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         console.log(data);
         if (status === "200") {
             var temp = "";

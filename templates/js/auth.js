@@ -32,9 +32,11 @@ document.getElementById('postLogin').addEventListener('submit', postLogin);
                     localStorage.setItem('user', data.user);
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('admission_no', data.user.admission_no);
+                    localStorage.setItem('user_id', data.user.user_id);
                     localStorage.setItem('email', data.user.email);
                     onSuccess('Signed in successfully!');
                     window.location.replace('user.html');
+                    console.log(data.user.admission_no)
                 }else{
                     raiseError(message);
                 }

@@ -49,10 +49,11 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(user, default=str)
-    
+
     def get_user_by_admission(self, admission_no):
         """Get user by admission."""
-        self.curr.execute("""SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
+        self.curr.execute(
+            """SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -88,10 +89,10 @@ class UsersModel(Database):
         self.curr.close()
         return json.dumps(user, default=str)
 
-    def update_user_info(self, user_id, firstname, lastname, surname):
+    def update_user_info(self, admission_no, firstname, lastname, surname):
         """Update user information by id."""
         self.curr.execute(
-            """UPDATE users SET firstname='{}', lastname='{}', surname='{}' WHERE user_id={} RETURNING firstname, lastname, surname""".format(user_id, firstname, lastname, surname))
+            """UPDATE users SET firstname='{}', lastname='{}', surname='{}' WHERE admission_no='{}' RETURNING firstname, lastname, surname""".format(admission_no, firstname, lastname, surname))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -105,7 +106,7 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return json.dumps(response, default=str)
-    
+
     def confirm_email(self, user_id, is_confirmed):
         """Confirm user email."""
         self.curr.execute(
