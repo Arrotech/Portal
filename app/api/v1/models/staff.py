@@ -7,7 +7,7 @@ from datetime import datetime
 class StaffModel(Database):
     """Add a new user and retrieve User(s) by Id, Username or Email."""
 
-    def __init__(self, firstname=None, lastname=None, form=None, stream=None, username=None, email=None, password=None, role='teacher', date=None):
+    def __init__(self, firstname=None, lastname=None, form=None, stream=None, username=None, email=None, password=None, role='teacher', created_on=None):
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
@@ -18,15 +18,15 @@ class StaffModel(Database):
         if password:
             self.password = generate_password_hash(password)
         self.role = role
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Save information of the new user."""
         self.curr.execute(
-            ''' INSERT INTO staff(firstname, lastname, form, stream, username, email, password, role, date)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, form, stream, username, email, password, role, date'''
+            ''' INSERT INTO staff(firstname, lastname, form, stream, username, email, password, role, created_on)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, form, stream, username, email, password, role, created_on'''
             .format(self.firstname, self.lastname, self.form, self.stream, self.username, self.email, self.password, self.role,
-                    self.date))
+                    self.created_on))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

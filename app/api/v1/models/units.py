@@ -8,19 +8,19 @@ class UnitsModel(Database):
 
     """Initialization."""
 
-    def __init__(self, unit_name=None, unit_code=None, date=None):
+    def __init__(self, unit_name=None, unit_code=None, created_on=None):
         super().__init__()
         self.unit_name = unit_name
         self.unit_code = unit_code
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Add a new unit."""
         self.curr.execute(
-            ''' INSERT INTO units(unit_name, unit_code, date)\
+            ''' INSERT INTO units(unit_name, unit_code, created_on)\
             VALUES('{}','{}','{}')\
-            RETURNING unit_name, unit_code, date'''
-            .format(self.unit_name, self.unit_code, self.date))
+            RETURNING unit_name, unit_code, created_on'''
+            .format(self.unit_name, self.unit_code, self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

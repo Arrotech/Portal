@@ -15,22 +15,22 @@ class LibraryModel(Database):
             title=None,
             author=None,
             book_no=None,
-            date=None):
+            created_on=None):
         super().__init__()
         self.admission_no = admission_no
         self.title = title
         self.author = author
         self.book_no = book_no
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Add a new book."""
         try:
             self.curr.execute(
-                ''' INSERT INTO library(student, title, author, book_no, date)
+                ''' INSERT INTO library(student, title, author, book_no, created_on)
                 VALUES('{}','{}','{}','{}','{}')
-                RETURNING student, title, author, book_no, date'''
-                .format(self.admission_no, self.title, self.author, self.book_no, self.date))
+                RETURNING student, title, author, book_no, created_on'''
+                .format(self.admission_no, self.title, self.author, self.book_no, self.created_on))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()

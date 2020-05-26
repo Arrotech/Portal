@@ -34,7 +34,7 @@ class Database:
                 role varchar NOT NULL,
                 is_confirmed BOOLEAN DEFAULT False,
                 confirmed_on TIMESTAMP,
-                date TIMESTAMP
+                created_on TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS staff(
@@ -47,7 +47,7 @@ class Database:
                 email varchar NOT NULL,
                 password varchar NOT NULL,
                 role varchar NOT NULL,
-                date TIMESTAMP
+                created_on TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS accountants(
@@ -58,7 +58,7 @@ class Database:
                 email varchar NOT NULL,
                 password varchar NOT NULL,
                 role varchar NOT NULL,
-                date TIMESTAMP
+                created_on TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS departments(
@@ -91,14 +91,14 @@ class Database:
                 unit_id serial PRIMARY KEY,
                 unit_name varchar NOT NULL UNIQUE,
                 unit_code varchar NOT NULL,
-                date TIMESTAMP
+                created_on TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS subjects(
                 subject_id serial UNIQUE,
                 student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
                 unit varchar NOT NULL REFERENCES units (unit_name) ON DELETE CASCADE,                                                                                                                                 
-                date TIMESTAMP,
+                created_on TIMESTAMP,
                 PRIMARY KEY (student, unit)
             )
             """,
@@ -110,7 +110,7 @@ class Database:
                 student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
                 unit varchar NOT NULL REFERENCES units (unit_name) ON DELETE CASCADE,   
                 marks varchar NOT NULL,
-                date TIMESTAMP,
+                created_on TIMESTAMP,
                 PRIMARY KEY (student, unit)
             )""",
             """
@@ -121,7 +121,7 @@ class Database:
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
                 amount varchar NOT NULL,
-                date TIMESTAMP,
+                created_on TIMESTAMP,
                 PRIMARY KEY (student)
             )
             """,
@@ -132,7 +132,7 @@ class Database:
                 title varchar NOT NULL,
                 author varchar NOT NULL,
                 book_no varchar NOT NULL,
-                date TIMESTAMP,
+                created_on TIMESTAMP,
                 PRIMARY KEY (student)
             )""",
             """
@@ -142,7 +142,7 @@ class Database:
                 rooms varchar NOT NULL,
                 gender varchar NOT NULL,
                 hostel_location varchar NOT NULL,
-                date TIMESTAMP
+                created_on TIMESTAMP
             )""",
             """
             CREATE TABLE IF NOT EXISTS accommodation(

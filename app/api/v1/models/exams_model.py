@@ -8,23 +8,23 @@ from datetime import datetime
 class ExamsModel(Database):
     """Initiallization."""
 
-    def __init__(self, semester=None, year=None, admission_no=None, unit_name=None, marks=None, date=None):
+    def __init__(self, semester=None, year=None, admission_no=None, unit_name=None, marks=None, created_on=None):
         super().__init__()
         self.semester = semester
         self.year = year
         self.admission_no = admission_no
         self.unit_name = unit_name
         self.marks = marks
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Create a new exam entry."""
         try:
             self.curr.execute(
-                ''' INSERT INTO exams(semester, year, student, unit, marks, date)
+                ''' INSERT INTO exams(semester, year, student, unit, marks, created_on)
                 VALUES('{}','{}','{}','{}','{}','{}')
-                RETURNING semester, year, student, unit, marks, date'''
-                .format(self.semester, self.year, self.admission_no, self.unit_name, self.marks, self.date))
+                RETURNING semester, year, student, unit, marks, created_on'''
+                .format(self.semester, self.year, self.admission_no, self.unit_name, self.marks, self.created_on))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()

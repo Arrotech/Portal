@@ -8,20 +8,20 @@ from datetime import datetime
 class SubjectsModel(Database):
     """Initiallization."""
 
-    def __init__(self, admission_no=None, unit_name=None, date=None):
+    def __init__(self, admission_no=None, unit_name=None, created_on=None):
         super().__init__()
         self.admission_no = admission_no
         self.unit_name = unit_name
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Register a subject."""
         try:
             self.curr.execute(
-                ''' INSERT INTO subjects(student, unit, date)
+                ''' INSERT INTO subjects(student, unit, created_on)
                 VALUES('{}','{}','{}')
-                RETURNING student, unit, date'''
-                .format(self.admission_no, self.unit_name, self.date))
+                RETURNING student, unit, created_on'''
+                .format(self.admission_no, self.unit_name, self.created_on))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()
