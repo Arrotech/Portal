@@ -8,21 +8,21 @@ from datetime import datetime
 class HostelsModel(Database):
     """Initiallization."""
 
-    def __init__(self, hostel_name=None, rooms=None, gender=None, hostel_location=None, date=None):
+    def __init__(self, hostel_name=None, rooms=None, gender=None, hostel_location=None, created_on=None):
         super().__init__()
         self.hostel_name = hostel_name
         self.rooms = rooms
         self.gender = gender
         self.hostel_location = hostel_location
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Add a new hostel."""
         self.curr.execute(
-            ''' INSERT INTO hostels(hostel_name, rooms, gender, hostel_location, date)
+            ''' INSERT INTO hostels(hostel_name, rooms, gender, hostel_location, created_on)
             VALUES('{}','{}','{}','{}','{}')
-            RETURNING hostel_name, rooms, gender, hostel_location, date'''
-            .format(self.hostel_name, self.rooms, self.gender, self.hostel_location, self.date))
+            RETURNING hostel_name, rooms, gender, hostel_location, created_on'''
+            .format(self.hostel_name, self.rooms, self.gender, self.hostel_location, self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

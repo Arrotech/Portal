@@ -7,7 +7,7 @@ from datetime import datetime
 class UsersModel(Database):
     """Add a new user and retrieve User(s) by Id, Admission Number or Email."""
 
-    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, gender=None, email=None, password=None, current_year=None, role='student', is_confirmed=False, confirmed_on=None, date=None):
+    def __init__(self, firstname=None, lastname=None, surname=None, admission_no=None, gender=None, email=None, password=None, current_year=None, role='student', is_confirmed=False, confirmed_on=None, created_on=None):
         super().__init__()
         self.firstname = firstname
         self.lastname = lastname
@@ -21,15 +21,15 @@ class UsersModel(Database):
         self.role = role
         self.is_confirmed = is_confirmed
         self.confirmed_on = datetime.now()
-        self.date = datetime.now()
+        self.created_on = datetime.now()
 
     def save(self):
         """Save information of the new user."""
         self.curr.execute(
-            ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, current_year, role, is_confirmed,  date)\
-                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, current_year, role, is_confirmed, date'''
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, current_year, role, is_confirmed,  created_on)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, current_year, role, is_confirmed, created_on'''
             .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
-                    self.current_year, self.role, self.is_confirmed, self.date))
+                    self.current_year, self.role, self.is_confirmed, self.created_on))
         user = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
