@@ -37,7 +37,10 @@ apply_course_v1 = Blueprint('apply_course_v1', __name__,
 accommodation_v1 = Blueprint('accommodation_v1', __name__, 
                            template_folder='../../../templates', static_folder='../../../../static')
 
+checklist_v1 = Blueprint('checklist_v1', __name__, 
+                           template_folder='../../../templates', static_folder='../../../../static')
+
 
 from app.api.v1.views import exam_views, subjects_view, units, staff,\
      accountant, auth_views, library_views, fees_views, hostels,\
-     departments, courses, apply_course, accommodation
+     departments, courses, apply_course, accommodation, checklist

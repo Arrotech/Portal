@@ -59,6 +59,18 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel retrived successfully')
         assert response2.status_code == 200
+        
+    def test_get_hostel_by_name(self):
+        """Test that a user can fetch a hostel by name."""
+        response1 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/hostels/nyati', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Hostel retrived successfully')
+        assert response2.status_code == 200
 
     def test_get_non_existing_hostel_by_id(self):
         """Test that a user cannot fetch non existing hostel by id."""
@@ -71,6 +83,18 @@ class TestHostels(BaseTest):
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel not found')
         assert response2.status_code == 404
+        
+    def test_get_non_existing_hostel_by_name(self):
+        """Test that a user cannot fetch non existing hostel by name."""
+        response1 = self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/hostels/ndovu', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'], 'Hostel not found')
+        assert response2.status_code == 404
 
     def test_view_hostel_by_location(self):
         """Test that a user can view hostel(s) by location."""
@@ -78,7 +102,7 @@ class TestHostels(BaseTest):
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
             headers=self.get_admin_token())
         response2 = self.client.get(
-            '/api/v1/hostels/gate c', content_type='application/json',
+            '/api/v1/hostels/location/sunrise', content_type='application/json',
             headers=self.get_token())
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'], 'Hostel(s) retrived successfully')
