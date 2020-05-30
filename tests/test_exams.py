@@ -9,6 +9,9 @@ class TestExams(BaseTest):
 
     def test_add_exams(self):
         """Test that an admin can make a new exam entry."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -22,6 +25,9 @@ class TestExams(BaseTest):
 
     def test_add_exams_keys(self):
         """Test that an admin cannot make a new exam entry with an invalid json key."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -35,6 +41,9 @@ class TestExams(BaseTest):
 
     def test_add_exams_for_non_existing_unit(self):
         """Test that an admin cannot make a new exam entry for a non existing unit"""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -48,6 +57,9 @@ class TestExams(BaseTest):
 
     def test_add_exams_for_non_existing_user(self):
         """Test that an admin cannot make a new exam entry for a non existing user"""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -61,6 +73,9 @@ class TestExams(BaseTest):
 
     def test_get_exams(self):
         """Test that an admin can fetch all exams."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -77,6 +92,9 @@ class TestExams(BaseTest):
 
     def test_get_exams_for_a_student_by_admission(self):
         """Test that a student can fetch all exams."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())

@@ -1,6 +1,6 @@
 import json
 
-from flask import make_response, jsonify, request, Blueprint
+from flask import request
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 
@@ -58,4 +58,4 @@ def delete_subject(subject_id):
     if response:
         SubjectsModel().delete(subject_id)
         return Serializer.serialize(response, 200, "Subject deleted successfully")
-    return Serializer.serialize(response, 404, "Subject not found")
+    return raise_error(404, "Subject not found")

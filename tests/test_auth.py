@@ -31,30 +31,8 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'Invalid Email Format!')
         assert response1.status_code == 400
 
-    # def test_reset_user_password(self):
-    #     """Test that a user can reset their password."""
-    #     response = self.client.post(
-    #         '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
-    #         headers=self.get_token())
-    #     response1 = self.client.post(
-    #         '/api/v1/auth/reset', data=json.dumps(reset_password), content_type='application/json',
-    #         headers=self.get_token())
-    #     result = json.loads(response1.data.decode())
-    #     self.assertEqual(result['message'], 'Password reset successful')
-    #     assert response1.status_code == 200
-
-    # def test_reset_user_password_for_non_existing_user(self):
-    #     """Test that a user cannot reset their password if they do not exist."""
-    #     response1 = self.client.post(
-    #         '/api/v1/auth/reset', data=json.dumps(reset_password), content_type='application/json',
-    #         headers=self.get_token())
-    #     result = json.loads(response1.data.decode())
-    #     self.assertEqual(result['message'], 'User not found')
-    #     assert response1.status_code == 404
-
     def test_promote_user(self):
         """Test promote user."""
-
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -66,8 +44,7 @@ class TestUsersAccount(BaseTest):
         assert response1.status_code == 200
 
     def test_promote_user_unexisting_user(self):
-        """Test promote unexisting user."""
-
+        """Test promote non existing user."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -79,8 +56,7 @@ class TestUsersAccount(BaseTest):
         assert response1.status_code == 404
 
     def test_login_with_wrong_password(self):
-        """Test the vote json keys."""
-
+        """Test login with wrong password."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -92,16 +68,14 @@ class TestUsersAccount(BaseTest):
         assert response1.status_code == 401
 
     def test_refresh_token(self):
-        """Test the vote json keys."""
-
+        """Test refresh token."""
         response = self.client.post(
             '/api/v1/auth/refresh', content_type='application/json',
             headers=self.get_refresh_token())
         assert response.status_code == 200
 
     def test_protected(self):
-        """Test fetching all offices that have been created."""
-
+        """Test protected route."""
         response = self.client.post(
             '/api/v1/auth/register', content_type='application/json',
             headers=self.get_token())
@@ -110,8 +84,7 @@ class TestUsersAccount(BaseTest):
         assert response1.status_code == 200
 
     def test_get_users(self):
-        """Test fetching all offices that have been created."""
-
+        """Test fetching all users."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -122,8 +95,7 @@ class TestUsersAccount(BaseTest):
         assert response1.status_code == 200
 
     def test_get_user_by_admission_no(self):
-        """Test getting a specific party by id."""
-
+        """Test getting a user by admission."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -133,21 +105,30 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'successfully retrieved')
         assert response1.status_code == 200
 
-    def test_get_user_not_found(self):
-        """Test getting a specific party by id."""
-
+    def test_get_user_by_id(self):
+        """Test get user by id."""
         response = self.client.post(
-            '/api/v1//auth/register', data=json.dumps(admin_account_test), content_type='application/json',
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response1 = self.client.get(
-            '/api/v1/auth/users/100', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/auth/users/1', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'User Not Found')
+        self.assertEqual(result['message'], 'successfully retrieved')
+        assert response1.status_code == 200
+
+    def test_get_non_existing_user_by_id(self):
+        """Test get non existing user by id."""
+        response = self.client.post(
+            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            headers=self.get_token())
+        response1 = self.client.get(
+            '/api/v1/auth/users/10', content_type='application/json', headers=self.get_token())
+        result = json.loads(response1.data.decode())
+        self.assertEqual(result['message'], 'User not found')
         assert response1.status_code == 404
 
     def test_create_account_keys(self):
-        """Test the vote json keys."""
-
+        """Test register user with invalid json keys."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(wrong_account_keys), content_type='application/json',
             headers=self.get_token())
@@ -156,8 +137,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_promote_user_keys(self):
-        """Test the promote user json keys."""
-
+        """Test the promote user with invalid json keys."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
@@ -169,8 +149,7 @@ class TestUsersAccount(BaseTest):
         assert response1.status_code == 400
 
     def test_password_length(self):
-        """Test the vote json keys."""
-
+        """Test password length."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(password_length), content_type='application/json',
             headers=self.get_token())
@@ -180,8 +159,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_email_exists(self):
-        """Test the vote json keys."""
-
+        """Test registering with existing email."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(email_already_exists), content_type='application/json',
             headers=self.get_token())
@@ -190,8 +168,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_Invalid_register_key(self):
-        """Test the vote json keys."""
-
+        """Test registering with invalid json keys."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(Invalid_register_key), content_type='application/json',
             headers=self.get_token())
@@ -200,8 +177,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_login(self):
-        """Test the vote json keys."""
-
+        """Test user login."""
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account1), content_type='application/json',
             headers=self.get_token())
@@ -213,8 +189,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 200
 
     def test_forgot_password(self):
-        """Test the vote json keys."""
-
+        """Test reset password email."""
         response1 = self.client.post(
             '/api/v1/auth/register', data=json.dumps(new_account1), content_type='application/json',
             headers=self.get_token())
@@ -225,22 +200,8 @@ class TestUsersAccount(BaseTest):
                          'Check Your Email for the Password Reset Link')
         assert response.status_code == 200
 
-    def test_wrong_forgot_password_email(self):
-        """Test the vote json keys."""
-
-        response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account1), content_type='application/json',
-            headers=self.get_token())
-        response = self.client.post(
-            '/api/v1/auth/forgot', data=json.dumps(wrong_student_email_token), content_type='application/json')
-        result = json.loads(response.data.decode())
-        self.assertEqual(result['message'],
-                         'Check Your Email for the Password Reset Link')
-        assert response.status_code == 200
-
     def test_invalid_email_login(self):
-        """Test the vote json keys."""
-
+        """Test login with non existing email."""
         response = self.client.post(
             '/api/v1/auth/login', data=json.dumps(new_login), content_type='application/json',
             headers=self.get_token())
@@ -249,8 +210,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 401
 
     def test_wrong_firstname(self):
-        """Test the vote json keys."""
-
+        """Test registering with wrong firstname format."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(wrong_firstname), content_type='application/json',
             headers=self.get_token())
@@ -259,8 +219,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_wrong_lastname(self):
-        """Test the vote json keys."""
-
+        """Test registering with wrong lastname format."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(wrong_lastname), content_type='application/json',
             headers=self.get_token())
@@ -269,8 +228,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_wrong_surname(self):
-        """Test the vote json keys."""
-
+        """Test registering with wrong surname format."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(wrong_surname), content_type='application/json',
             headers=self.get_token())
@@ -279,8 +237,7 @@ class TestUsersAccount(BaseTest):
         assert response.status_code == 400
 
     def test_wrong_email(self):
-        """Test the vote json keys."""
-
+        """Test registering with wrong email format."""
         response = self.client.post(
             '/api/v1/auth/register', data=json.dumps(wrong_email), content_type='application/json',
             headers=self.get_token())
@@ -290,7 +247,6 @@ class TestUsersAccount(BaseTest):
 
     def test_unexisting_register_ur(self):
         """Test when unexisting url is provided."""
-
         response = self.client.get(
             '/api/v2/party')
         result = json.loads(response.data.decode())

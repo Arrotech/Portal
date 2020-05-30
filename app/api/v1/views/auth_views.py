@@ -209,6 +209,20 @@ def get_users():
     }), 200)
 
 
+@auth_v1.route('/users/<int:user_id>', methods=['GET'])
+@jwt_required
+def get_user_by_id(user_id):
+    """Fetch user by id."""
+    user = json.loads(UsersModel().get_user_by_id(user_id))
+    if user:
+        return make_response(jsonify({
+            "status": "200",
+            "message": "successfully retrieved",
+            "user": user
+        }), 200)
+    return raise_error(404, "User not found")
+
+
 @auth_v1.route('/users/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_user(admission_no):
@@ -261,7 +275,8 @@ def update_user_info(admission_no):
     firstname = details['firstname']
     lastname = details['lastname']
     surname = details['surname']
-    response = UsersModel().update_user_info(firstname, lastname, surname, admission_no)
+    response = UsersModel().update_user_info(
+        firstname, lastname, surname, admission_no)
     if response:
         return Serializer.serialize(response, 200, "User updated successfully")
     return Serializer.serialize(response, 404, "User not found")
