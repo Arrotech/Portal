@@ -868,3 +868,10 @@ fill_checklist_hostel_not_found = {
     "hostel_name": "ndovu"
 }
 
+fill_checklist_user_not_found = {
+    "admission_no": "ajgkag",
+    "department_name": "mathematics",
+    "course_name": "maths and computer science",
+    "hostel_name": "nyati"
+}
+

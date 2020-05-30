@@ -15,16 +15,16 @@ def add_unit():
     """Add a new unit."""
     errors = check_units_keys(request)
     if errors:
-        return Serializer.serialize(errors, 400, 'Invalid {} key'.format(', '.join(errors)))
+        return raise_error(400, 'Invalid {} key'.format(', '.join(errors)))
     details = request.get_json()
     unit_name = details['unit_name']
     unit_code = details['unit_code']
     unitName = UnitsModel().get_unit_by_name(unit_name)
     if unitName:
-        return Serializer.serialize(unitName, 400, '{} already exists'.format(unit_name))
+        return raise_error(400, '{} already exists'.format(unit_name))
     unitCode = UnitsModel().get_unit_by_code(unit_code)
     if unitCode:
-        return Serializer.serialize(unitCode, 400, '{} already exists'.format(unit_code))
+        return raise_error(400, '{} already exists'.format(unit_code))
     response = UnitsModel(unit_name, unit_code).save()
     return Serializer.serialize(response, 201, 'Unit added successfully')
 
@@ -46,7 +46,7 @@ def get_unit_by_id(unit_id):
     response = UnitsModel().get_unit_by_id(unit_id)
     if response:
         return Serializer.serialize(response, 200, "Unit successfully retrieved")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")
 
 
 @units_blueprint_v1.route('/units/unit_name/<string:unit_name>', methods=['GET'])
@@ -57,7 +57,7 @@ def get_unit_by_name(unit_name):
     response = UnitsModel().get_unit_by_name(unit_name)
     if response:
         return Serializer.serialize(response, 200, "Unit successfully retrieved")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")
 
 
 @units_blueprint_v1.route('/units/unit_code/<string:unit_code>', methods=['GET'])
@@ -68,7 +68,7 @@ def get_unit_by_code(unit_code):
     response = UnitsModel().get_unit_by_code(unit_code)
     if response:
         return Serializer.serialize(response, 200, "Unit successfully retrieved")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")
 
 
 @units_blueprint_v1.route('/units/<int:unit_id>', methods=['DELETE'])
@@ -80,7 +80,7 @@ def delete_unit(unit_id):
     if response:
         UnitsModel().delete(unit_id)
         return Serializer.serialize(response, 200, "Unit deleted successfully")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")
 
 
 @units_blueprint_v1.route('/units/<int:unit_id>', methods=['PUT'])
@@ -96,14 +96,14 @@ def edit_unit(unit_id):
     unit_code = details['unit_code']
     unitName = UnitsModel().get_unit_by_name(unit_name)
     if unitName:
-        return Serializer.serialize(unitName, 400, '{} already exists'.format(unit_name))
+        return raise_error(400, '{} already exists'.format(unit_name))
     unitCode = UnitsModel().get_unit_by_code(unit_code)
     if unitCode:
-        return Serializer.serialize(unitCode, 400, '{} already exists'.format(unit_code))
+        return raise_error(400, '{} already exists'.format(unit_code))
     response = UnitsModel().edit(unit_name, unit_code, unit_id)
     if response:
         return Serializer.serialize(response, 200, "Unit updated successfully")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")
 
 
 @units_blueprint_v1.route('/units/unit_name/<int:unit_id>', methods=['PUT'])
@@ -113,16 +113,16 @@ def edit_unit_name(unit_id):
     """Update a unit name."""
     errors = check_unit_name_key(request)
     if errors:
-        return Serializer.serialize(errors, 400, 'Invalid {} key'.format(', '.join(errors)))
+        return raise_error(400, 'Invalid {} key'.format(', '.join(errors)))
     details = request.get_json()
     unit_name = details['unit_name']
     unitName = UnitsModel().get_unit_by_name(unit_name)
     if unitName:
-        return Serializer.serialize(unitName, 400, '{} already exists'.format(unit_name))
+        return raise_error(400, '{} already exists'.format(unit_name))
     response = UnitsModel().edit_name(unit_name, unit_id)
     if response:
         return Serializer.serialize(response, 200, "Unit name updated successfully")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")
 
 
 @units_blueprint_v1.route('/units/unit_code/<int:unit_id>', methods=['PUT'])
@@ -132,13 +132,13 @@ def edit_unit_code(unit_id):
     """Update a unit code."""
     errors = check_unit_code_key(request)
     if errors:
-        return Serializer.serialize(errors, 400, 'Invalid {} key'.format(', '.join(errors)))
+        return raise_error(400, 'Invalid {} key'.format(', '.join(errors)))
     details = request.get_json()
     unit_code = details['unit_code']
     unitCode = UnitsModel().get_unit_by_code(unit_code)
     if unitCode:
-        return Serializer.serialize(unitCode, 400, '{} already exists'.format(unit_code))
+        return raise_error(400, '{} already exists'.format(unit_code))
     response = UnitsModel().edit_code(unit_code, unit_id)
     if response:
         return Serializer.serialize(response, 200, "Unit code updated successfully")
-    return Serializer.serialize(response, 404, "Unit not found")
+    return raise_error(404, "Unit not found")

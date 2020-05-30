@@ -24,7 +24,7 @@ def apply_course():
     admission_no = details['admission_no']
     department_name = details['department_name']
     course_name = details['course_name']
-    if UsersModel().get_user_by_admission(admission_no):
+    if UsersModel().get_admission_no(admission_no):
         if DepartmentsModel().get_department_name(department_name):
             if CoursesModel().get_course_name(course_name):
                 response = ApplyCoursesModel(

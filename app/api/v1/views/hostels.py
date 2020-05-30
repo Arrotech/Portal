@@ -15,7 +15,7 @@ def add_hostel():
     """Add a new hostel."""
     errors = check_hostels_keys(request)
     if errors:
-        return Serializer.serialize(errors, 400, 'Invalid {} key'.format(', '.join(errors)))
+        return raise_error(400, 'Invalid {} key'.format(', '.join(errors)))
     details = request.get_json()
     hostel_name = details['hostel_name']
     rooms = details['rooms']
@@ -72,4 +72,4 @@ def delete_hostel(hostel_id):
     if response:
         HostelsModel().delete(hostel_id)
         return Serializer.serialize(response, 200, "Hostel deleted successfully")
-    return Serializer.serialize(response, 404, "Hostel not found")
+    return raise_error(404, "Hostel not found")

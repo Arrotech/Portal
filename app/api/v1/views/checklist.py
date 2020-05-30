@@ -24,13 +24,16 @@ def fill_checklist():
     department_name = details['department_name']
     course_name = details['course_name']
     hostel_name = details['hostel_name']
-    if UsersModel().get_admission_no(admission_no):
-        if DepartmentsModel().get_department_name(department_name):
-            if CoursesModel().get_course_name(course_name):
-                if HostelsModel().get_hostel_by_name(hostel_name):
+    user = json.loads(UsersModel().get_admission_no(admission_no))
+    if user:
+        department = user['department']
+        course = user['course']
+        hostel = user['hostel']
+        if DepartmentsModel().get_department_name(department_name=department):
+            if CoursesModel().get_course_name(course_name=course):
+                if HostelsModel().get_hostel_by_name(hostel_name=hostel):
                     response = ChecklistModel(admission_no, department_name, course_name, hostel_name).save()
+                    if "error" in response:
+                        return raise_error(500, "Check your input")
                     return Serializer.serialize(response, 201, "Checklist filled successfully")
-                return raise_error(404, "Hostel not found")
-            return raise_error(404, "Course not found")
-        return raise_error(404, "Department not found")
     return raise_error(404, "User not found")

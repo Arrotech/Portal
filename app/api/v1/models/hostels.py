@@ -28,15 +28,6 @@ class HostelsModel(Database):
         self.curr.close()
         return response
 
-    def get_hostel_by_name(self, hostel_name):
-        """Fetch hostel by name."""
-        self.curr.execute(
-            """ SELECT * FROM hostels WHERE hostel_name=%s""", (hostel_name,),)
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return response
-
     def get_all_hostels(self):
         """Fetch all hostels."""
         self.curr.execute(

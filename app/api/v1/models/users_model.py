@@ -41,7 +41,7 @@ class UsersModel(Database):
         users = Database().fetch(query)
         return json.dumps(users, default=str)
 
-    def get_user_id(self, user_id):
+    def get_user_by_id(self, user_id):
         """Request a single user with specific id."""
         self.curr.execute(
             """ SELECT * FROM users WHERE user_id={}""".format(user_id))
@@ -63,9 +63,10 @@ class UsersModel(Database):
         """Request a single user with specific Admission Number."""
         self.curr.execute(
             """ SELECT u.firstname, u.lastname, u.surname, u.admission_no,
-            u.gender, u.current_year, u.role, u.email, a.course, a.department, ac.hostel FROM users AS u
+            u.gender, u.current_year, u.role, u.email, a.course, a.department, c.hostel, s.unit FROM users AS u
             LEFT JOIN apply_course AS a ON u.admission_no=a.student
-            LEFT JOIN accommodation AS ac ON u.admission_no=ac.hostel
+            LEFT JOIN accommodation As c ON u.admission_no=c.student
+            LEFT JOIN subjects As s ON u.admission_no=s.student
             WHERE admission_no=%s""", (admission_no,))
         user = self.curr.fetchone()
         self.conn.commit()
