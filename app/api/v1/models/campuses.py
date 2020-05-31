@@ -25,3 +25,12 @@ class CampusModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_campus_by_id(self, campus_id):
+        """Get campus by id."""
+        self.curr.execute("""SELECT * FROM campuses WHERE campus_id={}""".format(campus_id))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+        

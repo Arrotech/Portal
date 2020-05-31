@@ -36,3 +36,29 @@ class TestCampuses(BaseTest):
         self.assertEqual(result['message'],
                          'Campus should either be main or town.')
         assert response1.status_code == 400
+        
+    def test_get_campus_by_id(self):
+        """Test that an admin can fetch campus by id."""
+        response1 = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/campuses/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Campus retrieved successfully')
+        assert response2.status_code == 200
+        
+    def test_get_non_existing_campus_by_id(self):
+        """Test that an admin cannot fetch non existing campus by id."""
+        response1 = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/campuses/10', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Campus not found')
+        assert response2.status_code == 404
