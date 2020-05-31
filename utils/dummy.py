@@ -893,3 +893,17 @@ campus_name_restrictions = {
     "campus_location": "juja"
 }
 
+update_campus = {
+    "campus_name": "town",
+    "campus_location": "juja"
+}
+
+update_campus_keys = {
+    "campusname": "town",
+    "campus_location": "juja"
+}
+
+update_campus_name_restrictions = {
+    "campus_name": "kitui",
+    "campus_location": "juja"
+}

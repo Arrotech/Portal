@@ -42,3 +42,12 @@ class CampusModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def edit_campus(self, campus_id, campus_name, campus_location):
+        """Update campus."""
+        self.curr.execute(
+            """UPDATE campuses SET campus_name='{}', campus_location='{}' WHERE campus_id={} RETURNING campus_name, campus_location""".format(campus_id, campus_name, campus_location))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
