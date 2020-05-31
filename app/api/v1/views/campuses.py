@@ -25,3 +25,13 @@ def add_campus():
         return raise_error(400, "Campus should either be main or town.")
     response = CampusModel(campus_name, campus_location).save()
     return Serializer.serialize(response, 201, "Campus added successfully")
+
+@campuses_v1.route('/campuses/<int:campus_id>', methods=['GET'])
+@jwt_required
+@admin_required
+def get_campus_by_id(campus_id):
+    """Fetch campus by id."""
+    response = CampusModel().get_campus_by_id(campus_id)
+    if response:
+        return Serializer.serialize(response, 200, "Campus retrieved successfully")
+    return raise_error(404, "Campus not found")
