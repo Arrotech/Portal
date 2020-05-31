@@ -26,6 +26,15 @@ def add_campus():
     response = CampusModel(campus_name, campus_location).save()
     return Serializer.serialize(response, 201, "Campus added successfully")
 
+
+@campuses_v1.route('/campuses', methods=['GET'])
+@jwt_required
+def get_all_campuses():
+    """Fetch all campuses."""
+    response = CampusModel().get_all_campuses()
+    return Serializer.serialize(response, 200, "Campuses retrieved successfully")
+
+
 @campuses_v1.route('/campuses/<int:campus_id>', methods=['GET'])
 @jwt_required
 @admin_required
