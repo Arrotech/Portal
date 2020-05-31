@@ -63,3 +63,14 @@ def update_campus(campus_id):
     if response:
         return Serializer.serialize(response, 200, 'Campus updated successfully')
     return raise_error(404, "Campus not found")
+
+
+@campuses_v1.route('/campuses/<int:campus_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_campus(campus_id):
+    """Delete campus by id."""
+    if CampusModel().get_campus_by_id(campus_id):
+        response = CampusModel().delete(campus_id)
+        return Serializer.serialize(response, 200, "Campus deleted successfully")
+    return raise_error(404, 'Campus not found')

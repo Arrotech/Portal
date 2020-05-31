@@ -51,3 +51,10 @@ class CampusModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def delete(self, campus_id):
+        """Delete campus by id."""
+        self.curr.execute(
+            """DELETE FROM campuses WHERE campus_id={}""".format(campus_id))
+        self.conn.commit()
+        self.curr.close()
