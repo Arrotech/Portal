@@ -875,3 +875,21 @@ fill_checklist_user_not_found = {
     "hostel_name": "nyati"
 }
 
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CAMPUSES @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_campus = {
+    "campus_name": "main",
+    "campus_location": "juja"
+}
+
+campus_keys = {
+    "campusname": "main",
+    "campus_location": "juja"    
+}
+
+campus_name_restrictions = {
+    "campus_name": "kitui",
+    "campus_location": "juja"
+}
+

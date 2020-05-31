@@ -24,6 +24,15 @@ def check_update_user_keys(request):
     return errors
 
 
+def check_campuses_keys(request):
+    res_keys = ['campus_name', 'campus_location']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+
 def check_apply_course_keys(request):
     res_keys = ['admission_no', 'department_name', 'course_name']
     errors = []
@@ -231,6 +240,14 @@ def form_restrictions(data):
 
     form = ["1", "2", "3", "4"]
     if data not in form:
+        return False
+    return True
+
+def campus_restrictions(data):
+    """Restrict user inputs in a list."""
+
+    campus_name = ["main", "town"]
+    if data not in campus_name:
         return False
     return True
 
