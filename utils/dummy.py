@@ -907,3 +907,17 @@ update_campus_name_restrictions = {
     "campus_name": "kitui",
     "campus_location": "juja"
 }
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CERTIFICATES @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_certificate = {
+    "certificate_name": "Degree"
+}
+
+certificate_keys = {
+    "certificatename": "Degree"   
+}
+
+certificate_name_restrictions = {
+    "certificate_name": "cisco"
+}
