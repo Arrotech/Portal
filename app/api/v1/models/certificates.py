@@ -50,3 +50,10 @@ class CertificatesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def delete(self, certificate_id):
+        """Delete certificate by id."""
+        self.curr.execute(
+            """DELETE FROM certificates WHERE certificate_id={}""".format(certificate_id))
+        self.conn.commit()
+        self.curr.close()
