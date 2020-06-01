@@ -25,9 +25,21 @@ def add_certificate():
     response = CertificatesModel(certificate_name).save()
     return Serializer.serialize(response, 201, "Certificate added successfully")
 
+
 @certificates_v1.route('/certificates', methods=['GET'])
 @jwt_required
 def get_all_certificates():
     """Get all certificates."""
     response = CertificatesModel().get_all_certificates()
     return Serializer.serialize(response, 200, "Certificates retrieved successfully")
+
+
+@certificates_v1.route('/certificates/<int:certificate_id>', methods=['GET'])
+@jwt_required
+@admin_required
+def get_certificate_by_id(certificate_id):
+    """Get certificate by id."""
+    response = CertificatesModel().get_certificate_by_id(certificate_id)
+    if response:
+        return Serializer.serialize(response, 200, "Certificate retrieved successfully")
+    return raise_error(404, "Certificate not found")

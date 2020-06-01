@@ -24,11 +24,20 @@ class CertificatesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def get_all_certificates(self):
         """Get all certificates."""
         self.curr.execute("""SELECT * FROM certificates""")
         response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def get_certificate_by_id(self, certificate_id):
+        """Get ceertificate by id."""
+        self.curr.execute(
+            """SELECT * FROM certificates WHERE certificate_id={}""".format(certificate_id))
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
