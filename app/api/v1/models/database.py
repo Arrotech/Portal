@@ -69,6 +69,13 @@ class Database:
             )
             """,
             """
+            CREATE TABLE IF NOT EXISTS certificates(
+                certificate_id serial PRIMARY KEY,
+                certificate_name varchar NOT NULL UNIQUE,
+                created_on TIMESTAMP
+            )
+            """,
+            """
             CREATE TABLE IF NOT EXISTS departments(
                 department_id serial PRIMARY KEY,
                 department_name varchar NOT NULL UNIQUE,
@@ -186,6 +193,7 @@ class Database:
         staff = "DROP TABLE IF EXISTS  staff CASCADE"
         accountants = "DROP TABLE IF EXISTS  accountants CASCADE"
         campuses = "DROP TABLE IF EXISTS campuses CASCADE"
+        certificates = "DROP TABLE IF EXISTS certificates CASCADE"
         departments = "DROP TABLE IF EXISTS departments CASCADE"
         courses = "DROP TABLE IF EXISTS courses CASCADE"
         apply_course = "DROP TABLE IF EXISTS apply_course CASCADE"
@@ -198,7 +206,7 @@ class Database:
         accommodation = "DROP TABLE IF EXISTS accommodation CASCADE"
         checklist = "DROP TABLE IF EXISTS checklist CASCADE"
 
-        queries = [exams, users, staff, accountants, campuses, departments,
+        queries = [exams, users, staff, accountants, campuses, certificates, departments,
                    courses, apply_course, subjects, fees, library, units, hostels, accommodation, checklist]
         try:
             for query in queries:

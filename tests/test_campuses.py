@@ -6,7 +6,7 @@ from .base_test import BaseTest
 
 
 class TestCampuses(BaseTest):
-    """Test campus endoints."""
+    """Test campus endpoints."""
 
     def test_add_campus(self):
         """Test that an admin can add a new campus."""

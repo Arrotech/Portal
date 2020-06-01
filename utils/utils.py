@@ -96,6 +96,14 @@ def check_unit_name_key(request):
             errors.append(key)
     return errors
 
+def check_certificates_keys(request):
+    res_keys = ['certificate_name']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 
 def check_unit_code_key(request):
     res_keys = ['unit_code']
@@ -248,6 +256,14 @@ def campus_restrictions(data):
 
     campus_name = ["main", "town"]
     if data not in campus_name:
+        return False
+    return True
+
+def certificate_restrictions(data):
+    """Restrict user inputs in a list."""
+
+    certificate_name = ["K.C.P.E", "K.C.S.E", "Certificate", "Diploma", "Degree", "Masters", "P.H.D"]
+    if data not in certificate_name:
         return False
     return True
 
