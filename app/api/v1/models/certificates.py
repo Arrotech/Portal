@@ -41,3 +41,12 @@ class CertificatesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def edit_certificate(self, certificate_id, certificate_name):
+        """Update certificate."""
+        self.curr.execute(
+            """UPDATE certificates SET certificate_name='{}' WHERE certificate_id={} RETURNING certificate_name""".format(certificate_id, certificate_name))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
