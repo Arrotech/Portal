@@ -36,3 +36,16 @@ class TestCertificates(BaseTest):
         self.assertEqual(result['message'],
                          'Invalid certificate name')
         assert response1.status_code == 400
+        
+    def test_get_all_certificates(self):
+        """Test that a user can get all certificates."""
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/certificates', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificates retrieved successfully')
+        assert response2.status_code == 200

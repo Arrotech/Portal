@@ -24,3 +24,10 @@ def add_certificate():
         return raise_error(400, "Invalid certificate name")
     response = CertificatesModel(certificate_name).save()
     return Serializer.serialize(response, 201, "Certificate added successfully")
+
+@certificates_v1.route('/certificates', methods=['GET'])
+@jwt_required
+def get_all_certificates():
+    """Get all certificates."""
+    response = CertificatesModel().get_all_certificates()
+    return Serializer.serialize(response, 200, "Certificates retrieved successfully")
