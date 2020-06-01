@@ -49,3 +49,29 @@ class TestCertificates(BaseTest):
         self.assertEqual(result['message'],
                          'Certificates retrieved successfully')
         assert response2.status_code == 200
+        
+    def test_get_certificate_by_id(self):
+        """Test that an admin can fetch certificate by id."""
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/certificates/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificate retrieved successfully')
+        assert response2.status_code == 200
+        
+    def test_get_non_existing_certificate_by_id(self):
+        """Test that an admin cannot fetch non existing certificate by id."""
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.get(
+            '/api/v1/certificates/10', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificate not found')
+        assert response2.status_code == 404
