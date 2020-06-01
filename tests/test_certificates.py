@@ -129,3 +129,29 @@ class TestCertificates(BaseTest):
                          'Certificate not found')
         assert response2.status_code == 404
         
+    def test_delete_certificate(self):
+        """Test that an admin can delete xisting certificate."""
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.delete(
+            '/api/v1/certificates/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificate deleted successfully')
+        assert response2.status_code == 200
+        
+    def test_delete_non_existing_certificate(self):
+        """Test that an admin cannot delete non existing certificate."""
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.delete(
+            '/api/v1/certificates/10', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificate not found')
+        assert response2.status_code == 404
+        
