@@ -24,3 +24,11 @@ class CertificatesModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+    
+    def get_all_certificates(self):
+        """Get all certificates."""
+        self.curr.execute("""SELECT * FROM certificates""")
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
