@@ -63,7 +63,7 @@ class Database:
             """
             CREATE TABLE IF NOT EXISTS campuses(
                 campus_id serial PRIMARY KEY,
-                campus_name varchar NOT NULL UNIQUE,
+                campus_name varchar NOT NULL,
                 campus_location varchar NOT NULL,
                 created_on TIMESTAMP
             )
@@ -71,7 +71,7 @@ class Database:
             """
             CREATE TABLE IF NOT EXISTS certificates(
                 certificate_id serial PRIMARY KEY,
-                certificate_name varchar NOT NULL UNIQUE,
+                certificate_name varchar NOT NULL,
                 created_on TIMESTAMP
             )
             """,
@@ -95,10 +95,12 @@ class Database:
             CREATE TABLE IF NOT EXISTS apply_course(
                 application_id serial UNIQUE,
                 student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
+                campus integer NOT NULL REFERENCES campuses (campus_id) ON DELETE CASCADE,
+                certificate integer NOT NULL REFERENCES certificates (certificate_id) ON DELETE CASCADE,
                 department varchar NOT NULL REFERENCES departments (department_name) ON DELETE CASCADE,
                 course varchar NOT NULL REFERENCES courses (course_name) ON DELETE CASCADE,
                 created_on TIMESTAMP,
-                PRIMARY KEY (student, department, course)
+                PRIMARY KEY (student, campus, certificate, department, course)
             )
             """,
             """

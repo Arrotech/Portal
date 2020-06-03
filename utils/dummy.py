@@ -781,32 +781,26 @@ update_course_name_exists = {
 
 apply_course = {
     "admission_no": "NJCF1001",
+    "campus_id": "1",
+    "certificate_id": "1",
     "department_name": "mathematics",
     "course_name": "maths and computer science"
 }
 
 apply_course_keys = {
     "admissionno": "NJCF1001",
+    "campus_id": "1",
+    "certificate_id": "1",
     "department_name": "mathematics",
     "course_name": "maths and computer science"
 }
 
 apply_course_user_not_found = {
     "admission_no": "NJCF1010",
+    "campus_id": "1",
+    "certificate_id": "1",
     "department_name": "mathematics",
     "course_name": "maths and computer science"
-}
-
-apply_course_department_not_found = {
-    "admission_no": "NJCF1001",
-    "department_name": "botany",
-    "course_name": "maths and computer science"
-}
-
-apply_course_not_found = {
-    "admission_no": "NJCF1001",
-    "department_name": "mathematics",
-    "course_name": "ICT"
 }
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BOOk HOSTEL @@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -885,7 +879,7 @@ new_campus = {
 
 campus_keys = {
     "campusname": "main",
-    "campus_location": "juja"    
+    "campus_location": "juja"
 }
 
 campus_name_restrictions = {
@@ -915,7 +909,7 @@ new_certificate = {
 }
 
 certificate_keys = {
-    "certificatename": "Degree"   
+    "certificatename": "Degree"
 }
 
 certificate_name_restrictions = {
