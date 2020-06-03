@@ -1,7 +1,7 @@
 import json
 
-from utils.dummy import apply_course, apply_course_department_not_found, apply_course_keys,\
-    apply_course_not_found, apply_course_user_not_found, new_department, new_course
+from utils.dummy import new_campus, new_certificate, apply_course, apply_course_keys,\
+    apply_course_user_not_found, new_department, new_course
 from .base_test import BaseTest
 
 
@@ -10,6 +10,12 @@ class TestApplyCourse(BaseTest):
 
     def test_apply_course(self):
         """Test that a student can apply a course."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
@@ -26,6 +32,12 @@ class TestApplyCourse(BaseTest):
 
     def test_apply_course_keys(self):
         """Test that a student cannot apply a course with an invalid json key."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
@@ -42,6 +54,12 @@ class TestApplyCourse(BaseTest):
 
     def test_apply_course_user_not_found(self):
         """Test that a student cannot apply a course if they dont exists."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
@@ -56,8 +74,11 @@ class TestApplyCourse(BaseTest):
                          'User not found')
         assert response4.status_code == 404
 
-    def test_apply_course_department_not_found(self):
-        """Test that a student cannot apply a course if the department doesn't exists."""
+    def test_apply_course_campus_not_found(self):
+        """Test that a student cannot apply a course if the campus doesn't exists."""
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
@@ -65,7 +86,45 @@ class TestApplyCourse(BaseTest):
             '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
             headers=self.get_admin_token())
         response4 = self.client.post(
-            '/api/v1/apply_course', data=json.dumps(apply_course_department_not_found), content_type='application/json',
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Campus not found')
+        assert response4.status_code == 404
+
+    def test_apply_course_certificate_not_found(self):
+        """Test that a student cannot apply a course if the certificate doesn't exists."""
+        response1 = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response4 = self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response4.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificate not found')
+        assert response4.status_code == 404
+
+    def test_apply_course_department_not_found(self):
+        """Test that a student cannot apply a course if the department doesn't exists."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        response3 = self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        response4 = self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response4.data.decode())
         self.assertEqual(result['message'],
@@ -74,14 +133,17 @@ class TestApplyCourse(BaseTest):
 
     def test_apply_course_not_found(self):
         """Test that a student cannot apply a course if the course doesn't exists."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
-        response3 = self.client.post(
-            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
-            headers=self.get_admin_token())
         response4 = self.client.post(
-            '/api/v1/apply_course', data=json.dumps(apply_course_not_found), content_type='application/json',
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response4.data.decode())
         self.assertEqual(result['message'],
@@ -90,6 +152,12 @@ class TestApplyCourse(BaseTest):
 
     def test_apply_course_get_course_by_id(self):
         """Test that a student can fetch course by id."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
@@ -109,6 +177,12 @@ class TestApplyCourse(BaseTest):
 
     def test_apply_course_get_non_exisiting_course_by_id(self):
         """Test that a student cannot fetch course by id if doesn't exists."""
+        response = self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        response1 = self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
