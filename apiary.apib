@@ -295,3 +295,189 @@ A staff/student/accountant can do the following:
                     "username": "Peter254"
                   }
             }
+            
+## Add Campus [/api/v1/campuses]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "campus_name": "main",
+            "campus_location": "juja"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/campuses
+
+    + Body
+
+            {
+                  "data": {
+                    "campus_location": "juja",
+                    "campus_name": "main",
+                    "created_on": "Thu, 04 Jun 2020 23:39:28 GMT"
+                  },
+                  "message": "Campus added successfully",
+                  "status": 201
+            }
+            
+## Add Certificate [/api/v1/certificates]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "certificate_name": "Degree"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/certificates
+
+    + Body
+
+            {
+              "data": {
+                "certificate_name": "Degree",
+                "created_on": "Thu, 04 Jun 2020 23:59:26 GMT"
+              },
+              "message": "Certificate added successfully",
+              "status": 201
+            }
+            
+## Add Department [/api/v1/departments]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "department_name": "mathematics"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/departments
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:03:39 GMT",
+                "department_name": "mathematics"
+              },
+              "message": "Department added successfully",
+              "status": 201
+            }
+            
+## Add Course [/api/v1/courses]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "course_name": "maths and computer science",
+            "department_name": "mathematics"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/courses
+
+    + Body
+
+            {
+              "data": {
+                "course_name": "maths and computer science",
+                "created_on": "Fri, 05 Jun 2020 00:08:23 GMT",
+                "department": "mathematics"
+              },
+              "message": "maths and computer science added successfully",
+              "status": 201
+            }
+            
+## Add Unit [/api/v1/units]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "unit_name": "Calculus 1",
+            "unit_code": "SMA001"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/units
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:10:46 GMT",
+                "unit_code": "SMA001",
+                "unit_name": "Calculus 1"
+              },
+              "message": "Unit added successfully",
+              "status": 201
+            }
+            
+## Add Hostel [/api/v1/hostels]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "hostel_name": "nyati",
+            "rooms": "400",
+            "gender": "male",
+            "hostel_location": "sunrise"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/hostels
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:14:15 GMT",
+                "gender": "male",
+                "hostel_location": "sunrise",
+                "hostel_name": "nyati",
+                "rooms": "400"
+              },
+              "message": "Hostel added successfully",
+              "status": 201
+            }
