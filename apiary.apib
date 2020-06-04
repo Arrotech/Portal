@@ -481,3 +481,71 @@ A staff/student/accountant can do the following:
               "message": "Hostel added successfully",
               "status": 201
             }
+            
+## Apply Course [/api/v1/apply_course]
+
+### Apply [POST]
+
++ Request (application/json)
+
+        {
+            "admission_no": "NJCF1001",
+            "campus_id": "1",
+            "certificate_id": "1",
+            "department_name": "mathematics",
+            "course_name": "maths and computer science"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/apply_course
+
+    + Body
+
+            {
+              "data": {
+                "campus": 1,
+                "certificate": 1,
+                "course": "maths and computer science",
+                "created_on": "Fri, 05 Jun 2020 00:20:36 GMT",
+                "department": "mathematics",
+                "student": "NJCF1001"
+              },
+              "message": "Course applied successfully",
+              "status": 201
+            }
+            
+## Book Hostel [/api/v1/accommodation]
+
+### Book [POST]
+
++ Request (application/json)
+
+        {
+            "admission_no": "NJCF1001",
+            "hostel_name": "nyati"
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/accommodation
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:25:06 GMT",
+                "hostel": "nyati",
+                "student": "NJCF1001"
+              },
+              "message": "Hostel booked successfully",
+              "status": 201
+            }
