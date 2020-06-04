@@ -36,7 +36,7 @@ def apply_course():
                         response = ApplyCoursesModel(
                             admission_no, campus_id, certificate_id, department_name, course_name).save()
                         if "error" in response:
-                            return raise_error(404, "User not found")
+                            return raise_error(500, "Check your input and try again")
                         return Serializer.serialize(response, 201, "Course applied successfully")
                     return raise_error(404, "Course not found")
                 return raise_error(404, "Department not found")

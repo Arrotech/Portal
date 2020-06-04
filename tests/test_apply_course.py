@@ -71,8 +71,8 @@ class TestApplyCourse(BaseTest):
             headers=self.get_token())
         result = json.loads(response4.data.decode())
         self.assertEqual(result['message'],
-                         'User not found')
-        assert response4.status_code == 404
+                         'Check your input and try again')
+        assert response4.status_code == 500
 
     def test_apply_course_campus_not_found(self):
         """Test that a student cannot apply a course if the campus doesn't exists."""
