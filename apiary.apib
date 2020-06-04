@@ -5,87 +5,114 @@ HOST: https://njc-school-portal.herokuapp.com
 
 Portal that handles student activities in an institution.
 
-## Create Account [/api/v1/auth/register]
+## Staff
 
-### REGISTER [POST]
+### Create Account [/api/v1/auth/staff/register]
+
+#### REGISTER [POST]
 
 + Request (application/json)
 
         {
-            "firstname": "Harun",
-            "lastname": "Gachanja",
-            "surname": "Gitundu",
-            "admission_no": "NA",
-            "email": "admin@admin.com",
-            "password": "Admin20930988",
-            "form": "4"
+            "firstname": "Peter",
+            "lastname": "Gitundu",
+            "form": "1",
+            "stream": "1A",
+            "username": "Peter254",
+            "email": "petergitundu44@gmail.com",
+            "password": "Peter20930988!"
         }
 
 + Response 201 (application/json)
 
-    + Headers
-
-            Authorization: Bearer Token
-            Location: /api/v1/auth/register
-
     + Body
 
             {
-                "message": "Successfully logged in!",
-                "status": "200",
-                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkzMDI0MjUsIm5iZiI6MTU1OTMwMjQyNSwianRpIjoiZjFjYTg0YmYtNzBlYS00NDk0LThkYjAtZWYyODMxNTEwZTNhIiwiZXhwIjoxNTU5MzAzMzI1LCJpZGVudGl0eSI6ImFkbWluQGFkbWluLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.ARkkzVOM7K_zqlC8CShrEHonfrWSfPmqMdVhlXQIBn0",
-                "user": {
-                    "admission_no": "NA",
-                    "email": "admin@admin.com",
-                    "firstname": "Harun",
-                    "form": "5",
-                    "lastname": "Gachanja",
-                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
-                    "role": "admin",
-                    "surname": "Gitundu",
-                    "user_id": 1
-                }
+                  "message": "Account created successfully!",
+                  "status": "201",
+                  "user": {
+                    "created_on": "2020-06-04 22:02:21.406688",
+                    "email": "petergitundu44@gmail.com",
+                    "firstname": "Peter",
+                    "form": "1",
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                    "role": "teacher",
+                    "stream": "1A",
+                    "username": "Peter254"
+                  }
             }
             
-## Login [/api/v1/auth/login]
+## Login [/api/v1/auth/staff/login]
 
 ### Login [POST]
 
 + Request (application/json)
 
         {
-            "email": "admin@admin.com",
-            "password": "Admin20930988"
+            "email": "petergitundu44@gmail.com",
+            "password": "Peter20930988!"
         }
 
 
-+ Response 201 (application/json)
-
-    + Headers
-
-            Authorization: Bearer Token
-            Location: /api/v1/auth/login
++ Response 200 (application/json)
 
     + Body
 
             {
-                "message": "Successfully logged in!",
-                "status": "200",
-                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkzMDIxMDEsIm5iZiI6MTU1OTMwMjEwMSwianRpIjoiMDA2M2Y5MTgtODdiZi00MjRjLWEwOTAtZTI1MDgxOGMzNWUzIiwiZXhwIjoxNTU5MzAzMDAxLCJpZGVudGl0eSI6ImFkbWluQGFkbWluLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.-TI_lo74WBx2VZV6bLSLdu7RFA7i-sfR-4QBkGmlA70",
-                "user": {
-                    "admission_no": "NA",
-                    "email": "admin@admin.com",
-                    "firstname": "Harun",
-                    "form": "5",
-                    "lastname": "Gachanja",
-                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
-                    "role": "admin",
-                    "surname": "Gitundu",
-                    "user_id": 1
-                }
+                  "message": "Successfully logged in!",
+                  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEyOTc1NjYsIm5iZiI6MTU5MTI5NzU2NiwianRpIjoiZWVmODNiNzUtNDE0NS00NmFiLTg5N2YtN2JjZmMyNGY1ZTYyIiwiZXhwIjoxNjIyODMzNTY2LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsInR5cGUiOiJyZWZyZXNoIn0.c6z17evh1-iV7hJP0EciU9QYvTso16xCusaZSBywPyU",
+                  "status": "200",
+                  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEyOTc1NjYsIm5iZiI6MTU5MTI5NzU2NiwianRpIjoiZmNkNGEwYjEtNWZiYS00NmU0LTgxYTgtNmY1MTU2ZTJhOTg4IiwiZXhwIjoxNjIyODMzNTY2LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.cXQZisV3BQUnEA8WSe4J_pAofYGF804kEU8RUk22fHY",
+                  "user": {
+                    "created_on": "2020-06-04 22:02:21.406688",
+                    "email": "petergitundu44@gmail.com",
+                    "firstname": "Peter",
+                    "form": "1",
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                    "role": "teacher",
+                    "staff_id": 1,
+                    "stream": "1A",
+                    "username": "Peter254"
+                  }
             }
             
-## Get all Users [/api/v1/auth/users]    
+## Token Refresh [/api/v1/auth/staff/refresh]
+
+### Refresh [POST]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+            Location: /api/v1/auth/users
+
+    + Body
+
+            {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEyOTgxODksIm5iZiI6MTU5MTI5ODE4OSwianRpIjoiZmU4MTc2MjctNGQ0My00MzU0LWJhYTAtMjFlY2U3ZmY1YzA4IiwiZXhwIjoxNjIyODM0MTg5LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.IpGos1gk6V8FZgqvP45w6GBRXQF3gCNAF-tb-o7MxQM"
+            }
+            
+## Protected Route [/api/v1/auth/staff/protected]    
+            
+### Protected  [GET]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+            Location: /api/v1/auth/staff/protected
+            
+    + Body
+
+            {
+                "logged_in_as": "petergitundu44@gmail.com"
+            }
+            
+## Get all Users [/api/v1/auth/staff/users]    
             
 ### Get Users  [GET]
 
@@ -94,43 +121,34 @@ Portal that handles student activities in an institution.
     + Headers
 
             Authorization: Bearer Token
-            Location: /api/v1/auth/users
+            Location: /api/v1/auth/staff/users
             
     + Body
 
             {
-                "Users": [
+                  "message": "success",
+                  "status": "200",
+                  "users": [
                     {
-                        "admission_no": "NA",
-                        "email": "admin@admin.com",
-                        "firstname": "Harun",
-                        "form": "5",
-                        "lastname": "Gachanja",
-                        "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
-                        "role": "admin",
-                        "surname": "Gitundu",
-                        "user_id": 1
-                    },
-                    {
-                        "admission_no": "NJCF1001",
-                        "email": "gitundu.mercy@students.jcs.ac.ke",
-                        "firstname": "Mercy",
-                        "form": "1",
-                        "lastname": "Wairimu",
-                        "password": "pbkdf2:sha256:50000$jYhBbvV1$20ac92d6541c7df4ec10dd6e342428bb9aea3e4539256acbac2df69721217c07",
-                        "role": "student",
-                        "surname": "Gitundu",
-                        "user_id": 2
+                      "created_on": "2020-06-04 22:02:21.406688",
+                      "email": "petergitundu44@gmail.com",
+                      "firstname": "Peter",
+                      "form": "1",
+                      "lastname": "Gitundu",
+                      "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                      "role": "teacher",
+                      "staff_id": 1,
+                      "stream": "1A",
+                      "username": "Peter254"
                     }
-                ],
-                "message": "successfully retrieved",
-                "status": "200"
+                  ]
             }
             
-## Specific User [/api/v1/auth/users/{user_id}]
+            
+## Get User By Username [/api/v1/auth/staff/users/{username}]
 
 + Parameters
-    + user_id (number)
+    + username (string)
 
 ### Get User  [GET]
 
@@ -139,22 +157,23 @@ Portal that handles student activities in an institution.
     + Headers
     
             Authorization: Bearer Token
-            Location: /api/v1/auth/users/{user_id}
+            Location: /api/v1/auth/staff/users/{username}
     
     + Body
 
             {
-                "message": "successfully retrieved",
-                "status": "200",
-                "user": {
-                    "admission_no": "NA",
-                    "email": "admin@admin.com",
-                    "firstname": "Harun",
-                    "form": "5",
-                    "lastname": "Gachanja",
-                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
-                    "role": "admin",
-                    "surname": "Gitundu",
-                    "user_id": 1
-                }
+                  "message": "success",
+                  "status": "200",
+                  "user": {
+                    "created_on": "2020-06-04 22:02:21.406688",
+                    "email": "petergitundu44@gmail.com",
+                    "firstname": "Peter",
+                    "form": "1",
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                    "role": "teacher",
+                    "staff_id": 1,
+                    "stream": "1A",
+                    "username": "Peter254"
+                  }
             }
