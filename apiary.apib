@@ -308,7 +308,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -338,7 +338,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -367,7 +367,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -397,7 +397,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -428,7 +428,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -461,7 +461,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -497,7 +497,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -531,7 +531,7 @@ A staff/student/accountant can do the following:
         }
 
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Headers
     
@@ -547,5 +547,36 @@ A staff/student/accountant can do the following:
                 "student": "NJCF1001"
               },
               "message": "Hostel booked successfully",
+              "status": 201
+            }
+            
+## Unit Registration [/api/v1/subjects]
+
+### Register [POST]
+
++ Request (application/json)
+
+        {
+            "admission_no": "NJCF1001",
+            "unit_name": "Calculus 1"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/subjects
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:30:16 GMT",
+                "student": "NJCF1001",
+                "unit": "Calculus 1"
+              },
+              "message": "You have successfully registered Calculus 1",
               "status": 201
             }
