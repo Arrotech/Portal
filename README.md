@@ -79,3 +79,5 @@ Note that this project is meant for linux.
 **AUTHOR**
 
      Harun Gachanja Gitundu.
+     
+     Esther Waweru.
