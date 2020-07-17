@@ -42,6 +42,15 @@ class InstitutionsModel(Database):
         self.curr.close()
         return response
 
+    def edit_institution(self, institution_id, institution_name):
+        """Update institution."""
+        self.curr.execute(
+            """UPDATE institutions SET institution_name='{}' WHERE institution_id={} RETURNING institution_name""".format(institution_id, institution_name))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def delete(self, institution_id):
         """Delete institution by id."""
         self.curr.execute(

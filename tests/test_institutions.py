@@ -1,6 +1,6 @@
 import json
 
-from utils.dummy import new_institution, institution_keys
+from utils.dummy import new_institution, institution_keys, update_institution, update_institution_keys
 from .base_test import BaseTest
 
 
@@ -60,6 +60,45 @@ class TestInstitutions(BaseTest):
             headers=self.get_admin_token())
         response2 = self.client.get(
             '/api/v1/institutions/10', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Institution not found')
+        assert response2.status_code == 404
+
+    def test_update_institution(self):
+        """Test that an admin can update an existing institution."""
+        response1 = self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/institutions/1', data=json.dumps(update_institution), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Institution updated successfully')
+        assert response2.status_code == 200
+
+    def test_update_institution_keys(self):
+        """Test that an admin cannot update existing institution with invalid json keys."""
+        response1 = self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/institutions/1', data=json.dumps(update_institution_keys), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Invalid institution_name key')
+        assert response2.status_code == 400
+        
+    def test_update_non_existing_institution(self):
+        """Test that an admin cannot update non existing institution."""
+        response1 = self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.put(
+            '/api/v1/institutions/100', data=json.dumps(update_institution), content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response2.data.decode())
         self.assertEqual(result['message'],

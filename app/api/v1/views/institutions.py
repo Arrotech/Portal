@@ -40,6 +40,21 @@ def get_institution_by_id(institution_id):
         return Serializer.serialize(response, 200, "Institution retrieved successfully")
     return raise_error(404, "Institution not found")
 
+@institutions_v1.route('/institutions/<int:institution_id>', methods=['PUT'])
+@jwt_required
+@admin_required
+def update_institution(institution_id):
+    """Update a institution by id."""
+    details = request.get_json()
+    errors = check_institutions_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+    institution_name = details['institution_name']
+    response = InstitutionsModel().edit_institution(institution_name, institution_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Institution updated successfully')
+    return raise_error(404, "Institution not found")
+
 @institutions_v1.route('/institutions/<int:institution_id>', methods=['DELETE'])
 @jwt_required
 @admin_required
