@@ -65,3 +65,29 @@ class TestInstitutions(BaseTest):
         self.assertEqual(result['message'],
                          'Institution not found')
         assert response2.status_code == 404
+
+    def test_delete_institution(self):
+        """Test that an admin can delete existing institution."""
+        response1 = self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.delete(
+            '/api/v1/institutions/1', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Institution deleted successfully')
+        assert response2.status_code == 200
+        
+    def test_delete_non_existing_institution(self):
+        """Test that an admin cannot delete non existing institution."""
+        response1 = self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
+            headers=self.get_admin_token())
+        response2 = self.client.delete(
+            '/api/v1/institutions/100', content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response2.data.decode())
+        self.assertEqual(result['message'],
+                         'Institution not found')
+        assert response2.status_code == 404
