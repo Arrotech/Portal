@@ -32,3 +32,12 @@ class InstitutionsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def get_institution_by_id(self, institution_id):
+        """Get institution by id."""
+        self.curr.execute(
+            """SELECT * FROM institutions WHERE institution_id={}""".format(institution_id))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response

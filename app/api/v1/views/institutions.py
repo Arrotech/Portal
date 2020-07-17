@@ -29,3 +29,13 @@ def get_all_institutions():
     """Fetch all institutions."""
     response = InstitutionsModel().get_all_institutions()
     return Serializer.serialize(response, 200, "Institutions retrieved successfully")
+
+@institutions_v1.route('/institutions/<int:institution_id>', methods=['GET'])
+@jwt_required
+@admin_required
+def get_institution_by_id(institution_id):
+    """Fetch institution by id."""
+    response = InstitutionsModel().get_institution_by_id(institution_id)
+    if response:
+        return Serializer.serialize(response, 200, "Institution retrieved successfully")
+    return raise_error(404, "Institution not found")
