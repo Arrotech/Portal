@@ -927,3 +927,13 @@ update_certificate_keys = {
 update_certificate_name_restrictions = {
     "certificate_name": "cisco"
 }
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ INSTITUTIONS @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+new_institution = {
+    "institution_name": "Jomokenyatta University of Agriculture and Technology"
+}
+
+institution_keys = {
+    "institutioname": "Jomokenyatta University of Agriculture and Technology"
+}

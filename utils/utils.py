@@ -32,6 +32,14 @@ def check_campuses_keys(request):
             errors.append(key)
     return errors
 
+def check_institutions_keys(request):
+    res_keys = ['institution_name']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 
 def check_apply_course_keys(request):
     res_keys = ['admission_no', 'campus_id', 'certificate_id', 'department_name', 'course_name']
