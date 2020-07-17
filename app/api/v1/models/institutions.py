@@ -24,3 +24,11 @@ class InstitutionsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def get_all_institutions(self):
+        """Get all institutions."""
+        self.curr.execute("""SELECT * FROM institutions""")
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response

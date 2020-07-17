@@ -22,3 +22,10 @@ def add_institution():
     institution_name = details['institution_name']
     response = InstitutionsModel(institution_name).save()
     return Serializer.serialize(response, 201, "Institution added successfully")
+
+@institutions_v1.route('/institutions', methods=['GET'])
+@jwt_required
+def get_all_institutions():
+    """Fetch all institutions."""
+    response = InstitutionsModel().get_all_institutions()
+    return Serializer.serialize(response, 200, "Institutions retrieved successfully")
