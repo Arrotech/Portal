@@ -39,3 +39,13 @@ def get_institution_by_id(institution_id):
     if response:
         return Serializer.serialize(response, 200, "Institution retrieved successfully")
     return raise_error(404, "Institution not found")
+
+@institutions_v1.route('/institutions/<int:institution_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_institution(institution_id):
+    """Delete institution by id."""
+    if InstitutionsModel().get_institution_by_id(institution_id):
+        response = InstitutionsModel().delete(institution_id)
+        return Serializer.serialize(response, 200, "Institution deleted successfully")
+    return raise_error(404, 'Institution not found')
