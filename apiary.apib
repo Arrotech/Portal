@@ -3,11 +3,39 @@ HOST: https://njc-school-portal.herokuapp.com
 
 # Portal
 
-Portal that handles student activities in an institution.
+This is a `restful web service` that handles `student's activitie`s in any given `institution`.
+
+#### Production/Test URL's
+
+1. `Test Url:` https://njc-school-portal.herokuapp.com
+2. `Production Url:` https://njc-school-portal.herokuapp.com
+
+#### Protocol Definition
+|Key                | Value                                        |
+|-------------------|----------------------------------------------|
+|Protocol           | HTTP                                         |
+|Method             | `POST GET PUT DELETE`                                          |
+|Request Body            | JSON                                         |
+|Response Body          | JSON                                         |
+|Authorization     | Bearer `<token>` |
+
+##### Default Error Codes
+|Key                | Value                                        |
+|-------------------|----------------------------------------------|
+|400           | Bad Request                                       |
+|401           | Unauthorized                                       |
+|403             | Forbidden                                       |
+|404            | Resource Not Found                                        |
+|405           | Method Not Allowed                                |
+|406     | Not Acceptable - You requested a format that isn’t json |
+|422     | Unable to process the contained instructions |
+|429     | Too Many Requests |
+|500     | Internal Server Error – We had a problem with our server. Try again later. |
+|503     | Service Unavailable – We’re temporarily offline for maintenance. Please try again later. |
 
 # Users Account
 
-A staff/student/accountant can do the following:
+A `staff/student/accountant` can do the following:
 1. Create a new account.
 2. Login to their account.
 3. Get users information.
