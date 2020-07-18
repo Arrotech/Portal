@@ -781,6 +781,7 @@ update_course_name_exists = {
 
 apply_course = {
     "admission_no": "NJCF1001",
+    "institution_name": "Jomokenyatta University of Agriculture and Technology",
     "campus_id": "1",
     "certificate_id": "1",
     "department_name": "mathematics",
@@ -789,6 +790,7 @@ apply_course = {
 
 apply_course_keys = {
     "admissionno": "NJCF1001",
+    "institution_name": "Jomokenyatta University of Agriculture and Technology",
     "campus_id": "1",
     "certificate_id": "1",
     "department_name": "mathematics",
@@ -797,6 +799,7 @@ apply_course_keys = {
 
 apply_course_user_not_found = {
     "admission_no": "NJCF1010",
+    "institution_name": "Jomokenyatta University of Agriculture and Technology",
     "campus_id": "1",
     "certificate_id": "1",
     "department_name": "mathematics",

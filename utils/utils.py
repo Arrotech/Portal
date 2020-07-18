@@ -42,7 +42,7 @@ def check_institutions_keys(request):
 
 
 def check_apply_course_keys(request):
-    res_keys = ['admission_no', 'campus_id', 'certificate_id', 'department_name', 'course_name']
+    res_keys = ['admission_no', 'institution_name', 'campus_id', 'certificate_id', 'department_name', 'course_name']
     errors = []
     for key in res_keys:
         if not key in request.json:

@@ -63,7 +63,7 @@ class UsersModel(Database):
         """Request a single user with specific Admission Number."""
         self.curr.execute(
             """ SELECT u.firstname, u.lastname, u.surname, u.admission_no,
-            u.gender, u.current_year, u.role, u.email, a.course, a.department, c.hostel, s.unit FROM users AS u
+            u.gender, u.current_year, u.role, u.email, a.institution, a.campus, a.course, a.department, c.hostel, s.unit FROM users AS u
             LEFT JOIN apply_course AS a ON u.admission_no=a.student
             LEFT JOIN accommodation As c ON u.admission_no=c.student
             LEFT JOIN subjects As s ON u.admission_no=s.student

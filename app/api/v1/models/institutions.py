@@ -42,6 +42,16 @@ class InstitutionsModel(Database):
         self.curr.close()
         return response
 
+    def get_institution_name(self, institution_name):
+        """Get institution by name."""
+        self.curr.execute("""
+                          SELECT * FROM institutions WHERE institution_name='{}'
+                          """.format(institution_name))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def edit_institution(self, institution_id, institution_name):
         """Update institution."""
         self.curr.execute(
