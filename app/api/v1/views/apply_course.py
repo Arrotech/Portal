@@ -9,6 +9,7 @@ from app.api.v1.models.campuses import CampusModel
 from app.api.v1.models.certificates import CertificatesModel
 from app.api.v1.models.departments import DepartmentsModel
 from app.api.v1.models.courses import CoursesModel
+from app.api.v1.models.institutions import InstitutionsModel
 from utils.utils import check_apply_course_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
@@ -24,24 +25,27 @@ def apply_course():
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     details = request.get_json()
     admission_no = details['admission_no']
+    institution_name = details['institution_name']
     campus_id = details['campus_id']
     certificate_id = details['certificate_id']
     department_name = details['department_name']
     course_name = details['course_name']
     if UsersModel().get_admission_no(admission_no):
-        if CampusModel().get_campus_by_id(campus_id):
-            if CertificatesModel().get_certificate_by_id(certificate_id):
-                if DepartmentsModel().get_department_name(department_name):
-                    if CoursesModel().get_course_name(course_name):
-                        response = ApplyCoursesModel(
-                            admission_no, campus_id, certificate_id, department_name, course_name).save()
-                        if "error" in response:
-                            return raise_error(500, "Check your input and try again")
-                        return Serializer.serialize(response, 201, "Course applied successfully")
-                    return raise_error(404, "Course not found")
-                return raise_error(404, "Department not found")
-            return raise_error(404, "Certificate not found")
-        return raise_error(404, "Campus not found")
+        if InstitutionsModel().get_institution_name(institution_name):
+            if CampusModel().get_campus_by_id(campus_id):
+                if CertificatesModel().get_certificate_by_id(certificate_id):
+                    if DepartmentsModel().get_department_name(department_name):
+                        if CoursesModel().get_course_name(course_name):
+                            response = ApplyCoursesModel(
+                                admission_no, institution_name, campus_id, certificate_id, department_name, course_name).save()
+                            if "error" in response:
+                                return raise_error(500, "Check your input and try again")
+                            return Serializer.serialize(response, 201, "Course applied successfully")
+                        return raise_error(404, "Course not found")
+                    return raise_error(404, "Department not found")
+                return raise_error(404, "Certificate not found")
+            return raise_error(404, "Campus not found")
+        return raise_error(404, "Institution not found")
 
 
 @apply_course_v1.route('/apply_course/<int:application_id>', methods=['GET'])
