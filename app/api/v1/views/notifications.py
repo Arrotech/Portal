@@ -33,3 +33,12 @@ def send_notification():
                 text_body=description,
                 html_body=description)
     return Serializer.serialize(response, 201, "Notification sent successfully")
+
+@notifications_v1.route('/notifications/<int:notification_id>', methods=['GET'])
+@jwt_required
+def get_notification_by_id(notification_id):
+    """Fetch institution by id."""
+    response = NotificationsModel().get_notitications_by_id(notification_id)
+    if response:
+        return Serializer.serialize(response, 200, "Notifications retrieved successfully")
+    return raise_error(404, "Notifications not found")

@@ -25,3 +25,12 @@ class NotificationsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def get_notitications_by_id(self, notification_id):
+        """Get notifications by id."""
+        self.curr.execute(
+            """SELECT * FROM notifications WHERE notification_id={}""".format(notification_id))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
