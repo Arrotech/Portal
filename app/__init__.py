@@ -11,7 +11,7 @@ from utils.utils import bad_request, page_not_found, method_not_allowed, interna
 from app.api.v1.models.database import Database
 from app.api.v1 import auth_v1, staff_v1, accountant_v1, exams_v1, books_v1, fees_v1,\
     subjects_v1, units_blueprint_v1, hostels_v1, departments_v1, courses_v1, apply_course_v1,\
-    accommodation_v1, checklist_v1, campuses_v1, certificates_v1, institutions_v1
+    accommodation_v1, checklist_v1, campuses_v1, certificates_v1, institutions_v1, notifications_v1
 from app.config import app_config
 
 
@@ -21,6 +21,12 @@ def exam_app(config_name):
     config_name = os.getenv('FLASK_ENV')
     app.config.from_pyfile('config.py')
     app.config['SECRET_KEY'] = "schoolportal"
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
  
 
     CORS(app)
@@ -47,6 +53,7 @@ def exam_app(config_name):
     app.register_blueprint(campuses_v1, url_prefix='/api/v1/')
     app.register_blueprint(institutions_v1, url_prefix='/api/v1/')
     app.register_blueprint(certificates_v1, url_prefix='/api/v1/')
+    app.register_blueprint(notifications_v1, url_prefix='/api/v1/')
     app.register_error_handler(400, bad_request)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(405, method_not_allowed)

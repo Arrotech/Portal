@@ -186,6 +186,13 @@ class Database:
                 hostel varchar NOT NULL REFERENCES hostels (hostel_name) ON DELETE CASCADE,
                 created_on TIMESTAMP,
                 PRIMARY KEY (student, department, course, hostel)
+            )""",
+            """
+            CREATE TABLE IF NOT EXISTS notifications(
+                notification_id serial PRIMARY KEY,
+                subject varchar NOT NULL,
+                description varchar NOT NULL,
+                created_on TIMESTAMP
             )"""
         ]
         try:
@@ -216,9 +223,10 @@ class Database:
         hostels = "DROP TABLE IF EXISTS hostels CASCADE"
         accommodation = "DROP TABLE IF EXISTS accommodation CASCADE"
         checklist = "DROP TABLE IF EXISTS checklist CASCADE"
+        notifications = "DROP TABLE IF EXISTS notifications CASCADE"
 
         queries = [exams, users, staff, accountants, institutions, campuses, certificates, departments,
-                   courses, apply_course, subjects, fees, library, units, hostels, accommodation, checklist]
+                   courses, apply_course, subjects, fees, library, units, hostels, accommodation, checklist, notifications]
         try:
             for query in queries:
                 self.curr.execute(query)
