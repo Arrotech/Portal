@@ -49,6 +49,15 @@ def check_apply_course_keys(request):
             errors.append(key)
     return errors
 
+    
+def check_notification_keys(request):
+    res_keys = ['subject', 'description']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
 
 def check_checklist_keys(request):
     res_keys = ['admission_no', 'department_name',
