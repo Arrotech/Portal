@@ -44,6 +44,73 @@ A `staff/student/accountant` can do the following:
 
 ### Admin Registration [/api/v1/auth/staff/register]
 
+This request enables an `admin user` to be able to `create a new account` in order to be able to carry out `future portal activities`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/register`
+
+#### Request Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|firstname             | Admin user first name (`Mandatory`)                        | String         | John                    |
+|lastname              | Admin user last name (`Mandatory`)                        | String         | Doe                     |
+|username              | Admin username should be unique (`Mandatory`)             | String         | Johndoe                 |
+|email                 | Admin user email should be unique (`Mandatory`)           | String         | johndoe@example.com     |
+|password              | Admin user password should be aleast 8 characters with special characters (`Mandatory`) | String | JohnDoeUFhgah!37 |
+
+
+**Sample request**
+
+```
+{
+    "firstname": "Peter",
+    "lastname": "Gitundu",
+    "form": "1",
+    "stream": "1A",
+    "username": "Peter254",
+    "email": "petergitundu44@gmail.com",
+    "password": "Peter20930988!"
+}
+```
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | Account created successfully |
+|status                | response status code                         | Object         | 201                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the request was created | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role           | String         | teacher     |
+
+
+**Successful Sample response**
+
+```
+{
+  "message": "Account created successfully!",
+  "status": "201",
+  "user": {
+    "created_on": "2020-07-19 11:25:43.501510",
+    "email": "petergitundu44@gmail.com",
+    "firstname": "Peter",
+    "form": "1",
+    "lastname": "Gitundu",
+    "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+    "role": "teacher",
+    "stream": "1A",
+    "username": "Peter254"
+  }
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+
 #### Register [POST]
 
 + Request (application/json)
@@ -79,6 +146,76 @@ A `staff/student/accountant` can do the following:
             }
             
 ## Admin Login [/api/v1/auth/staff/login]
+
+This request enables an admin user able to `login` in order to access `restricted endpoints`.
+
+```
+One must be logged in to carry out portal activities
+```
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/login`
+
+
+#### Request Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|email                 | email that you registered with (`Mandatory`)           | String         | johndoe@example.com     |
+|password              | password that you registered with (`Mandatory`) | String | JohnDoeUFhgah!37 |
+
+
+**Sample request**
+
+```
+{
+    "email": "petergitundu44@gmail.com",
+    "password": "Peter20930988!"
+}
+```
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | Successfully logged in! |
+|status                | response status code                         | Object         | 200                     |
+|token                 | bearer token that should be passed to all future requests | Object         | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI... |
+|refresh_token         | refresh token that should be used to get access token | Object         | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI... |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the login request was sent | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role | String         | teacher     |
+|staff_id              | Autogenerated admin id | Numeric         | 1     |
+
+
+**Successful Sample response**
+
+```
+{
+  "message": "Successfully logged in!",
+  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTUxNDkzMjYsIm5iZiI6MTU5NTE0OTMyNiwianRpIjoiMDg1NmIyZTYtMjMzYi00ZjRiLWI0Y2ItYTM0YWViYWYxNjMyIiwiZXhwIjoxNjI2Njg1MzI2LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsInR5cGUiOiJyZWZyZXNoIn0.MSyo8UIxCB8D85OAnUlZMUQpDtct0pLL5ddOJp0OClU",
+  "status": "200",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTUxNDkzMjYsIm5iZiI6MTU5NTE0OTMyNiwianRpIjoiNmYwNGVmYTctZmU1Ni00ZWE3LWExYzItOTE1YmVhMGY3YTM0IiwiZXhwIjoxNjI2Njg1MzI2LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.OptT5vKwfknagNucNPry2TjA1do8dyZaEbYjYiE3p54",
+  "user": {
+    "created_on": "2020-07-19 11:25:43.501510",
+    "email": "petergitundu44@gmail.com",
+    "firstname": "Peter",
+    "form": "1",
+    "lastname": "Gitundu",
+    "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+    "role": "teacher",
+    "staff_id": 1,
+    "stream": "1A",
+    "username": "Peter254"
+  }
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
 
 ### Login [POST]
 
