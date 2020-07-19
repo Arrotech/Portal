@@ -48,6 +48,14 @@ This request enables an `admin user` to be able to `create a new account` in ord
 
 The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/register`
 
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
 #### Request Data Fields
 
 |Parameter             | Description                                  | Parameter Type | Sample values           |
@@ -155,6 +163,13 @@ One must be logged in to carry out portal activities
 
 The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/login`
 
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
 
 #### Request Data Fields
 
@@ -252,13 +267,45 @@ The following request should be sent to the following url: `https://njc-school-p
             
 ## Admin Access Token [/api/v1/auth/staff/refresh]
 
+`Flask-JWT-Extended` supports `refresh tokens` out of the box. These are `long lived tokens` which can be used to `create new access tokens` once an `old access token has expired`. 
+
+Refresh tokens `cannot access` an endpoint that is `protected` with `jwt_required()` and access tokens `cannot` access and endpoint that is protected with `jwt_refresh_token_required()`.
+
+By setting the access tokens to a `shorter lifetime`, and utilizing refresh tokens we can `help reduce the damage` that can be done if an `access token is stolen`. However, if an `attacker` gets their hands on the refresh token, they `can keep generating` new access tokens and accessing protected endpoints as though he was that user.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/refresh`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<refresh-token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|access_token          | token returned | String         | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...|
+
+**Successful Sample Response**
+
+```
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTUxNTE2ODQsIm5iZiI6MTU5NTE1MTY4NCwianRpIjoiYWI0OWRmNjEtZThlZC00MTYxLTlkOWUtNGMwNTkwZmZmOGZiIiwiZXhwIjoxNjI2Njg3Njg0LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.Ui8vs2QwY3ytSebuvC26O1iqN6yZVq-ZczxMn3Zdh1I"
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+
 ### Get Access Token [POST]
 
 + Response 200 (application/json)
 
     + Headers
 
-            Authorization: Bearer Token
+            Authorization: Bearer <refresh-token>
             Location: /api/v1/auth/users
 
     + Body
@@ -267,7 +314,35 @@ The following request should be sent to the following url: `https://njc-school-p
                 "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEyOTgxODksIm5iZiI6MTU5MTI5ODE4OSwianRpIjoiZmU4MTc2MjctNGQ0My00MzU0LWJhYTAtMjFlY2U3ZmY1YzA4IiwiZXhwIjoxNjIyODM0MTg5LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.IpGos1gk6V8FZgqvP45w6GBRXQF3gCNAF-tb-o7MxQM"
             }
             
-## Admin Protected Route [/api/v1/auth/staff/protected]    
+## Admin Protected Route [/api/v1/auth/staff/protected]
+
+Get the `current user` logged in by their `email`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/protected`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|logged_in_as          | current logged in user | String         | petergitundu44@gmail.com |
+
+**Successful Sample Response**
+
+```
+{
+  "logged_in_as": "petergitundu44@gmail.com"
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
             
 ### Protected  [GET]
 
@@ -284,7 +359,62 @@ The following request should be sent to the following url: `https://njc-school-p
                 "logged_in_as": "petergitundu44@gmail.com"
             }
             
-## Admin Get Users [/api/v1/auth/staff/users]    
+## Admin Get Users [/api/v1/auth/staff/users]
+
+This request enables an admin user able to `get a list of all users` that have `created the account`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/users`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | success |
+|status                | response status code                         | Object         | 200                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the login request was sent | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role | String         | teacher     |
+|staff_id              | Autogenerated admin id | Numeric         | 1     |
+
+
+**Successful Sample Response**
+
+```
+{
+  "message": "success",
+  "status": "200",
+  "users": [
+    {
+      "created_on": "2020-07-19 11:25:43.501510",
+      "email": "petergitundu44@gmail.com",
+      "firstname": "Peter",
+      "form": "1",
+      "lastname": "Gitundu",
+      "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+      "role": "teacher",
+      "staff_id": 1,
+      "stream": "1A",
+      "username": "Peter254"
+    }
+  ]
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
             
 ### Get Users  [GET]
 
