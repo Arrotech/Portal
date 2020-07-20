@@ -52,9 +52,8 @@ The following request should be sent to the following url: `https://njc-school-p
 
 The following should be passed as the header:
 
-1. `Authorization:` Bearer `<token>`
-2. `Content-Type:` application/json
-3. `Accept:` application/json
+1. `Content-Type:` application/json
+2. `Accept:` application/json
 
 #### Request Data Fields
 
@@ -167,9 +166,8 @@ The following request should be sent to the following url: `https://njc-school-p
 
 The following should be passed as the header:
 
-1. `Authorization:` Bearer `<token>`
-2. `Content-Type:` application/json
-3. `Accept:` application/json
+1. `Content-Type:` application/json
+2. `Accept:` application/json
 
 #### Request Data Fields
 
@@ -503,6 +501,8 @@ The following should be passed as the header:
 }
 ```
 
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+
 + Parameters
     + username (string)
 
@@ -535,6 +535,89 @@ The following should be passed as the header:
             }
             
 ### Student Register [/api/v1/auth/register]
+
+This request enables a `student` to be able to `create a new account` in order to be able to carry out `future portal activities`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/register`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Content-Type:` application/json
+2. `Accept:` application/json
+
+#### Request Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|firstname             | user first name (`Mandatory`)                        | String         | John                    |
+|lastname              | user last name (`Mandatory`)                        | String         | Doe                     |
+|surname               | surname (`Mandatory`)             | String         | Dee                 |
+|gender                | user gender; male or female (`Mandatory`)           | String         | male     |
+|email                 | user email should be unique (`Mandatory`)           | String         | johndoe@example.com     |
+|password              | user password should be aleast 8 characters with special characters (`Mandatory`) | String | JohnDoeUFhgah!37 |
+|current_year          | year of admission (`Mandatory`)             | String         | Dee                 |
+|role                  | user role (`Mandatory`)           | String         | student     |
+|admission_no          | user registration number which should be unique (`Mandatory`)           | String         | sc200-1358/2020     |
+
+
+**Sample request**
+
+```
+{
+    "firstname": "Harun",
+    "lastname": "Gachanja",
+    "surname": "Gitundu",
+    "admission_no": "NJCF1001",
+    "gender": "male",
+    "email": "arrotechdesign@gmail.com",
+    "password": "Harun20930988!",
+    "current_year": "1",
+    "role": "student"
+}
+```
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | Account created successfully |
+|status                | response status code                         | Object         | 201                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the request was created | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | user first name | String         | John                    |
+|lastname              | user last name | String         | Doe                     |
+|surname              | user surname | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role           | String         | teacher     |
+|is_confirmed                  | Admin user role           | String         | teacher     |
+|gender                  | Admin user role           | String         | teacher     |
+
+
+**Successful Sample response**
+
+```
+{
+  "message": "Account created successfully!",
+  "status": "201",
+  "user": {
+    "created_on": "2020-07-19 11:25:43.501510",
+    "email": "petergitundu44@gmail.com",
+    "firstname": "Peter",
+    "form": "1",
+    "lastname": "Gitundu",
+    "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+    "role": "teacher",
+    "stream": "1A",
+    "username": "Peter254"
+  }
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
 
 #### Register [POST]
 
