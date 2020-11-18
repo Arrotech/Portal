@@ -31,23 +31,12 @@ class AccommodationModel(Database):
 
     def get_booked_hostels(self):
         """Fetch all booked hostels."""
-        self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,
-                          h.hostel_name FROM accommodation AS a
-                          INNER JOIN users AS u ON a.student=u.admission_no
-                          INNER JOIN hostels AS h ON a.hostel=h.hostel_name""")
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no, h.hostel_name FROM accommodation AS a INNER JOIN users AS u ON a.student=u.admission_no INNER JOIN hostels AS h ON a.hostel=h.hostel_name"
+        response = Database().fetch(query)
         return response
 
     def get_booked_hostel_by_admission(self, admission_no):
         """Fetch booked hostel by admission."""
-        self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,
-                          h.hostel_name FROM accommodation AS a
-                          INNER JOIN users AS u ON a.student=u.admission_no
-                          INNER JOIN hostels AS h ON a.hostel=h.hostel_name
-                          WHERE admission_no=%s""", (admission_no,))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no, h.hostel_name FROM accommodation AS a INNER JOIN users AS u ON a.student=u.admission_no INNER JOIN hostels AS h ON a.hostel=h.hostel_name WHERE admission_no=%s"
+        response = Database().fetch_one(query, admission_no)
         return response

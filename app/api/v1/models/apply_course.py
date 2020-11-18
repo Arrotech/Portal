@@ -35,17 +35,15 @@ class ApplyCoursesModel(Database):
 
     def get_course_by_id(self, application_id):
         """Get course by id."""
-        self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no, i.institution_name,
-                          d.department_name, c.course_name, ca.campus_name, ce.certificate_name
-                          FROM apply_course AS a
-                          INNER JOIN users AS u ON a.student=u.admission_no
-                          INNER JOIN institutions AS i on a.institution=i.institution_name
-                          INNER JOIN campuses AS ca ON a.campus=ca.campus_id
-                          INNER JOIN certificates AS ce ON a.certificate=ce.certificate_id
-                          INNER JOIN departments AS d ON a.department=d.department_name
-                          INNER JOIN courses AS c ON a.course=c.course_name
-                          WHERE application_id={}""".format(application_id))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no, i.institution_name,\
+                          d.department_name, c.course_name, ca.campus_name, ce.certificate_name\
+                          FROM apply_course AS a\
+                          INNER JOIN users AS u ON a.student=u.admission_no\
+                          INNER JOIN institutions AS i on a.institution=i.institution_name\
+                          INNER JOIN campuses AS ca ON a.campus=ca.campus_id\
+                          INNER JOIN certificates AS ce ON a.certificate=ce.certificate_id\
+                          INNER JOIN departments AS d ON a.department=d.department_name\
+                          INNER JOIN courses AS c ON a.course=c.course_name\
+                          WHERE application_id=%s"
+        response = Database().fetch_one(query, application_id)
         return response

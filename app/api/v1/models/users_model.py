@@ -43,42 +43,31 @@ class UsersModel(Database):
 
     def get_user_by_id(self, user_id):
         """Request a single user with specific id."""
-        self.curr.execute(
-            """ SELECT * FROM users WHERE user_id={}""".format(user_id))
-        user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM users WHERE user_id=%s"
+        user = Database().fetch_one(query, user_id)
         return json.dumps(user, default=str)
 
     def get_user_by_admission(self, admission_no):
         """Get user by admission."""
-        self.curr.execute(
-            """SELECT * FROM users WHERE admission_no=%s""", (admission_no,))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM users WHERE admission_no=%s"
+        response = Database().fetch_one(query, admission_no)
         return json.dumps(response, default=str)
 
     def get_admission_no(self, admission_no):
         """Request a single user with specific Admission Number."""
-        self.curr.execute(
-            """ SELECT u.firstname, u.lastname, u.surname, u.admission_no,
-            u.gender, u.current_year, u.role, u.email, a.institution, a.campus, a.course, a.department, c.hostel, s.unit FROM users AS u
-            LEFT JOIN apply_course AS a ON u.admission_no=a.student
-            LEFT JOIN accommodation As c ON u.admission_no=c.student
-            LEFT JOIN subjects As s ON u.admission_no=s.student
-            WHERE admission_no=%s""", (admission_no,))
-        user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
+            u.gender, u.current_year, u.role, u.email, a.institution, a.campus, a.course, a.department, c.hostel, s.unit FROM users AS u\
+            LEFT JOIN apply_course AS a ON u.admission_no=a.student\
+            LEFT JOIN accommodation As c ON u.admission_no=c.student\
+            LEFT JOIN subjects As s ON u.admission_no=s.student\
+            WHERE admission_no=%s"
+        user = Database().fetch_one(query, admission_no)
         return json.dumps(user, default=str)
 
     def get_email(self, email):
         """Request a single user with specific Email Address."""
-        self.curr.execute(''' SELECT * FROM users WHERE email=%s''', (email,))
-        user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM users WHERE email=%s"
+        user = Database().fetch_one(query, email)
         return json.dumps(user, default=str)
 
     def promote_user(self, admission_no, current_year):

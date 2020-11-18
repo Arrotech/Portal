@@ -40,13 +40,10 @@ class LibraryModel(Database):
 
     def get_all_books(self):
         """Fetch all books."""
-        self.curr.execute(''' SELECT u.admission_no, u.firstname, u.lastname, u.surname,
-                          l.title, l.author, l.book_no FROM library AS l
-                          INNER JOIN users AS u ON l.student = u.admission_no
-                          ''')
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT u.admission_no, u.firstname, u.lastname, u.surname,\
+                          l.title, l.author, l.book_no FROM library AS l\
+                          INNER JOIN users AS u ON l.student = u.admission_no"
+        response = Database().fetch(query)
         return response
 
     def get_books_by_user_admission(self, admission_no):

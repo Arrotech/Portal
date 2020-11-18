@@ -31,24 +31,17 @@ class SubjectsModel(Database):
 
     def get_subjects(self):
         """Fetch all subjects."""
-        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
-                          us.lastname, us.surname 
-                          FROM subjects AS s
-                          INNER JOIN units AS un ON s.unit = un.unit_name
-                          INNER JOIN users AS us ON s.student = us.admission_no
-                          """)
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,\
+                          us.lastname, us.surname FROM subjects AS s\
+                          INNER JOIN units AS un ON s.unit = un.unit_name\
+                          INNER JOIN users AS us ON s.student = us.admission_no"
+        response = Database().fetch(query)
         return response
 
     def get_subject_by_id(self, subject_id):
         """Fetch a subject by id."""
-        self.curr.execute(
-            """SELECT * FROM subjects WHERE subject_id={}""".format(subject_id))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM subjects WHERE subject_id=%s"
+        response = Database().fetch_one(query, subject_id)
         return response
 
     def get_subjects_for_specific_user_by_admission(self, admission_no):

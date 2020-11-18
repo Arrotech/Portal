@@ -34,14 +34,11 @@ class ExamsModel(Database):
 
     def get_exams(self):
         """Fetch all exams."""
-        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname, us.lastname,
-                          us.surname, e.marks, e.semester, e.year FROM exams AS e
-                          INNER JOIN units AS un ON e.unit = un.unit_name
-                          INNER JOIN users AS us ON e.student = us.admission_no
-                          """)
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname, us.lastname,\
+                          us.surname, e.marks, e.semester, e.year FROM exams AS e\
+                          INNER JOIN units AS un ON e.unit = un.unit_name\
+                          INNER JOIN users AS us ON e.student = us.admission_no"
+        response = Database().fetch(query)
         return response
 
     def get_exams_for_a_student_by_admission(self, admission_no):
