@@ -9,10 +9,10 @@ from app.api.v1.models.hostels import HostelsModel
 from utils.utils import check_accommdation_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
-from app.api.v1 import accommodation_v1
+from app.api.v1 import portal_v1
 
 
-@accommodation_v1.route('/accommodation', methods=['POST'])
+@portal_v1.route('/accommodation', methods=['POST'])
 @jwt_required
 def book_hostel():
     """Book hostel."""
@@ -31,7 +31,7 @@ def book_hostel():
         return raise_error(404, "Hostel not found")
 
 
-@accommodation_v1.route('/accommodation', methods=['GET'])
+@portal_v1.route('/accommodation', methods=['GET'])
 @jwt_required
 @admin_required
 def get_all_booked_hostels():
@@ -40,7 +40,7 @@ def get_all_booked_hostels():
     return Serializer.serialize(response, 200, "Hostels retrieved successfully")
 
 
-@accommodation_v1.route('/accommodation/<string:admission_no>', methods=['GET'])
+@portal_v1.route('/accommodation/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_booked_hostel_by_admission(admission_no):
     """Fetch hostel by admission."""

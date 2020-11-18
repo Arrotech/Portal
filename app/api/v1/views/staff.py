@@ -5,11 +5,11 @@ from app.api.v1.models.staff import StaffModel
 from utils.utils import is_valid_email, raise_error, check_staff_keys, check_login_keys, is_valid_password
 import datetime
 from werkzeug.security import check_password_hash
-from app.api.v1 import staff_v1
+from app.api.v1 import portal_v1
 
 
-@staff_v1.route('/register', methods=['POST'])
-def signup():
+@portal_v1.route('/staff/register', methods=['POST'])
+def staff_signup():
     """A new user can create a new account."""
     errors = check_staff_keys(request)
     if errors:
@@ -49,8 +49,8 @@ def signup():
     }), 201)
 
 
-@staff_v1.route('/login', methods=['POST'])
-def login():
+@portal_v1.route('/staff/login', methods=['POST'])
+def staff_login():
     """Already existing user can sign in to their account."""
     errors = check_login_keys(request)
     if errors:
@@ -83,9 +83,9 @@ def login():
     }), 401)
 
 
-@staff_v1.route('/refresh', methods=['POST'])
+@portal_v1.route('/staff/refresh', methods=['POST'])
 @jwt_refresh_token_required
-def refresh():
+def staff_refresh_token():
     """Get the access token."""
     current_user = get_jwt_identity()
     expires = datetime.timedelta(days=365)
@@ -96,17 +96,17 @@ def refresh():
     return jsonify(ret), 200
 
 
-@staff_v1.route('/protected', methods=['GET'])
+@portal_v1.route('/staff/protected', methods=['GET'])
 @jwt_required
-def protected():
+def staff_protected_route():
     """Access the protected route."""
     email = get_jwt_identity()
     return jsonify(logged_in_as=email), 200
 
 
-@staff_v1.route('/users', methods=['GET'])
+@portal_v1.route('/staff/users', methods=['GET'])
 @jwt_required
-def get_users():
+def get_all_staff():
     """Get all users."""
     return make_response(jsonify({
         "message": "success",
@@ -115,9 +115,9 @@ def get_users():
     }), 200)
 
 
-@staff_v1.route('/users/<string:username>', methods=['GET'])
+@portal_v1.route('/staff/users/<string:username>', methods=['GET'])
 @jwt_required
-def get_user(username):
+def get_staff_by_username(username):
     """Get a specific user by the username."""
     user = StaffModel().get_username(username)
     user = json.loads(user)

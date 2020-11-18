@@ -9,10 +9,10 @@ from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
 from utils.utils import check_library_keys, raise_error, check_edit_library_keys
 from utils.serializer import Serializer
-from app.api.v1 import books_v1
+from app.api.v1 import portal_v1
 
 
-@books_v1.route('/books', methods=['POST'])
+@portal_v1.route('/books', methods=['POST'])
 @jwt_required
 @admin_required
 def add_book():
@@ -35,16 +35,16 @@ def add_book():
         return Serializer.serialize(response, 201, "Book added successfully")
 
 
-@books_v1.route('/books', methods=['GET'])
+@portal_v1.route('/books', methods=['GET'])
 @jwt_required
 @admin_required
-def get_books():
+def get_all_books():
     """Fetch all books."""
     response = LibraryModel().get_all_books()
     return Serializer.serialize(response, 200, "Books retrieved successfully")
 
 
-@books_v1.route('/books/<string:admission_no>', methods=['GET'])
+@portal_v1.route('/books/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_books_for_one_student_by_admission(admission_no):
     """Fetch books for a single student by admission."""
@@ -54,10 +54,10 @@ def get_books_for_one_student_by_admission(admission_no):
     return raise_error(404, "Student not found")
 
 
-@books_v1.route('/books/<int:book_id>', methods=['PUT'])
+@portal_v1.route('/books/<int:book_id>', methods=['PUT'])
 @jwt_required
 @admin_required
-def put(book_id):
+def update_book_by_id(book_id):
     """Edit books."""
     errors = check_edit_library_keys(request)
     if errors:

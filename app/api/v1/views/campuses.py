@@ -7,10 +7,10 @@ from app.api.v1.models.campuses import CampusModel
 from utils.utils import check_campuses_keys, raise_error, campus_restrictions
 from utils.serializer import Serializer
 from utils.authorization import admin_required
-from app.api.v1 import campuses_v1
+from app.api.v1 import portal_v1
 
 
-@campuses_v1.route('/campuses', methods=['POST'])
+@portal_v1.route('/campuses', methods=['POST'])
 @jwt_required
 @admin_required
 def add_campus():
@@ -27,7 +27,7 @@ def add_campus():
     return Serializer.serialize(response, 201, "Campus added successfully")
 
 
-@campuses_v1.route('/campuses', methods=['GET'])
+@portal_v1.route('/campuses', methods=['GET'])
 @jwt_required
 def get_all_campuses():
     """Fetch all campuses."""
@@ -35,7 +35,7 @@ def get_all_campuses():
     return Serializer.serialize(response, 200, "Campuses retrieved successfully")
 
 
-@campuses_v1.route('/campuses/<int:campus_id>', methods=['GET'])
+@portal_v1.route('/campuses/<int:campus_id>', methods=['GET'])
 @jwt_required
 @admin_required
 def get_campus_by_id(campus_id):
@@ -46,7 +46,7 @@ def get_campus_by_id(campus_id):
     return raise_error(404, "Campus not found")
 
 
-@campuses_v1.route('/campuses/<int:campus_id>', methods=['PUT'])
+@portal_v1.route('/campuses/<int:campus_id>', methods=['PUT'])
 @jwt_required
 @admin_required
 def update_campus(campus_id):
@@ -65,7 +65,7 @@ def update_campus(campus_id):
     return raise_error(404, "Campus not found")
 
 
-@campuses_v1.route('/campuses/<int:campus_id>', methods=['DELETE'])
+@portal_v1.route('/campuses/<int:campus_id>', methods=['DELETE'])
 @jwt_required
 @admin_required
 def delete_campus(campus_id):

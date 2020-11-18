@@ -13,10 +13,10 @@ from app.api.v1.models.institutions import InstitutionsModel
 from utils.utils import check_apply_course_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
-from app.api.v1 import apply_course_v1
+from app.api.v1 import portal_v1
 
 
-@apply_course_v1.route('/apply_course', methods=['POST'])
+@portal_v1.route('/apply_course', methods=['POST'])
 @jwt_required
 def apply_course():
     """Apply a course."""
@@ -48,7 +48,7 @@ def apply_course():
         return raise_error(404, "Institution not found")
 
 
-@apply_course_v1.route('/apply_course/<int:application_id>', methods=['GET'])
+@portal_v1.route('/apply_course/<int:application_id>', methods=['GET'])
 @jwt_required
 def get_course(application_id):
     """Get course by id."""

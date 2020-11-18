@@ -2,13 +2,13 @@ import json
 from flask import request
 from flask_jwt_extended import jwt_required
 from utils.serializer import Serializer
-from app.api.v1 import departments_v1
+from app.api.v1 import portal_v1
 from app.api.v1.models.departments import DepartmentsModel
 from utils.utils import raise_error, check_department_keys
 from utils.authorization import admin_required
 
 
-@departments_v1.route('/departments', methods=['POST'])
+@portal_v1.route('/departments', methods=['POST'])
 @jwt_required
 @admin_required
 def add_department():
@@ -24,7 +24,7 @@ def add_department():
     return Serializer.serialize(response, 201, "Department added successfully")
 
 
-@departments_v1.route('/departments', methods=['GET'])
+@portal_v1.route('/departments', methods=['GET'])
 @jwt_required
 def get_all_departments():
     """Get all departments."""
@@ -32,7 +32,7 @@ def get_all_departments():
     return Serializer.serialize(response, 200, 'Departments successfully retrieved')
 
 
-@departments_v1.route('/departments/<int:department_id>', methods=['GET'])
+@portal_v1.route('/departments/<int:department_id>', methods=['GET'])
 @jwt_required
 def get_department_by_id(department_id):
     """Get all departments."""
@@ -42,7 +42,7 @@ def get_department_by_id(department_id):
     return raise_error(404, "Department not found")
 
 
-@departments_v1.route('/departments/<int:department_id>', methods=['PUT'])
+@portal_v1.route('/departments/<int:department_id>', methods=['PUT'])
 @jwt_required
 @admin_required
 def update_department(department_id):
@@ -60,7 +60,7 @@ def update_department(department_id):
     return raise_error(404, "Department not found")
 
 
-@departments_v1.route('/departments/<int:department_id>', methods=['DELETE'])
+@portal_v1.route('/departments/<int:department_id>', methods=['DELETE'])
 @jwt_required
 @admin_required
 def delete_department(department_id):

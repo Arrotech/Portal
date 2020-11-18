@@ -10,10 +10,10 @@ from app.api.v1.models.units import UnitsModel
 from utils.utils import check_subjects_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
-from app.api.v1 import subjects_v1
+from app.api.v1 import portal_v1
 
 
-@subjects_v1.route('/subjects', methods=['POST'])
+@portal_v1.route('/subjects', methods=['POST'])
 @jwt_required
 def register_subjects():
     """Register a subject."""
@@ -32,7 +32,7 @@ def register_subjects():
         return raise_error(404, "Unit {} not found".format(unit_name))
 
 
-@subjects_v1.route('/subjects', methods=['GET'])
+@portal_v1.route('/subjects', methods=['GET'])
 @jwt_required
 @admin_required
 def get_subjects():
@@ -41,7 +41,7 @@ def get_subjects():
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
 
 
-@subjects_v1.route('/subjects/<string:admission_no>', methods=['GET'])
+@portal_v1.route('/subjects/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_subjects_for_specific_user_by_admission(admission_no):
     """Fetch all subjects for a specific user by admission."""
@@ -49,7 +49,7 @@ def get_subjects_for_specific_user_by_admission(admission_no):
     return Serializer.serialize(response, 200, "Subjects successfull retrieved")
 
 
-@subjects_v1.route('/subjects/<int:subject_id>', methods=['DELETE'])
+@portal_v1.route('/subjects/<int:subject_id>', methods=['DELETE'])
 @jwt_required
 @admin_required
 def delete_subject(subject_id):

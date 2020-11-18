@@ -2,7 +2,7 @@ import json
 from flask import request
 from flask_jwt_extended import jwt_required
 from utils.serializer import Serializer
-from app.api.v1 import checklist_v1
+from app.api.v1 import portal_v1
 from app.api.v1.models.checklist import ChecklistModel
 from app.api.v1.models.users_model import UsersModel
 from app.api.v1.models.departments import DepartmentsModel
@@ -12,7 +12,7 @@ from utils.utils import raise_error, check_checklist_keys
 from utils.authorization import admin_required
 
 
-@checklist_v1.route('/checklist', methods=['POST'])
+@portal_v1.route('/checklist', methods=['POST'])
 @jwt_required
 def fill_checklist():
     """Fill checklist form."""

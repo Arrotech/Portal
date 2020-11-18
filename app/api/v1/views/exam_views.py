@@ -1,6 +1,6 @@
 from flask import request
 from flask_jwt_extended import jwt_required
-from app.api.v1 import exams_v1
+from app.api.v1 import portal_v1
 from app.api.v1.models.users_model import UsersModel
 from app.api.v1.models.units import UnitsModel
 from app.api.v1.models.exams_model import ExamsModel
@@ -9,7 +9,7 @@ from utils.serializer import Serializer
 from utils.authorization import admin_required
 
 
-@exams_v1.route('/exams', methods=['POST'])
+@portal_v1.route('/exams', methods=['POST'])
 @jwt_required
 def add_exam():
     """Make a new exam entry."""
@@ -32,18 +32,18 @@ def add_exam():
         return raise_error(404, "Unit {} not found".format(unit_name))
 
 
-@exams_v1.route('/exams', methods=['GET'])
+@portal_v1.route('/exams', methods=['GET'])
 @jwt_required
 @admin_required
-def get_exams():
+def get_all_exams():
     """Fetch all exams."""
     response = ExamsModel().get_exams()
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
 
-@exams_v1.route('/exams/<string:admission_no>', methods=['GET'])
+@portal_v1.route('/exams/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_exams_for_a_student(admission_no):
+def get_exams_for_a_student_by_admission(admission_no):
     """Fetch all exams for a specific student."""
     response = ExamsModel().get_exams_for_a_student_by_admission(admission_no)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")

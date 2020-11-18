@@ -1,4 +1,4 @@
-from app.api.v1 import hostels_v1
+from app.api.v1 import portal_v1
 from flask_jwt_extended import jwt_required
 from utils.authorization import admin_required
 from utils.utils import check_hostels_keys, raise_error
@@ -8,7 +8,7 @@ import json
 from utils.serializer import Serializer
 
 
-@hostels_v1.route('/hostels', methods=['POST'])
+@portal_v1.route('/hostels', methods=['POST'])
 @jwt_required
 @admin_required
 def add_hostel():
@@ -28,7 +28,7 @@ def add_hostel():
     return Serializer.serialize(response, 201, 'Hostel added successfully')
 
 
-@hostels_v1.route('/hostels', methods=['GET'])
+@portal_v1.route('/hostels', methods=['GET'])
 @jwt_required
 def get_all_hostels():
     """Have a user able to view all hostels."""
@@ -36,7 +36,7 @@ def get_all_hostels():
     return Serializer.serialize(response, 200, "Hostels retrived successfully")
 
 
-@hostels_v1.route('/hostels/<int:hostel_id>', methods=['GET'])
+@portal_v1.route('/hostels/<int:hostel_id>', methods=['GET'])
 @jwt_required
 def get_hostel_by_id(hostel_id):
     """Have a user able to view hostel by id."""
@@ -45,7 +45,7 @@ def get_hostel_by_id(hostel_id):
         return Serializer.serialize(response, 200, "Hostel retrived successfully")
     return raise_error(404, 'Hostel not found')
 
-@hostels_v1.route('/hostels/<string:hostel_name>', methods=['GET'])
+@portal_v1.route('/hostels/<string:hostel_name>', methods=['GET'])
 @jwt_required
 def get_hostel_by_name(hostel_name):
     """Have a user able to view hostel by name."""
@@ -55,7 +55,7 @@ def get_hostel_by_name(hostel_name):
     return raise_error(404, 'Hostel not found')
 
 
-@hostels_v1.route('/hostels/location/<string:hostel_location>', methods=['GET'])
+@portal_v1.route('/hostels/location/<string:hostel_location>', methods=['GET'])
 @jwt_required
 def get_hostels_by_location(hostel_location):
     """Have a user able to view all hostels by location."""
@@ -63,7 +63,7 @@ def get_hostels_by_location(hostel_location):
     return Serializer.serialize(response, 200, "Hostel(s) retrived successfully")
 
 
-@hostels_v1.route('/hostels/<int:hostel_id>', methods=['DELETE'])
+@portal_v1.route('/hostels/<int:hostel_id>', methods=['DELETE'])
 @jwt_required
 @admin_required
 def delete_hostel(hostel_id):
