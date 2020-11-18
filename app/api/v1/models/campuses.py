@@ -28,19 +28,14 @@ class CampusModel(Database):
 
     def get_all_campuses(self):
         """Get all campuses."""
-        self.curr.execute("""SELECT * FROM campuses""")
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM campuses"
+        response = Database().fetch(query)
         return response
 
     def get_campus_by_id(self, campus_id):
         """Get campus by id."""
-        self.curr.execute(
-            """SELECT * FROM campuses WHERE campus_id={}""".format(campus_id))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM campuses WHERE campus_id=%s"
+        response = Database().fetch_one(query, campus_id)
         return response
 
     def edit_campus(self, campus_id, campus_name, campus_location):

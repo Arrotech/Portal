@@ -30,38 +30,26 @@ class HostelsModel(Database):
 
     def get_all_hostels(self):
         """Fetch all hostels."""
-        self.curr.execute(
-            """ SELECT * FROM hostels """)
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM hostels"
+        response = Database().fetch(query)
         return response
 
     def get_hostel_by_id(self, hostel_id):
         """Fetch hostel by id."""
-        self.curr.execute(
-            """ SELECT * FROM hostels WHERE hostel_id={}""".format(hostel_id))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM hostels WHERE hostel_id=%s"
+        response = Database().fetch_one(query, hostel_id)
         return response
     
     def get_hostel_by_name(self, hostel_name):
         """Fetch hostel by name."""
-        self.curr.execute(
-            """ SELECT * FROM hostels WHERE hostel_name=%s""", (hostel_name,))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM hostels WHERE hostel_name=%s"
+        response = Database().fetch_one(query, hostel_name)
         return response
 
     def view_hostel_by_location(self, hostel_location):
         """View hostel(s) by location."""
-        self.curr.execute(
-            """ SELECT * FROM hostels WHERE hostel_location=%s""", (hostel_location,),)
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM hostels WHERE hostel_location=%s"
+        response = Database().fetch_one(query, hostel_location)
         return response
 
     def delete(self, hostel_id):

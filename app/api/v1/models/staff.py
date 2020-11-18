@@ -40,25 +40,17 @@ class StaffModel(Database):
 
     def get_username(self, username):
         """Request a single user with specific Username."""
-        self.curr.execute(
-            """ SELECT * FROM staff WHERE username=%s""", (username,))
-        user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(user, default=str)
+        query = "SELECT * FROM staff WHERE username=%s"
+        response = Database().fetch_one(query, username)
+        return json.dumps(response, default=str)
 
     def get_email(self, email):
         """Request a single user with specific Email Address."""
-        self.curr.execute(''' SELECT * FROM staff WHERE email=%s''', (email,))
-        user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(user, default=str)
+        query = "SELECT * FROM staff WHERE email=%s"
+        response = Database().fetch_one(query, email)
+        return json.dumps(response, default=str)
 
     def get_form(self, form):
-        """Request a single user with specific form."""
-        self.curr.execute(''' SELECT * FROM staff WHERE form=%s''', (form,))
-        user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return json.dumps(user, default=str)
+        query = "SELECT * FROM staff WHERE form=%s"
+        response = Database().fetch_one(query, form)
+        return json.dumps(response, default=str)

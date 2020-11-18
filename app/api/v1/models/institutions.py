@@ -27,29 +27,20 @@ class InstitutionsModel(Database):
 
     def get_all_institutions(self):
         """Get all institutions."""
-        self.curr.execute("""SELECT * FROM institutions""")
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM institutions"
+        response = Database().fetch(query)
         return response
 
     def get_institution_by_id(self, institution_id):
         """Get institution by id."""
-        self.curr.execute(
-            """SELECT * FROM institutions WHERE institution_id={}""".format(institution_id))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM institutions WHERE institution_id=%s"
+        response = Database().fetch_one(query, institution_id)
         return response
 
     def get_institution_name(self, institution_name):
         """Get institution by name."""
-        self.curr.execute("""
-                          SELECT * FROM institutions WHERE institution_name='{}'
-                          """.format(institution_name))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM institutions WHERE institution_name=%s"
+        response = Database().fetch_one(query, institution_name)
         return response
 
     def edit_institution(self, institution_id, institution_name):

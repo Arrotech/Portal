@@ -25,31 +25,20 @@ class DepartmentsModel(Database):
 
     def get_department_name(self, department_name):
         """Get department by name."""
-        self.curr.execute("""
-                          SELECT * FROM departments WHERE department_name='{}'
-                          """.format(department_name))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM departments WHERE department_name=%s"
+        response = Database().fetch_one(query, department_name)
         return response
 
     def get_all_departments(self):
         """Fetch all departments."""
-        self.curr.execute("""
-                          SELECT * FROM departments
-                          """)
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM departments"
+        response = Database().fetch(query)
         return response
 
     def get_department_by_id(self, department_id):
         """Fetch a specific department by id."""
-        self.curr.execute(
-            """SELECT * FROM departments WHERE department_id={}""".format(department_id))
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM departments WHERE department_id=%s"
+        response = Database().fetch_one(query, department_id)
         return response
 
     def edit_department(self, department_id, department_name):

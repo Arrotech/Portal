@@ -43,13 +43,10 @@ class FeesModels(Database):
 
     def get_all_fees(self):
         """Fetch all fees"""
-        self.curr.execute(''' SELECT f.transaction_type, f.transaction_no, f.description,
-                          f.amount, f.created_on, u.admission_no, u.firstname, u.lastname, u.surname FROM fees AS f
-                          INNER JOIN users AS u ON f.student = u.admission_no
-                          ''')
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT f.transaction_type, f.transaction_no, f.description,\
+                          f.amount, f.created_on, u.admission_no, u.firstname, u.lastname, u.surname FROM fees AS f\
+                          INNER JOIN users AS u ON f.student = u.admission_no"
+        response = Database().fetch(query)
         return response
 
     def get_fee_by_user_admission(self, admission_no):

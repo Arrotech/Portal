@@ -28,35 +28,20 @@ class CoursesModel(Database):
 
     def get_course_name(self, course_name):
         """Get course by name."""
-        self.curr.execute("""
-                          SELECT * FROM courses WHERE course_name='{}'
-                          """.format(course_name))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT * FROM courses WHERE course_name=%s"
+        response = Database().fetch_one(query, course_name)
         return response
 
     def get_courses(self):
         """Get all courses."""
-        self.curr.execute("""SELECT d.department_name, c.course_name 
-                          FROM courses AS c
-                          INNER JOIN departments AS d ON c.department = d.department_name
-                          """)
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT d.department_name, c.course_name FROM courses AS c INNER JOIN departments AS d ON c.department = d.department_name"
+        response = Database().fetch(query)
         return response
 
     def get_course_by_id(self, course_id):
         """Get course by id."""
-        self.curr.execute("""SELECT d.department_name, c.course_name 
-                          FROM courses AS c
-                          INNER JOIN departments AS d ON c.department = d.department_name
-                          WHERE course_id={}
-                          """.format(course_id))
-        response = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        query = "SELECT d.department_name, c.course_name FROM courses AS c INNER JOIN departments AS d ON c.department = d.department_name WHERE course_id=%s"
+        response = Database().fetch_one(query, course_id)
         return response
 
     def edit_course(self, course_id, course_name, department_name):
