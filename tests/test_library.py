@@ -10,7 +10,7 @@ class TestBooks(BaseTest):
     def test_add_books(self):
         """Test that the admin add books."""
         response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
@@ -22,7 +22,7 @@ class TestBooks(BaseTest):
     def test_add_books_keys(self):
         """Test the add books keys."""
         response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book_keys), content_type='application/json',
@@ -43,7 +43,7 @@ class TestBooks(BaseTest):
     def test_get_books(self):
         """Test that an admin can fetch all books that have been added."""
         response2 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
@@ -58,7 +58,7 @@ class TestBooks(BaseTest):
     def test_get_books_for_one_student_by_admission(self):
         """Test that a student can fetch all books that were issued."""
         response2 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
@@ -85,7 +85,7 @@ class TestBooks(BaseTest):
     def test_edit_books(self):
         """Test edit books."""
         response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response2 = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
@@ -99,7 +99,7 @@ class TestBooks(BaseTest):
     def test_edit_books_keys(self):
         """Test edit books keys."""
         response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
@@ -113,7 +113,7 @@ class TestBooks(BaseTest):
     def test_edit_non_existing_book(self):
         """Test edit non existing book."""
         response1 = self.client.post(
-            '/api/v1/auth/register', data=json.dumps(new_account), content_type='application/json',
+            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
             headers=self.get_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',

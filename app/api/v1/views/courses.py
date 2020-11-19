@@ -2,14 +2,14 @@ import json
 from flask import request
 from flask_jwt_extended import jwt_required
 from utils.serializer import Serializer
-from app.api.v1 import courses_v1
+from app.api.v1 import portal_v1
 from app.api.v1.models.courses import CoursesModel
 from app.api.v1.models.departments import DepartmentsModel
 from utils.utils import raise_error, check_courses_keys
 from utils.authorization import admin_required
 
 
-@courses_v1.route('/courses', methods=['POST'])
+@portal_v1.route('/courses', methods=['POST'])
 @jwt_required
 def add_course():
     """Add a course."""
@@ -27,17 +27,17 @@ def add_course():
     return raise_error(404, "Department not found")
 
 
-@courses_v1.route('/courses', methods=['GET'])
+@portal_v1.route('/courses', methods=['GET'])
 @jwt_required
-def get_courses():
+def get_all_courses():
     """Fetch all courses."""
     response = CoursesModel().get_courses()
     return Serializer.serialize(response, 200, "Courses successfull retrieved")
 
 
-@courses_v1.route('/courses/<int:course_id>', methods=['GET'])
+@portal_v1.route('/courses/<int:course_id>', methods=['GET'])
 @jwt_required
-def get_course(course_id):
+def get_course_by_id(course_id):
     """Fetch course by id."""
     response = CoursesModel().get_course_by_id(course_id)
     if response:
@@ -45,10 +45,10 @@ def get_course(course_id):
     return raise_error(404, "Course not found")
 
 
-@courses_v1.route('/courses/<int:course_id>', methods=['PUT'])
+@portal_v1.route('/courses/<int:course_id>', methods=['PUT'])
 @jwt_required
 @admin_required
-def update_course(course_id):
+def update_course_by_id(course_id):
     """Update a course by id."""
     details = request.get_json()
     errors = check_courses_keys(request)
@@ -64,7 +64,7 @@ def update_course(course_id):
     return raise_error(404, "Course not found")
 
 
-@courses_v1.route('/courses/<int:course_id>', methods=['DELETE'])
+@portal_v1.route('/courses/<int:course_id>', methods=['DELETE'])
 @jwt_required
 @admin_required
 def delete_course(course_id):

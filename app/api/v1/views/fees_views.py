@@ -8,11 +8,11 @@ from app.api.v1.models.users_model import UsersModel
 from utils.bursar import accountant_required
 from utils.utils import check_fees_keys, raise_error, check_edit_fees_keys
 from flask_jwt_extended import jwt_required
-from app.api.v1 import fees_v1
+from app.api.v1 import portal_v1
 from utils.serializer import Serializer
 
 
-@fees_v1.route('/fees', methods=['POST'])
+@portal_v1.route('/fees', methods=['POST'])
 @jwt_required
 @accountant_required
 def add_fees():
@@ -37,7 +37,7 @@ def add_fees():
         return Serializer.serialize(response, 201, "Entry made successfully")
 
 
-@fees_v1.route('/fees', methods=['GET'])
+@portal_v1.route('/fees', methods=['GET'])
 @jwt_required
 @accountant_required
 def get_fees():
@@ -46,7 +46,7 @@ def get_fees():
     return Serializer.serialize(response, 200, "Fees retrieved successfully")
 
 
-@fees_v1.route('/fees/<string:admission_no>', methods=['GET'])
+@portal_v1.route('/fees/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_fees_for_one_student_by_admission(admission_no):
     """The students can view their fees by admission."""
@@ -56,7 +56,7 @@ def get_fees_for_one_student_by_admission(admission_no):
     return raise_error(404, "Student not found")
 
 
-@fees_v1.route('/fees/<int:fee_id>', methods=['PUT'])
+@portal_v1.route('/fees/<int:fee_id>', methods=['PUT'])
 @jwt_required
 @accountant_required
 def put(fee_id):

@@ -1,5 +1,8 @@
 from flask import Blueprint
 
+portal_v1 = Blueprint('portal_v1', __name__,
+                          template_folder='../../../templates', static_folder='../../../../static')
+
 accountant_v1 = Blueprint('accountant_v1', __name__,
                           template_folder='../../../templates', static_folder='../../../../static')
 

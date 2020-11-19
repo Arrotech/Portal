@@ -7,15 +7,15 @@ from app.api.v1.models.users_model import UsersModel
 from utils.authorization import admin_required
 from utils.utils import default_decode_token, default_encode_token, generate_url, check_update_user_keys, is_valid_email, raise_error, check_register_keys, form_restrictions, is_valid_password, check_promote_student_keys
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.api.v1 import auth_v1
+from app.api.v1 import portal_v1
 from utils.serializer import Serializer
 from itsdangerous import URLSafeTimedSerializer
 from app.__init__ import exam_app
 from app.api.v1.services.mails.mail_services import send_email
 
 
-@auth_v1.route('/register', methods=['POST', 'GET'])
-def signup():
+@portal_v1.route('/students/register', methods=['POST', 'GET'])
+def student_signup():
     """A new user can create a new account."""
     errors = check_register_keys(request)
     if errors:
@@ -48,7 +48,7 @@ def signup():
     user = json.loads(UsersModel(firstname, lastname, surname,
                                  admission_no, gender, email, password, current_year).save())
     token = default_encode_token(email, salt='email-confirm-key')
-    confirm_url = generate_url('auth_v1.confirm_email', token=token)
+    confirm_url = generate_url('portal_v1.confirm_email', token=token)
     send_email('Confirm Your Email',
                sender='arrotechdesign@gmail.com',
                recipients=[email],
@@ -62,8 +62,8 @@ def signup():
     }), 201)
 
 
-@auth_v1.route('/login', methods=['POST'])
-def login():
+@portal_v1.route('/students/login', methods=['POST'])
+def student_login():
     """Already existing user can sign in to their account."""
     details = request.get_json()
     email = details['email']
@@ -93,7 +93,7 @@ def login():
     }), 401)
 
 
-@auth_v1.route('/confirm/<token>')
+@portal_v1.route('/students/confirm/<token>')
 def confirm_email(token):
     """Confirm email."""
     try:
@@ -114,7 +114,7 @@ def confirm_email(token):
     return raise_error(404, "User not found")
 
 
-@auth_v1.route('/forgot', methods=['POST'])
+@portal_v1.route('/students/forgot', methods=['POST'])
 def send_reset_email():
     """Send email for password reset link."""
     url = request.host_url + 'reset/'
@@ -145,7 +145,7 @@ def send_reset_email():
     }), 200)
 
 
-@auth_v1.route('/reset', methods=['POST'])
+@portal_v1.route('/students/reset', methods=['POST'])
 def reset_password():
     """Reset password."""
     """Already existing user can update their password."""
@@ -154,7 +154,7 @@ def reset_password():
     reset_token = details['reset_token']
     password = details['password']
     u_id = decode_token(reset_token)['identity']
-    user = json.loads(UsersModel().get_user_id(user_id=u_id))
+    user = json.loads(UsersModel().get_user_by_id(user_id=u_id))
     if user:
         email = user['email']
         user_id = user['user_id']
@@ -177,9 +177,9 @@ def reset_password():
     }))
 
 
-@auth_v1.route('/refresh', methods=['POST'])
+@portal_v1.route('/students/refresh', methods=['POST'])
 @jwt_refresh_token_required
-def refresh():
+def student_refresh_token():
     current_user = get_jwt_identity()
     expires = timedelta(days=365)
     access_token = create_access_token(current_user, expires_delta=expires)
@@ -189,17 +189,17 @@ def refresh():
     return jsonify(ret), 200
 
 
-@auth_v1.route('/protected', methods=['GET'])
+@portal_v1.route('/students/protected', methods=['GET'])
 @jwt_required
-def protected():
+def student_protected_route():
     email = get_jwt_identity()
     return jsonify(logged_in_as=email), 200
 
 
-@auth_v1.route('/users', methods=['GET'])
+@portal_v1.route('/students/users', methods=['GET'])
 @jwt_required
 @admin_required
-def get_users():
+def get_all_students():
     """An admin can fetch all users."""
     users = json.loads(UsersModel().get_users())
     return make_response(jsonify({
@@ -209,9 +209,9 @@ def get_users():
     }), 200)
 
 
-@auth_v1.route('/users/<int:user_id>', methods=['GET'])
+@portal_v1.route('/students/users/<int:user_id>', methods=['GET'])
 @jwt_required
-def get_user_by_id(user_id):
+def get_student_by_id(user_id):
     """Fetch user by id."""
     user = json.loads(UsersModel().get_user_by_id(user_id))
     if user:
@@ -223,9 +223,9 @@ def get_user_by_id(user_id):
     return raise_error(404, "User not found")
 
 
-@auth_v1.route('/users/<string:admission_no>', methods=['GET'])
+@portal_v1.route('/students/users/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_user(admission_no):
+def get_student_by_admission_no(admission_no):
     """An admin can fetch a single user."""
     user = json.loads(UsersModel().get_admission_no(admission_no))
     if user:
@@ -240,9 +240,9 @@ def get_user(admission_no):
     }), 404)
 
 
-@auth_v1.route('/users/<string:admission_no>/promote', methods=['PUT'])
+@portal_v1.route('/students/users/<string:admission_no>/promote', methods=['PUT'])
 @jwt_required
-def promote(admission_no):
+def promote_student(admission_no):
     """An admin can promote a student to another form."""
     errors = check_promote_student_keys(request)
     if errors:
@@ -264,9 +264,9 @@ def promote(admission_no):
     }), 404)
 
 
-@auth_v1.route('/users/user_info/<string:admission_no>', methods=['PUT'])
+@portal_v1.route('/students/users/user_info/<string:admission_no>', methods=['PUT'])
 @jwt_required
-def update_user_info(admission_no):
+def update_student_info(admission_no):
     """Update user information."""
     errors = check_update_user_keys(request)
     if errors:

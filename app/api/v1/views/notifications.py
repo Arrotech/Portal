@@ -8,11 +8,11 @@ from app.api.v1.models.users_model import UsersModel
 from utils.utils import check_notification_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
-from app.api.v1 import notifications_v1
+from app.api.v1 import portal_v1
 from app.api.v1.services.mails.mail_services import send_email
 
 
-@notifications_v1.route('/notifications', methods=['POST'])
+@portal_v1.route('/notifications', methods=['POST'])
 @jwt_required
 @admin_required
 def send_notification():
@@ -34,7 +34,7 @@ def send_notification():
                 html_body=description)
     return Serializer.serialize(response, 201, "Notification sent successfully")
 
-@notifications_v1.route('/notifications/<int:notification_id>', methods=['GET'])
+@portal_v1.route('/notifications/<int:notification_id>', methods=['GET'])
 @jwt_required
 def get_notification_by_id(notification_id):
     """Fetch institution by id."""

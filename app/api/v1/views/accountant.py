@@ -5,10 +5,10 @@ from app.api.v1.models.accountant import AccountantModel
 from utils.utils import is_valid_email, raise_error, check_accountant_keys, check_login_keys, is_valid_password
 import datetime
 from werkzeug.security import check_password_hash
-from app.api.v1 import accountant_v1
+from app.api.v1 import portal_v1
 
 
-@accountant_v1.route('/register', methods=['POST'])
+@portal_v1.route('/accountant/register', methods=['POST'])
 def signup():
     """A new user can create a new account."""
     errors = check_accountant_keys(request)
@@ -44,7 +44,7 @@ def signup():
     }), 201)
 
 
-@accountant_v1.route('/login', methods=['POST'])
+@portal_v1.route('/accountant/login', methods=['POST'])
 def login():
     """Already existing user can sign in to their account."""
     errors = check_login_keys(request)
@@ -78,7 +78,7 @@ def login():
     }), 401)
 
 
-@accountant_v1.route('/refresh', methods=['POST'])
+@portal_v1.route('/accountant/refresh', methods=['POST'])
 @jwt_refresh_token_required
 def refresh():
     """Get the access token."""
@@ -91,7 +91,7 @@ def refresh():
     return jsonify(ret), 200
 
 
-@accountant_v1.route('/protected', methods=['GET'])
+@portal_v1.route('/accountant/protected', methods=['GET'])
 @jwt_required
 def protected():
     """Access the protected route."""
@@ -99,7 +99,7 @@ def protected():
     return jsonify(logged_in_as=email), 200
 
 
-@accountant_v1.route('/users', methods=['GET'])
+@portal_v1.route('/accountant/users', methods=['GET'])
 @jwt_required
 def get_users():
     """Get all users."""
@@ -110,7 +110,7 @@ def get_users():
     }), 200)
 
 
-@accountant_v1.route('/users/<string:username>', methods=['GET'])
+@portal_v1.route('/accountant/users/<string:username>', methods=['GET'])
 @jwt_required
 def get_user(username):
     """Get a specific user by the username."""
