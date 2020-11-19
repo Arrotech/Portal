@@ -6,7 +6,6 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask import Flask
-from flask_caching import Cache
 
 from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
 from app.api.v1.models.database import Database
@@ -26,10 +25,7 @@ def exam_app(config_name):
     app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-    app.config['CACHE_TYPE'] = 'simple'
- 
 
-    Cache(app)
     CORS(app)
     JWTManager(app)
     Mail(app)
