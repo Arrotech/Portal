@@ -11,6 +11,7 @@ from utils.authorization import admin_required
 
 @portal_v1.route('/exams', methods=['POST'])
 @jwt_required
+@admin_required
 def add_exam():
     """Make a new exam entry."""
     errors = check_exams_keys(request)

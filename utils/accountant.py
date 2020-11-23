@@ -3,7 +3,7 @@ from functools import wraps
 
 from flask_jwt_extended import get_jwt_identity
 
-from app.api.v1.models.accountant import AccountantModel
+from app.api.v1.models.users_model import UsersModel
 
 
 def accountant_required(func):
@@ -11,7 +11,7 @@ def accountant_required(func):
 
     @wraps(func)
     def wrapper_function(*args, **kwargs):
-        users = AccountantModel().get_users()
+        users = UsersModel().get_all_users()
         users = json.loads(users)
         try:
             cur_user = [

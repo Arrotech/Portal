@@ -3,18 +3,36 @@ import json
 from utils.dummy import admin_login, admin_account_test, admin_account, email_already_exists, Invalid_register_key, create_account, user_login, new_account, new_login, new_account1, wrong_firstname,\
     wrong_lastname, reset_email, reset_unexisting_email, update_user_password, update_user_info, update_user_info_keys, promote_user, promote_user_key, wrong_student_email_token, student_email_token,\
     wrong_surname, wrong_email, password_length, invalid_password, wrong_role, wrong_account_keys, wrong_password_login,\
-    password_reset_invalid_email_format, reset_password
+    password_reset_invalid_email_format, reset_password, new_admin_account, new_accountant_account
 from .base_test import BaseTest
 
 
 class TestUsersAccount(BaseTest):
     """Testing the users account endpoint."""
 
-    def test_create_account(self):
+    def test_create_student_account(self):
         """Test that the user can create a new account."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Account created successfully!')
+        assert response.status_code == 201
+
+    def test_create_admin_account(self):
+        """Test that the user can create a new account."""
+        response = self.client.post(
+            '/api/v1/staff/register', data=json.dumps(new_admin_account), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Account created successfully!')
+        assert response.status_code == 201
+
+    def test_create_accountant_account(self):
+        """Test that the user can create a new account."""
+        response = self.client.post(
+            '/api/v1/accountant/register', data=json.dumps(new_accountant_account), content_type='application/json',
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Account created successfully!')
         assert response.status_code == 201
@@ -23,7 +41,7 @@ class TestUsersAccount(BaseTest):
         """Test that a user will get an error message why they provide invalid email format."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response1 = self.client.post(
             '/api/v1/students/forgot', data=json.dumps(password_reset_invalid_email_format), content_type='application/json',
             headers=self.get_token())
@@ -31,35 +49,11 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'Invalid Email Format!')
         assert response1.status_code == 400
 
-    def test_promote_user(self):
-        """Test promote user."""
-        response = self.client.post(
-            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.put(
-            '/api/v1/students/users/NJCF4001/promote', data=json.dumps(promote_user), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'student promoted successfully')
-        assert response1.status_code == 200
-
-    def test_promote_user_unexisting_user(self):
-        """Test promote non existing user."""
-        response = self.client.post(
-            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.put(
-            '/api/v1/students/users/NJCF4002/promote', data=json.dumps(promote_user), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'student not found')
-        assert response1.status_code == 404
-
     def test_login_with_wrong_password(self):
         """Test login with wrong password."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response1 = self.client.post(
             '/api/v1/students/login', data=json.dumps(wrong_password_login), content_type='application/json',
             headers=self.get_token())
@@ -70,26 +64,23 @@ class TestUsersAccount(BaseTest):
     def test_refresh_token(self):
         """Test refresh token."""
         response = self.client.post(
-            '/api/v1/students/refresh', content_type='application/json',
+            '/api/v1/users/refresh', content_type='application/json',
             headers=self.get_refresh_token())
         assert response.status_code == 200
 
     def test_protected(self):
         """Test protected route."""
-        response = self.client.post(
-            '/api/v1/students/register', content_type='application/json',
-            headers=self.get_token())
         response1 = self.client.get(
-            '/api/v1/students/protected', content_type='application/json', headers=self.get_token())
+            '/api/v1/users/protected', content_type='application/json', headers=self.get_token())
         assert response1.status_code == 200
 
     def test_get_users(self):
         """Test fetching all users."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response1 = self.client.get(
-            '/api/v1/students/users', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/staff/users', content_type='application/json', headers=self.get_admin_token())
         result = json.loads(response1.data.decode())
         self.assertEqual(result['message'], "successfully retrieved")
         assert response1.status_code == 200
@@ -98,7 +89,7 @@ class TestUsersAccount(BaseTest):
         """Test getting a user by admission."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response1 = self.client.get(
             '/api/v1/students/users/NJCF4001', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
@@ -131,28 +122,16 @@ class TestUsersAccount(BaseTest):
         """Test register user with invalid json keys."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(wrong_account_keys), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid firstname key')
         assert response.status_code == 400
-
-    def test_promote_user_keys(self):
-        """Test the promote user with invalid json keys."""
-        response = self.client.post(
-            '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
-        response1 = self.client.put(
-            '/api/v1/students/users/NJCF4001/promote', data=json.dumps(promote_user_key), content_type='application/json',
-            headers=self.get_admin_token())
-        result = json.loads(response1.data.decode())
-        self.assertEqual(result['message'], 'Invalid current_year key')
-        assert response1.status_code == 400
 
     def test_password_length(self):
         """Test password length."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(password_length), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'], 'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!')
@@ -162,7 +141,7 @@ class TestUsersAccount(BaseTest):
         """Test registering with existing email."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(email_already_exists), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Email Already Exists!')
         assert response.status_code == 400
@@ -171,7 +150,7 @@ class TestUsersAccount(BaseTest):
         """Test registering with invalid json keys."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(Invalid_register_key), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid firstname key')
         assert response.status_code == 400
@@ -180,7 +159,7 @@ class TestUsersAccount(BaseTest):
         """Test user login."""
         response1 = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account1), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response = self.client.post(
             '/api/v1/students/login', data=json.dumps(new_login), content_type='application/json',
             headers=self.get_token())
@@ -192,7 +171,7 @@ class TestUsersAccount(BaseTest):
         """Test reset password email."""
         response1 = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account1), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response = self.client.post(
             '/api/v1/students/forgot', data=json.dumps(student_email_token), content_type='application/json')
         result = json.loads(response.data.decode())
@@ -213,7 +192,7 @@ class TestUsersAccount(BaseTest):
         """Test registering with wrong firstname format."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(wrong_firstname), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'firstname is in wrong format')
         assert response.status_code == 400
@@ -222,7 +201,7 @@ class TestUsersAccount(BaseTest):
         """Test registering with wrong lastname format."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(wrong_lastname), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'lastname is in wrong format')
         assert response.status_code == 400
@@ -231,7 +210,7 @@ class TestUsersAccount(BaseTest):
         """Test registering with wrong surname format."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(wrong_surname), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'surname is in wrong format')
         assert response.status_code == 400
@@ -240,7 +219,7 @@ class TestUsersAccount(BaseTest):
         """Test registering with wrong email format."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(wrong_email), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid Email Format!')
         assert response.status_code == 400
@@ -257,7 +236,7 @@ class TestUsersAccount(BaseTest):
         """Test that a user can update their information"""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response2 = self.client.put(
             '/api/v1/students/users/user_info/NJCF4001', data=json.dumps(update_user_info), content_type='application/json',
             headers=self.get_token())
@@ -269,7 +248,7 @@ class TestUsersAccount(BaseTest):
         """Test that a user cannot update their information with invalid json keys."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response2 = self.client.put(
             '/api/v1/students/users/user_info/1', data=json.dumps(update_user_info_keys), content_type='application/json',
             headers=self.get_token())
@@ -281,7 +260,7 @@ class TestUsersAccount(BaseTest):
         """Test that a user cannot update their information for non existing user."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response2 = self.client.put(
             '/api/v1/students/users/user_info/100', data=json.dumps(update_user_info), content_type='application/json',
             headers=self.get_token())
@@ -293,7 +272,7 @@ class TestUsersAccount(BaseTest):
         """Test sending a password reset email."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/students/forgot', data=json.dumps(reset_email), content_type='application/json',
             headers=self.get_token())
@@ -306,7 +285,7 @@ class TestUsersAccount(BaseTest):
         """Test sending a password reset for non existing email."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response2 = self.client.post(
             '/api/v1/students/forgot', data=json.dumps(reset_unexisting_email), content_type='application/json',
             headers=self.get_token())

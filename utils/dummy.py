@@ -12,6 +12,31 @@ create_account = {
     "role": "student"
 }
 
+default_accountant_account = {
+    "firstname": "Mercy",
+    "lastname": "Wairimu",
+    "surname": "Gitundu",
+    "admission_no": "sc200-1345/2014",
+    "gender": "female",
+    "email": "petergitundu94@gmail.com",
+    "password": "Peter20930988!"
+}
+
+new_accountant_account = {
+    "firstname": "Mercy",
+    "lastname": "Wairimu",
+    "surname": "Gitundu",
+    "admission_no": "sc200-1345/2015",
+    "gender": "female",
+    "email": "peterg@gmail.com",
+    "password": "Peter20930988!"
+}
+
+default_accountant_login = {
+    "email": "petergitundu94@gmail.com",
+    "password": "Peter20930988!"
+}
+
 password_reset_invalid_email_format = {
     "email": "qwgfui17515987"
 }
@@ -64,6 +89,28 @@ new_account = {
     "lastname": "Njoroge",
     "surname": "Gitundu",
     "admission_no": "NJCF4001",
+    "gender": "male",
+    "email": "arrotechdesign@gmail.com",
+    "password": "Harun20930988!",
+    "current_year": "1",
+    "role": "student"
+}
+
+default_admin_account = {
+    "firstname": "Kevin",
+    "lastname": "Njoroge",
+    "surname": "Gitundu",
+    "admission_no": "sc200-1358/2014",
+    "gender": "male",
+    "email": "gitundugachanja94@gmail.com",
+    "password": "Harun20930988!"
+}
+
+new_admin_account = {
+    "firstname": "Kevin",
+    "lastname": "Njoroge",
+    "surname": "Gitundu",
+    "admission_no": "sc200-1358/2015",
     "gender": "male",
     "email": "arrotechdesign@gmail.com",
     "password": "Harun20930988!",
@@ -125,6 +172,11 @@ admin_login = {
     "password": "Admin20930988!"
 }
 
+default_admin_login = {
+    "email": "gitundugachanja94@gmail.com",
+    "password": "Harun20930988!"
+}
+
 bursar_login = {
     "email": "bursar@admin.com",
     "password": "Bursar20930988!"
@@ -160,7 +212,7 @@ email_already_exists = {
     "surname": "Gachanja",
     "admission_no": "NJCF1005",
     "gender": "male",
-    "email": "gitundu.mercy@students.jcs.ac.ke",
+    "email": "gitundugachanja94@gmail.com",
     "password": "Miriam20930988!",
     "current_year": "1",
     "role": "student"
@@ -272,250 +324,6 @@ wrong_role = {
     "role": "stude hui9876b )nt"
 }
 
-
-# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Staff Information @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-staff_account = {
-    "firstname": "Peter",
-    "lastname": "Gitundu",
-    "form": "1",
-    "stream": "1A",
-    "username": "Peter254",
-    "email": "petergitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-new_staff_account = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "form": "2",
-    "stream": "1A",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_staff_account_keys = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "form": "2",
-    "stream": "1A",
-    "usname": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_staff_account_firstname = {
-    "firstname": "Ha  run",
-    "lastname": "Gachanja",
-    "form": "2",
-    "stream": "1A",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_staff_account_lastname = {
-    "firstname": "Harun",
-    "lastname": "Gacha nja",
-    "form": "2",
-    "stream": "1A",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-# wrong_account_phone = {
-#     "firstname": "Harun",
-#     "lastname": "Gachanja",
-#     "form": "1",
-#     "username": "Arrotech",
-#     "email": "harungachanjagitundu@gmail.com",
-#     "password": "Harun20930988!"
-# }
-
-wrong_staff_account_email = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "form": "2",
-    "stream": "1A",
-    "username": "Arrotech",
-    "email": "harungachanjagitundugmailcom",
-    "password": "Harun20930988!"
-}
-
-wrong_staff_account_password = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "form": "2",
-    "stream": "1A",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "H"
-}
-
-# phone_exists = {
-#     "firstname": "Harun",
-#     "lastname": "Gachanja",
-#     "phone": "0711371265",
-#     "username": "Arrotech254",
-#     "email": "gitundu@gmail.com",
-#     "password": "Harun20930988!"
-# }
-
-username_staff_exists = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "form": "3",
-    "stream": "1A",
-    "username": "Arrotech",
-    "email": "gitundugachanja94@gmail.com",
-    "password": "Harun20930988!"
-}
-
-email_staff_exists = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "form": "3",
-    "stream": "1A",
-    "username": "Arrotech2547",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-staff_login = {
-    "email": "petergitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-wrong_staff_login_keys = {
-    "ema": "petergitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-wrong_staff_password_login = {
-    "email": "harungachanjagitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-wrong_staff_email_login = {
-    "email": "harungitundu94@gmail.com",
-    "password": "Harun20930988!"
-}
-
-invalid_email_password = {
-    "email": "harungachanjagitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-invalid_staff_login_password = {
-    "email": "petergitundu94@gmail.com",
-    "password": "Peter209309"
-}
-
-
-# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Accountant Information @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-accountant_account = {
-    "firstname": "Peter",
-    "lastname": "Gitundu",
-    "username": "Peter254",
-    "email": "petergitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-new_accountant_account = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_accountant_account_keys = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "usname": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_accountant_account_firstname = {
-    "firstname": "Ha  run",
-    "lastname": "Gachanja",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_accountant_account_lastname = {
-    "firstname": "Harun",
-    "lastname": "Gacha nja",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-wrong_accountant_account_email = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "username": "Arrotech",
-    "email": "harungachanjagitundugmailcom",
-    "password": "Harun20930988!"
-}
-
-wrong_accountant_account_password = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "username": "Arrotech",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "H"
-}
-
-username_accountant_exists = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "username": "Arrotech",
-    "email": "gitundugachanja94@gmail.com",
-    "password": "Harun20930988!"
-}
-
-email_accountant_exists = {
-    "firstname": "Harun",
-    "lastname": "Gachanja",
-    "username": "Arrotech2547",
-    "email": "harungachanjagitundu@gmail.com",
-    "password": "Harun20930988!"
-}
-
-accountant_login = {
-    "email": "petergitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-wrong_accountant_login_keys = {
-    "ema": "petergitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-wrong_accountant_password_login = {
-    "email": "harungachanjagitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-wrong_accountant_email_login = {
-    "email": "harungitundu94@gmail.com",
-    "password": "Harun20930988!"
-}
-
-invalid_accountant_email_password = {
-    "email": "harungachanjagitundu94@gmail.com",
-    "password": "Peter20930988!"
-}
-
-invalid_accountant_password = {
-    "email": "petergitundu94@gmail.com",
-    "password": "Peter209309"
-}
-
 # @@@@@@@@@@@@@@@@@@@@@@@@@@ UNITS @@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 new_unit = {
@@ -583,7 +391,7 @@ update_existing_unit_code1 = {
 new_entry = {
     "semester": "1",
     "year": "2014",
-    "admission_no": "NJCF1001",
+    "admission_no": "NJCF4001",
     "unit_name": "Calculus 1",
     "marks": "80"
 }
@@ -661,7 +469,7 @@ edit_books_keys = {
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FEES Data @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 add_fees = {
-    "admission_no": "NJCF1001",
+    "admission_no": "NJCF4001",
     "transaction_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",

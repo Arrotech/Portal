@@ -24,7 +24,7 @@ def send_notification():
     subject = details['subject']
     description = details['description']
     response = NotificationsModel(subject, description).save()
-    users = json.loads(UsersModel().get_users())
+    users = json.loads(UsersModel().get_all_users())
     for user in users:
         email = user['email']
         send_email(subject,
