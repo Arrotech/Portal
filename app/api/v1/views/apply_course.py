@@ -30,7 +30,7 @@ def apply_course():
     certificate_id = details['certificate_id']
     department_name = details['department_name']
     course_name = details['course_name']
-    if UsersModel().get_admission_no(admission_no):
+    if UsersModel().get_user_by_admission(admission_no):
         if InstitutionsModel().get_institution_name(institution_name):
             if CampusModel().get_campus_by_id(campus_id):
                 if CertificatesModel().get_certificate_by_id(certificate_id):

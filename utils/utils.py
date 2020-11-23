@@ -7,7 +7,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 def check_register_keys(request):
     res_keys = ['firstname', 'lastname', 'surname',
-                'admission_no', 'gender', 'email', 'password', 'current_year']
+                'admission_no', 'gender', 'email', 'password']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -134,7 +134,7 @@ def check_unit_code_key(request):
 def check_staff_keys(request):
     """Check that registration json keys match the required ones."""
     res_keys = ['firstname', 'lastname',
-                'form', 'stream', 'username', 'email', 'password']
+                'username', 'email', 'password']
     errors = []
     for key in res_keys:
         if not key in request.json:

@@ -15,6 +15,8 @@ from app.api.v1.services.mails.mail_services import send_email
 
 
 @portal_v1.route('/students/register', methods=['POST', 'GET'])
+@jwt_required
+@admin_required
 def student_signup():
     """A new user can create a new account."""
     errors = check_register_keys(request)
@@ -28,7 +30,6 @@ def student_signup():
     gender = details['gender']
     email = details['email']
     password = details['password']
-    current_year = details['current_year']
     if details['firstname'].isalpha() is False:
         return raise_error(400, "firstname is in wrong format")
     if details['lastname'].isalpha() is False:
@@ -39,14 +40,99 @@ def student_signup():
         return raise_error(400, "Invalid Email Format!")
     if not is_valid_password(password):
         return raise_error(400, "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!")
-    user_admission_no = json.loads(UsersModel().get_admission_no(admission_no))
-    if user_admission_no:
-        return raise_error(400, "Admission Number Already Exists!")
-    user_email = json.loads(UsersModel().get_email(email))
+    user_email = json.loads(UsersModel().get_user_by_email(email))
     if user_email:
         return raise_error(400, "Email Already Exists!")
     user = json.loads(UsersModel(firstname, lastname, surname,
-                                 admission_no, gender, email, password, current_year).save())
+                                 admission_no, gender, email, password).save_student())
+    token = default_encode_token(email, salt='email-confirm-key')
+    confirm_url = generate_url('portal_v1.confirm_email', token=token)
+    send_email('Confirm Your Email',
+               sender='arrotechdesign@gmail.com',
+               recipients=[email],
+               text_body=render_template(
+                   'email_confirmation.txt', confirm_url=confirm_url),
+               html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
+    return make_response(jsonify({
+        "message": "Account created successfully!",
+        "status": "201",
+        "user": user
+    }), 201)
+
+@portal_v1.route('/staff/register', methods=['POST', 'GET'])
+def admin_signup():
+    """A new user can create a new account."""
+    errors = check_register_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+    details = request.get_json()
+    firstname = details['firstname']
+    lastname = details['lastname']
+    surname = details['surname']
+    admission_no = details['admission_no']
+    gender = details['gender']
+    email = details['email']
+    password = details['password']
+    if details['firstname'].isalpha() is False:
+        return raise_error(400, "firstname is in wrong format")
+    if details['lastname'].isalpha() is False:
+        return raise_error(400, "lastname is in wrong format")
+    if details['surname'].isalpha() is False:
+        return raise_error(400, "surname is in wrong format")
+    if not is_valid_email(email):
+        return raise_error(400, "Invalid Email Format!")
+    if not is_valid_password(password):
+        return raise_error(400, "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!")
+    user_email = json.loads(UsersModel().get_user_by_email(email))
+    if user_email:
+        return raise_error(400, "Email Already Exists!")
+    user = json.loads(UsersModel(firstname, lastname, surname,
+                                 admission_no, gender, email, password).save_admin())
+    token = default_encode_token(email, salt='email-confirm-key')
+    confirm_url = generate_url('portal_v1.confirm_email', token=token)
+    send_email('Confirm Your Email',
+               sender='arrotechdesign@gmail.com',
+               recipients=[email],
+               text_body=render_template(
+                   'email_confirmation.txt', confirm_url=confirm_url),
+               html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
+    return make_response(jsonify({
+        "message": "Account created successfully!",
+        "status": "201",
+        "user": user
+    }), 201)
+
+@portal_v1.route('/accountant/register', methods=['POST', 'GET'])
+@jwt_required
+@admin_required
+def accountant_signup():
+    """A new user can create a new account."""
+    errors = check_register_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+    details = request.get_json()
+    firstname = details['firstname']
+    lastname = details['lastname']
+    surname = details['surname']
+    admission_no = details['admission_no']
+    gender = details['gender']
+    email = details['email']
+    password = details['password']
+    if details['firstname'].isalpha() is False:
+        return raise_error(400, "firstname is in wrong format")
+    if details['lastname'].isalpha() is False:
+        return raise_error(400, "lastname is in wrong format")
+    if details['surname'].isalpha() is False:
+        return raise_error(400, "surname is in wrong format")
+    if not is_valid_email(email):
+        return raise_error(400, "Invalid Email Format!")
+    if not is_valid_password(password):
+        return raise_error(400, "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!")
+    user_email = json.loads(UsersModel().get_user_by_email(email))
+    if user_email:
+        return raise_error(400, "Email Already Exists!")
+    user = json.loads(UsersModel(firstname, lastname, surname,
+                                 admission_no, gender, email, password).save_accountant())
     token = default_encode_token(email, salt='email-confirm-key')
     confirm_url = generate_url('portal_v1.confirm_email', token=token)
     send_email('Confirm Your Email',
@@ -62,13 +148,74 @@ def student_signup():
     }), 201)
 
 
+
 @portal_v1.route('/students/login', methods=['POST'])
 def student_login():
     """Already existing user can sign in to their account."""
     details = request.get_json()
     email = details['email']
     password = details['password']
-    user = json.loads(UsersModel().get_email(email))
+    user = json.loads(UsersModel().get_user_by_email(email))
+    if user:
+        password_db = user['password']
+        if check_password_hash(password_db, password):
+            expires = timedelta(days=365)
+            token = create_access_token(identity=email, expires_delta=expires)
+            refresh_token = create_refresh_token(
+                identity=email, expires_delta=expires)
+            return make_response(jsonify({
+                "status": "200",
+                "message": "Successfully logged in!",
+                "token": token,
+                "refresh_token": refresh_token,
+                "user": user
+            }), 200)
+        return make_response(jsonify({
+            "status": "401",
+            "message": "Invalid Email or Password"
+        }), 401)
+    return make_response(jsonify({
+        "status": "401",
+        "message": "Invalid Email or Password"
+    }), 401)
+
+@portal_v1.route('/staff/login', methods=['POST'])
+def staff_login():
+    """Already existing user can sign in to their account."""
+    details = request.get_json()
+    email = details['email']
+    password = details['password']
+    user = json.loads(UsersModel().get_user_by_email(email))
+    if user:
+        password_db = user['password']
+        if check_password_hash(password_db, password):
+            expires = timedelta(days=365)
+            token = create_access_token(identity=email, expires_delta=expires)
+            refresh_token = create_refresh_token(
+                identity=email, expires_delta=expires)
+            return make_response(jsonify({
+                "status": "200",
+                "message": "Successfully logged in!",
+                "token": token,
+                "refresh_token": refresh_token,
+                "user": user
+            }), 200)
+        return make_response(jsonify({
+            "status": "401",
+            "message": "Invalid Email or Password"
+        }), 401)
+    return make_response(jsonify({
+        "status": "401",
+        "message": "Invalid Email or Password"
+    }), 401)
+
+@portal_v1.route('/accountant/login', methods=['POST'])
+def accountant_login():
+    """Already existing user can sign in to their account."""
+    details = request.get_json()
+    email = details['email']
+    password = details['password']
+    user = json.loads(UsersModel().get_user_by_email(email))
     if user:
         password_db = user['password']
         if check_password_hash(password_db, password):
@@ -101,10 +248,10 @@ def confirm_email(token):
             token, salt='email-confirm-key', expiration=3600)
     except:
         return raise_error(404, "User not found")
-    user = json.loads(UsersModel().get_email(email))
+    user = json.loads(UsersModel().get_user_by_email(email))
     user_id = user['user_id']
     if user:
-        response = json.loads(UsersModel().confirm_email(
+        response = json.loads(UsersModel().confirm_user_email(
             user_id, is_confirmed=True))
         return make_response(jsonify({
             "status": "200",
@@ -122,7 +269,7 @@ def send_reset_email():
     email = details['email']
     if not is_valid_email(email):
         return raise_error(400, "Invalid Email Format!")
-    user = json.loads(UsersModel().get_email(email))
+    user = json.loads(UsersModel().get_user_by_email(email))
     if user:
         user_id = user['user_id']
         email = user['email']
@@ -146,7 +293,7 @@ def send_reset_email():
 
 
 @portal_v1.route('/students/reset', methods=['POST'])
-def reset_password():
+def reset_user_password():
     """Reset password."""
     """Already existing user can update their password."""
     url = request.host_url + 'reset/'
@@ -177,9 +324,9 @@ def reset_password():
     }))
 
 
-@portal_v1.route('/students/refresh', methods=['POST'])
+@portal_v1.route('/users/refresh', methods=['POST'])
 @jwt_refresh_token_required
-def student_refresh_token():
+def user_refresh_token():
     current_user = get_jwt_identity()
     expires = timedelta(days=365)
     access_token = create_access_token(current_user, expires_delta=expires)
@@ -189,19 +336,19 @@ def student_refresh_token():
     return jsonify(ret), 200
 
 
-@portal_v1.route('/students/protected', methods=['GET'])
+@portal_v1.route('/users/protected', methods=['GET'])
 @jwt_required
-def student_protected_route():
+def user_protected_route():
     email = get_jwt_identity()
     return jsonify(logged_in_as=email), 200
 
 
-@portal_v1.route('/students/users', methods=['GET'])
+@portal_v1.route('/staff/users', methods=['GET'])
 @jwt_required
 @admin_required
-def get_all_students():
+def get_all_users():
     """An admin can fetch all users."""
-    users = json.loads(UsersModel().get_users())
+    users = json.loads(UsersModel().get_all_users())
     return make_response(jsonify({
         "status": "200",
         "message": "successfully retrieved",
@@ -225,9 +372,9 @@ def get_student_by_id(user_id):
 
 @portal_v1.route('/students/users/<string:admission_no>', methods=['GET'])
 @jwt_required
-def get_student_by_admission_no(admission_no):
+def get_user_info(admission_no):
     """An admin can fetch a single user."""
-    user = json.loads(UsersModel().get_admission_no(admission_no))
+    user = json.loads(UsersModel().get_user_info(admission_no))
     if user:
         return make_response(jsonify({
             "status": "200",
@@ -237,30 +384,6 @@ def get_student_by_admission_no(admission_no):
     return make_response(jsonify({
         "status": "404",
         "message": "User Not Found"
-    }), 404)
-
-
-@portal_v1.route('/students/users/<string:admission_no>/promote', methods=['PUT'])
-@jwt_required
-def promote_student(admission_no):
-    """An admin can promote a student to another form."""
-    errors = check_promote_student_keys(request)
-    if errors:
-        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
-    details = request.get_json()
-    current_year = details['current_year']
-    user = json.loads(UsersModel().get_admission_no(admission_no))
-    if user:
-        updated_user = json.loads(
-            UsersModel().promote_user(current_year, admission_no))
-        return make_response(jsonify({
-            "status": "200",
-            "message": "student promoted successfully",
-            "user": updated_user
-        }), 200)
-    return make_response(jsonify({
-        "status": "404",
-        "message": "student not found"
     }), 404)
 
 

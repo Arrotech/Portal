@@ -5,7 +5,7 @@ from flask_restful import Resource
 
 from app.api.v1.models.fees_models import FeesModels
 from app.api.v1.models.users_model import UsersModel
-from utils.bursar import accountant_required
+from utils.accountant import accountant_required
 from utils.utils import check_fees_keys, raise_error, check_edit_fees_keys
 from flask_jwt_extended import jwt_required
 from app.api.v1 import portal_v1

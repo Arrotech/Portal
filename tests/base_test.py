@@ -5,7 +5,7 @@ import os
 
 from app import exam_app
 from app.api.v1.models.database import Database
-from utils.dummy import staff_account, staff_login, accountant_login, accountant_account, create_account, user_login
+from utils.dummy import default_admin_account, default_admin_login, default_accountant_login, default_accountant_account, create_account, user_login
 
 
 class BaseTest(unittest.TestCase):
@@ -28,7 +28,7 @@ class BaseTest(unittest.TestCase):
 
     def get_token(self):
         self.client.post('/api/v1/students/register', data=json.dumps(create_account),
-                         content_type='application/json')
+                         content_type='application/json', headers=self.get_admin_token())
         resp = self.client.post('/api/v1/students/login', data=json.dumps(user_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
@@ -37,7 +37,7 @@ class BaseTest(unittest.TestCase):
 
     def get_refresh_token(self):
         self.client.post('/api/v1/students/register', data=json.dumps(create_account),
-                         content_type='application/json')
+                         content_type='application/json', headers=self.get_admin_token())
         resp = self.client.post('/api/v1/students/login', data=json.dumps(user_login),
                                 content_type='application/json')
         refresh_token = json.loads(resp.get_data(as_text=True))[
@@ -46,39 +46,19 @@ class BaseTest(unittest.TestCase):
         return auth_header
 
     def get_admin_token(self):
-        self.client.post('/api/v1/staff/register', data=json.dumps(staff_account),
+        self.client.post('/api/v1/staff/register', data=json.dumps(default_admin_account),
                          content_type='application/json')
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(staff_login),
+        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_admin_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
-    def get_staff_refresh_token(self):
-        self.client.post('/api/v1/staff/register', data=json.dumps(staff_account),
-                         content_type='application/json')
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(staff_login),
-                                content_type='application/json')
-        refresh_token = json.loads(resp.get_data(as_text=True))[
-            'refresh_token']
-        auth_header = {'Authorization': 'Bearer {}'.format(refresh_token)}
-        return auth_header
-
-    def get_bursar_token(self):
-        self.client.post('/api/v1/accountant/register', data=json.dumps(accountant_account),
-                         content_type='application/json')
-        resp = self.client.post('/api/v1/accountant/login', data=json.dumps(accountant_login),
+    def get_accountant_token(self):
+        self.client.post('/api/v1/accountant/register', data=json.dumps(default_accountant_account),
+                         content_type='application/json', headers=self.get_admin_token())
+        resp = self.client.post('/api/v1/accountant/login', data=json.dumps(default_accountant_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
-        return auth_header
-
-    def get_accountant_refresh_token(self):
-        self.client.post('/api/v1/accountant/register', data=json.dumps(accountant_account),
-                         content_type='application/json')
-        resp = self.client.post('/api/v1/accountant/login', data=json.dumps(accountant_login),
-                                content_type='application/json')
-        refresh_token = json.loads(resp.get_data(as_text=True))[
-            'refresh_token']
-        auth_header = {'Authorization': 'Bearer {}'.format(refresh_token)}
         return auth_header

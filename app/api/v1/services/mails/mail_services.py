@@ -3,7 +3,6 @@ from threading import Thread
 from flask_mail import Message, Mail
 from app.__init__ import exam_app
 from utils.utils import raise_error
-from app.api.v1 import auth_v1
 from app.config import app_config
 
 config_name = os.getenv('FLASK_ENV')
