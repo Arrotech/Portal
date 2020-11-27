@@ -12,12 +12,17 @@ from app.api.v1.models.database import Database
 from app.api.v1 import portal_v1
 from app.config import app_config
 
-
-def exam_app(config_name):
+def exam_app(config_name='development'):
     """Create the app."""
-    app = Flask(__name__, template_folder='../../../templates')
-    config_name = os.getenv('FLASK_ENV')
-    app.config.from_pyfile('config.py')
+    app = Flask(__name__, instance_relative_config=True,
+                template_folder='../../../templates')
+
+    # filling the config from a config file based on the environment: development, statging, testing, default
+    # app.config.from_object(app_config[config_name])
+
+    # filling the config from a config file: Secure data/information
+    app.config.from_pyfile('config.py', silent=True)
+
     app.config['SECRET_KEY'] = "schoolportal"
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
@@ -42,3 +47,6 @@ def exam_app(config_name):
     load_dotenv(path.join(basedir, '.env'))
 
     return app
+
+
+

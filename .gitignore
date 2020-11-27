@@ -6,4 +6,4 @@ node_modules/
 portal/
 .pyc
 .env
-portal_env/
+instance/

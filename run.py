@@ -2,10 +2,9 @@ import os
 
 from app import exam_app
 from app.api.v1.models.database import Database
+from utils.serializer import Serializer
 
-config_name = os.getenv('FLASK_ENV')
-print(config_name)
-app = exam_app(config_name)
+app = exam_app(os.getenv('FLASK_ENV'))
 
 
 @app.cli.command()

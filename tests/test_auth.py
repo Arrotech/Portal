@@ -100,7 +100,7 @@ class TestUsersAccount(BaseTest):
         """Test get user by id."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response1 = self.client.get(
             '/api/v1/students/users/1', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())
@@ -111,7 +111,7 @@ class TestUsersAccount(BaseTest):
         """Test get non existing user by id."""
         response = self.client.post(
             '/api/v1/students/register', data=json.dumps(new_account), content_type='application/json',
-            headers=self.get_token())
+            headers=self.get_admin_token())
         response1 = self.client.get(
             '/api/v1/students/users/10', content_type='application/json', headers=self.get_token())
         result = json.loads(response1.data.decode())

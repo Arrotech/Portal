@@ -10,6 +10,9 @@ load_dotenv(path.join(basedir, '.env'))
 class Config(object):
     """App configuration variables."""
 
+    DEBUG = False
+    TESTING = False
+
     # database
     DB_NAME = os.getenv('DB_NAME')
     DB_USER = os.getenv('DB_USER')
@@ -36,11 +39,12 @@ class DevelopmentConfig(Config):
     """Allow debug to restart after changes."""
 
     DEBUG = True
-    TESTING = False
 
 
 class TestingConfig(Config):
     """Testing the application."""
+
+    DB_NAME = os.getenv('DB_TEST_NAME')
 
     DEBUG = True
     TESTING = True
@@ -56,13 +60,12 @@ class ReleaseConfig(Config):
     """Releasing app configurations."""
 
     DEBUG = False
-    TESTING = False
 
 
 class ProductionConfig(Config):
     """Production configurations."""
 
-    pass
+    DB_NAME = os.getenv('DB_NAME')
 
 
 app_config = {
