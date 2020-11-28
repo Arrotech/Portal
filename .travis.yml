@@ -20,6 +20,7 @@ addons:
 
 before_script:
   - psql -c 'create database school_portal;' -U postgres
+  - psql -c 'create database test_school_portal;' -U postgres
 
 script:
   - pytest --cov=app --cov-report=term-missing
