@@ -9,19 +9,17 @@ from flask import Flask
 
 from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
 from app.api.v1.models.database import Database
-from app.api.v1 import portal_v1
 from app.config import app_config
 
 def exam_app(config_name='development'):
     """Create the app."""
-    app = Flask(__name__, instance_relative_config=True,
-                template_folder='../../../templates')
+    app = Flask(__name__, template_folder='../../../templates')
 
     # filling the config from a config file based on the environment: development, statging, testing, default
-    # app.config.from_object(app_config[config_name])
+    app.config.from_object('app.config')
 
     # filling the config from a config file: Secure data/information
-    app.config.from_pyfile('config.py', silent=True)
+    app.config.from_pyfile('config.py')
 
     app.config['SECRET_KEY'] = "schoolportal"
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -36,6 +34,8 @@ def exam_app(config_name='development'):
     Mail(app)
 
     Database().create_table()
+
+    from app.api.v1 import portal_v1
 
     app.register_blueprint(portal_v1, url_prefix='/api/v1/')
     app.register_error_handler(400, bad_request)

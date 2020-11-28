@@ -44,10 +44,8 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Testing the application."""
 
-    DB_NAME = os.getenv('DB_TEST_NAME')
-
-    DEBUG = True
     TESTING = True
+    DB_NAME = os.getenv('DB_TEST_NAME')
 
 
 class StagingConfig(Config):
@@ -65,12 +63,12 @@ class ReleaseConfig(Config):
 class ProductionConfig(Config):
     """Production configurations."""
 
-    DB_NAME = os.getenv('DB_NAME')
+    TESTING = False
+    DEBUG = False
 
 
-app_config = {
-    "development": DevelopmentConfig,
-    "testing": TestingConfig,
-    "production": ProductionConfig,
-    "default": DevelopmentConfig
-}
+app_config = dict(
+    testing=TestingConfig,
+    development=DevelopmentConfig,
+    production=ProductionConfig
+)
