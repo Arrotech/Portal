@@ -29,6 +29,7 @@ def book_hostel():
                 return raise_error(404, "User does not exist or your are trying to book twice")
             return Serializer.serialize(response, 201, "Hostel booked successfully")
         return raise_error(404, "Hostel not found")
+    return raise_error(400, "User does not exist or your are trying to book twice")
 
 
 @portal_v1.route('/accommodation', methods=['GET'])

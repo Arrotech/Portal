@@ -4,7 +4,7 @@ from app import exam_app
 from app.api.v1.models.database import Database
 from utils.serializer import Serializer
 
-app = exam_app(os.getenv('FLASK_ENV'))
+app = exam_app('development')
 
 
 @app.cli.command()

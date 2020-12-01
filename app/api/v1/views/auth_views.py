@@ -271,7 +271,7 @@ def confirm_email(token):
     return raise_error(404, "User not found")
 
 
-@portal_v1.route('/students/forgot', methods=['POST'])
+@portal_v1.route('/users/forgot', methods=['POST'])
 def send_reset_email():
     """Send email for password reset link."""
     url = request.host_url + 'reset/'
@@ -396,7 +396,7 @@ def get_user_info(admission_no):
     }), 404)
 
 
-@portal_v1.route('/students/users/user_info/<string:admission_no>', methods=['PUT'])
+@portal_v1.route('/users/students/<string:admission_no>', methods=['PUT'])
 @jwt_required
 def update_student_info(admission_no):
     """Update user information."""

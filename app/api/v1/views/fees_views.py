@@ -35,6 +35,7 @@ def add_fees():
         if "error" in response:
             return raise_error(404, "Student not found")
         return Serializer.serialize(response, 201, "Entry made successfully")
+    return raise_error(404, "Student not found")
 
 
 @portal_v1.route('/fees', methods=['GET'])

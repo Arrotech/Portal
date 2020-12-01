@@ -31,6 +31,7 @@ def add_exam():
                 return raise_error(400, "User does not exist or your are trying to enter marks twice")
             return Serializer.serialize(response, 201, "Marks added successfully")
         return raise_error(404, "Unit {} not found".format(unit_name))
+    return raise_error(400, "User does not exist or your are trying to enter marks twice")
 
 
 @portal_v1.route('/exams', methods=['GET'])

@@ -5,7 +5,7 @@ from app.__init__ import exam_app
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker="amqps://wmznztra:2jFJ5RUUV4daZWzPWLcW5bczw2vFP2CJ@moose.rmq.cloudamqp.com/wmznztra"
+        broker="amqp://localhost//"
     )
     celery.conf.update(app.config)
 
