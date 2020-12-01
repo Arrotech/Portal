@@ -24,7 +24,7 @@ def fill_checklist():
     department_name = details['department_name']
     course_name = details['course_name']
     hostel_name = details['hostel_name']
-    user = json.loads(UsersModel().get_user_by_admission(admission_no))
+    user = UsersModel().get_user_by_admission(admission_no)
     if user:
         if DepartmentsModel().get_department_name(department_name):
             if CoursesModel().get_course_name(course_name):

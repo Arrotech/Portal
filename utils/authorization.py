@@ -8,12 +8,10 @@ from app.api.v1.models.users_model import UsersModel
 
 def admin_required(func):
     """ Admin Rights."""
-
     @wraps(func)
     def wrapper_function(*args, **kwargs):
-        users = UsersModel().get_all_users()
-        users = json.loads(users)
         try:
+            users = UsersModel().get_all_users()
             cur_user = [
                 user for user in users if user['email'] == get_jwt_identity()]
             user_role = cur_user[0]['role']

@@ -46,6 +46,7 @@ def apply_course():
                 return raise_error(404, "Certificate not found")
             return raise_error(404, "Campus not found")
         return raise_error(404, "Institution not found")
+    return raise_error(404, "Student not found")
 
 
 @portal_v1.route('/apply_course/<int:application_id>', methods=['GET'])

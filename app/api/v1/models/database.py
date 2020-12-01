@@ -3,6 +3,13 @@ import json
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from app.config import app_config
+
+# config_name = os.getenv('ENV')
+# if config_name is not None:
+#     URL = app_config[config_name].DB_NAME
+# else:
+#     URL = 'test_school_portal'
 
 
 class Database:

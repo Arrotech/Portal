@@ -12,7 +12,6 @@ def accountant_required(func):
     @wraps(func)
     def wrapper_function(*args, **kwargs):
         users = UsersModel().get_all_users()
-        users = json.loads(users)
         try:
             cur_user = [
                 user for user in users if user['email'] == get_jwt_identity()]

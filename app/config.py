@@ -7,67 +7,81 @@ basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
 
-class Config(object):
+class Config:
     """App configuration variables."""
 
+    DEBUG = False
+    TESTING = False
+
+    SESSION_COOKIE_SECURE = True
+    ENV = 'production'
+
     # database
-    DB_NAME = os.getenv('DB_NAME')
-    DB_USER = os.getenv('DB_USER')
-    DB_HOST = os.getenv('DB_HOST')
-    DB_PASSWORD = os.getenv('DB_PASSWORD')
+    DB_NAME = "school_portal"
+    DB_USER = "postgres"
+    DB_HOST = "localhost"
+    DB_PASSWORD = "postgres20930988"
 
     # app secret key
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+    SECRET_KEY = "schoolportal"
+    JWT_SECRET_KEY = "jwtschoolportal"
 
     # mail server
-    MAIL_SERVER = os.getenv('MAIL_SERVER')
-    MAIL_PORT = os.getenv('MAIL_PORT')
-    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USERNAME = 'arrotechdesign@gmail.com'
+    MAIL_PASSWORD = '11371265!birkhoff?'
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
 
     # administrator list
-    ADMINS = os.getenv('ADMINS')
+    ADMINS = ['arrotechdesign@gmail.com']
 
+
+class ProductionConfig(Config):
+    """Production configurations."""
+    FLASK_ENV = 'production'
+    ENV = 'production'
 
 class DevelopmentConfig(Config):
     """Allow debug to restart after changes."""
 
     DEBUG = True
-    TESTING = False
+    SESSION_COOKIE_SECURE = False
+    FLASK_ENV = 'development'
+    ENV = 'development'
 
 
 class TestingConfig(Config):
     """Testing the application."""
 
-    DEBUG = True
     TESTING = True
+    SESSION_COOKIE_SECURE = False
+
+    DB_NAME = 'test_school_portal'
+    FLASK_ENV = 'testing'
+    ENV = 'testing'
 
 
 class StagingConfig(Config):
     """Configurations for Staging."""
 
-    DEBUG = True
+    FLASK_ENV = 'staging'
+    ENV = 'staging'
 
 
 class ReleaseConfig(Config):
     """Releasing app configurations."""
 
     DEBUG = False
-    TESTING = False
+    FLASK_ENV = 'release'
+    ENV = 'release'
 
 
-class ProductionConfig(Config):
-    """Production configurations."""
-
-    pass
-
-
-app_config = {
-    "development": DevelopmentConfig,
-    "testing": TestingConfig,
-    "production": ProductionConfig,
-    "default": DevelopmentConfig
-}
+app_config = dict(
+    testing=TestingConfig,
+    development=DevelopmentConfig,
+    production=ProductionConfig,
+    staging=StagingConfig,
+    release=ReleaseConfig
+)

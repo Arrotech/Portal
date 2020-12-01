@@ -29,10 +29,10 @@ class UsersModel(Database):
                 VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
             .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
                     self.role, self.is_confirmed, self.created_on))
-        user = self.curr.fetchone()
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(user, default=str)
+        return response
 
     def save_admin(self, role='admin'):
         """Save information of the new user."""
@@ -41,10 +41,10 @@ class UsersModel(Database):
                 VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
             .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
                     role, self.is_confirmed, self.created_on))
-        user = self.curr.fetchone()
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(user, default=str)
+        return response
 
     def save_accountant(self, role='accountant'):
         """Save information of the new user."""
@@ -53,28 +53,28 @@ class UsersModel(Database):
                 VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
             .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
                     role, self.is_confirmed, self.created_on))
-        user = self.curr.fetchone()
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(user, default=str)
+        return response
 
     def get_all_users(self):
         """Fetch all users"""
         query = "SELECT * from users"
-        users = Database().fetch(query)
-        return json.dumps(users, default=str)
+        response = Database().fetch(query)
+        return response
 
     def get_user_by_id(self, user_id):
         """Request a single user with specific id."""
         query = "SELECT * FROM users WHERE user_id=%s"
-        user = Database().fetch_one(query, user_id)
-        return json.dumps(user, default=str)
+        response = Database().fetch_one(query, user_id)
+        return response
 
     def get_user_by_admission(self, admission_no):
         """Get user by admission."""
         query = "SELECT * FROM users WHERE admission_no=%s"
         response = Database().fetch_one(query, admission_no)
-        return json.dumps(response, default=str)
+        return response
 
     def get_user_info(self, admission_no):
         """Request a single user with specific Admission Number."""
@@ -84,14 +84,14 @@ class UsersModel(Database):
             LEFT JOIN accommodation As c ON u.admission_no=c.student\
             LEFT JOIN subjects As s ON u.admission_no=s.student\
             WHERE admission_no=%s"
-        user = Database().fetch_one(query, admission_no)
-        return json.dumps(user, default=str)
+        response = Database().fetch_one(query, admission_no)
+        return response
 
     def get_user_by_email(self, email):
         """Request a single user with specific Email Address."""
         query = "SELECT * FROM users WHERE email=%s"
-        user = Database().fetch_one(query, email)
-        return json.dumps(user, default=str)
+        response = Database().fetch_one(query, email)
+        return response
 
     def update_user_info(self, admission_no, firstname, lastname, surname):
         """Update user information by id."""
@@ -109,7 +109,7 @@ class UsersModel(Database):
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(response, default=str)
+        return response
 
     def confirm_user_email(self, user_id, is_confirmed):
         """Confirm user email."""
@@ -118,4 +118,4 @@ class UsersModel(Database):
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(response, default=str)
+        return response
