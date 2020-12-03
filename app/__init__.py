@@ -6,6 +6,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask import Flask
+from celery import Celery
 
 from app.api.v1.models.database import Database
 from app.config import app_config
@@ -25,6 +26,7 @@ def exam_app(config_name):
 
     CORS(app)
     JWTManager(app)
+    Celery(app)
     Mail(app)
 
     Database().create_table()
