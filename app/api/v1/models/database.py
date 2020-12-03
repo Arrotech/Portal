@@ -4,19 +4,22 @@ import json
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from app.config import app_config
+from utils.serializer import Serializer
 
-# config_name = os.getenv('ENV')
-# if config_name is not None:
-#     URL = app_config[config_name].DB_NAME
-# else:
-#     URL = 'test_school_portal'
+
+config_name = os.getenv('ENV')
+print("---This--Config", config_name)
+if config_name is not None:
+    URL = app_config[config_name].DB_NAME
+else:
+    URL = 'test_school_portal'
 
 
 class Database:
     """Initialization."""
 
     def __init__(self):
-        self.db_name = os.getenv('DB_NAME')
+        self.db_name = URL
         self.db_host = os.getenv('DB_HOST')
         self.db_user = os.getenv('DB_USER')
         self.db_password = os.getenv('DB_PASSWORD')
@@ -205,7 +208,7 @@ class Database:
             self.conn.commit()
             self.curr.close()
         except Exception as e:
-            return e
+            return Serializer.serialize("{}".format(e), 500, "Error")
 
     def destroy_table(self):
         """Destroy tables"""
@@ -237,7 +240,7 @@ class Database:
             self.conn.commit()
             self.curr.close()
         except Exception as e:
-            return e
+            return Serializer.serialize("{}".format(e), 500, "Error")
 
     def fetch(self, query):
         """Fetch all query."""
@@ -254,8 +257,3 @@ class Database:
         self.conn.commit()
         self.curr.close()
         return fetch_one
-
-
-if __name__ == '__main__':
-    Database().destroy_table()
-    Database().create_table()

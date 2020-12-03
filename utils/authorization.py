@@ -4,6 +4,7 @@ from functools import wraps
 from flask_jwt_extended import get_jwt_identity
 
 from app.api.v1.models.users_model import UsersModel
+from utils.serializer import Serializer
 
 
 def admin_required(func):
@@ -20,6 +21,6 @@ def admin_required(func):
                     'message': 'This activity can only be completed by the admin'}, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
-            return {"message": e}
+            return Serializer.serialize("{}".format(e), 500, "Error")
 
     return wrapper_function

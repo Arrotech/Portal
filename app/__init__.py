@@ -22,23 +22,16 @@ def exam_app(config_name):
     elif config_name == 'testing':
         app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
-    app.config['SECRET_KEY'] = "schoolportal"
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = True
-    app.config['MAIL_USERNAME'] = 'arrotechdesign@gmail.com'
-    app.config['MAIL_PASSWORD'] = '11371265!birkhoff?'
-    
-
-    from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
-    from app.api.v1 import portal_v1
 
     CORS(app)
     JWTManager(app)
     Mail(app)
 
     Database().create_table()
+    
+
+    from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
+    from app.api.v1 import portal_v1
 
     app.register_blueprint(portal_v1, url_prefix='/api/v1/')
     app.register_error_handler(400, bad_request)
