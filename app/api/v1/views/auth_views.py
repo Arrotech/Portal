@@ -12,7 +12,7 @@ from itsdangerous import URLSafeTimedSerializer
 from app.api.v1.services.mails.mail_services import send_email
 from arrotechtools import is_valid_email, is_valid_password, raise_error
 from utils.authorization import admin_required
-
+from app.api.v1.forms.forms import EmailForm, PasswordForm
 
 
 @portal_v1.route('/students/register', methods=['POST', 'GET'])
@@ -49,18 +49,19 @@ def student_signup():
         if user_email:
             return raise_error(400, "Email Already Exists!")
         response = UsersModel(firstname, lastname, surname,
-                                    admission_no, gender, email, password).save_student()
+                              admission_no, gender, email, password).save_student()
         token = default_encode_token(email, salt='email-confirm-key')
         confirm_url = generate_url('portal_v1.confirm_email', token=token)
         send_email.delay('Confirm Your Email',
-                sender='arrotechdesign@gmail.com',
-                recipients=[email],
-                text_body=render_template(
-                    'email_confirmation.txt', confirm_url=confirm_url),
-                html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
+                         sender='arrotechdesign@gmail.com',
+                         recipients=[email],
+                         text_body=render_template(
+                             'email_confirmation.txt', confirm_url=confirm_url),
+                         html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
         return Serializer.serialize(response, 201, "Account created successfully!")
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
+
 
 @portal_v1.route('/staff/register', methods=['POST', 'GET'])
 def admin_signup():
@@ -94,18 +95,19 @@ def admin_signup():
         if user_email:
             return raise_error(400, "Email Already Exists!")
         response = UsersModel(firstname, lastname, surname,
-                                    admission_no, gender, email, password).save_admin()
+                              admission_no, gender, email, password).save_admin()
         token = default_encode_token(email, salt='email-confirm-key')
         confirm_url = generate_url('portal_v1.confirm_email', token=token)
         send_email.delay('Confirm Your Email',
-                sender='arrotechdesign@gmail.com',
-                recipients=[email],
-                text_body=render_template(
-                    'email_confirmation.txt', confirm_url=confirm_url),
-                html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
+                         sender='arrotechdesign@gmail.com',
+                         recipients=[email],
+                         text_body=render_template(
+                             'email_confirmation.txt', confirm_url=confirm_url),
+                         html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
         return Serializer.serialize(response, 201, "Account created successfully!")
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
+
 
 @portal_v1.route('/accountant/register', methods=['POST', 'GET'])
 @jwt_required
@@ -141,19 +143,18 @@ def accountant_signup():
         if user_email:
             return raise_error(400, "Email Already Exists!")
         response = UsersModel(firstname, lastname, surname,
-                                    admission_no, gender, email, password).save_accountant()
+                              admission_no, gender, email, password).save_accountant()
         token = default_encode_token(email, salt='email-confirm-key')
         confirm_url = generate_url('portal_v1.confirm_email', token=token)
         send_email.delay('Confirm Your Email',
-                sender='arrotechdesign@gmail.com',
-                recipients=[email],
-                text_body=render_template(
-                    'email_confirmation.txt', confirm_url=confirm_url),
-                html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
+                         sender='arrotechdesign@gmail.com',
+                         recipients=[email],
+                         text_body=render_template(
+                             'email_confirmation.txt', confirm_url=confirm_url),
+                         html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
         return Serializer.serialize(response, 201, "Account created successfully!")
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
-
 
 
 @portal_v1.route('/students/login', methods=['POST'])
@@ -168,7 +169,8 @@ def student_login():
             password_db = user['password']
             if check_password_hash(password_db, password):
                 expires = timedelta(days=365)
-                token = create_access_token(identity=email, expires_delta=expires)
+                token = create_access_token(
+                    identity=email, expires_delta=expires)
                 refresh_token = create_refresh_token(
                     identity=email, expires_delta=expires)
                 return make_response(jsonify({
@@ -182,6 +184,7 @@ def student_login():
         return raise_error(401, "Invalid Email or Password")
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
+
 
 @portal_v1.route('/staff/login', methods=['POST'])
 def staff_login():
@@ -195,7 +198,8 @@ def staff_login():
             password_db = user['password']
             if check_password_hash(password_db, password):
                 expires = timedelta(days=365)
-                token = create_access_token(identity=email, expires_delta=expires)
+                token = create_access_token(
+                    identity=email, expires_delta=expires)
                 refresh_token = create_refresh_token(
                     identity=email, expires_delta=expires)
                 return make_response(jsonify({
@@ -210,6 +214,7 @@ def staff_login():
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
 
+
 @portal_v1.route('/accountant/login', methods=['POST'])
 def accountant_login():
     """Already existing user can sign in to their account."""
@@ -222,7 +227,8 @@ def accountant_login():
             password_db = user['password']
             if check_password_hash(password_db, password):
                 expires = timedelta(days=365)
-                token = create_access_token(identity=email, expires_delta=expires)
+                token = create_access_token(
+                    identity=email, expires_delta=expires)
                 refresh_token = create_refresh_token(
                     identity=email, expires_delta=expires)
                 return make_response(jsonify({
@@ -258,58 +264,61 @@ def confirm_email(token):
         return Serializer.serialize("{}".format(e), 500, "Error")
 
 
-@portal_v1.route('/users/forgot', methods=['POST'])
+@portal_v1.route('/reset', methods=['POST', 'GET'])
 def send_reset_email():
     """Send email for password reset link."""
     try:
-        url = request.host_url + 'reset/'
         details = request.get_json()
         email = details['email']
         if not is_valid_email(email):
             return raise_error(400, "Invalid Email Format!")
-        user = UsersModel().get_user_by_email(email)
+        user = UsersModel().get_user_by_email(email)     
         if user:
-            user_id = user['user_id']
             email = user['email']
             firstname = user['firstname']
-            expires = timedelta(days=1)
-            reset_token = create_access_token(
-                identity=user_id, expires_delta=expires)
+            token = default_encode_token(email, salt='recover-key')
+            recover_url = url_for(
+                'portal_v1.reset_with_token', token=token, _external=True)
             send_email('Reset your password',
-                    sender='arrotechdesign@gmail.com',
-                    recipients=[email],
-                    text_body=render_template(
-                        'reset_password.txt', url=url + reset_token, firstname=firstname),
-                    html_body=render_template('reset_password.html', url=url + reset_token, firstname=firstname))
+                        sender='arrotechdesign@gmail.com',
+                        recipients=[email],
+                        text_body=render_template(
+                            'reset_password.txt', recover_url=recover_url, firstname=firstname),
+                        html_body=render_template('reset_password.html', recover_url=recover_url, firstname=firstname))
             return raise_error(200, "Check Your Email for the Password Reset Link")
         return raise_error(200, "Check Your Email for the Password Reset Link")
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
 
 
-@portal_v1.route('/students/reset', methods=['POST'])
-def reset_user_password():
+@portal_v1.route('/reset/<token>', methods=['POST','GET'])
+def reset_with_token(token):
     """Reset password."""
     """Already existing user can update their password."""
     try:
-        url = request.host_url + 'reset/'
-        details = request.get_json()
-        reset_token = details['reset_token']
-        password = details['password']
-        u_id = decode_token(reset_token)['identity']
-        user = UsersModel().get_user_by_id(user_id=u_id)
-        if user:
-            email = user['email']
-            user_id = user['user_id']
-            hashed_password = generate_password_hash(password)
-            response = UsersModel().update_user_password(hashed_password, user_id)
-            send_email('Password reset successful',
-                    sender='arrotechdesign@gmail.com',
-                    recipients=[email],
-                    text_body='Password reset was successful',
-                    html_body='<p>Password reset was successful</p>')
-            return Serializer.serialize(response, 200, "Password reset successful")
-        return raise_error(404, "User not found")
+        try:
+            email = default_decode_token(
+                token, salt="recover-key", expiration=86400)
+            print("------my email------", email)
+        except:
+            return raise_error(404, "User not found")
+        form = PasswordForm()
+        user = UsersModel().get_user_by_email(email)
+        if form.validate_on_submit():
+            if user:
+                email = user['email']
+                user_id = user['user_id']
+                hashed_password = generate_password_hash(
+                    password=form.password.data)
+                response = UsersModel().update_user_password(hashed_password, user_id)
+                send_email('Password reset successful',
+                           sender='arrotechdesign@gmail.com',
+                           recipients=[email],
+                           text_body='Password reset was successful',
+                           html_body='<p>Password reset was successful</p>')
+                return Serializer.serialize(response, 200, "Password reset successful")
+            return raise_error(404, "User not found")
+        return render_template('reset_with_token.html', form=form, token=token)
     except Exception as e:
         return Serializer.serialize("{}".format(e), 500, "Error")
 
