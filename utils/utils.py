@@ -355,9 +355,9 @@ def default_decode_token(token, salt='email-confirm-key', expiration=3600):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
         email = serializer.loads(
-            token, salt='email-confirm-key', max_age=expiration)
+            token, salt=salt, max_age=expiration)
         return email
-    except Exception as e:
+    except Exception:
         return False
 
 

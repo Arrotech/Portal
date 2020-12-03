@@ -25,7 +25,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
             headers=self.get_admin_token())
         response = self.client.post(
-            '/api/v1/users/forgot', data=json.dumps(invalid_email_format), content_type='application/json',
+            '/api/v1/reset', data=json.dumps(invalid_email_format), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid Email Format!')
@@ -141,7 +141,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
             headers=self.get_admin_token())
         response = self.client.post(
-            '/api/v1/users/forgot', data=json.dumps(reset_email), content_type='application/json')
+            '/api/v1/reset', data=json.dumps(reset_email), content_type='application/json')
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Check Your Email for the Password Reset Link')
@@ -239,7 +239,7 @@ class TestUsersAccount(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
             headers=self.get_admin_token())
         response = self.client.post(
-            '/api/v1/users/forgot', data=json.dumps(reset_unexisting_email), content_type='application/json',
+            '/api/v1/reset', data=json.dumps(reset_unexisting_email), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
