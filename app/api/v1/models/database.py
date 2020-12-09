@@ -7,19 +7,11 @@ from app.config import app_config
 from utils.serializer import Serializer
 
 
-config_name = os.getenv('ENV')
-print("---This--Config", config_name)
-if config_name is not None:
-    URL = app_config[config_name].DB_NAME
-else:
-    URL = 'test_school_portal'
-
-
 class Database:
     """Initialization."""
 
     def __init__(self):
-        self.db_name = URL
+        self.db_name = os.getenv('DB_NAME')
         self.db_host = os.getenv('DB_HOST')
         self.db_user = os.getenv('DB_USER')
         self.db_password = os.getenv('DB_PASSWORD')
