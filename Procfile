@@ -1,3 +1,3 @@
 
 web: gunicorn run:app
-worker: python3 worker.py
+worker: celery worker --app=app.api.v1.services.mails.mail_services.celery
