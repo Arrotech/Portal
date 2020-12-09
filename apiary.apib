@@ -1,91 +1,424 @@
 FORMAT: 1A
-HOST: https://arrotech-school-portal.herokuapp.com
+HOST: https://njc-school-portal.herokuapp.com
 
-# School-Portal
+# Portal
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+This is a `restful web service` that handles `student's activitie`s in any given `institution`.
 
-## Create Account [/api/v1/auth/register]
+#### Production/Test URL's
 
-### REGISTER [POST]
+1. `Test Url:` https://njc-school-portal.herokuapp.com
+2. `Production Url:` https://njc-school-portal.herokuapp.com
+
+#### Protocol Definition
+|Key                | Value                                        |
+|-------------------|----------------------------------------------|
+|Protocol           | HTTP                                         |
+|Method             | `POST GET PUT DELETE`                                          |
+|Request Body            | JSON                                         |
+|Response Body          | JSON                                         |
+|Authorization     | Bearer `<token>` |
+
+##### Default Error Codes
+|Key                | Value                                        |
+|-------------------|----------------------------------------------|
+|400           | Bad Request                                       |
+|401           | Unauthorized                                       |
+|403             | Forbidden                                       |
+|404            | Resource Not Found                                        |
+|405           | Method Not Allowed                                |
+|406     | Not Acceptable - You requested a format that isn’t json |
+|422     | Unable to process the contained instructions |
+|429     | Too Many Requests |
+|500     | Internal Server Error – We had a problem with our server. Try again later. |
+|503     | Service Unavailable – We’re temporarily offline for maintenance. Please try again later. |
+
+# Users Account
+
+A `staff/student/accountant` can do the following:
+1. Create a new account.
+2. Login to their account.
+3. Get users information.
+4. Get access token using the refresh token.
+5. Access protected route.
+
+### Admin Registration [/api/v1/staff/register]
+
+This request enables an `admin user` to be able to `create a new account` in order to be able to carry out `future portal activities`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/register`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Content-Type:` application/json
+2. `Accept:` application/json
+
+#### Request Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|firstname             | Admin user first name (`Mandatory`)                        | String         | John                    |
+|lastname              | Admin user last name (`Mandatory`)                        | String         | Doe                     |
+|username              | Admin username should be unique (`Mandatory`)             | String         | Johndoe                 |
+|email                 | Admin user email should be unique (`Mandatory`)           | String         | johndoe@example.com     |
+|password              | Admin user password should be aleast 8 characters with special characters (`Mandatory`) | String | JohnDoeUFhgah!37 |
+
+
+**Sample request**
+
+```
+{
+    "firstname": "Peter",
+    "lastname": "Gitundu",
+    "surname": "Kigo",
+    "admission_no": "32829635",
+    "gender": "male",
+    "email": "arrotechdesign@gmail.com",
+    "password": "Peter20930988!"
+}
+```
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | Account created successfully |
+|status                | response status code                         | Object         | 201                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the request was created | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role           | String         | teacher     |
+
+
+**Successful Sample response**
+
+```
+{
+    "data": {
+        "admission_no": "32829635",
+        "created_on": "Wed, 09 Dec 2020 10:07:37 GMT",
+        "email": "arrotechdesign@gmail.com",
+        "firstname": "Peter",
+        "gender": "male",
+        "is_confirmed": false,
+        "lastname": "Gitundu",
+        "password": "pbkdf2:sha256:150000$lqvi4ci8$180dd131394f86200af577d716218eb2e51bd7049c97b3bef64ce336372a90c2",
+        "role": "admin",
+        "surname": "Kigo"
+    },
+    "message": "Account created successfully!",
+    "status": 201
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+
+#### Register [POST]
 
 + Request (application/json)
 
         {
-            "firstname": "Harun",
-            "lastname": "Gachanja",
-            "surname": "Gitundu",
-            "admission_no": "NA",
-            "email": "admin@admin.com",
-            "password": "Admin20930988",
-            "form": "4"
+            "firstname": "Peter",
+            "lastname": "Gitundu",
+            "surname": "Kigo",
+            "admission_no": "32829635",
+            "gender": "male",
+            "email": "arrotechdesign@gmail.com",
+            "password": "Peter20930988!"
         }
 
 + Response 201 (application/json)
 
-    + Headers
-
-            Authorization: Bearer Token
-            Location: /api/v1/auth/register
-
     + Body
 
             {
-                "message": "Successfully logged in!",
-                "status": "200",
-                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkzMDI0MjUsIm5iZiI6MTU1OTMwMjQyNSwianRpIjoiZjFjYTg0YmYtNzBlYS00NDk0LThkYjAtZWYyODMxNTEwZTNhIiwiZXhwIjoxNTU5MzAzMzI1LCJpZGVudGl0eSI6ImFkbWluQGFkbWluLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.ARkkzVOM7K_zqlC8CShrEHonfrWSfPmqMdVhlXQIBn0",
-                "user": {
-                    "admission_no": "NA",
-                    "email": "admin@admin.com",
-                    "firstname": "Harun",
-                    "form": "5",
-                    "lastname": "Gachanja",
-                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
+                "data": {
+                    "admission_no": "32829635",
+                    "created_on": "Wed, 09 Dec 2020 10:07:37 GMT",
+                    "email": "arrotechdesign@gmail.com",
+                    "firstname": "Peter",
+                    "gender": "male",
+                    "is_confirmed": false,
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$lqvi4ci8$180dd131394f86200af577d716218eb2e51bd7049c97b3bef64ce336372a90c2",
                     "role": "admin",
-                    "surname": "Gitundu",
-                    "user_id": 1
-                }
+                    "surname": "Kigo"
+                },
+                "message": "Account created successfully!",
+                "status": 201
             }
             
-## Login [/api/v1/auth/login]
+## Admin Login [/api/v1/staff/login]
+
+This request enables an admin user able to `login` in order to access `restricted endpoints`.
+
+```
+One must be logged in to carry out portal activities
+```
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/login`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Content-Type:` application/json
+2. `Accept:` application/json
+
+#### Request Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|email                 | email that you registered with (`Mandatory`)           | String         | johndoe@example.com     |
+|password              | password that you registered with (`Mandatory`) | String | JohnDoeUFhgah!37 |
+
+
+**Sample request**
+
+```
+{
+    "email": "arrotechdesign@gmail.com",
+    "password": "Peter20930988!"
+}
+```
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | Successfully logged in! |
+|status                | response status code                         | Object         | 200                     |
+|token                 | bearer token that should be passed to all future requests | Object         | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI... |
+|refresh_token         | refresh token that should be used to get access token | Object         | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI... |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the login request was sent | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role | String         | teacher     |
+|staff_id              | Autogenerated admin id | Numeric         | 1     |
+
+
+**Successful Sample response**
+
+```
+{
+    "message": "Successfully logged in!",
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDc0OTkxMDcsIm5iZiI6MTYwNzQ5OTEwNywianRpIjoiOTk2NzVhMWMtZGMyNi00ODAxLWFmNjEtZDAxMmY4OGY1MTQwIiwiZXhwIjoxNjM5MDM1MTA3LCJpZGVudGl0eSI6ImFycm90ZWNoZGVzaWduQGdtYWlsLmNvbSIsInR5cGUiOiJyZWZyZXNoIn0.FPzImHi6GR9HqhgeNg4RNXrD161REzGrrUOi-XtvuZ8",
+    "status": "200",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDc0OTkxMDcsIm5iZiI6MTYwNzQ5OTEwNywianRpIjoiNGJmN2FlMGUtYWYzYS00ODgxLWJiNzEtNmZiNjg1MjZkZTY0IiwiZXhwIjoxNjM5MDM1MTA3LCJpZGVudGl0eSI6ImFycm90ZWNoZGVzaWduQGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.pGIiELu5sfd6UMD5QUzcQ0HDjuZGo1ECIbb_VgDnnys",
+    "user": {
+        "admission_no": "32829635",
+        "confirmed_on": null,
+        "created_on": "Wed, 09 Dec 2020 10:07:37 GMT",
+        "email": "arrotechdesign@gmail.com",
+        "firstname": "Peter",
+        "gender": "male",
+        "is_confirmed": false,
+        "lastname": "Gitundu",
+        "password": "pbkdf2:sha256:150000$lqvi4ci8$180dd131394f86200af577d716218eb2e51bd7049c97b3bef64ce336372a90c2",
+        "role": "admin",
+        "surname": "Kigo",
+        "user_id": 1
+    }
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
 
 ### Login [POST]
 
 + Request (application/json)
 
         {
-            "email": "admin@admin.com",
-            "password": "Admin20930988"
+            "email": "arrotechdesign@gmail.com",
+            "password": "Peter20930988!"
         }
 
 
-+ Response 201 (application/json)
-
-    + Headers
-
-            Authorization: Bearer Token
-            Location: /api/v1/auth/login
++ Response 200 (application/json)
 
     + Body
 
             {
                 "message": "Successfully logged in!",
+                "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDc0OTkxMDcsIm5iZiI6MTYwNzQ5OTEwNywianRpIjoiOTk2NzVhMWMtZGMyNi00ODAxLWFmNjEtZDAxMmY4OGY1MTQwIiwiZXhwIjoxNjM5MDM1MTA3LCJpZGVudGl0eSI6ImFycm90ZWNoZGVzaWduQGdtYWlsLmNvbSIsInR5cGUiOiJyZWZyZXNoIn0.FPzImHi6GR9HqhgeNg4RNXrD161REzGrrUOi-XtvuZ8",
                 "status": "200",
-                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkzMDIxMDEsIm5iZiI6MTU1OTMwMjEwMSwianRpIjoiMDA2M2Y5MTgtODdiZi00MjRjLWEwOTAtZTI1MDgxOGMzNWUzIiwiZXhwIjoxNTU5MzAzMDAxLCJpZGVudGl0eSI6ImFkbWluQGFkbWluLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.-TI_lo74WBx2VZV6bLSLdu7RFA7i-sfR-4QBkGmlA70",
+                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDc0OTkxMDcsIm5iZiI6MTYwNzQ5OTEwNywianRpIjoiNGJmN2FlMGUtYWYzYS00ODgxLWJiNzEtNmZiNjg1MjZkZTY0IiwiZXhwIjoxNjM5MDM1MTA3LCJpZGVudGl0eSI6ImFycm90ZWNoZGVzaWduQGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.pGIiELu5sfd6UMD5QUzcQ0HDjuZGo1ECIbb_VgDnnys",
                 "user": {
-                    "admission_no": "NA",
-                    "email": "admin@admin.com",
-                    "firstname": "Harun",
-                    "form": "5",
-                    "lastname": "Gachanja",
-                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
+                    "admission_no": "32829635",
+                    "confirmed_on": null,
+                    "created_on": "Wed, 09 Dec 2020 10:07:37 GMT",
+                    "email": "arrotechdesign@gmail.com",
+                    "firstname": "Peter",
+                    "gender": "male",
+                    "is_confirmed": false,
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$lqvi4ci8$180dd131394f86200af577d716218eb2e51bd7049c97b3bef64ce336372a90c2",
                     "role": "admin",
-                    "surname": "Gitundu",
+                    "surname": "Kigo",
                     "user_id": 1
                 }
             }
             
-## Get all Users [/api/v1/auth/users]    
+## Admin Access Token [/api/v1/auth/staff/refresh]
+
+`Flask-JWT-Extended` supports `refresh tokens` out of the box. These are `long lived tokens` which can be used to `create new access tokens` once an `old access token has expired`. 
+
+Refresh tokens `cannot access` an endpoint that is `protected` with `jwt_required()` and access tokens `cannot` access and endpoint that is protected with `jwt_refresh_token_required()`.
+
+By setting the access tokens to a `shorter lifetime`, and utilizing refresh tokens we can `help reduce the damage` that can be done if an `access token is stolen`. However, if an `attacker` gets their hands on the refresh token, they `can keep generating` new access tokens and accessing protected endpoints as though he was that user.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/refresh`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<refresh-token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|access_token          | token returned | String         | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...|
+
+**Successful Sample Response**
+
+```
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTUxNTE2ODQsIm5iZiI6MTU5NTE1MTY4NCwianRpIjoiYWI0OWRmNjEtZThlZC00MTYxLTlkOWUtNGMwNTkwZmZmOGZiIiwiZXhwIjoxNjI2Njg3Njg0LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.Ui8vs2QwY3ytSebuvC26O1iqN6yZVq-ZczxMn3Zdh1I"
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+
+### Get Access Token [POST]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer <refresh-token>
+            Location: /api/v1/auth/users
+
+    + Body
+
+            {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEyOTgxODksIm5iZiI6MTU5MTI5ODE4OSwianRpIjoiZmU4MTc2MjctNGQ0My00MzU0LWJhYTAtMjFlY2U3ZmY1YzA4IiwiZXhwIjoxNjIyODM0MTg5LCJpZGVudGl0eSI6InBldGVyZ2l0dW5kdTQ0QGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.IpGos1gk6V8FZgqvP45w6GBRXQF3gCNAF-tb-o7MxQM"
+            }
+            
+## Admin Protected Route [/api/v1/auth/staff/protected]
+
+Get the `current user` logged in by their `email`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/protected`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|logged_in_as          | current logged in user | String         | petergitundu44@gmail.com |
+
+**Successful Sample Response**
+
+```
+{
+  "logged_in_as": "petergitundu44@gmail.com"
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+            
+### Protected  [GET]
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+            Location: /api/v1/auth/staff/protected
+            
+    + Body
+
+            {
+                "logged_in_as": "petergitundu44@gmail.com"
+            }
+            
+## Admin Get Users [/api/v1/auth/staff/users]
+
+This request enables an admin user able to `get a list of all users` that have `created the account`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/users`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | success |
+|status                | response status code                         | Object         | 200                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the login request was sent | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role | String         | teacher     |
+|staff_id              | Autogenerated admin id | Numeric         | 1     |
+
+
+**Successful Sample Response**
+
+```
+{
+  "message": "success",
+  "status": "200",
+  "users": [
+    {
+      "created_on": "2020-07-19 11:25:43.501510",
+      "email": "petergitundu44@gmail.com",
+      "firstname": "Peter",
+      "form": "1",
+      "lastname": "Gitundu",
+      "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+      "role": "teacher",
+      "staff_id": 1,
+      "stream": "1A",
+      "username": "Peter254"
+    }
+  ]
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
             
 ### Get Users  [GET]
 
@@ -94,43 +427,90 @@ Polls is a simple API allowing consumers to view polls and vote in them.
     + Headers
 
             Authorization: Bearer Token
-            Location: /api/v1/auth/users
+            Location: /api/v1/auth/staff/users
             
     + Body
 
             {
-                "Users": [
+                  "message": "success",
+                  "status": "200",
+                  "users": [
                     {
-                        "admission_no": "NA",
-                        "email": "admin@admin.com",
-                        "firstname": "Harun",
-                        "form": "5",
-                        "lastname": "Gachanja",
-                        "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
-                        "role": "admin",
-                        "surname": "Gitundu",
-                        "user_id": 1
-                    },
-                    {
-                        "admission_no": "NJCF1001",
-                        "email": "gitundu.mercy@students.jcs.ac.ke",
-                        "firstname": "Mercy",
-                        "form": "1",
-                        "lastname": "Wairimu",
-                        "password": "pbkdf2:sha256:50000$jYhBbvV1$20ac92d6541c7df4ec10dd6e342428bb9aea3e4539256acbac2df69721217c07",
-                        "role": "student",
-                        "surname": "Gitundu",
-                        "user_id": 2
+                      "created_on": "2020-06-04 22:02:21.406688",
+                      "email": "petergitundu44@gmail.com",
+                      "firstname": "Peter",
+                      "form": "1",
+                      "lastname": "Gitundu",
+                      "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                      "role": "teacher",
+                      "staff_id": 1,
+                      "stream": "1A",
+                      "username": "Peter254"
                     }
-                ],
-                "message": "successfully retrieved",
-                "status": "200"
+                  ]
             }
             
-## Specific User [/api/v1/auth/users/{user_id}]
+            
+## Admin Get User By Username [/api/v1/auth/staff/users/{username}]
+
+Enable an admin user able to `get` a `specific user's` details by their `username`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/staff/users/{username}`
+
+```
+Provide the `username` at the end of the url.
+```
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Authorization:` Bearer `<token>`
+2. `Content-Type:` application/json
+3. `Accept:` application/json
+
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | success |
+|status                | response status code                         | Object         | 200                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the login request was sent | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | Admin user first name | String         | John                    |
+|lastname              | Admin user last name | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role | String         | teacher     |
+|staff_id              | Autogenerated admin id | Numeric         | 1     |
+
+**Successful Sample Response**
+
+```
+{
+  "message": "success",
+  "status": "200",
+  "user": {
+    "created_on": "2020-07-19 11:25:43.501510",
+    "email": "petergitundu44@gmail.com",
+    "firstname": "Peter",
+    "form": "1",
+    "lastname": "Gitundu",
+    "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+    "role": "teacher",
+    "staff_id": 1,
+    "stream": "1A",
+    "username": "Peter254"
+  }
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
 
 + Parameters
-    + user_id (number)
+    + username (string)
 
 ### Get User  [GET]
 
@@ -139,22 +519,502 @@ Polls is a simple API allowing consumers to view polls and vote in them.
     + Headers
     
             Authorization: Bearer Token
-            Location: /api/v1/auth/users/{user_id}
+            Location: /api/v1/auth/staff/users/{username}
     
     + Body
 
             {
-                "message": "successfully retrieved",
-                "status": "200",
-                "user": {
-                    "admission_no": "NA",
-                    "email": "admin@admin.com",
+                  "message": "success",
+                  "status": "200",
+                  "user": {
+                    "created_on": "2020-06-04 22:02:21.406688",
+                    "email": "petergitundu44@gmail.com",
+                    "firstname": "Peter",
+                    "form": "1",
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                    "role": "teacher",
+                    "staff_id": 1,
+                    "stream": "1A",
+                    "username": "Peter254"
+                  }
+            }
+            
+### Student Register [/api/v1/auth/register]
+
+This request enables a `student` to be able to `create a new account` in order to be able to carry out `future portal activities`.
+
+The following request should be sent to the following url: `https://njc-school-portal.herokuapp.com/api/v1/auth/register`
+
+#### Headers
+
+The following should be passed as the header:
+
+1. `Content-Type:` application/json
+2. `Accept:` application/json
+
+#### Request Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|firstname             | user first name (`Mandatory`)                        | String         | John                    |
+|lastname              | user last name (`Mandatory`)                        | String         | Doe                     |
+|surname               | surname (`Mandatory`)             | String         | Dee                 |
+|gender                | user gender; male or female (`Mandatory`)           | String         | male     |
+|email                 | user email should be unique (`Mandatory`)           | String         | johndoe@example.com     |
+|password              | user password should be aleast 8 characters with special characters (`Mandatory`) | String | JohnDoeUFhgah!37 |
+|current_year          | year of admission (`Mandatory`)             | String         | Dee                 |
+|role                  | user role (`Mandatory`)           | String         | student     |
+|admission_no          | user registration number which should be unique (`Mandatory`)           | String         | sc200-1358/2020     |
+
+
+**Sample request**
+
+```
+{
+    "firstname": "Harun",
+    "lastname": "Gachanja",
+    "surname": "Gitundu",
+    "admission_no": "NJCF1001",
+    "gender": "male",
+    "email": "arrotechdesign@gmail.com",
+    "password": "Harun20930988!",
+    "current_year": "1",
+    "role": "student"
+}
+```
+
+#### Response Data Fields
+
+|Parameter             | Description                                  | Parameter Type | Sample values           |
+|----------------------|----------------------------------------------|----------------|-------------------------|
+|message               | message about the request                    | Object         | Account created successfully |
+|status                | response status code                         | Object         | 201                     |
+|user                  | user account information             | Object         | {...}                 |
+|created_on            | date when the request was created | Date (`TIMESTAMP`) | 2020-07-19 11:25:43.501510 |
+|firstname             | user first name | String         | John                    |
+|lastname              | user last name | String         | Doe                     |
+|surname              | user surname | String         | Doe                     |
+|username              | Admin username | String         | Johndoe                 |
+|email                 | Admin user email | String         | johndoe@example.com     |
+|password              | Admin user password hashed password | String | pbkdf2:sha256:150000$Ryqas... |
+|role                  | Admin user role           | String         | teacher     |
+|is_confirmed                  | Admin user role           | String         | teacher     |
+|gender                  | Admin user role           | String         | teacher     |
+
+
+**Successful Sample response**
+
+```
+{
+  "message": "Account created successfully!",
+  "status": "201",
+  "user": {
+    "created_on": "2020-07-19 11:25:43.501510",
+    "email": "petergitundu44@gmail.com",
+    "firstname": "Peter",
+    "form": "1",
+    "lastname": "Gitundu",
+    "password": "pbkdf2:sha256:150000$RyqasqjW$1764fafdb1d0bf8a9984f462614e89fca256246dcc727504016f720633b4f4d5",
+    "role": "teacher",
+    "stream": "1A",
+    "username": "Peter254"
+  }
+}
+```
+
+<span style="color:royalblue; font-size:18px;">**Try in console**</span>
+
+#### Register [POST]
+
++ Request (application/json)
+
+        {
+            "firstname": "Harun",
+            "lastname": "Gachanja",
+            "surname": "Gitundu",
+            "admission_no": "NJCF1001",
+            "gender": "male",
+            "email": "arrotechdesign@gmail.com",
+            "password": "Harun20930988!",
+            "current_year": "1",
+            "role": "student"
+        }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                  "message": "Account created successfully!",
+                  "status": "201",
+                  "user": {
+                    "admission_no": "NJCF1001",
+                    "created_on": "2020-06-04 23:05:16.738564",
+                    "current_year": "1",
+                    "email": "arrotechdesign@gmail.com",
                     "firstname": "Harun",
-                    "form": "5",
+                    "gender": "male",
+                    "is_confirmed": false,
                     "lastname": "Gachanja",
-                    "password": "pbkdf2:sha256:50000$aNlgJU9E$bf5d2dc9783e38f905618aacd50eb55b098f282dc6b03834aee7c4f80a9100e8",
-                    "role": "admin",
+                    "password": "pbkdf2:sha256:150000$1AEGuLqc$0dfbddb71c7d014c39ccbc3bf0a1c38dffb686c2d95ec6d8a1b86a3288dbaab0",
+                    "role": "student",
+                    "surname": "Gitundu"
+                  }
+            }
+            
+## Student Login [/api/v1/auth/login]
+
+### Login [POST]
+
++ Request (application/json)
+
+        {
+            "email": "arrotechdesign@gmail.com",
+            "password": "Harun20930988!"
+        }
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                  "message": "Successfully logged in!",
+                  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEzMDE3NzQsIm5iZiI6MTU5MTMwMTc3NCwianRpIjoiYWQ3ZjI0MjYtMDMzZi00Y2JhLWJiZmMtMzhmYTZlOWMxMGE2IiwiZXhwIjoxNjIyODM3Nzc0LCJpZGVudGl0eSI6ImFycm90ZWNoZGVzaWduQGdtYWlsLmNvbSIsInR5cGUiOiJyZWZyZXNoIn0.8XudXqTbCns5sZv2tYTusvt6nztIDA2HSECzNPuMfiY",
+                  "status": "200",
+                  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTEzMDE3NzQsIm5iZiI6MTU5MTMwMTc3NCwianRpIjoiMzVhNTkzYjEtZWM3Yi00NGNjLTg3OTUtYzcyOWVlYTExNmEwIiwiZXhwIjoxNjIyODM3Nzc0LCJpZGVudGl0eSI6ImFycm90ZWNoZGVzaWduQGdtYWlsLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.oj-QLMuVTJ5v-6agdwLafFj0cFYg5Tmi6sGYkdldrSk",
+                  "user": {
+                    "admission_no": "NJCF1001",
+                    "confirmed_on": null,
+                    "created_on": "2020-06-04 23:05:16.738564",
+                    "current_year": "1",
+                    "email": "arrotechdesign@gmail.com",
+                    "firstname": "Harun",
+                    "gender": "male",
+                    "is_confirmed": false,
+                    "lastname": "Gachanja",
+                    "password": "pbkdf2:sha256:150000$1AEGuLqc$0dfbddb71c7d014c39ccbc3bf0a1c38dffb686c2d95ec6d8a1b86a3288dbaab0",
+                    "role": "student",
                     "surname": "Gitundu",
                     "user_id": 1
-                }
+                  }
+            }
+            
+## Get Student By Registration No. [/api/v1/auth/users/{admission_no}]
+
++ Parameters
+    + admission_no (string)
+
+### Get Student  [GET]
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/auth/users/{admission_no}
+    
+    + Body
+
+            {
+                  "message": "success",
+                  "status": "200",
+                  "user": {
+                    "created_on": "2020-06-04 22:02:21.406688",
+                    "email": "petergitundu44@gmail.com",
+                    "firstname": "Peter",
+                    "form": "1",
+                    "lastname": "Gitundu",
+                    "password": "pbkdf2:sha256:150000$XWo2q0vD$5da9ab52bbfdceb1e8e275b1544070e2a43a912a7c67c3f6de8e616652bf7134",
+                    "role": "teacher",
+                    "staff_id": 1,
+                    "stream": "1A",
+                    "username": "Peter254"
+                  }
+            }
+            
+## Add Campus [/api/v1/campuses]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "campus_name": "main",
+            "campus_location": "juja"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/campuses
+
+    + Body
+
+            {
+                  "data": {
+                    "campus_location": "juja",
+                    "campus_name": "main",
+                    "created_on": "Thu, 04 Jun 2020 23:39:28 GMT"
+                  },
+                  "message": "Campus added successfully",
+                  "status": 201
+            }
+            
+## Add Certificate [/api/v1/certificates]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "certificate_name": "Degree"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/certificates
+
+    + Body
+
+            {
+              "data": {
+                "certificate_name": "Degree",
+                "created_on": "Thu, 04 Jun 2020 23:59:26 GMT"
+              },
+              "message": "Certificate added successfully",
+              "status": 201
+            }
+            
+## Add Department [/api/v1/departments]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "department_name": "mathematics"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/departments
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:03:39 GMT",
+                "department_name": "mathematics"
+              },
+              "message": "Department added successfully",
+              "status": 201
+            }
+            
+## Add Course [/api/v1/courses]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "course_name": "maths and computer science",
+            "department_name": "mathematics"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/courses
+
+    + Body
+
+            {
+              "data": {
+                "course_name": "maths and computer science",
+                "created_on": "Fri, 05 Jun 2020 00:08:23 GMT",
+                "department": "mathematics"
+              },
+              "message": "maths and computer science added successfully",
+              "status": 201
+            }
+            
+## Add Unit [/api/v1/units]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "unit_name": "Calculus 1",
+            "unit_code": "SMA001"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/units
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:10:46 GMT",
+                "unit_code": "SMA001",
+                "unit_name": "Calculus 1"
+              },
+              "message": "Unit added successfully",
+              "status": 201
+            }
+            
+## Add Hostel [/api/v1/hostels]
+
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "hostel_name": "nyati",
+            "rooms": "400",
+            "gender": "male",
+            "hostel_location": "sunrise"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/hostels
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:14:15 GMT",
+                "gender": "male",
+                "hostel_location": "sunrise",
+                "hostel_name": "nyati",
+                "rooms": "400"
+              },
+              "message": "Hostel added successfully",
+              "status": 201
+            }
+            
+## Apply Course [/api/v1/apply_course]
+
+### Apply [POST]
+
++ Request (application/json)
+
+        {
+            "admission_no": "NJCF1001",
+            "campus_id": "1",
+            "certificate_id": "1",
+            "department_name": "mathematics",
+            "course_name": "maths and computer science"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/apply_course
+
+    + Body
+
+            {
+              "data": {
+                "campus": 1,
+                "certificate": 1,
+                "course": "maths and computer science",
+                "created_on": "Fri, 05 Jun 2020 00:20:36 GMT",
+                "department": "mathematics",
+                "student": "NJCF1001"
+              },
+              "message": "Course applied successfully",
+              "status": 201
+            }
+            
+## Book Hostel [/api/v1/accommodation]
+
+### Book [POST]
+
++ Request (application/json)
+
+        {
+            "admission_no": "NJCF1001",
+            "hostel_name": "nyati"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/accommodation
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:25:06 GMT",
+                "hostel": "nyati",
+                "student": "NJCF1001"
+              },
+              "message": "Hostel booked successfully",
+              "status": 201
+            }
+            
+## Unit Registration [/api/v1/subjects]
+
+### Register [POST]
+
++ Request (application/json)
+
+        {
+            "admission_no": "NJCF1001",
+            "unit_name": "Calculus 1"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Authorization: Bearer Token
+            Location: /api/v1/subjects
+
+    + Body
+
+            {
+              "data": {
+                "created_on": "Fri, 05 Jun 2020 00:30:16 GMT",
+                "student": "NJCF1001",
+                "unit": "Calculus 1"
+              },
+              "message": "You have successfully registered Calculus 1",
+              "status": 201
             }
