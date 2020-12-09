@@ -21,6 +21,7 @@ class Config:
     DB_USER = "postgres"
     DB_HOST = "localhost"
     DB_PASSWORD = "postgres20930988"
+    REDISTOGO_URL = "redis://localhost:6379"
 
     # app secret key
     SECRET_KEY = "schoolportal"
