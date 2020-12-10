@@ -380,9 +380,10 @@ def get_user_info(admission_no):
         return Serializer.serialize("{}".format(e), 500, "Error")
 
 
-@portal_v1.route('/users/students/<string:admission_no>', methods=['PUT'])
+@portal_v1.route('/user/update/<string:admission_no>', methods=['PUT'])
 @jwt_required
-def update_student_info(admission_no):
+@admin_required
+def update_user_info(admission_no):
     """Update user information."""
     try:
         errors = check_update_user_keys(request)
@@ -392,8 +393,9 @@ def update_student_info(admission_no):
         firstname = details['firstname']
         lastname = details['lastname']
         surname = details['surname']
+        gender = details['gender']
         response = UsersModel().update_user_info(
-            firstname, lastname, surname, admission_no)
+            firstname, lastname, surname, gender, admission_no)
         if response:
             return Serializer.serialize(response, 200, "User updated successfully")
         return Serializer.serialize(response, 404, "User not found")
