@@ -206,8 +206,8 @@ class TestUsersAccount(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
             headers=self.get_admin_token())
         response = self.client.put(
-            '/api/v1/users/students/NJCF4001', data=json.dumps(update_student_info), content_type='application/json',
-            headers=self.get_token())
+            '/api/v1/user/update/NJCF4001', data=json.dumps(update_student_info), content_type='application/json',
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'User updated successfully')
         assert response.status_code == 200
@@ -218,8 +218,8 @@ class TestUsersAccount(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
             headers=self.get_admin_token())
         response = self.client.put(
-            '/api/v1/users/students/1', data=json.dumps(update_student_info_keys), content_type='application/json',
-            headers=self.get_token())
+            '/api/v1/user/update/NJCF4001', data=json.dumps(update_student_info_keys), content_type='application/json',
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid firstname key')
         assert response.status_code == 400
@@ -227,8 +227,8 @@ class TestUsersAccount(BaseTest):
     def test_update_student_info_for_non_existing_student(self):
         """Test that a user cannot update their information if they do no have an account."""
         response = self.client.put(
-            '/api/v1/users/students/100', data=json.dumps(update_student_info), content_type='application/json',
-            headers=self.get_token())
+            '/api/v1/user/update/100', data=json.dumps(update_student_info), content_type='application/json',
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'User not found')
         assert response.status_code == 404

@@ -93,10 +93,10 @@ class UsersModel(Database):
         response = Database().fetch_one(query, email)
         return response
 
-    def update_user_info(self, admission_no, firstname, lastname, surname):
-        """Update user information by id."""
+    def update_user_info(self, admission_no, firstname, lastname, surname, gender):
+        """Update user information by admission number."""
         self.curr.execute(
-            """UPDATE users SET firstname='{}', lastname='{}', surname='{}' WHERE admission_no='{}' RETURNING firstname, lastname, surname""".format(admission_no, firstname, lastname, surname))
+            """UPDATE users SET firstname='{}', lastname='{}', surname='{}', gender='{}' WHERE admission_no='{}' RETURNING firstname, lastname, surname, gender""".format(admission_no, firstname, lastname, surname, gender))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

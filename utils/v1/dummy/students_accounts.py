@@ -91,13 +91,15 @@ student_invalid_login_email = {
 update_student_info = {
     "firstname": "Mercy",
     "lastname": "Wairimu",
-    "surname": "Gitundu"
+    "surname": "Gitundu",
+    "gender": "female"
 }
 
 update_student_info_keys = {
     "fitname": "Mercy",
     "lastname": "Wairimu",
-    "surname": "Gitundu"
+    "surname": "Gitundu",
+    "gender": "female"
 }
 
 
