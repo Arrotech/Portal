@@ -16,18 +16,15 @@ class SubjectsModel(Database):
 
     def save(self):
         """Register a subject."""
-        try:
-            self.curr.execute(
-                ''' INSERT INTO subjects(student, unit, created_on)
-                VALUES('{}','{}','{}')
-                RETURNING student, unit, created_on'''
-                .format(self.admission_no, self.unit_name, self.created_on))
-            response = self.curr.fetchone()
-            self.conn.commit()
-            self.curr.close()
-            return response
-        except psycopg2.IntegrityError:
-            return "error"
+        self.curr.execute(
+            ''' INSERT INTO subjects(student, unit, created_on)
+            VALUES('{}','{}','{}')
+            RETURNING student, unit, created_on'''
+            .format(self.admission_no, self.unit_name, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
 
     def get_subjects(self):
         """Fetch all subjects."""

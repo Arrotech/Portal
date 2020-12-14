@@ -3,6 +3,7 @@ import psycopg2
 
 from datetime import datetime
 from app.api.v1.models.database import Database
+from utils.serializer import Serializer
 
 Database().create_table()
 
@@ -28,18 +29,15 @@ class FeesModels(Database):
 
     def save(self):
         """Create a new fee entry."""
-        try:
-            self.curr.execute(
-                ''' INSERT INTO fees(student, transaction_type, transaction_no, description, amount, created_on)
-                VALUES('{}','{}','{}','{}','{}','{}')
-                RETURNING student, transaction_type, transaction_no, description, amount, created_on'''
-                .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.amount, self.created_on))
-            response = self.curr.fetchone()
-            self.conn.commit()
-            self.curr.close()
-            return response
-        except psycopg2.IntegrityError:
-            return "error"
+        self.curr.execute(
+            ''' INSERT INTO fees(student, transaction_type, transaction_no, description, amount, created_on)
+            VALUES('{}','{}','{}','{}','{}','{}')
+            RETURNING student, transaction_type, transaction_no, description, amount, created_on'''
+            .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.amount, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
 
     def get_all_fees(self):
         """Fetch all fees"""

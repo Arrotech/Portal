@@ -3,6 +3,7 @@ import psycopg2
 
 from app.api.v1.models.database import Database
 from datetime import datetime
+from utils.serializer import Serializer
 
 
 class ApplyCoursesModel(Database):
@@ -20,18 +21,15 @@ class ApplyCoursesModel(Database):
 
     def save(self):
         """Apply for a course."""
-        try:
-            self.curr.execute(
-                ''' INSERT INTO apply_course(student, institution, campus, certificate, department, course, created_on)
-                VALUES('{}','{}','{}','{}','{}','{}','{}')
-                RETURNING student, institution, campus, certificate, department, course, created_on'''
-                .format(self.admission_no, self.institution_name, self.campus_id, self.certificate_id, self.department_name, self.course_name, self.created_on))
-            response = self.curr.fetchone()
-            self.conn.commit()
-            self.curr.close()
-            return response
-        except psycopg2.IntegrityError:
-            return "error"
+        self.curr.execute(
+            ''' INSERT INTO apply_course(student, institution, campus, certificate, department, course, created_on)
+            VALUES('{}','{}','{}','{}','{}','{}','{}')
+            RETURNING student, institution, campus, certificate, department, course, created_on'''
+            .format(self.admission_no, self.institution_name, self.campus_id, self.certificate_id, self.department_name, self.course_name, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
 
     def get_course_by_id(self, application_id):
         """Get course by id."""

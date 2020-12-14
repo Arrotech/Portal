@@ -39,8 +39,6 @@ def fill_checklist():
                         if CampusModel().get_campus_by_id(campus_id):
                             if HostelsModel().get_hostel_by_name(hostel_name):
                                 response = ChecklistModel(admission_no, department_name, course_name, certificate_id, year_id, campus_id, hostel_name).save()
-                                if "error" in response:
-                                    return raise_error(500, "Check your input")
                                 return Serializer.serialize(response, 201, "Checklist filled successfully")
                             return raise_error(404, "Hostel not found")
                         return raise_error(404, "Campus not found")

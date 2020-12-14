@@ -29,10 +29,9 @@ def add_book():
         response = LibraryModel(admission_no,
                                 title,
                                 author,
-                                book_no).save()
-        if "error" in response:
-            return raise_error(404, "Student not found")
+                                book_no).save()          
         return Serializer.serialize(response, 201, "Book added successfully")
+    return raise_error(404, "Student not found")
 
 
 @portal_v1.route('/books', methods=['GET'])

@@ -3,6 +3,7 @@ import psycopg2
 
 from app.api.v1.models.database import Database
 from datetime import datetime
+from utils.serializer import Serializer
 
 
 class AccommodationModel(Database):
@@ -16,18 +17,15 @@ class AccommodationModel(Database):
 
     def save(self):
         """Book hostel."""
-        try:
-            self.curr.execute(
-                ''' INSERT INTO accommodation(student, hostel, created_on)
-                VALUES('{}','{}','{}')
-                RETURNING student, hostel, created_on'''
-                .format(self.admission_no, self.hostel_name, self.created_on))
-            response = self.curr.fetchone()
-            self.conn.commit()
-            self.curr.close()
-            return response
-        except psycopg2.IntegrityError:
-            return "error"
+        self.curr.execute(
+            ''' INSERT INTO accommodation(student, hostel, created_on)
+            VALUES('{}','{}','{}')
+            RETURNING student, hostel, created_on'''
+            .format(self.admission_no, self.hostel_name, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
 
     def get_booked_hostels(self):
         """Fetch all booked hostels."""

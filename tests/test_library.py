@@ -32,14 +32,14 @@ class TestBooks(BaseTest):
         self.assertEqual(result['message'], 'Invalid admission_no key')
         assert response.status_code == 400
 
-    # def test_add_books_for_unexisting_user(self):
-    #     """Test that the add books for unexisting user."""
-    #     response = self.client.post(
-    #         '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-    #         headers=self.get_admin_token())
-    #     result = json.loads(response.data.decode())
-    #     self.assertEqual(result['message'], 'Student not found')
-    #     assert response.status_code == 404
+    def test_add_books_for_unexisting_user(self):
+        """Test that the add books for unexisting user."""
+        response = self.client.post(
+            '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Student not found')
+        assert response.status_code == 404
 
     def test_get_books(self):
         """Test that an admin can fetch all books that have been added."""
@@ -71,17 +71,17 @@ class TestBooks(BaseTest):
                          'Books retrieved successfully')
         assert response.status_code == 200
 
-    # def test_get_books_for_non_existing_user(self):
-    #     """Test that one cannot get books for non existing user"""
-    #     self.client.post(
-    #         '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-    #         headers=self.get_admin_token())
-    #     response = self.client.get(
-    #         '/api/v1/books/NJCF1013', content_type='application/json', headers=self.get_token())
-    #     result = json.loads(response.data.decode())
-    #     self.assertEqual(result['message'],
-    #                      'Student not found')
-    #     assert response.status_code == 404
+    def test_get_books_for_non_existing_user(self):
+        """Test that one cannot get books for non existing user"""
+        self.client.post(
+            '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
+            headers=self.get_admin_token())
+        response = self.client.get(
+            '/api/v1/books/NJCF1013', content_type='application/json', headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Student not found')
+        assert response.status_code == 404
 
     def test_edit_books(self):
         """Test edit books."""

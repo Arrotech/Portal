@@ -235,27 +235,36 @@ class Database:
 
     def fetch(self, query):
         """Fetch all query."""
-        self.curr.execute(query)
-        fetch_all = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
-        return fetch_all
+        try:
+            self.curr.execute(query)
+            fetch_all = self.curr.fetchall()
+            self.conn.commit()
+            self.curr.close()
+            return fetch_all
+        except Exception as e:
+            return Serializer.serialize(f"{e}", 500, "Error")
 
     def fetch_group(self, query, var, *args, **kwargs):
         """Fetch one query."""
-        self.curr.execute(query, (var,),)
-        fetch_group = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
-        return fetch_group
+        try:
+            self.curr.execute(query, (var,),)
+            fetch_group = self.curr.fetchall()
+            self.conn.commit()
+            self.curr.close()
+            return fetch_group
+        except Exception as e:
+            return Serializer.serialize(f"{e}", 500, "Error")
 
     def fetch_one(self, query, var):
         """Fetch one query."""
-        self.curr.execute(query, (var,),)
-        fetch_one = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
-        return fetch_one
+        try:
+            self.curr.execute(query, (var,),)
+            fetch_one = self.curr.fetchone()
+            self.conn.commit()
+            self.curr.close()
+            return fetch_one
+        except Exception as e:
+            return Serializer.serialize(f"{e}", 500, "Error")
 
 
 if __name__ == '__main__':

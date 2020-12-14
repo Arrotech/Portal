@@ -63,8 +63,8 @@ class TestAccommodation(BaseTest):
             headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(
-            result['message'], 'User does not exist or your are trying to book twice')
-        assert response.status_code == 400
+            result['message'], 'User not found')
+        assert response.status_code == 404
 
     def test_get_booked_hostels(self):
         """Test that an admin can fetch all booked hostels."""

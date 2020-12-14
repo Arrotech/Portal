@@ -28,8 +28,6 @@ def add_exam():
             if UnitsModel().get_unit_by_name(unit_name):
                 response = ExamsModel(year_id, admission_no,
                                       unit_name, marks).save()
-                if "error" in response:
-                    return raise_error(400, "User does not exist or your are trying to enter marks twice")
                 return Serializer.serialize(response, 201, "Marks added successfully")
             return raise_error(404, "Unit {} not found".format(unit_name))
         return raise_error(400, "User does not exist or your are trying to enter marks twice")
