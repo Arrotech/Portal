@@ -61,7 +61,7 @@ def check_notification_keys(request):
 
 def check_checklist_keys(request):
     res_keys = ['admission_no', 'department_name',
-                'course_name', 'hostel_name']
+                'course_name', 'certificate_id', 'year_id', 'campus_id', 'hostel_name']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -163,7 +163,7 @@ def check_login_keys(request):
 
 
 def check_exams_keys(request):
-    res_keys = ['semester', 'year', 'admission_no', 'unit_name', 'marks']
+    res_keys = ['year_id', 'admission_no', 'unit_name', 'marks']
     errors = []
     for key in res_keys:
         if not key in request.json:
@@ -231,6 +231,14 @@ def check_accommdation_keys(request):
 
 def check_subjects_keys(request):
     res_keys = ['admission_no', 'unit_name']
+    errors = []
+    for key in res_keys:
+        if not key in request.json:
+            errors.append(key)
+    return errors
+
+def check_year_keys(request):
+    res_keys = ['year', 'semester']
     errors = []
     for key in res_keys:
         if not key in request.json:

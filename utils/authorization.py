@@ -24,3 +24,39 @@ def admin_required(func):
             return Serializer.serialize("{}".format(e), 500, "Error")
 
     return wrapper_function
+
+def dean_required(func):
+    """ Dean Rights."""
+    @wraps(func)
+    def wrapper_function(*args, **kwargs):
+        try:
+            users = UsersModel().get_all_users()
+            cur_user = [
+                user for user in users if user['email'] == get_jwt_identity()]
+            user_role = cur_user[0]['role']
+            if user_role != 'dean':
+                return {
+                    'message': 'This activity can only be completed by the dean'}, 403  # Forbidden
+            return func(*args, **kwargs)
+        except Exception as e:
+            return Serializer.serialize("{}".format(e), 500, "Error")
+
+    return wrapper_function
+
+def registrar_required(func):
+    """ Registrar Rights."""
+    @wraps(func)
+    def wrapper_function(*args, **kwargs):
+        try:
+            users = UsersModel().get_all_users()
+            cur_user = [
+                user for user in users if user['email'] == get_jwt_identity()]
+            user_role = cur_user[0]['role']
+            if user_role != 'registrar':
+                return {
+                    'message': 'This activity can only be completed by the registrar'}, 403  # Forbidden
+            return func(*args, **kwargs)
+        except Exception as e:
+            return Serializer.serialize("{}".format(e), 500, "Error")
+
+    return wrapper_function

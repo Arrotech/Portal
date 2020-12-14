@@ -11,6 +11,7 @@ from utils.v1.dummy.apply_course import apply_course
 from utils.v1.dummy.accommodation import book_hostel
 from utils.v1.dummy.certificates import new_certificate
 from utils.v1.dummy.campuses import new_campus
+from utils.v1.dummy.academic_year import new_academic_year
 from .base_test import BaseTest
 
 
@@ -38,6 +39,9 @@ class TestChecklistForm(BaseTest):
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
             '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
             headers=self.get_token())
         self.client.post(
@@ -61,6 +65,15 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
@@ -91,6 +104,15 @@ class TestChecklistForm(BaseTest):
             '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
@@ -117,6 +139,15 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
@@ -147,6 +178,15 @@ class TestChecklistForm(BaseTest):
             '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
@@ -175,6 +215,15 @@ class TestChecklistForm(BaseTest):
             '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
@@ -189,4 +238,107 @@ class TestChecklistForm(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'User not found')
+        assert response.status_code == 404
+
+    def test_campus_not_found(self):
+        """Test that a student cannot fill checklist form with non-existing campus."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/checklist', data=json.dumps(fill_checklist), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Campus not found')
+        assert response.status_code == 404
+
+
+    def test_certificate_not_found(self):
+        """Test that a student cannot fill checklist form with non-existing certificate."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/checklist', data=json.dumps(fill_checklist), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Certificate not found')
+        assert response.status_code == 404
+
+    def test_year_not_found(self):
+        """Test that a student cannot fill checklist form with non-existing academic year."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
+            headers=self.get_token())
+        self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
+            headers=self.get_token())
+        response = self.client.post(
+            '/api/v1/checklist', data=json.dumps(fill_checklist), content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Year not found')
         assert response.status_code == 404
