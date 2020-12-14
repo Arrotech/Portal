@@ -1,39 +1,37 @@
 
-default_admin_account = {
-    "firstname": "Kevin",
-    "lastname": "Njoroge",
-    "surname": "Gitundu",
-    "admission_no": "sc200-1358/2014",
-    "gender": "male",
-    "email": "gitundugachanja94@gmail.com",
-    "password": "Harun20930988!"
+default_registrar_account = {
+    "firstname": "Martha",
+    "lastname": "Mukami",
+    "surname": "Murugi",
+    "admission_no": "1234567890",
+    "gender": "female",
+    "email": "marsha@gmail.com",
+    "password": "Marsha20930988!"
 }
 
-new_admin_account = {
-    "firstname": "Kevin",
-    "lastname": "Njoroge",
-    "surname": "Gitundu",
-    "admission_no": "sc200-1358/2015",
+new_registrar_account = {
+    "firstname": "George",
+    "lastname": "Njuguna",
+    "surname": "Murugi",
+    "admission_no": "0987654321",
     "gender": "male",
-    "email": "arrotechdesign@gmail.com",
-    "password": "Harun20930988!",
-    "current_year": "1",
-    "role": "student"
+    "email": "george@gmail.com",
+    "password": "George20930988!"
+}
+
+default_registrar_login = {
+    "email": "marsha@gmail.com",
+    "password": "Marsha20930988!"
+}
+
+new_registrar_login = {
+    "email": "george@gmail.com",
+    "password": "George20930988!"
 }
 
 invalid_login_password = {
     "email": "gitundu.kevin@students.jcs.ac.ke",
     "password": "Mercy20930988!"
-}
-
-default_admin_login = {
-    "email": "gitundugachanja94@gmail.com",
-    "password": "Harun20930988!"
-}
-
-new_admin_login = {
-    "email": "arrotechdesign@gmail.com",
-    "password": "Harun20930988!"
 }
 
 invalid_admin_account_keys = {
@@ -54,7 +52,7 @@ email_already_exists = {
     "surname": "Gachanja",
     "admission_no": "NJCF1005",
     "gender": "male",
-    "email": "arrotechdesign@gmail.com",
+    "email": "george@gmail.com",
     "password": "Miriam20930988!",
     "current_year": "1",
     "role": "student"
@@ -64,7 +62,7 @@ admission_already_exists = {
     "firstname": "Miriam",
     "lastname": "Wangeci",
     "surname": "Gachanja",
-    "admission_no": "sc200-1358/2015",
+    "admission_no": "0987654321",
     "gender": "male",
     "email": "newemail@gmail.com",
     "password": "Miriam20930988!",

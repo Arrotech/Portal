@@ -7,6 +7,9 @@ from app.api.v1.models.checklist import ChecklistModel
 from app.api.v1.models.users_model import UsersModel
 from app.api.v1.models.departments import DepartmentsModel
 from app.api.v1.models.courses import CoursesModel
+from app.api.v1.models.certificates import CertificatesModel
+from app.api.v1.models.academic_year import AcademicYearModel
+from app.api.v1.models.campuses import CampusModel
 from app.api.v1.models.hostels import HostelsModel
 from utils.utils import raise_error, check_checklist_keys
 from utils.authorization import admin_required
@@ -23,17 +26,26 @@ def fill_checklist():
     admission_no = details['admission_no']
     department_name = details['department_name']
     course_name = details['course_name']
+    certificate_id = details['certificate_id']
+    year_id = details['year_id']
+    campus_id = details['campus_id']
     hostel_name = details['hostel_name']
     user = UsersModel().get_user_by_admission(admission_no)
     if user:
         if DepartmentsModel().get_department_name(department_name):
             if CoursesModel().get_course_name(course_name):
-                if HostelsModel().get_hostel_by_name(hostel_name):
-                    response = ChecklistModel(admission_no, department_name, course_name, hostel_name).save()
-                    if "error" in response:
-                        return raise_error(500, "Check your input")
-                    return Serializer.serialize(response, 201, "Checklist filled successfully")
-                return raise_error(404, "Hostel not found")
+                if CertificatesModel().get_certificate_by_id(certificate_id):
+                    if AcademicYearModel().get_academic_year_by_id(year_id):
+                        if CampusModel().get_campus_by_id(campus_id):
+                            if HostelsModel().get_hostel_by_name(hostel_name):
+                                response = ChecklistModel(admission_no, department_name, course_name, certificate_id, year_id, campus_id, hostel_name).save()
+                                if "error" in response:
+                                    return raise_error(500, "Check your input")
+                                return Serializer.serialize(response, 201, "Checklist filled successfully")
+                            return raise_error(404, "Hostel not found")
+                        return raise_error(404, "Campus not found")
+                    return raise_error(404, "Year not found")
+                return raise_error(404, "Certificate not found")
             return raise_error(404, "Course not found")
         return raise_error(404, "Department not found")
     return raise_error(404, "User not found")

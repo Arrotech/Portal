@@ -3,15 +3,15 @@ import psycopg2
 
 from app.api.v1.models.database import Database
 from datetime import datetime
+from utils.serializer import Serializer
 
 
 class ExamsModel(Database):
     """Initiallization."""
 
-    def __init__(self, semester=None, year=None, admission_no=None, unit_name=None, marks=None, created_on=None):
+    def __init__(self, year_id=None, admission_no=None, unit_name=None, marks=None, created_on=None):
         super().__init__()
-        self.semester = semester
-        self.year = year
+        self.year_id = year_id
         self.admission_no = admission_no
         self.unit_name = unit_name
         self.marks = marks
@@ -21,10 +21,10 @@ class ExamsModel(Database):
         """Create a new exam entry."""
         try:
             self.curr.execute(
-                ''' INSERT INTO exams(semester, year, student, unit, marks, created_on)
-                VALUES('{}','{}','{}','{}','{}','{}')
-                RETURNING semester, year, student, unit, marks, created_on'''
-                .format(self.semester, self.year, self.admission_no, self.unit_name, self.marks, self.created_on))
+                ''' INSERT INTO exams(year, student, unit, marks, created_on)
+                VALUES('{}','{}','{}','{}','{}')
+                RETURNING year, student, unit, marks, created_on'''
+                .format(self.year_id, self.admission_no, self.unit_name, self.marks, self.created_on))
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()
@@ -32,23 +32,33 @@ class ExamsModel(Database):
         except psycopg2.IntegrityError:
             return "error"
 
-    def get_exams(self):
-        """Fetch all exams."""
-        query = "SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname, us.lastname,\
-                          us.surname, e.marks, e.semester, e.year FROM exams AS e\
-                          INNER JOIN units AS un ON e.unit = un.unit_name\
-                          INNER JOIN users AS us ON e.student = us.admission_no"
-        response = Database().fetch(query)
-        return response
-
-    def get_exams_for_a_student_by_admission(self, admission_no):
+    def fetch_all_exams_for_specific_student(self, admission_no):
         """A student can fetch all his examinations."""
-        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
-                          us.lastname, us.surname, e.marks FROM exams AS e
-                          INNER JOIN units AS un ON e.unit = un.unit_name
-                          INNER JOIN users AS us ON e.student = us.admission_no WHERE admission_no=%s
-                          """, (admission_no,))
-        response = self.curr.fetchall()
-        self.conn.commit()
-        self.curr.close()
-        return response
+        try:
+            self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
+                            us.lastname, us.surname, a.year, a.semester, e.marks FROM exams AS e
+                            INNER JOIN academic_year AS a ON e.year = a.year_id
+                            INNER JOIN users AS us ON e.student = us.admission_no
+                            INNER JOIN units AS un ON e.unit = un.unit_name WHERE admission_no=%s
+                            """, (admission_no,))
+            response = self.curr.fetchall()
+            self.conn.commit()
+            self.curr.close()
+            return response
+        except Exception as e:
+            return Serializer.serialize(f"{e}", 500, "Error")
+
+    def fetch_all_exams_for_specific_year(self, admission_no, year):
+        """A student can fetch all his examinations for the specified year."""
+        try:
+            self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
+                            us.lastname, us.surname, a.year, a.semester, e.marks FROM exams AS e
+                            INNER JOIN academic_year AS a ON e.year = a.year_id
+                            INNER JOIN users AS us ON e.student = us.admission_no
+                            INNER JOIN units AS un ON e.unit = un.unit_name WHERE admission_no=%s AND a.year=%s""", (admission_no, year,))
+            response = self.curr.fetchall()
+            self.conn.commit()
+            self.curr.close()
+            return response
+        except Exception as e:
+            return Serializer.serialize(f"{e}", 500, "Error")

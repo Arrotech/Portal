@@ -16,20 +16,23 @@ from app.api.v1 import portal_v1
 @jwt_required
 def book_hostel():
     """Book hostel."""
-    errors = check_accommdation_keys(request)
-    if errors:
-        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
-    details = request.get_json()
-    admission_no = details['admission_no']
-    hostel_name = details['hostel_name']
-    if UsersModel().get_user_by_admission(admission_no):
-        if HostelsModel().get_hostel_by_name(hostel_name):
-            response = AccommodationModel(admission_no, hostel_name).save()
-            if "error" in response:
-                return raise_error(404, "User does not exist or your are trying to book twice")
-            return Serializer.serialize(response, 201, "Hostel booked successfully")
-        return raise_error(404, "Hostel not found")
-    return raise_error(400, "User does not exist or your are trying to book twice")
+    try:
+        errors = check_accommdation_keys(request)
+        if errors:
+            return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+        details = request.get_json()
+        admission_no = details['admission_no']
+        hostel_name = details['hostel_name']
+        if UsersModel().get_user_by_admission(admission_no):
+            if HostelsModel().get_hostel_by_name(hostel_name):
+                response = AccommodationModel(admission_no, hostel_name).save()
+                if "error" in response:
+                    return raise_error(404, "User does not exist or your are trying to book twice")
+                return Serializer.serialize(response, 201, "Hostel booked successfully")
+            return raise_error(404, "Hostel not found")
+        return raise_error(400, "User does not exist or your are trying to book twice")
+    except Exception as e:
+        return Serializer.serialize(f"{e}", 500, "Error")
 
 
 @portal_v1.route('/accommodation', methods=['GET'])
@@ -37,8 +40,11 @@ def book_hostel():
 @admin_required
 def get_all_booked_hostels():
     """Fetch all hostels that have been booked."""
-    response = AccommodationModel().get_booked_hostels()
-    return Serializer.serialize(response, 200, "Hostels retrieved successfully")
+    try:
+        response = AccommodationModel().get_booked_hostels()
+        return Serializer.serialize(response, 200, "Hostels retrieved successfully")
+    except Exception as e:
+        return Serializer.serialize(f"{e}", 500, "Error")
 
 
 @portal_v1.route('/accommodation/<string:admission_no>', methods=['GET'])
