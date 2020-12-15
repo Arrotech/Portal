@@ -6,13 +6,13 @@ from flask_jwt_extended import jwt_required
 from app.api.v1.models.campuses import CampusModel
 from utils.utils import check_campuses_keys, raise_error, campus_restrictions
 from utils.serializer import Serializer
-from utils.authorization import admin_required
+from utils.authorization import registrar_required
 from app.api.v1 import portal_v1
 
 
 @portal_v1.route('/campuses', methods=['POST'])
 @jwt_required
-@admin_required
+@registrar_required
 def add_campus():
     """Add new campus."""
     errors = check_campuses_keys(request)
@@ -37,7 +37,6 @@ def get_all_campuses():
 
 @portal_v1.route('/campuses/<int:campus_id>', methods=['GET'])
 @jwt_required
-@admin_required
 def get_campus_by_id(campus_id):
     """Fetch campus by id."""
     response = CampusModel().get_campus_by_id(campus_id)
@@ -48,7 +47,7 @@ def get_campus_by_id(campus_id):
 
 @portal_v1.route('/campuses/<int:campus_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@registrar_required
 def update_campus(campus_id):
     """Update a campus by id."""
     details = request.get_json()
@@ -67,10 +66,11 @@ def update_campus(campus_id):
 
 @portal_v1.route('/campuses/<int:campus_id>', methods=['DELETE'])
 @jwt_required
-@admin_required
+@registrar_required
 def delete_campus(campus_id):
     """Delete campus by id."""
-    if CampusModel().get_campus_by_id(campus_id):
-        response = CampusModel().delete(campus_id)
+    response = CampusModel().get_campus_by_id(campus_id)
+    if response:
+        CampusModel().delete(campus_id)
         return Serializer.serialize(response, 200, "Campus deleted successfully")
     return raise_error(404, 'Campus not found')

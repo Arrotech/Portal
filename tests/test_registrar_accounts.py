@@ -3,7 +3,8 @@ import json
 from utils.v1.dummy.registrar import admission_already_exists, email_already_exists, new_registrar_account, new_registrar_login, invalid_admin_account_keys, wrong_firstname,\
     wrong_lastname,\
     wrong_surname, invalid_email_format, password_length, invalid_password, invalid_login_password,\
-    staff_invalid_login_email
+    staff_invalid_login_email, update_admin_to_dean
+from utils.v1.dummy.admin_accounts import new_admin_account
 from .base_test import BaseTest
 
 
@@ -65,7 +66,6 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'Admission number Already Exists!')
         assert response.status_code == 400
 
-
     def test_the_format_of_create_account_json_keys_for_the_registrar(self):
         """Test that an admin cannot create a new account with invalid json keys."""
         response = self.client.post(
@@ -86,7 +86,6 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Successfully logged in!')
         assert response.status_code == 200
-
 
     def test_registrar_invalid_email_login(self):
         """Test that an admin cannot login with an invalid email."""
@@ -132,3 +131,27 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid Email Format!')
         assert response.status_code == 400
+
+    def test_promote_admin(self):
+        """Test that the registrar can update an admin to a new role."""
+        self.client.post(
+            '/api/v1/staff/register', data=json.dumps(new_admin_account), content_type='application/json',
+            headers=self.get_registrar_token())
+        response = self.client.put(
+            '/api/v1/staff/role/2', data=json.dumps(update_admin_to_dean), content_type='application/json',
+            headers=self.get_registrar_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Admin promoted to dean')
+        assert response.status_code == 200
+
+    def test_promote_unexisting_admin(self):
+        """Test that the registrar cannot update unexisting admin to a new role."""
+        self.client.post(
+            '/api/v1/staff/register', data=json.dumps(new_admin_account), content_type='application/json',
+            headers=self.get_registrar_token())
+        response = self.client.put(
+            '/api/v1/staff/role/20', data=json.dumps(update_admin_to_dean), content_type='application/json',
+            headers=self.get_registrar_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'User not found')
+        assert response.status_code == 404

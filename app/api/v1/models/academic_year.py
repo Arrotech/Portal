@@ -39,12 +39,6 @@ class AcademicYearModel(Database):
         response = Database().fetch_one(query, year_id)
         return response
 
-    def get_academic_year_by_year(self, year):
-        """Get a specific academic year by year"""
-        query = "SELECT * FROM academic_year WHERE year=%s"
-        response = Database().fetch_one(query, year)
-        return response
-
     def edit_academic_year(self, year_id, year, semester):
         """Update specific academic year by id."""
         self.curr.execute(

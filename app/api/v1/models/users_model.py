@@ -45,6 +45,7 @@ class UsersModel(Database):
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
+        return response
 
     def save_accountant(self, role='accountant'):
         """Save information of the new accountant."""
@@ -141,7 +142,7 @@ class UsersModel(Database):
     def confirm_user_email(self, user_id, is_confirmed):
         """Confirm user email."""
         self.curr.execute(
-            """UPDATE users SET is_confirmed=True WHERE user_id={} RETURNING is_confirmed, confirmed_on""".format(user_id, is_confirmed))
+            """UPDATE users SET is_confirmed=True WHERE user_id={} RETURNING is_confirmed""".format(user_id, is_confirmed))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

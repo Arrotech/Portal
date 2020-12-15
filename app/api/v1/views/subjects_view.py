@@ -26,10 +26,9 @@ def register_subjects():
     if UsersModel().get_user_by_admission(admission_no):
         if UnitsModel().get_unit_by_name(unit_name):
             response = SubjectsModel(admission_no, unit_name).save()
-            if "error" in response:
-                return raise_error(400, "User does not exist or your are trying to enter marks twice")
             return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_name))
         return raise_error(404, "Unit {} not found".format(unit_name))
+    return raise_error(404, "User not found")
 
 
 @portal_v1.route('/subjects', methods=['GET'])

@@ -140,3 +140,7 @@ invalid_email_format = {
     "role": "student"
 }
 
+update_admin_to_dean = {
+    "role": "dean"
+}
+

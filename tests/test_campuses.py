@@ -12,7 +12,7 @@ class TestCampuses(BaseTest):
         """Test that an admin can add a new campus."""
         response = self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus added successfully')
@@ -22,7 +22,7 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot add a new campus with invalid json keys."""
         response = self.client.post(
             '/api/v1/campuses', data=json.dumps(campus_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid campus_name key')
@@ -32,7 +32,7 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot add a new campus with invalid campus name."""
         response = self.client.post(
             '/api/v1/campuses', data=json.dumps(campus_name_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus should either be main or town.')
@@ -42,10 +42,10 @@ class TestCampuses(BaseTest):
         """Test that a user can fetch all campuses."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/campuses', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campuses retrieved successfully')
@@ -55,10 +55,10 @@ class TestCampuses(BaseTest):
         """Test that an admin can fetch campus by id."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/campuses/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus retrieved successfully')
@@ -68,10 +68,10 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot fetch non existing campus by id."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/campuses/10', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus not found')
@@ -81,10 +81,10 @@ class TestCampuses(BaseTest):
         """Test that an admin can update an existing campus."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/campuses/1', data=json.dumps(update_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus updated successfully')
@@ -94,10 +94,10 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot update existing campus with invalid json keys."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/campuses/1', data=json.dumps(update_campus_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid campus_name key')
@@ -107,10 +107,10 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot update a campus with invalid campus name."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(campus_name_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/campuses/1', data=json.dumps(update_campus_name_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus should either be main or town.')
@@ -120,10 +120,10 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot update non existing campus."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/campuses/100', data=json.dumps(update_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus not found')
@@ -133,10 +133,10 @@ class TestCampuses(BaseTest):
         """Test that an admin can delete existing campus."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.delete(
             '/api/v1/campuses/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus deleted successfully')
@@ -146,10 +146,10 @@ class TestCampuses(BaseTest):
         """Test that an admin cannot delete non existing campus."""
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.delete(
             '/api/v1/campuses/100', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Campus not found')

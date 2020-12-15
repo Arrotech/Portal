@@ -15,3 +15,8 @@ user_does_not_exist = {
     "admission_no": "NJCF1020",
     "unit_name": "Calculus III"
 }
+
+unexisting_user = {
+    "admission_no": "NJCF2013",
+    "unit_name": "Calculus 1"
+}

@@ -37,7 +37,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -71,7 +71,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -108,7 +108,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -145,7 +145,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -182,7 +182,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -219,7 +219,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -291,7 +291,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
             headers=self.get_admin_token())
@@ -328,7 +328,7 @@ class TestChecklistForm(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
             headers=self.get_token())

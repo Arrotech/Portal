@@ -21,10 +21,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -50,10 +50,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -75,10 +75,10 @@ class TestApplyCourse(BaseTest):
         """Test that a student cannot apply a course if they dont exists."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -103,7 +103,7 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -128,10 +128,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/departments', data=json.dumps(new_department), content_type='application/json',
             headers=self.get_admin_token())
@@ -153,10 +153,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -178,10 +178,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -203,7 +203,7 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -225,10 +225,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())
@@ -256,10 +256,10 @@ class TestApplyCourse(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/campuses', data=json.dumps(new_campus), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
             headers=self.get_admin_token())

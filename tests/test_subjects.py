@@ -1,6 +1,6 @@
 import json
 
-from utils.v1.dummy.subjects import new_subject, new_subject_keys
+from utils.v1.dummy.subjects import new_subject, new_subject_keys, unexisting_user
 from utils.v1.dummy.units import new_unit
 from utils.v1.dummy.students_accounts import new_student_account
 from .base_test import BaseTest
@@ -43,21 +43,17 @@ class TestSubjects(BaseTest):
         self.assertEqual(result['message'], 'Unit Calculus 1 not found')
         assert response.status_code == 404
 
-    def test_add_register_for_existing_subject(self):
-        """Test that a student cannot register for a subject twice."""
+    def test_add_subjects_for_unexisting_user(self):
+        """Test that an existing user cannot register for a non existing user."""
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
-        self.client.post(
-            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
-            headers=self.get_token())
         response = self.client.post(
-            '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
+            '/api/v1/subjects', data=json.dumps(unexisting_user), content_type='application/json',
             headers=self.get_token())
         result = json.loads(response.data.decode())
-        self.assertEqual(result['message'],
-                         'User does not exist or your are trying to enter marks twice')
-        assert response.status_code == 400
+        self.assertEqual(result['message'], 'User not found')
+        assert response.status_code == 404
 
     def test_get_subjects(self):
         """Test that an admin can fetch all subjects."""

@@ -11,7 +11,7 @@ class TestInstitutions(BaseTest):
         """Test that an admin can add a new institution."""
         response = self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution added successfully')
@@ -21,7 +21,7 @@ class TestInstitutions(BaseTest):
         """Test that an admin cannot add a new institution with invalid json keys."""
         response = self.client.post(
             '/api/v1/institutions', data=json.dumps(institution_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid institution_name key')
@@ -31,10 +31,10 @@ class TestInstitutions(BaseTest):
         """Test that a user can fetch all institutions."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/institutions', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institutions retrieved successfully')
@@ -44,10 +44,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin can fetch institution by id."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/institutions/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution retrieved successfully')
@@ -57,10 +57,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin cannot fetch non existing institution by id."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/institutions/10', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution not found')
@@ -70,10 +70,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin can update an existing institution."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/institutions/1', data=json.dumps(update_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution updated successfully')
@@ -83,10 +83,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin cannot update existing institution with invalid json keys."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/institutions/1', data=json.dumps(update_institution_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid institution_name key')
@@ -96,10 +96,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin cannot update non existing institution."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/institutions/100', data=json.dumps(update_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution not found')
@@ -109,10 +109,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin can delete existing institution."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.delete(
             '/api/v1/institutions/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution deleted successfully')
@@ -122,10 +122,10 @@ class TestInstitutions(BaseTest):
         """Test that an admin cannot delete non existing institution."""
         self.client.post(
             '/api/v1/institutions', data=json.dumps(new_institution), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.delete(
             '/api/v1/institutions/100', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Institution not found')
