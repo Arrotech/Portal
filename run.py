@@ -3,12 +3,8 @@ import os
 from flask import redirect, make_response, jsonify
 from app import exam_app
 from app.api.v1.models.database import Database
-from utils.serializer import Serializer
-
-app = exam_app('testing')
 
 
-# Create app instance with env
 def app_context():
     if os.getenv("FLASK_ENV") is None:
         application = exam_app('testing')
@@ -35,11 +31,18 @@ def create_tables():
     Database().create_table()
     print("New tables created...")
 
-@app.route('/docs')
-def home():
-    return redirect('https://portal56.docs.apiary.io/#', 302,
-                    make_response(jsonify({"message": "redirecting to documentation"})))
 
+@app.route('/')
+def index():
+    return make_response(jsonify({
+        "message": "Welcome to your institution portal",
+        "status": "200"
+    }), 200)
+
+
+@app.route('/docs')
+def docs():
+    return redirect('https://portal56.docs.apiary.io/', code=302)
 
 
 if __name__ == '__main__':
