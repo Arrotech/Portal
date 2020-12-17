@@ -10,11 +10,12 @@ load_dotenv(path.join(basedir, '.env'))
 class Config:
     """App configuration variables."""
 
-    DEBUG = False
+    DEBUG = True
     TESTING = False
 
     SESSION_COOKIE_SECURE = True
     ENV = 'production'
+    FLASK_ENV= 'production'
 
     # database
     DB_NAME = "school_portal"
@@ -41,8 +42,6 @@ class Config:
 
 class ProductionConfig(Config):
     """Production configurations."""
-    FLASK_ENV = 'production'
-    ENV = 'production'
 
 class DevelopmentConfig(Config):
     """Allow debug to restart after changes."""
