@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b8353faff38d4802809d03536ed3d5a7)](https://app.codacy.com/gh/Arrotech/Portal?utm_source=github.com&utm_medium=referral&utm_content=Arrotech/Portal&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.com/Arrotech/Portal.svg?branch=develop)](https://travis-ci.com/Arrotech/Portal) [![Coverage Status](https://coveralls.io/repos/github/Arrotech/Portal/badge.svg?branch=develop)](https://coveralls.io/github/Arrotech/Portal?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/d18f71e29c6588ba2043/maintainability)](https://codeclimate.com/github/Arrotech/Portal/maintainability) [![codecov](https://codecov.io/gh/Arrotech/Portal/branch/develop/graph/badge.svg?token=4s0xOjtFgH)](https://codecov.io/gh/Arrotech/Portal) [![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)]
 
 **SCHOOL PORTAL**
