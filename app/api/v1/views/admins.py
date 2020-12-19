@@ -102,6 +102,13 @@ def get_grouped_users(role):
     users = UsersModel().get_grouped_users(role)
     return Serializer.serialize(users, 200, "successfully retrieved")
 
+@portal_v1.route('/staff/students/<string:role>', methods=['GET'])
+@jwt_required
+@admin_required
+def get_students_total(role):
+    users = UsersModel().number_of_users(role)
+    return Serializer.serialize(users, 200, "successfully retrieved")
+
 
 @portal_v1.route('/user/update/<string:admission_no>', methods=['PUT'])
 @jwt_required

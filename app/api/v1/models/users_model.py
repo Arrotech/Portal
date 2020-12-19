@@ -83,6 +83,12 @@ class UsersModel(Database):
         response = Database().fetch_group(query, role)
         return response
 
+    def number_of_users(self, role):
+        """Fetch the total number of specific users."""
+        query = "SELECT COUNT(*) FROM users WHERE role=%s"
+        response = Database().fetch_one(query, role)
+        return response
+
     def get_user_by_id(self, user_id):
         """Request a single user with specific id."""
         query = "SELECT * FROM users WHERE user_id=%s"
