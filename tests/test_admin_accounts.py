@@ -40,6 +40,14 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], "successfully retrieved")
         assert response.status_code == 200
 
+    def test_get_total_number_of_students(self):
+        """Test that an admin can fetch the total number of his/her students."""
+        response = self.client.get(
+            '/api/v1/staff/students/student', content_type='application/json', headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], "successfully retrieved")
+        assert response.status_code == 200
+
     def test_get_grouped_users(self):
         """Test that an admin can fetch users by their roles."""
         response = self.client.get(
