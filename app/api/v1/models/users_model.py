@@ -112,6 +112,32 @@ class UsersModel(Database):
         response = Database().fetch_one(query, admission_no)
         return response
 
+    def get_users_by_department(self, department):
+        """Request a single user with specific Admission Number."""
+        self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
+            u.gender, u.role, u.email, a.institution, a.campus, a.course, a.department, c.hostel, s.unit FROM users AS u\
+            LEFT JOIN apply_course AS a ON u.admission_no=a.student\
+            LEFT JOIN accommodation As c ON u.admission_no=c.student\
+            LEFT JOIN subjects As s ON u.admission_no=s.student\
+            WHERE a.department=%s""", (department))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    # def get_users_by_course(self, course):
+    #     """Request a single user with specific Admission Number."""
+    #     self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
+    #         u.gender, u.role, u.email, a.institution, a.campus, a.course, a.department, c.hostel, s.unit FROM users AS u\
+    #         LEFT JOIN apply_course AS a ON u.admission_no=a.student\
+    #         LEFT JOIN accommodation As c ON u.admission_no=c.student\
+    #         LEFT JOIN subjects As s ON u.admission_no=s.student\
+    #         WHERE a.course=%s""", (course))
+    #     response = self.curr.fetchall()
+    #     self.conn.commit()
+    #     self.curr.close()
+    #     return response
+
     def get_user_by_email(self, email):
         """Request a single user with specific Email Address."""
         query = "SELECT * FROM users WHERE email=%s"
