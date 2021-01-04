@@ -124,6 +124,7 @@ class Database:
                 student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
                 unit varchar NOT NULL REFERENCES units (unit_name) ON DELETE CASCADE,   
                 marks varchar NOT NULL,
+                exam_type varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (year, student, unit)
             )""",

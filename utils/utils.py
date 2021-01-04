@@ -163,7 +163,7 @@ def check_login_keys(request):
 
 
 def check_exams_keys(request):
-    res_keys = ['year_id', 'admission_no', 'unit_name', 'marks']
+    res_keys = ['year_id', 'admission_no', 'unit_name', 'marks', 'exam_type']
     errors = []
     for key in res_keys:
         if not key in request.json:
