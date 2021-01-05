@@ -35,6 +35,30 @@ class UsersModel(Database):
         self.curr.close()
         return response
 
+    def save_college_head(self, role='college'):
+        """Save information of the new college head."""
+        self.curr.execute(
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
+            .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
+                    role, self.is_confirmed, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def save_department_head(self, role='department'):
+        """Save information of the new department head."""
+        self.curr.execute(
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
+            .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
+                    role, self.is_confirmed, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def save_admin(self, role='admin'):
         """Save information of the new admin."""
         self.curr.execute(
@@ -47,7 +71,31 @@ class UsersModel(Database):
         self.curr.close()
         return response
 
+    def save_librarian(self, role='librarian'):
+        """Save information of the new admin."""
+        self.curr.execute(
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
+            .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
+                    role, self.is_confirmed, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def save_accountant(self, role='accountant'):
+        """Save information of the new accountant."""
+        self.curr.execute(
+            ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
+                VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on'''
+            .format(self.firstname, self.lastname, self.surname, self.admission_no, self.gender, self.email, self.password,
+                    role, self.is_confirmed, self.created_on))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def save_hostel_manager(self, role='hostel'):
         """Save information of the new accountant."""
         self.curr.execute(
             ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
@@ -124,19 +172,6 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
-
-    # def get_users_by_course(self, course):
-    #     """Request a single user with specific Admission Number."""
-    #     self.curr.execute("""SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
-    #         u.gender, u.role, u.email, a.institution, a.campus, a.course, a.department, c.hostel, s.unit FROM users AS u\
-    #         LEFT JOIN apply_course AS a ON u.admission_no=a.student\
-    #         LEFT JOIN accommodation As c ON u.admission_no=c.student\
-    #         LEFT JOIN subjects As s ON u.admission_no=s.student\
-    #         WHERE a.course=%s""", (course))
-    #     response = self.curr.fetchall()
-    #     self.conn.commit()
-    #     self.curr.close()
-    #     return response
 
     def get_user_by_email(self, email):
         """Request a single user with specific Email Address."""

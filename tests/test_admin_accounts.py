@@ -59,7 +59,7 @@ class TestUsersAccount(BaseTest):
     def test_get_users_by_department(self):
         """Test that an admin can fetch users by their department."""
         response = self.client.get(
-            '/api/v1/staff/users/mathematics', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/users/department/mathematics', content_type='application/json', headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], "successfully retrieved")
         assert response.status_code == 200

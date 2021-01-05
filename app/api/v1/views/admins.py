@@ -102,11 +102,13 @@ def get_grouped_users(role):
     users = UsersModel().get_grouped_users(role)
     return Serializer.serialize(users, 200, "successfully retrieved")
 
-@portal_v1.route('/staff/users/<string:department>', methods=['GET'])
+@portal_v1.route('/users/department/<string:department>', methods=['GET'])
 @jwt_required
 @admin_required
 def get_users_by_department(department):
+    print("--------------------------")
     users = UsersModel().get_users_by_department(department)
+    print("@@@@@@@@@@@@@@@@@@", users)
     return Serializer.serialize(users, 200, "successfully retrieved")
 
 @portal_v1.route('/staff/students/<string:role>', methods=['GET'])
