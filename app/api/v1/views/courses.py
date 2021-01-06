@@ -6,11 +6,12 @@ from app.api.v1 import portal_v1
 from app.api.v1.models.courses import CoursesModel
 from app.api.v1.models.departments import DepartmentsModel
 from utils.utils import raise_error, check_courses_keys
-from utils.authorization import admin_required
+from utils.authorization import registrar_required
 
 
 @portal_v1.route('/courses', methods=['POST'])
 @jwt_required
+@registrar_required
 def add_course():
     """Add a course."""
     errors = check_courses_keys(request)
@@ -47,7 +48,7 @@ def get_course_by_id(course_id):
 
 @portal_v1.route('/courses/<int:course_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@registrar_required
 def update_course_by_id(course_id):
     """Update a course by id."""
     details = request.get_json()
@@ -66,10 +67,11 @@ def update_course_by_id(course_id):
 
 @portal_v1.route('/courses/<int:course_id>', methods=['DELETE'])
 @jwt_required
-@admin_required
+@registrar_required
 def delete_course(course_id):
     """Delete course by id."""
-    if CoursesModel().get_course_by_id(course_id):
-        response = CoursesModel().delete(course_id)
+    response = CoursesModel().get_course_by_id(course_id)
+    if response:
+        CoursesModel().delete(course_id)
         return Serializer.serialize(response, 200, "Course deleted successfully")
     return raise_error(404, 'Course not found')

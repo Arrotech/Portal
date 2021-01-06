@@ -25,7 +25,6 @@ class BaseTest(unittest.TestCase):
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()
-        Database().destroy_table()
         Database().create_table()
 
     def tearDown(self):

@@ -6,13 +6,13 @@ from flask_jwt_extended import jwt_required
 from app.api.v1.models.certificates import CertificatesModel
 from utils.utils import check_certificates_keys, raise_error, certificate_restrictions
 from utils.serializer import Serializer
-from utils.authorization import admin_required
+from utils.authorization import registrar_required
 from app.api.v1 import portal_v1
 
 
 @portal_v1.route('/certificates', methods=['POST'])
 @jwt_required
-@admin_required
+@registrar_required
 def add_certificate():
     """Add new certificate."""
     errors = check_certificates_keys(request)
@@ -36,7 +36,6 @@ def get_all_certificates():
 
 @portal_v1.route('/certificates/<int:certificate_id>', methods=['GET'])
 @jwt_required
-@admin_required
 def get_certificate_by_id(certificate_id):
     """Get certificate by id."""
     response = CertificatesModel().get_certificate_by_id(certificate_id)
@@ -47,7 +46,7 @@ def get_certificate_by_id(certificate_id):
 
 @portal_v1.route('/certificates/<int:certificate_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@registrar_required
 def update_certificate(certificate_id):
     """Update a certificate by id."""
     details = request.get_json()
@@ -66,10 +65,11 @@ def update_certificate(certificate_id):
 
 @portal_v1.route('/certificates/<int:certificate_id>', methods=['DELETE'])
 @jwt_required
-@admin_required
+@registrar_required
 def delete_certificate(certificate_id):
     """Delete certificate by id."""
-    if CertificatesModel().get_certificate_by_id(certificate_id):
-        response = CertificatesModel().delete(certificate_id)
+    response = CertificatesModel().get_certificate_by_id(certificate_id)
+    if response:
+        CertificatesModel().delete(certificate_id)
         return Serializer.serialize(response, 200, "Certificate deleted successfully")
     return raise_error(404, 'Certificate not found')

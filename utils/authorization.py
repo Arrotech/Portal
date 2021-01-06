@@ -54,9 +54,9 @@ def department_head(func):
             cur_user = [
                 user for user in users if user['email'] == get_jwt_identity()]
             user_role = cur_user[0]['role']
-            if user_role != 'dean':
+            if user_role != 'department':
                 return {
-                    'message': 'This activity can only be completed by the dean'}, 403  # Forbidden
+                    'message': 'This activity can only be completed by the dean of department'}, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return Serializer.serialize("{}".format(e), 500, "Error")
@@ -112,7 +112,7 @@ def hostel_manager(func):
             cur_user = [
                 user for user in users if user['email'] == get_jwt_identity()]
             user_role = cur_user[0]['role']
-            if user_role != 'accomodation':
+            if user_role != 'hostel':
                 return {
                     'message': 'This activity can only be completed by the hostel manager'}, 403  # Forbidden
             return func(*args, **kwargs)
@@ -121,7 +121,7 @@ def hostel_manager(func):
 
     return wrapper_function
 
-def librarian(func):
+def librarian_required(func):
     """ Library Manager Rights."""
 
     @wraps(func)

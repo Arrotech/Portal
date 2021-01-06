@@ -12,7 +12,7 @@ class TestCertificates(BaseTest):
         """Test that an admin can add a new certificate."""
         response = self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate added successfully')
@@ -22,7 +22,7 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot add a new certificate with invalid json keys."""
         response = self.client.post(
             '/api/v1/certificates', data=json.dumps(certificate_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid certificate_name key')
@@ -32,7 +32,7 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot add a new certificate with invalid certificate name."""
         response = self.client.post(
             '/api/v1/certificates', data=json.dumps(certificate_name_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid certificate name')
@@ -42,7 +42,7 @@ class TestCertificates(BaseTest):
         """Test that a user can get all certificates."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/certificates', content_type='application/json',
             headers=self.get_token())
@@ -55,10 +55,10 @@ class TestCertificates(BaseTest):
         """Test that an admin can fetch certificate by id."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/certificates/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate retrieved successfully')
@@ -68,10 +68,10 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot fetch non existing certificate by id."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.get(
             '/api/v1/certificates/10', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate not found')
@@ -81,10 +81,10 @@ class TestCertificates(BaseTest):
         """Test that an admin can update an existing certificate."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/certificates/1', data=json.dumps(update_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate updated successfully')
@@ -94,10 +94,10 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot update an existing certificate with invalid json keys."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/certificates/1', data=json.dumps(update_certificate_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid certificate_name key')
@@ -107,10 +107,10 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot update an existing certificate with invalid certificate name."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/certificates/1', data=json.dumps(update_certificate_name_restrictions), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Invalid certificate name')
@@ -120,10 +120,10 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot update non existing certificate."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.put(
             '/api/v1/certificates/10', data=json.dumps(update_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate not found')
@@ -133,10 +133,10 @@ class TestCertificates(BaseTest):
         """Test that an admin can delete xisting certificate."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.delete(
             '/api/v1/certificates/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate deleted successfully')
@@ -146,10 +146,10 @@ class TestCertificates(BaseTest):
         """Test that an admin cannot delete non existing certificate."""
         self.client.post(
             '/api/v1/certificates', data=json.dumps(new_certificate), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         response = self.client.delete(
             '/api/v1/certificates/10', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Certificate not found')

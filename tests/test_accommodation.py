@@ -15,9 +15,10 @@ class TestAccommodation(BaseTest):
         self.client.post(
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
             headers=self.get_admin_token())
-        self.client.post(
+        r1 = self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
+        print("@@@@@@@@@@@@@@@@@@@---------", r1)
         response = self.client.post(
             '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
             headers=self.get_token())
@@ -33,7 +34,7 @@ class TestAccommodation(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response= self.client.post(
             '/api/v1/accommodation', data=json.dumps(book_hostel_keys), content_type='application/json',
             headers=self.get_token())
@@ -57,7 +58,7 @@ class TestAccommodation(BaseTest):
         """Test that a non existing user cannot book a hostel."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.post(
             '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
             headers=self.get_token())
@@ -73,13 +74,13 @@ class TestAccommodation(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         self.client.post(
             '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
             headers=self.get_token())
         response = self.client.get(
             '/api/v1/accommodation', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Hostels retrieved successfully')
@@ -92,7 +93,7 @@ class TestAccommodation(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         self.client.post(
             '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
             headers=self.get_token())
@@ -111,7 +112,7 @@ class TestAccommodation(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         self.client.post(
             '/api/v1/accommodation', data=json.dumps(book_hostel), content_type='application/json',
             headers=self.get_token())

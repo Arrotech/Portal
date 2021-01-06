@@ -6,7 +6,7 @@ from flask_restful import Resource
 
 from app.api.v1.models.library_model import LibraryModel
 from app.api.v1.models.users_model import UsersModel
-from utils.authorization import admin_required
+from utils.authorization import librarian_required
 from utils.utils import check_library_keys, raise_error, check_edit_library_keys
 from utils.serializer import Serializer
 from app.api.v1 import portal_v1
@@ -14,7 +14,7 @@ from app.api.v1 import portal_v1
 
 @portal_v1.route('/books', methods=['POST'])
 @jwt_required
-@admin_required
+@librarian_required
 def add_book():
     """Add a new book."""
     errors = check_library_keys(request)
@@ -36,7 +36,7 @@ def add_book():
 
 @portal_v1.route('/books', methods=['GET'])
 @jwt_required
-@admin_required
+@librarian_required
 def get_all_books():
     """Fetch all books."""
     response = LibraryModel().get_all_books()
@@ -55,7 +55,7 @@ def get_books_for_one_student_by_admission(admission_no):
 
 @portal_v1.route('/books/<int:book_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@librarian_required
 def update_book_by_id(book_id):
     """Edit books."""
     errors = check_edit_library_keys(request)

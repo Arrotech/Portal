@@ -15,7 +15,7 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Book added successfully')
         assert response.status_code == 201
@@ -27,7 +27,7 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid admission_no key')
         assert response.status_code == 400
@@ -36,7 +36,7 @@ class TestBooks(BaseTest):
         """Test that the add books for unexisting user."""
         response = self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Student not found')
         assert response.status_code == 404
@@ -48,9 +48,9 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         response = self.client.get(
-            '/api/v1/books', content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/books', content_type='application/json', headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          "Books retrieved successfully")
@@ -63,7 +63,7 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         response = self.client.get(
             '/api/v1/books/NJCF4001', content_type='application/json', headers=self.get_token())
         result = json.loads(response.data.decode())
@@ -75,7 +75,7 @@ class TestBooks(BaseTest):
         """Test that one cannot get books for non existing user"""
         self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         response = self.client.get(
             '/api/v1/books/NJCF1013', content_type='application/json', headers=self.get_token())
         result = json.loads(response.data.decode())
@@ -90,9 +90,9 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         response = self.client.put(
-            '/api/v1/books/1', data=json.dumps(edit_books), content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/books/1', data=json.dumps(edit_books), content_type='application/json', headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Book updated successfully')
         assert response.status_code == 200
@@ -104,9 +104,9 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         response = self.client.put(
-            '/api/v1/books/1', data=json.dumps(edit_books_keys), content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/books/1', data=json.dumps(edit_books_keys), content_type='application/json', headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid title key')
         assert response.status_code == 400
@@ -118,9 +118,9 @@ class TestBooks(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/books', data=json.dumps(add_book), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_librarian_token())
         response = self.client.put(
-            '/api/v1/books/10', data=json.dumps(edit_books), content_type='application/json', headers=self.get_admin_token())
+            '/api/v1/books/10', data=json.dumps(edit_books), content_type='application/json', headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Book not found')
         assert response.status_code == 404

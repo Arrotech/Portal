@@ -10,19 +10,22 @@ load_dotenv(path.join(basedir, '.env'))
 class Config:
     """App configuration variables."""
 
-    DEBUG = True
+    DEBUG = False
     TESTING = False
 
     SESSION_COOKIE_SECURE = True
-    ENV = 'production'
-    FLASK_ENV= 'production'
 
     # database
     DB_NAME = "school_portal"
     DB_USER = "postgres"
     DB_HOST = "localhost"
     DB_PASSWORD = "postgres20930988"
-    REDISTOGO_URL = "redis://localhost:6379"
+
+    # brokers
+    RABBITMQ_LOCAL_URL = "amqps://localhost//"
+    RABBITMQ_HOSTED_URL = "amqps://wmznztra:2jFJ5RUUV4daZWzPWLcW5bczw2vFP2CJ@moose.rmq.cloudamqp.com/wmznztra"
+    REDISTOGO_LOCAL_URL = "redis://localhost:6379"
+    REDISTOGO_HOSTED_URL = ""
 
     # app secret key
     SECRET_KEY = "schoolportal"
@@ -43,13 +46,12 @@ class Config:
 class ProductionConfig(Config):
     """Production configurations."""
 
+
 class DevelopmentConfig(Config):
     """Allow debug to restart after changes."""
 
     DEBUG = True
     SESSION_COOKIE_SECURE = False
-    FLASK_ENV = 'development'
-    ENV = 'development'
 
 
 class TestingConfig(Config):
@@ -59,23 +61,16 @@ class TestingConfig(Config):
     SESSION_COOKIE_SECURE = False
 
     DB_NAME = 'test_school_portal'
-    FLASK_ENV = 'testing'
-    ENV = 'testing'
 
 
 class StagingConfig(Config):
     """Configurations for Staging."""
-
-    FLASK_ENV = 'staging'
-    ENV = 'staging'
 
 
 class ReleaseConfig(Config):
     """Releasing app configurations."""
 
     DEBUG = False
-    FLASK_ENV = 'release'
-    ENV = 'release'
 
 
 app_config = dict(

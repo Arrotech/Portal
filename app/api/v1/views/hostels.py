@@ -1,6 +1,6 @@
 from app.api.v1 import portal_v1
 from flask_jwt_extended import jwt_required
-from utils.authorization import admin_required
+from utils.authorization import hostel_manager
 from utils.utils import check_hostels_keys, raise_error
 from flask import request, make_response, jsonify
 from app.api.v1.models.hostels import HostelsModel
@@ -10,7 +10,7 @@ from utils.serializer import Serializer
 
 @portal_v1.route('/hostels', methods=['POST'])
 @jwt_required
-@admin_required
+@hostel_manager
 def add_hostel():
     """Add a new hostel."""
     errors = check_hostels_keys(request)
@@ -65,7 +65,7 @@ def get_hostels_by_location(hostel_location):
 
 @portal_v1.route('/hostels/<int:hostel_id>', methods=['DELETE'])
 @jwt_required
-@admin_required
+@hostel_manager
 def delete_hostel(hostel_id):
     """Delete a hostel by id."""
     response = HostelsModel().get_hostel_by_id(hostel_id)

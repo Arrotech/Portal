@@ -13,7 +13,7 @@ class TestSubjects(BaseTest):
         """Test that a student can register for a subject."""
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -26,7 +26,7 @@ class TestSubjects(BaseTest):
         """Test that a student cannot register for a subject with an invalid key."""
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject_keys), content_type='application/json',
             headers=self.get_token())
@@ -47,7 +47,7 @@ class TestSubjects(BaseTest):
         """Test that an existing user cannot register for a non existing user."""
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(unexisting_user), content_type='application/json',
             headers=self.get_token())
@@ -59,7 +59,7 @@ class TestSubjects(BaseTest):
         """Test that an admin can fetch all subjects."""
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -75,7 +75,7 @@ class TestSubjects(BaseTest):
         """Test that a student can fetch all subjects that they have registered for."""
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -94,7 +94,7 @@ class TestSubjects(BaseTest):
             headers=self.get_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -113,7 +113,7 @@ class TestSubjects(BaseTest):
             headers=self.get_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())

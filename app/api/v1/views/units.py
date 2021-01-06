@@ -1,6 +1,6 @@
 from app.api.v1 import portal_v1
 from flask_jwt_extended import jwt_required
-from utils.authorization import admin_required
+from utils.authorization import department_head
 from utils.utils import check_units_keys, raise_error, check_unit_name_key, check_unit_code_key
 from flask import request, make_response, jsonify
 from app.api.v1.models.units import UnitsModel
@@ -10,7 +10,7 @@ from utils.serializer import Serializer
 
 @portal_v1.route('/units', methods=['POST'])
 @jwt_required
-@admin_required
+@department_head
 def add_unit():
     """Add a new unit."""
     errors = check_units_keys(request)
@@ -31,7 +31,6 @@ def add_unit():
 
 @portal_v1.route('/units', methods=['GET'])
 @jwt_required
-@admin_required
 def get_all_units():
     """Fetch all available units."""
     response = UnitsModel().get_units()
@@ -40,7 +39,6 @@ def get_all_units():
 
 @portal_v1.route('/units/<int:unit_id>', methods=['GET'])
 @jwt_required
-@admin_required
 def get_unit_by_id(unit_id):
     """Fetch a unit by id."""
     response = UnitsModel().get_unit_by_id(unit_id)
@@ -51,7 +49,6 @@ def get_unit_by_id(unit_id):
 
 @portal_v1.route('/units/unit_name/<string:unit_name>', methods=['GET'])
 @jwt_required
-@admin_required
 def get_unit_by_name(unit_name):
     """Fetch a unit by name."""
     response = UnitsModel().get_unit_by_name(unit_name)
@@ -62,7 +59,6 @@ def get_unit_by_name(unit_name):
 
 @portal_v1.route('/units/unit_code/<string:unit_code>', methods=['GET'])
 @jwt_required
-@admin_required
 def get_unit_by_code(unit_code):
     """Fetch a unit by code."""
     response = UnitsModel().get_unit_by_code(unit_code)
@@ -73,7 +69,7 @@ def get_unit_by_code(unit_code):
 
 @portal_v1.route('/units/<int:unit_id>', methods=['DELETE'])
 @jwt_required
-@admin_required
+@department_head
 def delete_unit(unit_id):
     """Delete a unit by id."""
     response = UnitsModel().get_unit_by_id(unit_id)
@@ -85,7 +81,7 @@ def delete_unit(unit_id):
 
 @portal_v1.route('/units/<int:unit_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@department_head
 def edit_unit_by_id(unit_id):
     """Update a unit."""
     errors = check_units_keys(request)
@@ -108,7 +104,7 @@ def edit_unit_by_id(unit_id):
 
 @portal_v1.route('/units/unit_name/<int:unit_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@department_head
 def edit_unit_name_by_id(unit_id):
     """Update a unit name."""
     errors = check_unit_name_key(request)
@@ -127,7 +123,7 @@ def edit_unit_name_by_id(unit_id):
 
 @portal_v1.route('/units/unit_code/<int:unit_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@department_head
 def edit_unit_code_by_id(unit_id):
     """Update a unit code."""
     errors = check_unit_code_key(request)
