@@ -2,13 +2,11 @@ import os
 from celery import Celery
 from app.__init__ import exam_app
 
-# amqps://wmznztra:2jFJ5RUUV4daZWzPWLcW5bczw2vFP2CJ@moose.rmq.cloudamqp.com/wmznztra
-# amqps://localhost//
 
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker="amqps://wmznztra:2jFJ5RUUV4daZWzPWLcW5bczw2vFP2CJ@moose.rmq.cloudamqp.com/wmznztra"
+        broker=os.getenv('RABBITMQ_HOSTED_URL')
     )
     celery.conf.update(app.config)
 
@@ -19,4 +17,3 @@ def make_celery(app):
 
     celery.Task = ContextTask
     return celery
-

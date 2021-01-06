@@ -18,6 +18,15 @@ class TestHostelManagerAccount(BaseTest):
         self.assertEqual(result['message'], 'Account created successfully!')
         assert response.status_code == 201
 
+    def test_invalid_email_format(self):
+        """Test that an admin cannot register a new student with the wrong email format.."""
+        response = self.client.post(
+            '/api/v1/hostel/register', data=json.dumps(invalid_email_format), content_type='application/json',
+            headers=self.get_registrar_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Invalid Email Format!')
+        assert response.status_code == 400
+
     def test_password_format(self):
         """Test that the password should be valid."""
         response = self.client.post(

@@ -64,22 +64,6 @@ class ExamsModel(Database):
         self.curr.close()
         return response
 
-        # exam_id   year_id   admission_no     unit_name   marks   exam_type   created_on
-        # 1         1         sc200-1358-2014  calculus    62      MAIN        wigfgwFGIGF
-
-        # exam_id   year_id   admission_no     unit_name   marks   exam_type   created_on
-        # 2         1         sc200-1358-2014  calculus    28      CAT        wigfgwFGIGF
-
-        # ------- Query for the summation of Main and CAT for a particular unit ----------
-
-        # year_id   admission_no     unit_name   marks
-        # 1         sc200-1358-2014  calculus    90
-
-        # ------- Query for the summation of several units for a particular year and semester ---------
-
-        # year_id   admission_no     unit_name   marks
-        # 1         sc200-1358-2014  calculus    90
-
     def fetch_total_for_specific_unit(self, admission_no, unit):
         """A student can fetch all his examinations for the specified semester."""
         self.curr.execute("""SELECT a.year, a.semester, unit, SUM(marks) as total FROM exams as e

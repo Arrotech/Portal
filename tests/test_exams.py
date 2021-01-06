@@ -20,7 +20,7 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
@@ -39,7 +39,7 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/exams', data=json.dumps(invalid_exam_key), content_type='application/json',
             headers=self.get_admin_token())
@@ -58,7 +58,7 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/exams', data=json.dumps(invalid_unit_id), content_type='application/json',
             headers=self.get_admin_token())
@@ -74,7 +74,7 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
@@ -90,7 +90,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         response = self.client.post(
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
@@ -109,7 +109,7 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
@@ -121,7 +121,7 @@ class TestExams(BaseTest):
                          'Exams successfull retrieved')
         assert response.status_code == 200
 
-    def test_get_exams_for_specifi_semester(self):
+    def test_get_exams_for_specific_semester(self):
         """Test that an admin can fetch all exams."""
         self.client.post(
             '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
@@ -131,7 +131,7 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
@@ -153,13 +153,35 @@ class TestExams(BaseTest):
             headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_department_head_token())
         self.client.post(
             '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
             headers=self.get_admin_token())
         response = self.client.get(
             '/api/v1/exams/NJCF4001', content_type='application/json',
             headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Exams successfull retrieved')
+        assert response.status_code == 200
+
+    def test_get_total_for_specific_unit(self):
+        """Test that an admin can fetch all exams."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account), content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
+            headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/exams', data=json.dumps(new_entry), content_type='application/json',
+            headers=self.get_admin_token())
+        response = self.client.get(
+            '/api/v1/exams/total/NJCF4001/Calculus 1', content_type='application/json',
+            headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Exams successfull retrieved')

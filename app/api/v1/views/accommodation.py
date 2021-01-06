@@ -8,7 +8,7 @@ from app.api.v1.models.users_model import UsersModel
 from app.api.v1.models.hostels import HostelsModel
 from utils.utils import check_accommdation_keys, raise_error
 from utils.serializer import Serializer
-from utils.authorization import admin_required
+from utils.authorization import hostel_manager
 from app.api.v1 import portal_v1
 
 
@@ -32,7 +32,7 @@ def book_hostel():
 
 @portal_v1.route('/accommodation', methods=['GET'])
 @jwt_required
-@admin_required
+@hostel_manager
 def get_all_booked_hostels():
     """Fetch all hostels that have been booked."""
     response = AccommodationModel().get_booked_hostels()

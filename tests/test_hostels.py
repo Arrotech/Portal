@@ -10,7 +10,7 @@ class TestHostels(BaseTest):
         """Test that an admin user can add a new hostel."""
         response = self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Hostel added successfully')
         assert response.status_code == 201
@@ -19,7 +19,7 @@ class TestHostels(BaseTest):
         """Test that an admin user cannot add a new hostel with invalid json keys."""
         response = self.client.post(
             '/api/v1/hostels', data=json.dumps(hostel_keys), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Invalid hostel_name key')
         assert response.status_code == 400
@@ -28,10 +28,10 @@ class TestHostels(BaseTest):
         """Test that an admin user cannot add an existing hostel name."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.post(
             '/api/v1/hostels', data=json.dumps(hostel_name_exists), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'nyati already exists')
         assert response.status_code == 400
@@ -40,7 +40,7 @@ class TestHostels(BaseTest):
         """Test that a user can fetch all hostels."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.get(
             '/api/v1/hostels', content_type='application/json',
             headers=self.get_token())
@@ -52,7 +52,7 @@ class TestHostels(BaseTest):
         """Test that a user can fetch a hostel by id."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.get(
             '/api/v1/hostels/1', content_type='application/json',
             headers=self.get_token())
@@ -64,7 +64,7 @@ class TestHostels(BaseTest):
         """Test that a user can fetch a hostel by name."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.get(
             '/api/v1/hostels/nyati', content_type='application/json',
             headers=self.get_token())
@@ -76,7 +76,7 @@ class TestHostels(BaseTest):
         """Test that a user cannot fetch non existing hostel by id."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.get(
             '/api/v1/hostels/100', content_type='application/json',
             headers=self.get_token())
@@ -88,7 +88,7 @@ class TestHostels(BaseTest):
         """Test that a user cannot fetch non existing hostel by name."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.get(
             '/api/v1/hostels/ndovu', content_type='application/json',
             headers=self.get_token())
@@ -100,7 +100,7 @@ class TestHostels(BaseTest):
         """Test that a user can view hostel(s) by location."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.get(
             '/api/v1/hostels/location/sunrise', content_type='application/json',
             headers=self.get_token())
@@ -112,10 +112,10 @@ class TestHostels(BaseTest):
         """Test that an admin user can delete a hostel by id."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.delete(
             '/api/v1/hostels/1', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Hostel deleted successfully')
         assert response.status_code == 200
@@ -124,10 +124,10 @@ class TestHostels(BaseTest):
         """Test that an admin user cannot delete unexisting hostel."""
         self.client.post(
             '/api/v1/hostels', data=json.dumps(new_hostel), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         response = self.client.delete(
             '/api/v1/hostels/100', content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_hostel_manager_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Hostel not found')
         assert response.status_code == 404

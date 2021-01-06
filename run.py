@@ -20,16 +20,16 @@ app = app_context()
 def destroy_tables():
     """Create tables if they do not exists."""
     Database().destroy_table()
-    print("Existing tables destroyed...")
+    print("Existing tables destroyed...  OK")
 
 
 @app.cli.command()
 def create_tables():
     """Create tables if they do not exists."""
     Database().destroy_table()
-    print("Existing tables destroyed...")
+    print("Existing tables destroyed... OK")
     Database().create_table()
-    print("New tables created...")
+    print("New tables created... OK")
 
 
 @app.route('/')
