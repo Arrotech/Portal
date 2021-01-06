@@ -17,7 +17,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -36,7 +36,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -55,7 +55,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -71,7 +71,7 @@ class TestExams(BaseTest):
         """Test that an admin cannot make a new exam entry for a non existing user"""
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -106,7 +106,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -128,7 +128,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())
@@ -150,7 +150,7 @@ class TestExams(BaseTest):
             headers=self.get_admin_token())
         self.client.post(
             '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
-            headers=self.get_admin_token())
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_admin_token())

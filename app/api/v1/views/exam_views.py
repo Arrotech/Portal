@@ -56,3 +56,10 @@ def get_exams_for_specific_semester(admission_no, year, semester):
     """Fetch all exams fro specific semester."""
     response = ExamsModel().fetch_all_exams_for_specific_semester(admission_no, year, semester)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
+@portal_v1.route('/exams/total/<string:admission_no>/<string:unit>', methods=['GET'])
+@jwt_required
+def get_total_for_specific_unit(admission_no, unit):
+    """Fetch all exams fro specific semester."""
+    response = ExamsModel().fetch_total_for_specific_unit(admission_no, unit)
+    return Serializer.serialize(response, 200, "Exams successfull retrieved")

@@ -6,13 +6,13 @@ from flask_jwt_extended import jwt_required
 from app.api.v1.models.academic_year import AcademicYearModel
 from utils.utils import check_year_keys, raise_error
 from utils.serializer import Serializer
-from utils.authorization import admin_required
+from utils.authorization import registrar_required
 from app.api.v1 import portal_v1
 
 
 @portal_v1.route('/year', methods=['POST'])
 @jwt_required
-@admin_required
+@registrar_required
 def add_year():
     """Add new academic year."""
     errors = check_year_keys(request)
@@ -45,7 +45,7 @@ def get_year_by_id(year_id):
 
 @portal_v1.route('/year/<int:year_id>', methods=['PUT'])
 @jwt_required
-@admin_required
+@registrar_required
 def update_year(year_id):
     """Update specific year by id."""
     details = request.get_json()
@@ -63,10 +63,11 @@ def update_year(year_id):
 
 @portal_v1.route('/year/<int:year_id>', methods=['DELETE'])
 @jwt_required
-@admin_required
+@registrar_required
 def delete_academic_year(year_id):
     """Delete specific academic year by id."""
-    if AcademicYearModel().get_academic_year_by_id(year_id):
-        response = AcademicYearModel().delete(year_id)
+    response = AcademicYearModel().get_academic_year_by_id(year_id)
+    if response:
+        AcademicYearModel().delete(year_id)
         return Serializer.serialize(response, 200, "Year deleted successfully")
     return raise_error(404, 'Year not found')
