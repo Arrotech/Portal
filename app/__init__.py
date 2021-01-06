@@ -16,7 +16,12 @@ def exam_app(config_name):
     """Create the app."""
     app = Flask(__name__, template_folder='../../../templates')
 
-    app.config.from_object(app_config[config_name])
+    if config_name == 'development':
+        app.config.from_object(app_config[config_name])
+    elif config_name == 'production':
+        app.config.from_object(app_config[config_name])
+    elif config_name == 'testing':
+        app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
 
     CORS(app)
