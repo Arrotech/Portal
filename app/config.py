@@ -25,7 +25,7 @@ class Config:
     RABBITMQ_LOCAL_URL = "amqps://localhost//"
     RABBITMQ_HOSTED_URL = "amqps://wmznztra:2jFJ5RUUV4daZWzPWLcW5bczw2vFP2CJ@moose.rmq.cloudamqp.com/wmznztra"
     REDISTOGO_LOCAL_URL = "redis://localhost:6379"
-    REDISTOGO_HOSTED_URL = ""
+    REDISTOGO_HOSTED_URL = "redis://redistogo:e321b5418c64a7495955088ac41a8a1b@pike.redistogo.com:11205/"
 
     # app secret key
     SECRET_KEY = "schoolportal"
