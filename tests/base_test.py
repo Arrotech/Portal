@@ -21,7 +21,7 @@ class BaseTest(unittest.TestCase):
     def setUp(self):
         """Set up the app for testing."""
         self.app = exam_app("testing")
-        self.app.config['SECRET_KEY'] = "quqGIk8pCHyhlg63vrdPHw"
+        self.app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -113,5 +113,3 @@ class BaseTest(unittest.TestCase):
             'refresh_token']
         auth_header = {'Authorization': 'Bearer {}'.format(refresh_token)}
         return auth_header
-
-

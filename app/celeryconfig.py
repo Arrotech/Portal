@@ -6,7 +6,7 @@ from app.__init__ import exam_app
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker=os.getenv('RABBITMQ_HOSTED_URL')
+        broker=os.environ.get('RABBITMQ_HOSTED_URL')
     )
     celery.conf.update(app.config)
 

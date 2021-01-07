@@ -16,31 +16,31 @@ class Config:
     SESSION_COOKIE_SECURE = True
 
     # database
-    DB_NAME = os.getenv('DB_NAME')
-    DB_USER = os.getenv('DB_USER')
-    DB_HOST = os.getenv('DB_HOST')
-    DB_PASSWORD = os.getenv('DB_PASSWORD')
+    DB_NAME = os.environ.get('DB_NAME')
+    DB_USER = os.environ.get('DB_USER')
+    DB_HOST = os.environ.get('DB_HOST')
+    DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
     # brokers
-    RABBITMQ_LOCAL_URL = os.getenv('RABBITMQ_LOCAL_URL')
-    RABBITMQ_HOSTED_URL = os.getenv('RABBITMQ_HOSTED_URL')
-    REDISTOGO_LOCAL_URL = os.getenv('REDISTOGO_LOCAL_URL')
-    REDISTOGO_HOSTED_URL = os.getenv('REDISTOGO_HOSTED_URL')
+    RABBITMQ_LOCAL_URL = os.environ.get('RABBITMQ_LOCAL_URL')
+    RABBITMQ_HOSTED_URL = os.environ.get('RABBITMQ_HOSTED_URL')
+    REDISTOGO_LOCAL_URL = os.environ.get('REDISTOGO_LOCAL_URL')
+    REDISTOGO_HOSTED_URL = os.environ.get('REDISTOGO_HOSTED_URL')
 
     # app secret key
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
     # mail server
-    MAIL_SERVER = os.getenv('MAIL_SERVER')
-    MAIL_PORT = os.getenv('MAIL_PORT')
-    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    MAIL_USE_TLS = os.getenv('MAIL_USE_TLS')
-    MAIL_USE_SSL = os.getenv('MAIL_USE_SSL')
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = os.environ.get('MAIL_PORT')
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
+    MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL')
 
     # administrator list
-    ADMINS = os.getenv('ADMINS')
+    ADMINS = os.environ.get('ADMINS')
 
 
 class ProductionConfig(Config):

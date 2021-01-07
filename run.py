@@ -9,7 +9,7 @@ def app_context():
     if os.getenv("FLASK_ENV") is None:
         application = exam_app('testing')
         return application
-    application = exam_app(os.getenv("FLASK_ENV"))
+    application = exam_app(os.environ.get("FLASK_ENV"))
     return application
 
 
