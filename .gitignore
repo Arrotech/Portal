@@ -8,3 +8,4 @@ portal/
 .env
 instance/
 config.py
+.coverage
