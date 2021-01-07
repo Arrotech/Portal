@@ -70,8 +70,6 @@ class StagingConfig(Config):
 class ReleaseConfig(Config):
     """Releasing app configurations."""
 
-    DEBUG = False
-
 
 app_config = dict(
     testing=TestingConfig,
