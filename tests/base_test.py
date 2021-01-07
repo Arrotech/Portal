@@ -21,7 +21,7 @@ class BaseTest(unittest.TestCase):
     def setUp(self):
         """Set up the app for testing."""
         self.app = exam_app("testing")
-        self.app.config['SECRET_KEY'] = "schoolportal"
+        self.app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()

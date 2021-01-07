@@ -7,5 +7,4 @@ portal/
 *.pyc
 .env
 instance/
-config.py
 .coverage
