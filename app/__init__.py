@@ -16,12 +16,17 @@ def exam_app(config_name):
     """Create the app."""
     app = Flask(__name__, template_folder='../../../templates')
 
-    if config_name == 'development':
+    if config_name == 'testing':
+        app.config.from_object(app_config[config_name])
+    elif config_name == 'development':
         app.config.from_object(app_config[config_name])
     elif config_name == 'production':
         app.config.from_object(app_config[config_name])
-    elif config_name == 'testing':
+    elif config_name == 'staging':
         app.config.from_object(app_config[config_name])
+    elif config_name == 'release':
+        app.config.from_object(app_config[config_name])
+
     app.config.from_pyfile('config.py')
 
     CORS(app)
@@ -31,7 +36,6 @@ def exam_app(config_name):
 
     Database().create_table()
     # Database().create_registrar()
-    
 
     from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
     from app.api.v1 import portal_v1
