@@ -22,10 +22,8 @@ class Config:
     DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
     # brokers
-    RABBITMQ_LOCAL_URL = os.environ.get('RABBITMQ_LOCAL_URL')
-    RABBITMQ_HOSTED_URL = os.environ.get('RABBITMQ_HOSTED_URL')
-    REDISTOGO_LOCAL_URL = os.environ.get('REDISTOGO_LOCAL_URL')
-    REDISTOGO_HOSTED_URL = os.environ.get('REDISTOGO_HOSTED_URL')
+    RABBITMQ_URL = os.environ.get('RABBITMQ_URL')
+    REDISTOGO_URL = os.environ.get('REDISTOGO_URL')
 
     # app secret key
     SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -52,6 +50,9 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     SESSION_COOKIE_SECURE = False
+
+    RABBITMQ_URL = 'amqps://localhost//'
+    REDISTOGO_URL = 'redis://localhost:6379'
 
 
 class TestingConfig(Config):
