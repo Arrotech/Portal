@@ -43,7 +43,7 @@ def exam_app(config_name):
     Mail(app)
 
     Database().create_table()
-    # Database().create_registrar()
+    Database().create_registrar()
 
     from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
     from app.api.v1 import portal_v1

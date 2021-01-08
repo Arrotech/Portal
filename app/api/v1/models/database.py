@@ -226,18 +226,18 @@ class Database:
         except Exception as e:
             return Serializer.serialize(f"{e}", 500, "Error")
 
-    # def create_registrar(self):
-    #     """Create default admin."""
-    #     try:
-    #         self.curr.execute(
-    #             ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
-    #                 VALUES('Peter','Gitundu','Kigo','8511024','male','petergitundu44@gmail.com','pbkdf2:sha256:150000$Xlqfm8GS$d8544269c47e1d8f3835d887d3cb4ba4b939f34584f75db043a374a286558cc9','registrar','false','Mon, 14 Dec 2020 00:48:26 GMT') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on''')
-    #         response = self.curr.fetchone()
-    #         self.conn.commit()
-    #         self.curr.close()
-    #         return response
-    #     except Exception as e:
-    #         Serializer.serialize(f"{e}", 500, "Error")
+    def create_registrar(self):
+        """Create default admin."""
+        try:
+            self.curr.execute(
+                ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
+                    VALUES('Peter','Gitundu','Kigo','8511024','male','registrar@admin.com','pbkdf2:sha256:150000$Xlqfm8GS$d8544269c47e1d8f3835d887d3cb4ba4b939f34584f75db043a374a286558cc9','registrar','false','Mon, 14 Dec 2020 00:48:26 GMT') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on''')
+            response = self.curr.fetchone()
+            self.conn.commit()
+            self.curr.close()
+            return response
+        except Exception as e:
+            Serializer.serialize(f"{e}", 500, "Error")
 
     def fetch(self, query):
         """Fetch all query."""

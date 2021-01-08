@@ -30,6 +30,8 @@ def create_tables():
     print("Existing tables destroyed... OK")
     Database().create_table()
     print("New tables created... OK")
+    Database().create_registrar()
+    print("Registrar account created successfully... OK")
 
 
 @app.route('/')
