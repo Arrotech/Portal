@@ -7,9 +7,14 @@ from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask import Flask
 from celery import Celery
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from app.api.v1.models.database import Database
 from app.config import app_config
+
+db = SQLAlchemy()
+migrate = Migrate()
 
 
 def exam_app(config_name):
@@ -28,6 +33,9 @@ def exam_app(config_name):
         app.config.from_object(app_config[config_name])
 
     app.config.from_pyfile('config.py')
+
+    db.init_app(app)
+    migrate.init_app(app, db)
 
     CORS(app)
     JWTManager(app)
