@@ -45,6 +45,17 @@ def get_fees():
     return Serializer.serialize(response, 200, "Fees retrieved successfully")
 
 
+@portal_v1.route('/fees/<int:fee_id>', methods=['GET'])
+@jwt_required
+@accountant_required
+def get_fee_by_id(fee_id):
+    """Fetch fee by id."""
+    response = FeesModels().get_fee_by_id(fee_id)
+    if response:
+        return Serializer.serialize(response, 200, "Fee retrieved successfully")
+    return raise_error(404, "Fee not found")
+
+
 @portal_v1.route('/fees/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_fees_for_one_student_by_admission(admission_no):
@@ -58,7 +69,7 @@ def get_fees_for_one_student_by_admission(admission_no):
 @portal_v1.route('/fees/<int:fee_id>', methods=['PUT'])
 @jwt_required
 @accountant_required
-def put(fee_id):
+def update_fee_entry(fee_id):
     """Edit fees."""
     errors = check_edit_fees_keys(request)
     if errors:
@@ -73,3 +84,14 @@ def put(fee_id):
     if response:
         return Serializer.serialize(response, 200, "Fees updated successfully")
     return raise_error(404, "Fees not found")
+
+@portal_v1.route('/fees/<int:fee_id>', methods=['DELETE'])
+@jwt_required
+@accountant_required
+def delete_fee(fee_id):
+    """Delete fee by id."""
+    response = FeesModels().get_fee_by_id(fee_id)
+    if response:
+        FeesModels().delete(fee_id)
+        return Serializer.serialize(response, 200, "Fee deleted successfully")
+    return raise_error(404, 'Fee not found')

@@ -31,8 +31,20 @@ class ApplyCoursesModel(Database):
         self.curr.close()
         return response
 
+    def get_all_applied_courses(self):
+        """Fetch all applied courses."""
+        query = "SELECT * FROM apply_course"
+        response = Database().fetch(query)
+        return response
+
     def get_course_by_id(self, application_id):
-        """Get course by id."""
+        """Get applied course by id."""
+        query = "SELECT * FROM apply_course WHERE application_id=%s"
+        response = Database().fetch_one(query, application_id)
+        return response
+
+    def get_course_info_by_admission_no(self, admission_no):
+        """Get applied course by admission_no."""
         query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no, i.institution_name,\
                           d.department_name, c.course_name, ca.campus_name, ce.certificate_name\
                           FROM apply_course AS a\
@@ -42,6 +54,22 @@ class ApplyCoursesModel(Database):
                           INNER JOIN certificates AS ce ON a.certificate=ce.certificate_id\
                           INNER JOIN departments AS d ON a.department=d.department_name\
                           INNER JOIN courses AS c ON a.course=c.course_name\
-                          WHERE application_id=%s"
-        response = Database().fetch_one(query, application_id)
+                          WHERE student=%s"
+        response = Database().fetch_one(query, admission_no)
         return response
+
+    def update(self, application_id, institution_name, campus_id, certificate_id, department_name, course_name):
+        """Update applied course by id."""
+        self.curr.execute(
+            """UPDATE apply_course SET institution='{}', campus='{}',certificate='{}',department='{}',course='{}' WHERE application_id={} RETURNING institution, campus, certificate, department, course""".format(application_id, institution_name, campus_id, certificate_id, department_name, course_name))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def delete(self, application_id):
+        """Delete applied course by id."""
+        self.curr.execute(
+            """DELETE FROM apply_course WHERE application_id={}""".format(application_id))
+        self.conn.commit()
+        self.curr.close()

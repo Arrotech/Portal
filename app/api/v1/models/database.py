@@ -6,31 +6,35 @@ from psycopg2.extras import RealDictCursor
 from app.config import app_config
 from utils.serializer import Serializer
 
-config_name = os.getenv("FLASK_ENV")
+config_name = os.environ.get("FLASK_ENV")
 if config_name is not None:
-    DB_URL = app_config[config_name].DB_NAME
+    URL = app_config[config_name].DATABASE_URL
 else:
-    DB_URL = "test_school_portal"
+    URL = os.environ.get('TEST_DATABASE_URL')
 
 
 class Database:
     """Initialization."""
 
     def __init__(self):
-        self.db_name = DB_URL
-        self.db_host = os.getenv('DB_HOST')
-        self.db_user = os.getenv('DB_USER')
-        self.db_password = os.getenv('DB_PASSWORD')
-        self.conn = psycopg2.connect(
-            database=self.db_name, host=self.db_host, user=self.db_user, password=self.db_password)
+        self.conn = psycopg2.connect(URL)
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
 
-    def create_table(self):
+    def __enter__(self):
+        """ Instantitiates and returns the db connection """
+        return self.conn
+
+    def __exit__(self, exe_typ, exec_value, exec_tb):
+        """ Define what the context manager should do before exit """
+        self.conn.close()
+
+    @classmethod
+    def create_table(cls):
         """Create tables."""
         queries = [
             """
             CREATE TABLE IF NOT EXISTS users(
-                user_id serial PRIMARY KEY,
+                user_id serial,
                 firstname varchar NOT NULL,
                 lastname varchar NOT NULL,
                 surname varchar NOT NULL,
@@ -41,161 +45,199 @@ class Database:
                 role varchar NOT NULL,
                 is_confirmed BOOLEAN DEFAULT False,
                 confirmed_on TIMESTAMP,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (admission_no)
             )""",
             """
             CREATE TABLE IF NOT EXISTS institutions(
-                institution_id serial PRIMARY KEY,
+                institution_id serial,
                 institution_name varchar NOT NULL UNIQUE,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (institution_name)
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS campuses(
-                campus_id serial PRIMARY KEY,
+                campus_id serial,
                 campus_name varchar NOT NULL,
                 campus_location varchar NOT NULL,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (campus_id)
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS certificates(
-                certificate_id serial PRIMARY KEY,
+                certificate_id serial,
                 certificate_name varchar NOT NULL,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (certificate_id)
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS departments(
-                department_id serial PRIMARY KEY,
-                department_name varchar NOT NULL UNIQUE,
-                created_on TIMESTAMP
-            )
-            """,
-            """
-            CREATE TABLE IF NOT EXISTS courses(
-                course_id serial NOT NULL,
-                course_name varchar UNIQUE,
-                department varchar NOT NULL REFERENCES departments (department_name) ON DELETE CASCADE,
+                department_id serial,
+                department_name varchar NOT NULL,
                 created_on TIMESTAMP,
-                PRIMARY KEY (department)
-            )
-            """,
-            """
-            CREATE TABLE IF NOT EXISTS academic_year(
-                year_id serial UNIQUE,
-                year varchar NOT NULL,
-                semester varchar NOT NULL,
-                created_on TIMESTAMP
-            )""",
-            """
-            CREATE TABLE IF NOT EXISTS apply_course(
-                application_id serial UNIQUE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
-                institution varchar NOT NULL REFERENCES institutions (institution_name) ON DELETE CASCADE,
-                campus integer NOT NULL REFERENCES campuses (campus_id) ON DELETE CASCADE,
-                certificate integer NOT NULL REFERENCES certificates (certificate_id) ON DELETE CASCADE,
-                department varchar NOT NULL REFERENCES departments (department_name) ON DELETE CASCADE,
-                course varchar NOT NULL REFERENCES courses (course_name) ON DELETE CASCADE,
-                created_on TIMESTAMP,
-                PRIMARY KEY (student, institution, campus, certificate, department, course)
+                PRIMARY KEY (department_name)
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS units(
-                unit_id serial PRIMARY KEY,
+                unit_id serial,
                 unit_name varchar NOT NULL UNIQUE,
                 unit_code varchar NOT NULL,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (unit_name)
             )""",
             """
-            CREATE TABLE IF NOT EXISTS subjects(
-                subject_id serial UNIQUE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
-                unit varchar NOT NULL REFERENCES units (unit_name) ON DELETE CASCADE,                                                                                                                                 
+            CREATE TABLE IF NOT EXISTS academic_year(
+                year_id serial,
+                year varchar NOT NULL,
+                semester varchar NOT NULL,
                 created_on TIMESTAMP,
-                PRIMARY KEY (student, unit)
+                PRIMARY KEY (year_id)
+            )""",
+            """
+            CREATE TABLE IF NOT EXISTS hostels(
+                hostel_id serial,
+                hostel_name varchar NOT NULL UNIQUE,
+                rooms varchar NOT NULL,
+                gender varchar NOT NULL,
+                hostel_location varchar NOT NULL,
+                created_on TIMESTAMP,
+                PRIMARY KEY (hostel_name)
+            )""",
+            """
+            CREATE TABLE IF NOT EXISTS courses(
+                course_id serial,
+                course_name varchar UNIQUE,
+                department varchar NOT NULL,
+                created_on TIMESTAMP,
+                PRIMARY KEY (course_id),
+                FOREIGN KEY (department) REFERENCES departments(department_name) ON DELETE CASCADE
+            )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS apply_course(
+                application_id serial,
+                student varchar NOT NULL,
+                institution varchar NOT NULL,
+                campus integer NOT NULL,
+                certificate integer NOT NULL,
+                department varchar NOT NULL,
+                course varchar NOT NULL,
+                created_on TIMESTAMP,
+                PRIMARY KEY (application_id),
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
+                FOREIGN KEY (institution) REFERENCES institutions(institution_name) ON DELETE CASCADE,
+                FOREIGN KEY (campus) REFERENCES campuses(campus_id) ON DELETE CASCADE,
+                FOREIGN KEY (certificate) REFERENCES certificates(certificate_id) ON DELETE CASCADE,
+                FOREIGN KEY (department) REFERENCES departments(department_name) ON DELETE CASCADE,
+                FOREIGN KEY (course) REFERENCES courses(course_name) ON DELETE CASCADE
+            )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS subjects(
+                subject_id serial,
+                student varchar NOT NULL,
+                unit varchar NOT NULL,
+                year integer NOT NULL,                                                                                                                                
+                created_on TIMESTAMP,
+                PRIMARY KEY (subject_id),
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
+                FOREIGN KEY (unit) REFERENCES units(unit_name) ON DELETE CASCADE,
+                FOREIGN KEY (year) REFERENCES academic_year(year_id) ON DELETE CASCADE
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS exams(
-                exam_id serial UNIQUE,
-                year integer NOT NULL REFERENCES academic_year (year_id) ON DELETE CASCADE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
-                unit varchar NOT NULL REFERENCES units (unit_name) ON DELETE CASCADE,   
+                exam_id serial,
+                year integer NOT NULL,
+                student varchar NOT NULL,
+                unit varchar NOT NULL,   
                 marks integer NOT NULL,
                 exam_type varchar NOT NULL,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (exam_id),
+                FOREIGN KEY (year) REFERENCES academic_year(year_id) ON DELETE CASCADE,
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
+                FOREIGN KEY (unit) REFERENCES units(unit_name) ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS fees(
-                fee_id serial UNIQUE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
+                fee_id serial,
+                student varchar NOT NULL,
                 transaction_type varchar NOT NULL,
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
                 amount varchar NOT NULL,
                 created_on TIMESTAMP,
-                PRIMARY KEY (student)
+                PRIMARY KEY (fee_id),
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE
             )
             """,
             """
             CREATE TABLE IF NOT EXISTS library(
                 book_id serial UNIQUE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
+                student varchar NOT NULL,
                 title varchar NOT NULL,
                 author varchar NOT NULL,
                 book_no varchar NOT NULL,
                 created_on TIMESTAMP,
-                PRIMARY KEY (student)
-            )""",
-            """
-            CREATE TABLE IF NOT EXISTS hostels(
-                hostel_id serial PRIMARY KEY,
-                hostel_name varchar NOT NULL UNIQUE,
-                rooms varchar NOT NULL,
-                gender varchar NOT NULL,
-                hostel_location varchar NOT NULL,
-                created_on TIMESTAMP
+                PRIMARY KEY (book_id),
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS accommodation(
-                accommodation_id serial UNIQUE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
-                hostel varchar NOT NULL REFERENCES hostels (hostel_name) ON DELETE CASCADE,
+                accommodation_id serial,
+                student varchar NOT NULL,
+                hostel varchar NOT NULL,
                 created_on TIMESTAMP,
-                PRIMARY KEY (student, hostel)
+                PRIMARY KEY (accommodation_id),
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
+                FOREIGN KEY (hostel) REFERENCES hostels(hostel_name) ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS checklist(
-                checklist_id serial UNIQUE,
-                student varchar NOT NULL REFERENCES users (admission_no) ON DELETE CASCADE,
-                department varchar NOT NULL REFERENCES departments (department_name) ON DELETE CASCADE,
-                course varchar NOT NULL REFERENCES courses (course_name) ON DELETE CASCADE,
-                certificate integer NOT NULL REFERENCES certificates (certificate_id) ON DELETE CASCADE,
-                year integer NOT NULL REFERENCES academic_year (year_id) ON DELETE CASCADE,
-                campus integer NOT NULL REFERENCES campuses (campus_id) ON DELETE CASCADE,
-                hostel varchar NOT NULL REFERENCES hostels (hostel_name) ON DELETE CASCADE,
+                checklist_id serial,
+                student varchar NOT NULL,
+                department varchar NOT NULL,
+                course varchar NOT NULL,
+                certificate integer NOT NULL,
+                year integer NOT NULL,
+                campus integer NOT NULL,
+                hostel varchar NOT NULL,
                 created_on TIMESTAMP,
-                PRIMARY KEY (student, department, course, certificate, year, campus, hostel)
+                PRIMARY KEY (checklist_id),
+                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
+                FOREIGN KEY (department) REFERENCES departments(department_name) ON DELETE CASCADE,
+                FOREIGN KEY (course) REFERENCES courses(course_name) ON DELETE CASCADE,
+                FOREIGN KEY (certificate) REFERENCES certificates(certificate_id) ON DELETE CASCADE,
+                FOREIGN KEY (year) REFERENCES academic_year(year_id) ON DELETE CASCADE,
+                FOREIGN KEY (campus) REFERENCES campuses(campus_id) ON DELETE CASCADE,
+                FOREIGN KEY (hostel) REFERENCES hostels(hostel_name) ON DELETE CASCADE   
             )""",
             """
             CREATE TABLE IF NOT EXISTS notifications(
-                notification_id serial PRIMARY KEY,
+                notification_id serial,
                 subject varchar NOT NULL,
                 description varchar NOT NULL,
-                created_on TIMESTAMP
+                created_on TIMESTAMP,
+                PRIMARY KEY (notification_id)
             )"""
         ]
         try:
-            for query in queries:
-                self.curr.execute(query)
-            self.conn.commit()
-            self.curr.close()
+            with Database() as conn:
+                curr = conn.cursor(cursor_factory=RealDictCursor)
+                for query in queries:
+                    curr.execute(query)
+                conn.commit()
+            return 'Successfuly created tables'
         except Exception as e:
             return Serializer.serialize(f"{e}", 500, "Error")
 
-    def destroy_table(self):
+    @classmethod
+    def destroy_table(cls):
         """Destroy tables"""
         exams = "DROP TABLE IF EXISTS  exams CASCADE"
         users = "DROP TABLE IF EXISTS  users CASCADE"
@@ -219,10 +261,11 @@ class Database:
         queries = [exams, users, institutions, campuses, certificates, departments,
                    courses, academic_year, apply_course, subjects, fees, library, units, hostels, accommodation, checklist, notifications]
         try:
-            for query in queries:
-                self.curr.execute(query)
-            self.conn.commit()
-            self.curr.close()
+            with Database() as conn:
+                curr = conn.cursor(cursor_factory=RealDictCursor)
+                for query in queries:
+                    curr.execute(query)
+                conn.commit()
         except Exception as e:
             return Serializer.serialize(f"{e}", 500, "Error")
 
@@ -271,9 +314,3 @@ class Database:
             return fetch_one
         except Exception as e:
             return Serializer.serialize(f"{e}", 500, "Error")
-
-
-if __name__ == '__main__':
-    Database().destroy_table()
-    Database().create_table()
-    Database().create_registrar()

@@ -43,6 +43,14 @@ def get_all_exams_for_a_student_by_admission(admission_no):
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
 
+@portal_v1.route('/exams/<int:exam_id>', methods=['GET'])
+@jwt_required
+@admin_required
+def get_exam_by_id(exam_id):
+    """Fetch an exam by Id."""
+    response = ExamsModel().fetch_exam_by_id(exam_id)
+    return Serializer.serialize(response, 200, "Exam successfull retrieved")
+
 @portal_v1.route('/exams/year/<string:admission_no>/<string:year>', methods=['GET'])
 @jwt_required
 def get_exams_for_specific_year(admission_no, year):
@@ -63,3 +71,34 @@ def get_total_for_specific_unit(admission_no, unit):
     """Fetch all exams fro specific semester."""
     response = ExamsModel().fetch_total_for_specific_unit(admission_no, unit)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
+@portal_v1.route('/exams/<int:exam_id>', methods=['PUT'])
+@jwt_required
+@admin_required
+def update_exam_by_id(exam_id):
+    """Update exam by id."""
+    errors = check_exams_keys(request)
+    if errors:
+        return raise_error(400, "Invalid {} key".format(', '.join(errors)))
+    details = request.get_json()
+    year_id = details['year_id']
+    admission_no = details['admission_no']
+    unit_name = details['unit_name']
+    marks = details['marks']
+    exam_type = details['exam_type']
+    response = ExamsModel().update(year_id, admission_no, unit_name, marks, exam_type, exam_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Exam updated successfully')
+    return raise_error(404, "Exam not found")
+
+
+@portal_v1.route('/exams/<int:exam_id>', methods=['DELETE'])
+@jwt_required
+@admin_required
+def delete_exam(exam_id):
+    """Delete exam by id."""
+    response = ExamsModel().fetch_exam_by_id(exam_id)
+    if response:
+        ExamsModel().delete(exam_id)
+        return Serializer.serialize(response, 200, "Exam deleted successfully")
+    return raise_error(404, 'Exam not found')

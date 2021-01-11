@@ -62,6 +62,24 @@ def get_hostels_by_location(hostel_location):
     response = HostelsModel().view_hostel_by_location(hostel_location)
     return Serializer.serialize(response, 200, "Hostel(s) retrived successfully")
 
+@portal_v1.route('/hostels/<int:hostel_id>', methods=['PUT'])
+@jwt_required
+@hostel_manager
+def update_hostel_by_id(hostel_id):
+    """Update hostel by id."""
+    errors = check_hostels_keys(request)
+    if errors:
+        return raise_error(400, 'Invalid {} key'.format(', '.join(errors)))
+    details = request.get_json()
+    hostel_name = details['hostel_name']
+    rooms = details['rooms']
+    gender = details['gender']
+    hostel_location = details['hostel_location']
+    response = HostelsModel().edit_hostel(hostel_name, rooms, gender, hostel_location, hostel_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Hostel updated successfully')
+    return raise_error(404, "Hostel not found")
+
 
 @portal_v1.route('/hostels/<int:hostel_id>', methods=['DELETE'])
 @jwt_required

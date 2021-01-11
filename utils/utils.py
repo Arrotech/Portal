@@ -230,7 +230,7 @@ def check_accommdation_keys(request):
 
 
 def check_subjects_keys(request):
-    res_keys = ['admission_no', 'unit_name']
+    res_keys = ['admission_no', 'unit_name', 'year_id']
     errors = []
     for key in res_keys:
         if not key in request.json:

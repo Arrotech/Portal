@@ -43,6 +43,12 @@ class LibraryModel(Database):
         response = Database().fetch(query)
         return response
 
+    def get_book_by_id(self, book_id):
+        """Fetch book by id."""
+        query = "SELECT * FROM library WHERE book_id=%s"
+        response = Database().fetch_one(query, book_id)
+        return response
+
     def get_books_by_user_admission(self, admission_no):
         """Get a book with specific user admission."""
         self.curr.execute(""" SELECT u.admission_no, u.firstname, u.lastname, u.surname,
@@ -64,3 +70,10 @@ class LibraryModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def delete(self, book_id):
+        """Delete book by id."""
+        self.curr.execute(
+            """DELETE FROM library WHERE book_id={}""".format(book_id))
+        self.conn.commit()
+        self.curr.close()

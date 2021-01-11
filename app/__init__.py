@@ -13,24 +13,20 @@ from flask_migrate import Migrate
 from app.api.v1.models.database import Database
 from app.config import app_config
 
+db = SQLAlchemy()
+migrate = Migrate()
+
 
 def exam_app(config_name):
     """Create the app."""
     app = Flask(__name__, template_folder='../../../templates')
 
-    if config_name == 'testing':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'development':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'production':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'staging':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'release':
-        app.config.from_object(app_config[config_name])
+    app.config.from_object(app_config[config_name])
 
     app.config.from_pyfile('config.py')
 
+    db.init_app(app)
+    migrate.init_app(app, db)
     CORS(app)
     JWTManager(app)
     Celery(app)

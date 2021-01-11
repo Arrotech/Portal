@@ -34,16 +34,56 @@ def book_hostel():
 @jwt_required
 @hostel_manager
 def get_all_booked_hostels():
-    """Fetch all hostels that have been booked."""
+    """Fetch all booked hostels."""
     response = AccommodationModel().get_booked_hostels()
     return Serializer.serialize(response, 200, "Hostels retrieved successfully")
+
+
+@portal_v1.route('/accommodation/<int:accommodation_id>', methods=['GET'])
+@jwt_required
+def get_booked_hostel_by_id(accommodation_id):
+    """Fetch hostel accommodation by id."""
+    response = AccommodationModel().get_booked_hostel_by_id(accommodation_id)
+    if response:
+        return Serializer.serialize(response, 200, "Hostel retrieved successfully")
+    return raise_error(404, "Hostel not found")
 
 
 @portal_v1.route('/accommodation/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_booked_hostel_by_admission(admission_no):
-    """Fetch hostel by admission."""
+    """Fetch hostel accommodation by admission."""
     response = AccommodationModel().get_booked_hostel_by_admission(admission_no)
     if response:
         return Serializer.serialize(response, 200, "Hostel retrieved successfully")
     return raise_error(404, "Hostel not found")
+
+@portal_v1.route('/accommodation/all/<string:admission_no>', methods=['GET'])
+@jwt_required
+def get_accommodation_history_by_admission_no(admission_no):
+    """Fetch accommodation history by admission number."""
+    response = AccommodationModel().get_accommodation_history_by_admission_no(admission_no)
+    return Serializer.serialize(response, 200, "Accomodation history retrieved successfully")
+
+
+@portal_v1.route('/accommodation/<int:accommodation_id>', methods=['PUT'])
+@jwt_required
+def update_hostel_accomodation(accommodation_id):
+    """Update specific hostel accommodation by id."""
+    details = request.get_json()
+    hostel_name = details['hostel_name']
+    response = AccommodationModel().update(hostel_name, accommodation_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Hostel accommodation updated successfully')
+    return raise_error(404, "Hostel accommodation not found")
+
+
+@portal_v1.route('/accommodation/<int:accommodation_id>', methods=['DELETE'])
+@jwt_required
+def delete_hostel_accomodation(accommodation_id):
+    """Delete specific hostel accommodation booking by id."""
+    response = AccommodationModel().get_booked_hostel_by_id(accommodation_id)
+    if response:
+        AccommodationModel().delete(accommodation_id)
+        return Serializer.serialize(response, 200, "Hostel accommodation deleted successfully")
+    return raise_error(404, 'Hostel accommodation not found')

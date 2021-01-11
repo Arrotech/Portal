@@ -26,11 +26,29 @@ class NotificationsModel(Database):
         self.curr.close()
         return response
 
+    def get_all_notifications(self):
+        """Get all notifications."""
+        query = "SELECT * FROM notifications"
+        response = Database().fetch(query)
+        return response
+
     def get_notitications_by_id(self, notification_id):
         """Get notifications by id."""
-        self.curr.execute(
-            """SELECT * FROM notifications WHERE notification_id={}""".format(notification_id))
-        response = self.curr.fetchall()
+        query = "SELECT * FROM notifications WHERE notification_id=%s"
+        response = Database().fetch_one(query, notification_id)
+        return response
+
+    def update(self, notification_id, subject, description):
+        """Edit notification by id."""
+        self.curr.execute("""UPDATE notifications SET subject='{}', description='{}' WHERE notification_id={} RETURNING subject, description""".format(notification_id, subject, description))
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
+
+    def delete(self, notification_id):
+        """Delete notification by id."""
+        self.curr.execute(
+            """DELETE FROM notifications WHERE notification_id={}""".format(notification_id))
+        self.conn.commit()
+        self.curr.close()
