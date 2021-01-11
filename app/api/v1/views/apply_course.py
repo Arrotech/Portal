@@ -12,7 +12,7 @@ from app.api.v1.models.courses import CoursesModel
 from app.api.v1.models.institutions import InstitutionsModel
 from utils.utils import check_apply_course_keys, raise_error
 from utils.serializer import Serializer
-from utils.authorization import admin_required
+from utils.authorization import admin_required, registrar_required
 from app.api.v1 import portal_v1
 
 
@@ -46,12 +46,54 @@ def apply_course():
         return raise_error(404, "Institution not found")
     return raise_error(404, "Student not found")
 
+@portal_v1.route('/apply_course', methods=['GET'])
+@jwt_required
+@registrar_required
+def get_all_applied_courses():
+    """Fetch all applied courses."""
+    response = ApplyCoursesModel().get_all_applied_courses()
+    return Serializer.serialize(response, 200, "Applied courses retrieved successfully")
+
 
 @portal_v1.route('/apply_course/<int:application_id>', methods=['GET'])
 @jwt_required
-def get_course(application_id):
+def get_applied_course_by_id(application_id):
     """Get course by id."""
     response = ApplyCoursesModel().get_course_by_id(application_id)
     if response:
         return Serializer.serialize(response, 200, "Course retrieved successfully")
     return raise_error(404, "Course not found")
+
+@portal_v1.route('/apply_course/<string:admission_no>', methods=['GET'])
+@jwt_required
+def get_course_info(admission_no):
+    """Get course by admission_no."""
+    response = ApplyCoursesModel().get_course_info_by_admission_no(admission_no)
+    if response:
+        return Serializer.serialize(response, 200, "Course retrieved successfully")
+    return raise_error(404, "Course not found")
+
+@portal_v1.route('/apply_course/<int:application_id>', methods=['PUT'])
+@jwt_required
+def update_applied_course(application_id):
+    """Update applied course by id."""
+    details = request.get_json()
+    institution_name = details['institution_name']
+    campus_id = details['campus_id']
+    certificate_id = details['certificate_id']
+    department_name = details['department_name']
+    course_name = details['course_name']
+    response = ApplyCoursesModel().update(institution_name, campus_id, certificate_id, department_name, course_name, application_id)
+    if response:
+        return Serializer.serialize(response, 200, 'Applied course updated successfully')
+    return raise_error(404, "Applied course not found")
+
+@portal_v1.route('/apply_course/<int:application_id>', methods=['DELETE'])
+@jwt_required
+def delete__applied_course(application_id):
+    """Delete applied course by id."""
+    response = ApplyCoursesModel().get_course_by_id(application_id)
+    if response:
+        ApplyCoursesModel().delete(application_id)
+        return Serializer.serialize(response, 200, "Applied course deleted successfully")
+    return raise_error(404, 'Applied course not found')

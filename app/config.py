@@ -21,6 +21,11 @@ class Config:
     DB_HOST = os.environ.get('DB_HOST')
     DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
+    # SQLALCHEMY
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
+        'SQLALCHEMY_TRACK_MODIFICATIONS')
+
     # brokers
     RABBITMQ_URL = os.environ.get('RABBITMQ_URL')
     REDISTOGO_URL = os.environ.get('REDISTOGO_URL')
@@ -61,7 +66,8 @@ class TestingConfig(Config):
     TESTING = True
     SESSION_COOKIE_SECURE = False
 
-    DB_NAME = 'test_school_portal'
+    DB_NAME = os.environ.get('TEST_DB_NAME')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
 
 
 class StagingConfig(Config):

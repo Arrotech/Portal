@@ -42,6 +42,12 @@ class ExamsModel(Database):
         self.curr.close()
         return response
 
+    def fetch_exam_by_id(self, exam_id):
+        """Fetch an exam by id."""
+        query = "SELECT * FROM exams WHERE exam_id=%s"
+        response = Database().fetch_one(query, exam_id)
+        return response
+
     def fetch_all_exams_for_specific_year(self, admission_no, year):
         """A student can fetch all his examinations for the specified year."""
         self.curr.execute("""SELECT un.unit_code, a.year, a.semester, e.marks, e.exam_type FROM exams AS e
@@ -73,3 +79,20 @@ class ExamsModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def update(self, exam_id, year, student, unit, marks, exam_type):
+        """Update exam entry."""
+        self.curr.execute(
+            """UPDATE exams SET year='{}', student='{}', unit='{}', marks='{}', exam_type='{}' WHERE exam_id={} RETURNING year, student, unit, marks, exam_type""".format(exam_id, year, student, unit, marks, exam_type))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def delete(self, exam_id):
+        """Delete exam by id."""
+        self.curr.execute(
+            """DELETE FROM exams WHERE exam_id={}""".format(exam_id))
+        self.conn.commit()
+        self.curr.close()
+

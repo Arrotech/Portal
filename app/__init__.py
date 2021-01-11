@@ -13,6 +13,9 @@ from flask_migrate import Migrate
 from app.api.v1.models.database import Database
 from app.config import app_config
 
+db = SQLAlchemy()
+migrate = Migrate()
+
 
 def exam_app(config_name):
     """Create the app."""
@@ -31,6 +34,8 @@ def exam_app(config_name):
 
     app.config.from_pyfile('config.py')
 
+    db.init_app(app)
+    migrate.init_app(app, db)
     CORS(app)
     JWTManager(app)
     Celery(app)

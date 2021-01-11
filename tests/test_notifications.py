@@ -37,7 +37,7 @@ class TestNotifications(BaseTest):
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
-                         'Notifications retrieved successfully')
+                         'Notification retrieved successfully')
         assert response.status_code == 200
 
     def test_get_non_existing_notifications_by_id(self):
@@ -50,5 +50,5 @@ class TestNotifications(BaseTest):
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
-                         'Notifications not found')
+                         'Notification not found')
         assert response.status_code == 404

@@ -3,6 +3,7 @@ import json
 from utils.v1.dummy.subjects import new_subject, new_subject_keys, unexisting_user
 from utils.v1.dummy.units import new_unit
 from utils.v1.dummy.students_accounts import new_student_account
+from utils.v1.dummy.academic_year import new_academic_year
 from .base_test import BaseTest
 
 
@@ -14,6 +15,9 @@ class TestSubjects(BaseTest):
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -27,6 +31,9 @@ class TestSubjects(BaseTest):
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject_keys), content_type='application/json',
             headers=self.get_token())
@@ -36,6 +43,9 @@ class TestSubjects(BaseTest):
 
     def test_add_subjects_for_unexisting_unit(self):
         """Test that an existing user cannot register for a non existing unit."""
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -48,6 +58,9 @@ class TestSubjects(BaseTest):
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         response = self.client.post(
             '/api/v1/subjects', data=json.dumps(unexisting_user), content_type='application/json',
             headers=self.get_token())
@@ -60,6 +73,9 @@ class TestSubjects(BaseTest):
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -76,6 +92,9 @@ class TestSubjects(BaseTest):
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
@@ -96,6 +115,9 @@ class TestSubjects(BaseTest):
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
         self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())
         response = self.client.delete(
@@ -114,6 +136,9 @@ class TestSubjects(BaseTest):
         self.client.post(
             '/api/v1/units', data=json.dumps(new_unit), content_type='application/json',
             headers=self.get_department_head_token())
+        self.client.post(
+            '/api/v1/year', data=json.dumps(new_academic_year), content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/subjects', data=json.dumps(new_subject), content_type='application/json',
             headers=self.get_token())

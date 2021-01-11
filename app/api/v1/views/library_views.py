@@ -42,6 +42,16 @@ def get_all_books():
     response = LibraryModel().get_all_books()
     return Serializer.serialize(response, 200, "Books retrieved successfully")
 
+@portal_v1.route('/books/<int:book_id>', methods=['GET'])
+@jwt_required
+@librarian_required
+def get_book_by_id(book_id):
+    """Fetch book by id."""
+    response = LibraryModel().get_book_by_id(book_id)
+    if response:
+        return Serializer.serialize(response, 200, "Book retrieved successfully")
+    return raise_error(404, "Book not found")
+
 
 @portal_v1.route('/books/<string:admission_no>', methods=['GET'])
 @jwt_required
@@ -69,3 +79,14 @@ def update_book_by_id(book_id):
     if response:
         return Serializer.serialize(response, 200, "Book updated successfully")
     return raise_error(404, "Book not found")
+
+@portal_v1.route('/books/<int:book_id>', methods=['DELETE'])
+@jwt_required
+@librarian_required
+def delete_book(book_id):
+    """Delete fee by id."""
+    response = LibraryModel().get_book_by_id(book_id)
+    if response:
+        LibraryModel().delete(book_id)
+        return Serializer.serialize(response, 200, "Book deleted successfully")
+    return raise_error(404, 'Book not found')

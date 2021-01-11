@@ -52,6 +52,15 @@ class HostelsModel(Database):
         response = Database().fetch_one(query, hostel_location)
         return response
 
+    def edit_hostel(self, hostel_id, hostel_name, rooms, gender, hostel_location):
+        """Update hostel by id."""
+        self.curr.execute(
+            """UPDATE hostels SET hostel_name='{}', rooms='{}', gender='{}', hostel_location='{}' WHERE hostel_id={} RETURNING hostel_name, rooms, gender, hostel_location""".format(hostel_id, hostel_name, rooms, gender, hostel_location))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def delete(self, hostel_id):
         """Delete a hostel by id."""
         self.curr.execute(

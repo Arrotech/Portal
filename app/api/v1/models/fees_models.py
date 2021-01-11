@@ -47,6 +47,12 @@ class FeesModels(Database):
         response = Database().fetch(query)
         return response
 
+    def get_fee_by_id(self, fee_id):
+        """Fetch fee by Id."""
+        query = "SELECT * FROM fees WHERE fee_id=%s"
+        response = Database().fetch_one(query, fee_id)
+        return response
+
     def get_fee_by_user_admission(self, admission_no):
         """Get fees for a specific student by his/her admission."""
         self.curr.execute(
@@ -70,3 +76,11 @@ class FeesModels(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def delete(self, fee_id):
+        """Delete fee by id."""
+        self.curr.execute(
+            """DELETE FROM fees WHERE fee_id={}""".format(fee_id))
+        self.conn.commit()
+        self.curr.close()
+

@@ -8,19 +8,20 @@ from datetime import datetime
 class SubjectsModel(Database):
     """Initiallization."""
 
-    def __init__(self, admission_no=None, unit_name=None, created_on=None):
+    def __init__(self, admission_no=None, unit_name=None, year_id=None, created_on=None):
         super().__init__()
         self.admission_no = admission_no
         self.unit_name = unit_name
+        self.year_id = year_id
         self.created_on = datetime.now()
 
     def save(self):
         """Register a subject."""
         self.curr.execute(
-            ''' INSERT INTO subjects(student, unit, created_on)
-            VALUES('{}','{}','{}')
-            RETURNING student, unit, created_on'''
-            .format(self.admission_no, self.unit_name, self.created_on))
+            ''' INSERT INTO subjects(student, unit, year, created_on)
+            VALUES('{}','{}','{}','{}')
+            RETURNING student, unit, year, created_on'''
+            .format(self.admission_no, self.unit_name, self.year_id, self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -51,6 +52,15 @@ class SubjectsModel(Database):
                           WHERE admission_no=%s
                           """, (admission_no,))
         response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def edit_subject_by_id(self, subject_id, unit_name):
+        """Update subject by id."""
+        self.curr.execute(
+            """UPDATE subjects SET unit='{}' WHERE subject_id={} RETURNING unit""".format(subject_id, unit_name))
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
