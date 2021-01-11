@@ -6,18 +6,23 @@ from psycopg2.extras import RealDictCursor
 from app.config import app_config
 from utils.serializer import Serializer
 
-config_name = os.environ.get("FLASK_ENV")
+config_name = os.getenv("FLASK_ENV")
 if config_name is not None:
-    URL = app_config[config_name].DATABASE_URL
+    DB_URL = app_config[config_name].DB_NAME
 else:
-    URL = os.environ.get('TEST_DATABASE_URL')
+    DB_URL = "test_school_portal"
 
 
 class Database:
     """Initialization."""
 
     def __init__(self):
-        self.conn = psycopg2.connect(URL)
+        self.db_name = DB_URL
+        self.db_host = os.getenv('DB_HOST')
+        self.db_user = os.getenv('DB_USER')
+        self.db_password = os.getenv('DB_PASSWORD')
+        self.conn = psycopg2.connect(
+            database=self.db_name, host=self.db_host, user=self.db_user, password=self.db_password)
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def __enter__(self):

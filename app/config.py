@@ -15,12 +15,16 @@ class Config:
 
     SESSION_COOKIE_SECURE = True
 
-    # DATABASE
-    DATABASE_URL = os.environ.get('DATABASE_URL')
+    # database
+    DB_NAME = os.environ.get('DB_NAME')
+    DB_USER = os.environ.get('DB_USER')
+    DB_HOST = os.environ.get('DB_HOST')
+    DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
     # SQLALCHEMY
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
+    SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(
+        'SQLALCHEMY_TRACK_MODIFICATIONS')
 
     # brokers
     RABBITMQ_URL = os.environ.get('RABBITMQ_URL')
@@ -51,7 +55,7 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     SESSION_COOKIE_SECURE = False
- 
+
     RABBITMQ_URL = 'amqps://localhost//'
     REDISTOGO_URL = 'redis://localhost:6379'
 
@@ -62,7 +66,8 @@ class TestingConfig(Config):
     TESTING = True
     SESSION_COOKIE_SECURE = False
 
-    DATABASE_URL = os.environ.get('TEST_DATABASE_URL')
+    DB_NAME = os.environ.get('TEST_DB_NAME')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
 
 
 class StagingConfig(Config):
