@@ -1,10 +1,9 @@
-import json
-
 from flask import request
 from flask_jwt_extended import jwt_required
 
 from app.api.v1.models.certificates import CertificatesModel
-from utils.utils import check_certificates_keys, raise_error, certificate_restrictions
+from utils.utils import check_certificates_keys, raise_error,\
+    certificate_restrictions
 from utils.serializer import Serializer
 from utils.authorization import registrar_required
 from app.api.v1 import portal_v1
@@ -23,7 +22,8 @@ def add_certificate():
     if not certificate_restrictions(certificate_name):
         return raise_error(400, "Invalid certificate name")
     response = CertificatesModel(certificate_name).save()
-    return Serializer.serialize(response, 201, "Certificate added successfully")
+    return Serializer.serialize(response, 201,
+                                "Certificate added successfully")
 
 
 @portal_v1.route('/certificates', methods=['GET'])
@@ -31,7 +31,8 @@ def add_certificate():
 def get_all_certificates():
     """Get all certificates."""
     response = CertificatesModel().get_all_certificates()
-    return Serializer.serialize(response, 200, "Certificates retrieved successfully")
+    return Serializer.serialize(response, 200,
+                                "Certificates retrieved successfully")
 
 
 @portal_v1.route('/certificates/<int:certificate_id>', methods=['GET'])
@@ -40,7 +41,8 @@ def get_certificate_by_id(certificate_id):
     """Get certificate by id."""
     response = CertificatesModel().get_certificate_by_id(certificate_id)
     if response:
-        return Serializer.serialize(response, 200, "Certificate retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Certificate retrieved successfully")
     return raise_error(404, "Certificate not found")
 
 
@@ -57,9 +59,11 @@ def update_certificate(certificate_id):
     certificate_name = details['certificate_name']
     if not certificate_restrictions(certificate_name):
         return raise_error(400, "Invalid certificate name")
-    response = CertificatesModel().edit_certificate(certificate_name, certificate_id)
+    response = CertificatesModel().edit_certificate(certificate_name,
+                                                    certificate_id)
     if response:
-        return Serializer.serialize(response, 200, 'Certificate updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Certificate updated successfully')
     return raise_error(404, "Certificate not found")
 
 
@@ -71,5 +75,6 @@ def delete_certificate(certificate_id):
     response = CertificatesModel().get_certificate_by_id(certificate_id)
     if response:
         CertificatesModel().delete(certificate_id)
-        return Serializer.serialize(response, 200, "Certificate deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Certificate deleted successfully")
     return raise_error(404, 'Certificate not found')

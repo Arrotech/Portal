@@ -1,10 +1,10 @@
 from app.api.v1 import portal_v1
 from flask_jwt_extended import jwt_required
 from utils.authorization import department_head
-from utils.utils import check_units_keys, raise_error, check_unit_name_key, check_unit_code_key
-from flask import request, make_response, jsonify
+from utils.utils import check_units_keys, raise_error, check_unit_name_key, \
+    check_unit_code_key
+from flask import request
 from app.api.v1.models.units import UnitsModel
-import json
 from utils.serializer import Serializer
 
 
@@ -43,7 +43,8 @@ def get_unit_by_id(unit_id):
     """Fetch a unit by id."""
     response = UnitsModel().get_unit_by_id(unit_id)
     if response:
-        return Serializer.serialize(response, 200, "Unit successfully retrieved")
+        return Serializer.serialize(response, 200,
+                                    "Unit successfully retrieved")
     return raise_error(404, "Unit not found")
 
 
@@ -53,7 +54,8 @@ def get_unit_by_name(unit_name):
     """Fetch a unit by name."""
     response = UnitsModel().get_unit_by_name(unit_name)
     if response:
-        return Serializer.serialize(response, 200, "Unit successfully retrieved")
+        return Serializer.serialize(response, 200,
+                                    "Unit successfully retrieved")
     return raise_error(404, "Unit not found")
 
 
@@ -63,7 +65,8 @@ def get_unit_by_code(unit_code):
     """Fetch a unit by code."""
     response = UnitsModel().get_unit_by_code(unit_code)
     if response:
-        return Serializer.serialize(response, 200, "Unit successfully retrieved")
+        return Serializer.serialize(response, 200,
+                                    "Unit successfully retrieved")
     return raise_error(404, "Unit not found")
 
 
@@ -86,7 +89,8 @@ def edit_unit_by_id(unit_id):
     """Update a unit."""
     errors = check_units_keys(request)
     if errors:
-        return Serializer.serialize(errors, 400, 'Invalid {} key'.format(', '.join(errors)))
+        return Serializer.serialize(errors, 400,
+                                    'Invalid {} key'.format(', '.join(errors)))
     details = request.get_json()
     unit_name = details['unit_name']
     unit_code = details['unit_code']
@@ -117,7 +121,8 @@ def edit_unit_name_by_id(unit_id):
         return raise_error(400, '{} already exists'.format(unit_name))
     response = UnitsModel().edit_name(unit_name, unit_id)
     if response:
-        return Serializer.serialize(response, 200, "Unit name updated successfully")
+        return Serializer.serialize(response, 200,
+                                    "Unit name updated successfully")
     return raise_error(404, "Unit not found")
 
 
@@ -136,5 +141,6 @@ def edit_unit_code_by_id(unit_id):
         return raise_error(400, '{} already exists'.format(unit_code))
     response = UnitsModel().edit_code(unit_code, unit_id)
     if response:
-        return Serializer.serialize(response, 200, "Unit code updated successfully")
+        return Serializer.serialize(response, 200,
+                                    "Unit code updated successfully")
     return raise_error(404, "Unit not found")

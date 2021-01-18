@@ -1,18 +1,19 @@
-import json
-import os
-from datetime import datetime, timedelta
-from flask import make_response, jsonify, request, Blueprint, render_template, url_for, redirect
-from flask_jwt_extended import decode_token, create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required, get_raw_jwt
+from datetime import timedelta
+from flask import make_response, jsonify, request, render_template, url_for
+from flask_jwt_extended import create_access_token, jwt_required,\
+    get_jwt_identity, create_refresh_token, jwt_refresh_token_required
 from app.api.v1.models.users_model import UsersModel
-from utils.utils import default_decode_token, default_encode_token, generate_url, check_update_user_keys, check_register_keys, form_restrictions, check_promote_student_keys
+from utils.utils import default_decode_token, default_encode_token,\
+    generate_url, check_register_keys
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.api.v1 import portal_v1
 from utils.serializer import Serializer
-from itsdangerous import URLSafeTimedSerializer
-from app.api.v1.services.mails.mail_services import send_email
+from app.api.v1.services.mail import send_email
 from arrotechtools import is_valid_email, is_valid_password, raise_error
-from utils.authorization import admin_required, registrar_required
-from app.api.v1.forms.forms import EmailForm, PasswordForm
+from utils.authorization import admin_required
+from app.api.v1.forms.forms import PasswordForm
+
+sr = Serializer
 
 
 @portal_v1.route('/students/register', methods=['POST', 'GET'])
@@ -40,15 +41,20 @@ def student_signup():
     if not is_valid_email(email):
         return raise_error(400, "Invalid Email Format!")
     if not is_valid_password(password):
-        return raise_error(400, "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!")
+        return raise_error(400, "Invalid password")
     user_admission = UsersModel().get_user_by_admission(admission_no)
     if user_admission:
         return raise_error(400, "Admission number Already Exists!")
     user_email = UsersModel().get_user_by_email(email)
     if user_email:
         return raise_error(400, "Email Already Exists!")
-    response = UsersModel(firstname, lastname, surname,
-                          admission_no, gender, email, password).save_student()
+    response = UsersModel(firstname,
+                          lastname,
+                          surname,
+                          admission_no,
+                          gender,
+                          email,
+                          password).save_student()
     token = default_encode_token(email, salt='email-confirm-key')
     confirm_url = generate_url('portal_v1.confirm_email', token=token)
     send_email.delay('Confirm Your Email',
@@ -56,8 +62,9 @@ def student_signup():
                      recipients=[email],
                      text_body=render_template(
                             'email_confirmation.txt', confirm_url=confirm_url),
-                     html_body=render_template('email_confirmation.html', confirm_url=confirm_url))
-    return Serializer.serialize(response, 201, "Account created successfully!")
+                     html_body=render_template('email_confirmation.html',
+                                               confirm_url=confirm_url))
+    return sr.serialize(response, 201, "Account created successfully!")
 
 
 @portal_v1.route('/students/login', methods=['POST'])
@@ -92,14 +99,16 @@ def confirm_email(token):
     try:
         email = default_decode_token(
             token, salt='email-confirm-key', expiration=3600)
-    except:
+    except Exception:
         return raise_error(404, "User not found")
     user = UsersModel().get_user_by_email(email)
     user_id = user['user_id']
     if user:
         response = UsersModel().confirm_user_email(
             user_id, is_confirmed=True)
-        return Serializer.serialize(response, 200, "You have confirmed your email successfully")
+        return sr.serialize(response,
+                            200,
+                            "You have confirmed your email successfully")
     return raise_error(404, "User not found")
 
 
@@ -121,8 +130,11 @@ def send_reset_email():
                    sender='arrotechdesign@gmail.com',
                    recipients=[email],
                    text_body=render_template(
-                       'reset_password.txt', recover_url=recover_url, firstname=firstname),
-                   html_body=render_template('reset_password.html', recover_url=recover_url, firstname=firstname))
+                       'reset_password.txt', recover_url=recover_url,
+                       firstname=firstname),
+                   html_body=render_template('reset_password.html',
+                                             recover_url=recover_url,
+                                             firstname=firstname))
         return raise_error(200, "Check Your Email for the Password Reset Link")
     return raise_error(200, "Check Your Email for the Password Reset Link")
 
@@ -134,7 +146,7 @@ def reset_with_token(token):
     try:
         email = default_decode_token(
             token, salt="recover-key", expiration=86400)
-    except:
+    except Exception:
         return raise_error(404, "User not found")
     form = PasswordForm()
     user = UsersModel().get_user_by_email(email)
@@ -144,13 +156,15 @@ def reset_with_token(token):
             user_id = user['user_id']
             hashed_password = generate_password_hash(
                 password=form.password.data)
-            response = UsersModel().update_user_password(hashed_password, user_id)
+            response = UsersModel().update_user_password(hashed_password,
+                                                         user_id)
             send_email('Password reset successful',
                        sender='arrotechdesign@gmail.com',
                        recipients=[email],
                        text_body='Password reset was successful',
                        html_body='<p>Password reset was successful</p>')
-            return Serializer.serialize(response, 200, "Password reset successful")
+            return Serializer.serialize(response, 200,
+                                        "Password reset successful")
         return raise_error(404, "User not found")
     return render_template('reset_with_token.html', form=form, token=token)
 

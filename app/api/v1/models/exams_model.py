@@ -50,7 +50,7 @@ class ExamsModel(Database):
 
     def fetch_all_exams_for_specific_year(self, admission_no, year):
         """A student can fetch all his examinations for the specified year."""
-        self.curr.execute("""SELECT un.unit_code, a.year, a.semester, e.marks, e.exam_type FROM exams AS e
+        self.curr.execute("""SELECT un.unit_name, un.unit_code, a.year, a.semester, e.marks, e.exam_type FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name WHERE admission_no=%s AND a.year=%s""", (admission_no, year,))
@@ -61,7 +61,7 @@ class ExamsModel(Database):
 
     def fetch_all_exams_for_specific_semester(self, admission_no, year, semester):
         """A student can fetch all his examinations for the specified semester."""
-        self.curr.execute("""SELECT un.unit_code, a.year, a.semester, e.marks, e.exam_type FROM exams AS e
+        self.curr.execute("""SELECT un.unit_name, un.unit_code, a.year, a.semester, e.marks, e.exam_type FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name WHERE admission_no=%s AND a.year=%s AND a.semester=%s""", (admission_no, year, semester))

@@ -56,6 +56,36 @@ class SubjectsModel(Database):
         self.curr.close()
         return response
 
+    def get_subjects_for_specific_user_by_year(self, admission_no, year):
+        """Fetch all subjects for a single user for a specific year."""
+        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
+                          us.lastname, us.surname, a.year, a.semester
+                          FROM subjects AS s
+                          INNER JOIN units AS un ON s.unit = un.unit_name
+                          INNER JOIN users AS us ON s.student = us.admission_no
+                          INNER JOIN academic_year AS a ON s.year = a.year_id
+                          WHERE admission_no=%s AND a.year=%s
+                          """, (admission_no, year,))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def get_subjects_for_specific_user_by_semester(self, admission_no, year, semester):
+        """Fetch all subjects for a single user for a specific semester."""
+        self.curr.execute("""SELECT un.unit_name, un.unit_code, us.admission_no, us.firstname,
+                          us.lastname, us.surname, a.year, a.semester
+                          FROM subjects AS s
+                          INNER JOIN units AS un ON s.unit = un.unit_name
+                          INNER JOIN users AS us ON s.student = us.admission_no
+                          INNER JOIN academic_year AS a ON s.year = a.year_id
+                          WHERE admission_no=%s AND a.year=%s AND a.semester=%s 
+                          """, (admission_no, year, semester,))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def edit_subject_by_id(self, subject_id, unit_name):
         """Update subject by id."""
         self.curr.execute(

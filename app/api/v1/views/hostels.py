@@ -2,9 +2,8 @@ from app.api.v1 import portal_v1
 from flask_jwt_extended import jwt_required
 from utils.authorization import hostel_manager
 from utils.utils import check_hostels_keys, raise_error
-from flask import request, make_response, jsonify
+from flask import request
 from app.api.v1.models.hostels import HostelsModel
-import json
 from utils.serializer import Serializer
 
 
@@ -42,8 +41,10 @@ def get_hostel_by_id(hostel_id):
     """Have a user able to view hostel by id."""
     response = HostelsModel().get_hostel_by_id(hostel_id)
     if response:
-        return Serializer.serialize(response, 200, "Hostel retrived successfully")
+        return Serializer.serialize(response, 200,
+                                    "Hostel retrived successfully")
     return raise_error(404, 'Hostel not found')
+
 
 @portal_v1.route('/hostels/<string:hostel_name>', methods=['GET'])
 @jwt_required
@@ -51,7 +52,8 @@ def get_hostel_by_name(hostel_name):
     """Have a user able to view hostel by name."""
     response = HostelsModel().get_hostel_by_name(hostel_name)
     if response:
-        return Serializer.serialize(response, 200, "Hostel retrived successfully")
+        return Serializer.serialize(response, 200,
+                                    "Hostel retrived successfully")
     return raise_error(404, 'Hostel not found')
 
 
@@ -60,7 +62,9 @@ def get_hostel_by_name(hostel_name):
 def get_hostels_by_location(hostel_location):
     """Have a user able to view all hostels by location."""
     response = HostelsModel().view_hostel_by_location(hostel_location)
-    return Serializer.serialize(response, 200, "Hostel(s) retrived successfully")
+    return Serializer.serialize(response, 200,
+                                "Hostel(s) retrived successfully")
+
 
 @portal_v1.route('/hostels/<int:hostel_id>', methods=['PUT'])
 @jwt_required
@@ -75,9 +79,14 @@ def update_hostel_by_id(hostel_id):
     rooms = details['rooms']
     gender = details['gender']
     hostel_location = details['hostel_location']
-    response = HostelsModel().edit_hostel(hostel_name, rooms, gender, hostel_location, hostel_id)
+    response = HostelsModel().edit_hostel(hostel_name,
+                                          rooms,
+                                          gender,
+                                          hostel_location,
+                                          hostel_id)
     if response:
-        return Serializer.serialize(response, 200, 'Hostel updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Hostel updated successfully')
     return raise_error(404, "Hostel not found")
 
 
@@ -89,5 +98,6 @@ def delete_hostel(hostel_id):
     response = HostelsModel().get_hostel_by_id(hostel_id)
     if response:
         HostelsModel().delete(hostel_id)
-        return Serializer.serialize(response, 200, "Hostel deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Hostel deleted successfully")
     return raise_error(404, "Hostel not found")

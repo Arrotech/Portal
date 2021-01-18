@@ -37,7 +37,6 @@ class TestApplyCourse(BaseTest):
         response = self.client.post(
             '/api/v1/apply_course', data=json.dumps(apply_course), content_type='application/json',
             headers=self.get_token())
-        print(response)
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Course applied successfully')

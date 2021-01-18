@@ -12,6 +12,8 @@ class Config:
 
     DEBUG = False
     TESTING = False
+    DEBUG_TB_INTERCEPT_REDIRECTS = os.environ.get(
+        'DEBUG_TB_INTERCEPT_REDIRECTS')
 
     SESSION_COOKIE_SECURE = True
 
@@ -49,13 +51,19 @@ class Config:
 class ProductionConfig(Config):
     """Production configurations."""
 
+    DEBUG = False
+
 
 class DevelopmentConfig(Config):
     """Allow debug to restart after changes."""
 
+    DEVELOPMENT = True
     DEBUG = True
+    DEBUG_TB_INTERCEPT_REDIRECTS = True
+
     SESSION_COOKIE_SECURE = False
 
+    SECRET_KEY = os.environ.get('DEV_SECRET_KEY')
     RABBITMQ_URL = 'amqps://localhost//'
     REDISTOGO_URL = 'redis://localhost:6379'
 
@@ -63,15 +71,22 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Testing the application."""
 
+    DEBUG_TB_INTERCEPT_REDIRECTS = True
+    DEBUG = True
     TESTING = True
     SESSION_COOKIE_SECURE = False
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
 
+    SECRET_KEY = os.environ.get('DEV_SECRET_KEY')
     DB_NAME = os.environ.get('TEST_DB_NAME')
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
 
 
 class StagingConfig(Config):
     """Configurations for Staging."""
+
+    DEVELOPMENT = True
+    DEBUG = True
 
 
 class ReleaseConfig(Config):

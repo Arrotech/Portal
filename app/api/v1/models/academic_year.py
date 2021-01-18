@@ -1,9 +1,5 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
-from utils.serializer import Serializer
 
 
 class AcademicYearModel(Database):
@@ -42,12 +38,14 @@ class AcademicYearModel(Database):
     def edit_academic_year(self, year_id, year, semester):
         """Update specific academic year by id."""
         self.curr.execute(
-            """UPDATE academic_year SET year='{}', semester='{}' WHERE year_id={} RETURNING year, semester""".format(year_id, year, semester))
+            """UPDATE academic_year SET year='{}',
+             semester='{}' WHERE year_id={}
+             RETURNING year, semester""".format(year_id, year, semester))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def delete(self, year_id):
         """Delete academic year by id."""
         self.curr.execute(

@@ -1,4 +1,3 @@
-import json
 from flask import request
 from flask_jwt_extended import jwt_required
 from utils.serializer import Serializer
@@ -19,7 +18,8 @@ def add_department():
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     department_name = details['department_name']
     if DepartmentsModel().get_department_name(department_name):
-        return raise_error(400, "{} department already exists".format(department_name))
+        return raise_error(400,
+                           "{} department already exists".format(department_name))
     response = DepartmentsModel(department_name).save()
     return Serializer.serialize(response, 201, "Department added successfully")
 
@@ -29,7 +29,8 @@ def add_department():
 def get_all_departments():
     """Get all departments."""
     response = DepartmentsModel().get_all_departments()
-    return Serializer.serialize(response, 200, 'Departments successfully retrieved')
+    return Serializer.serialize(response,
+                                200, 'Departments successfully retrieved')
 
 
 @portal_v1.route('/departments/<int:department_id>', methods=['GET'])
@@ -38,7 +39,8 @@ def get_department_by_id(department_id):
     """Get all departments."""
     response = DepartmentsModel().get_department_by_id(department_id)
     if response:
-        return Serializer.serialize(response, 200, 'Department successfully retrieved')
+        return Serializer.serialize(response, 200,
+                                    'Department successfully retrieved')
     return raise_error(404, "Department not found")
 
 
@@ -53,10 +55,14 @@ def update_department(department_id):
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     department_name = details['department_name']
     if DepartmentsModel().get_department_name(department_name):
-        return raise_error(400, "{} department already exists".format(department_name))
-    response = DepartmentsModel().edit_department(department_name, department_id)
+        return raise_error(
+            400,
+            "{} department already exists".format(department_name))
+    response = DepartmentsModel().edit_department(department_name,
+                                                  department_id)
     if response:
-        return Serializer.serialize(response, 200, 'Department updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Department updated successfully')
     return raise_error(404, "Department not found")
 
 
@@ -68,5 +74,6 @@ def delete_department(department_id):
     response = DepartmentsModel().get_department_by_id(department_id)
     if response:
         DepartmentsModel().delete(department_id)
-        return Serializer.serialize(response, 200, "Department deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Department deleted successfully")
     return raise_error(404, 'Department not found')

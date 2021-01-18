@@ -1,12 +1,14 @@
 import os
 from celery import Celery
-from app.__init__ import exam_app
+from config import app_config
+
+config_name = os.environ.get('FLASK_ENV')
 
 
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker=os.environ.get('RABBITMQ_URL')
+        broker=app_config[config_name].RABBITMQ_URL
     )
     celery.conf.update(app.config)
 

@@ -1,9 +1,8 @@
 import os
-import json
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from app.config import app_config
+from config import app_config
 from utils.serializer import Serializer
 
 config_name = os.getenv("FLASK_ENV")

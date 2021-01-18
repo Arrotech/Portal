@@ -1,5 +1,3 @@
-"""Import flask module."""
-import os
 from os import path
 from dotenv import load_dotenv
 from flask_cors import CORS
@@ -8,45 +6,46 @@ from flask_mail import Mail
 from flask import Flask
 from celery import Celery
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_debugtoolbar import DebugToolbarExtension
 
-from app.api.v1.models.database import Database
-from app.config import app_config
+from config import app_config
 
+
+toolbar = DebugToolbarExtension()
 db = SQLAlchemy()
-migrate = Migrate()
+jwtmanager = JWTManager()
+cors = CORS()
+mail = Mail()
+
+# from app.api.v2.models import models  # noqa
 
 
-def exam_app(config_name):
+def exam_app(config_name=None):
     """Create the app."""
     app = Flask(__name__, template_folder='../../../templates')
 
-    if config_name == 'testing':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'development':
+    if config_name == 'development':
         app.config.from_object(app_config[config_name])
     elif config_name == 'production':
         app.config.from_object(app_config[config_name])
-    elif config_name == 'staging':
+    elif config_name == 'testing':
         app.config.from_object(app_config[config_name])
-    elif config_name == 'release':
-        app.config.from_object(app_config[config_name])
-
-    app.config.from_pyfile('config.py')
 
     db.init_app(app)
-    migrate.init_app(app, db)
-    CORS(app)
-    JWTManager(app)
+    toolbar.init_app(app)
+    jwtmanager.init_app(app)
+    cors.init_app(app)
+    mail.init_app(app)
+
     Celery(app)
-    Mail(app)
 
-    Database().create_table()
-
-    from utils.utils import bad_request, page_not_found, method_not_allowed, internal_server_error
+    from utils.utils import bad_request, page_not_found, method_not_allowed,\
+        internal_server_error
     from app.api.v1 import portal_v1
+    from app.api.v2 import portal_v2
 
     app.register_blueprint(portal_v1, url_prefix='/api/v1/')
+    app.register_blueprint(portal_v2, url_prefix='/api/v2/')
     app.register_error_handler(400, bad_request)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(405, method_not_allowed)

@@ -1,9 +1,5 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
-from utils.serializer import Serializer
 
 
 class ApplyCoursesModel(Database):

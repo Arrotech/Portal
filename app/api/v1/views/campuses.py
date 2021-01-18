@@ -1,5 +1,3 @@
-import json
-
 from flask import request
 from flask_jwt_extended import jwt_required
 
@@ -32,7 +30,8 @@ def add_campus():
 def get_all_campuses():
     """Fetch all campuses."""
     response = CampusModel().get_all_campuses()
-    return Serializer.serialize(response, 200, "Campuses retrieved successfully")
+    return Serializer.serialize(response, 200,
+                                "Campuses retrieved successfully")
 
 
 @portal_v1.route('/campuses/<int:campus_id>', methods=['GET'])
@@ -41,7 +40,8 @@ def get_campus_by_id(campus_id):
     """Fetch campus by id."""
     response = CampusModel().get_campus_by_id(campus_id)
     if response:
-        return Serializer.serialize(response, 200, "Campus retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Campus retrieved successfully")
     return raise_error(404, "Campus not found")
 
 
@@ -58,9 +58,12 @@ def update_campus(campus_id):
     campus_location = details['campus_location']
     if not campus_restrictions(campus_name):
         return raise_error(400, "Campus should either be main or town.")
-    response = CampusModel().edit_campus(campus_name, campus_location, campus_id)
+    response = CampusModel().edit_campus(campus_name,
+                                         campus_location,
+                                         campus_id)
     if response:
-        return Serializer.serialize(response, 200, 'Campus updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Campus updated successfully')
     return raise_error(404, "Campus not found")
 
 
@@ -72,5 +75,6 @@ def delete_campus(campus_id):
     response = CampusModel().get_campus_by_id(campus_id)
     if response:
         CampusModel().delete(campus_id)
-        return Serializer.serialize(response, 200, "Campus deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Campus deleted successfully")
     return raise_error(404, 'Campus not found')

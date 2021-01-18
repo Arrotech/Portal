@@ -34,7 +34,7 @@ class TestHostelManagerAccount(BaseTest):
             headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(
-            result['message'], 'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!')
+            result['message'], 'Invalid password')
         assert response.status_code == 400
 
     def test_email_exists(self):

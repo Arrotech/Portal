@@ -1,5 +1,3 @@
-import json
-
 from flask import request
 from flask_jwt_extended import jwt_required
 
@@ -21,7 +19,8 @@ def add_institution():
     details = request.get_json()
     institution_name = details['institution_name']
     response = InstitutionsModel(institution_name).save()
-    return Serializer.serialize(response, 201, "Institution added successfully")
+    return Serializer.serialize(response, 201,
+                                "Institution added successfully")
 
 
 @portal_v1.route('/institutions', methods=['GET'])
@@ -29,7 +28,8 @@ def add_institution():
 def get_all_institutions():
     """Fetch all institutions."""
     response = InstitutionsModel().get_all_institutions()
-    return Serializer.serialize(response, 200, "Institutions retrieved successfully")
+    return Serializer.serialize(response, 200,
+                                "Institutions retrieved successfully")
 
 
 @portal_v1.route('/institutions/<int:institution_id>', methods=['GET'])
@@ -38,7 +38,8 @@ def get_institution_by_id(institution_id):
     """Fetch institution by id."""
     response = InstitutionsModel().get_institution_by_id(institution_id)
     if response:
-        return Serializer.serialize(response, 200, "Institution retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Institution retrieved successfully")
     return raise_error(404, "Institution not found")
 
 
@@ -52,9 +53,11 @@ def update_institution(institution_id):
     if errors:
         return raise_error(400, "Invalid {} key".format(', '.join(errors)))
     institution_name = details['institution_name']
-    response = InstitutionsModel().edit_institution(institution_name, institution_id)
+    response = InstitutionsModel().edit_institution(institution_name,
+                                                    institution_id)
     if response:
-        return Serializer.serialize(response, 200, 'Institution updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Institution updated successfully')
     return raise_error(404, "Institution not found")
 
 
@@ -66,5 +69,6 @@ def delete_institution(institution_id):
     response = InstitutionsModel().get_institution_by_id(institution_id)
     if response:
         InstitutionsModel().delete(institution_id)
-        return Serializer.serialize(response, 200, "Institution deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Institution deleted successfully")
     return raise_error(404, 'Institution not found')

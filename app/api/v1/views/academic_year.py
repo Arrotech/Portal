@@ -1,5 +1,3 @@
-import json
-
 from flask import request
 from flask_jwt_extended import jwt_required
 
@@ -39,7 +37,8 @@ def get_year_by_id(year_id):
     """Get specific academic year by id."""
     response = AcademicYearModel().get_academic_year_by_id(year_id)
     if response:
-        return Serializer.serialize(response, 200, "Year retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Year retrieved successfully")
     return raise_error(404, "Year not found")
 
 

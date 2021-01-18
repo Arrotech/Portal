@@ -29,9 +29,13 @@ def add_exam():
             if UnitsModel().get_unit_by_name(unit_name):
                 response = ExamsModel(year_id, admission_no,
                                       unit_name, marks, exam_type).save()
-                return Serializer.serialize(response, 201, "Marks added successfully")
+                return Serializer.serialize(response,
+                                            201,
+                                            "Marks added successfully")
             return raise_error(404, "Unit {} not found".format(unit_name))
-        return raise_error(400, "User does not exist or your are trying to enter marks twice")
+        return raise_error(
+            400,
+            "User does not exist or your are trying to enter marks twice")
     return raise_error(404, "Year not found")
 
 
@@ -51,19 +55,27 @@ def get_exam_by_id(exam_id):
     response = ExamsModel().fetch_exam_by_id(exam_id)
     return Serializer.serialize(response, 200, "Exam successfull retrieved")
 
-@portal_v1.route('/exams/year/<string:admission_no>/<string:year>', methods=['GET'])
+
+@portal_v1.route('/exams/year/<string:admission_no>/<string:year>',
+                 methods=['GET'])
 @jwt_required
 def get_exams_for_specific_year(admission_no, year):
     """Fetch all exams."""
-    response = ExamsModel().fetch_all_exams_for_specific_year(admission_no, year)
+    response = ExamsModel().fetch_all_exams_for_specific_year(admission_no,
+                                                              year)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
-@portal_v1.route('/exams/year/<string:admission_no>/<string:year>/<string:semester>', methods=['GET'])
+
+@portal_v1.route(
+    '/exams/year/<string:admission_no>/<string:year>/<string:semester>',
+    methods=['GET'])
 @jwt_required
 def get_exams_for_specific_semester(admission_no, year, semester):
     """Fetch all exams fro specific semester."""
-    response = ExamsModel().fetch_all_exams_for_specific_semester(admission_no, year, semester)
+    response = ExamsModel().fetch_all_exams_for_specific_semester(
+        admission_no, year, semester)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
 
 @portal_v1.route('/exams/total/<string:admission_no>/<string:unit>', methods=['GET'])
 @jwt_required
@@ -71,6 +83,7 @@ def get_total_for_specific_unit(admission_no, unit):
     """Fetch all exams fro specific semester."""
     response = ExamsModel().fetch_total_for_specific_unit(admission_no, unit)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
 
 @portal_v1.route('/exams/<int:exam_id>', methods=['PUT'])
 @jwt_required
@@ -86,7 +99,8 @@ def update_exam_by_id(exam_id):
     unit_name = details['unit_name']
     marks = details['marks']
     exam_type = details['exam_type']
-    response = ExamsModel().update(year_id, admission_no, unit_name, marks, exam_type, exam_id)
+    response = ExamsModel().update(year_id, admission_no,
+                                   unit_name, marks, exam_type, exam_id)
     if response:
         return Serializer.serialize(response, 200, 'Exam updated successfully')
     return raise_error(404, "Exam not found")
