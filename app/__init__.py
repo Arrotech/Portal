@@ -25,7 +25,10 @@ def exam_app(config_name=None):
     app = Flask(__name__, instance_relative_config=True,
                 template_folder='../../../templates')
 
-    app.config.from_object(app_config[config_name])
+    if config_name is not None:
+        app.config.from_object(app_config[config_name])
+    else:
+        app.config.from_object(app_config[config_name])
 
     db.init_app(app)
     toolbar.init_app(app)
