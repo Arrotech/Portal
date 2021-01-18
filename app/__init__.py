@@ -1,3 +1,4 @@
+import os
 from os import path
 from dotenv import load_dotenv
 from flask_cors import CORS
@@ -25,10 +26,8 @@ def exam_app(config_name=None):
     app = Flask(__name__, instance_relative_config=True,
                 template_folder='../../../templates')
 
-    if config_name is not None:
-        app.config.from_object(app_config[config_name])
-    else:
-        app.config.from_object(app_config[config_name])
+    app.config.from_object(app_config[config_name])
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
     db.init_app(app)
     toolbar.init_app(app)

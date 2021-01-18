@@ -63,7 +63,6 @@ class DevelopmentConfig(Config):
 
     SESSION_COOKIE_SECURE = False
 
-    SECRET_KEY = os.environ.get('DEV_SECRET_KEY')
     RABBITMQ_URL = os.environ.get('LOCAL_RABBITMQ_URL')
     REDISTOGO_URL = os.environ.get('redis://localhost:6379')
 
@@ -77,7 +76,6 @@ class TestingConfig(Config):
     SESSION_COOKIE_SECURE = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
 
-    SECRET_KEY = os.environ.get('DEV_SECRET_KEY')
     DB_NAME = os.environ.get('TEST_DB_NAME')
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
 
