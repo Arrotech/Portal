@@ -1,14 +1,18 @@
 import os
 from celery import Celery
-from config import app_config
+from instance.config import app_config
 
-config_name = os.environ.get('FLASK_ENV')
+config_name = os.environ.get("FLASK_ENV")
+if config_name is not None:
+    BROKER_URL = app_config[config_name].RABBITMQ_URL
+else:
+    BROKER_URL = os.environ.get('RABBITMQ_URL')
 
 
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker=app_config[config_name].RABBITMQ_URL
+        broker=BROKER_URL
     )
     celery.conf.update(app.config)
 

@@ -8,7 +8,7 @@ from celery import Celery
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 
-from config import app_config
+from instance.config import app_config
 
 
 toolbar = DebugToolbarExtension()
@@ -22,14 +22,10 @@ mail = Mail()
 
 def exam_app(config_name=None):
     """Create the app."""
-    app = Flask(__name__, template_folder='../../../templates')
+    app = Flask(__name__, instance_relative_config=True,
+                template_folder='../../../templates')
 
-    if config_name == 'development':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'production':
-        app.config.from_object(app_config[config_name])
-    elif config_name == 'testing':
-        app.config.from_object(app_config[config_name])
+    app.config.from_object(app_config[config_name])
 
     db.init_app(app)
     toolbar.init_app(app)

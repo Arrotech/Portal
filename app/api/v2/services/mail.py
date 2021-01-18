@@ -3,7 +3,7 @@ from threading import Thread
 from flask_mail import Message, Mail
 from app.__init__ import exam_app
 from arrotechtools import raise_error
-from utils.celery import make_celery
+from app.celery import make_celery
 
 config_name = os.getenv('FLASK_ENV')
 app = exam_app(config_name)
