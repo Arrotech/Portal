@@ -1,9 +1,5 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
-from utils.serializer import Serializer
 
 
 class AccommodationModel(Database):
@@ -29,7 +25,10 @@ class AccommodationModel(Database):
 
     def get_booked_hostels(self):
         """Fetch all booked hostels."""
-        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no, h.hostel_name FROM accommodation AS a INNER JOIN users AS u ON a.student=u.admission_no INNER JOIN hostels AS h ON a.hostel=h.hostel_name"
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
+                h.hostel_name FROM accommodation AS a \
+                INNER JOIN users AS u ON a.student=u.admission_no\
+                INNER JOIN hostels AS h ON a.hostel=h.hostel_name"
         response = Database().fetch(query)
         return response
 
@@ -41,7 +40,11 @@ class AccommodationModel(Database):
 
     def get_booked_hostel_by_admission(self, admission_no):
         """Fetch booked hostel by admission."""
-        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no, h.hostel_name FROM accommodation AS a INNER JOIN users AS u ON a.student=u.admission_no INNER JOIN hostels AS h ON a.hostel=h.hostel_name WHERE admission_no=%s"
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
+                h.hostel_name FROM accommodation AS a\
+                INNER JOIN users AS u ON a.student=u.admission_no\
+                INNER JOIN hostels AS h ON a.hostel=h.hostel_name\
+                WHERE admission_no=%s"
         response = Database().fetch_one(query, admission_no)
         return response
 
@@ -54,7 +57,8 @@ class AccommodationModel(Database):
     def update(self, accommodation_id, hostel_name):
         """Update specific hostel by id."""
         self.curr.execute(
-            """UPDATE accommodation SET hostel='{}' WHERE accommodation_id={} RETURNING hostel""".format(accommodation_id, hostel_name))
+            """UPDATE accommodation SET hostel='{}' WHERE accommodation_id={}\
+            RETURNING hostel""".format(accommodation_id, hostel_name))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -63,6 +67,7 @@ class AccommodationModel(Database):
     def delete(self, accommodation_id):
         """Delete hostel by id."""
         self.curr.execute(
-            """DELETE FROM accommodation WHERE accommodation_id={}""".format(accommodation_id))
+            """DELETE FROM accommodation \
+            WHERE accommodation_id={}""".format(accommodation_id))
         self.conn.commit()
         self.curr.close()

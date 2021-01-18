@@ -5,14 +5,20 @@ import os
 
 from app import exam_app
 from app.api.v1.models.database import Database
-from utils.v1.dummy.accountant_accounts import default_accountant_login, default_accountant_account
-from utils.v1.dummy.admin_accounts import default_admin_account, default_admin_login
-from utils.v1.dummy.students_accounts import default_student_account, default_student_login
-from utils.v1.dummy.registrar import default_registrar_account, default_registrar_login
-from utils.v1.dummy.college_head import default_college_head_account, default_college_head_login
-from utils.v1.dummy.department_head import default_department_head_account, default_department_head_login
-from utils.v1.dummy.librarian import default_librarian_account, default_librarian_login
-from utils.v1.dummy.hostel_manager import default_hostel_manager_account, default_hostel_manager_login
+from utils.v1.dummy.accountant_accounts import default_accountant_login,\
+    default_accountant_account
+from utils.v1.dummy.admin_accounts import default_admin_account,\
+    default_admin_login
+from utils.v1.dummy.students_accounts import default_student_account,\
+    default_student_login
+from utils.v1.dummy.college_head import default_college_head_account,\
+    default_college_head_login
+from utils.v1.dummy.department_head import default_department_head_account,\
+    default_department_head_login
+from utils.v1.dummy.librarian import default_librarian_account,\
+    default_librarian_login
+from utils.v1.dummy.hostel_manager import default_hostel_manager_account,\
+    default_hostel_manager_login
 
 
 class BaseTest(unittest.TestCase):
@@ -20,7 +26,8 @@ class BaseTest(unittest.TestCase):
 
     def setUp(self):
         """Set up the app for testing."""
-        self.app = exam_app("testing")
+        config_name = "testing"
+        self.app = exam_app(config_name)
         self.app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()

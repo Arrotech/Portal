@@ -1,8 +1,5 @@
-import json
-
 from flask import request
 from flask_jwt_extended import jwt_required
-from flask_restful import Resource
 
 from app.api.v1.models.subject_model import SubjectsModel
 from app.api.v1.models.users_model import UsersModel
@@ -28,8 +25,13 @@ def register_subjects():
     if UsersModel().get_user_by_admission(admission_no):
         if UnitsModel().get_unit_by_name(unit_name):
             if AcademicYearModel().get_academic_year_by_id(year_id):
-                response = SubjectsModel(admission_no, unit_name, year_id).save()
-                return Serializer.serialize(response, 201, "You have successfully registered {}".format(unit_name))
+                response = SubjectsModel(admission_no,
+                                         unit_name,
+                                         year_id).save()
+                return Serializer.serialize(
+                    response,
+                    201,
+                    "You have successfully registered {}".format(unit_name))
             return raise_error(404, "Year not found")
         return raise_error(404, "Unit {} not found".format(unit_name))
     return raise_error(404, "User not found")
@@ -41,7 +43,8 @@ def register_subjects():
 def get_subjects():
     """Fetch all subjects."""
     response = SubjectsModel().get_subjects()
-    return Serializer.serialize(response, 200, "Subjects successfull retrieved")
+    return Serializer.serialize(response, 200,
+                                "Subjects successfull retrieved")
 
 
 @portal_v1.route('/subjects/<int:subject_id>', methods=['GET'])
@@ -51,7 +54,8 @@ def get_subject_by_id(subject_id):
     """Fetch subject by id."""
     response = SubjectsModel().get_subject_by_id(subject_id)
     if response:
-        return Serializer.serialize(response, 200, "Subject successfull retrieved")
+        return Serializer.serialize(response, 200,
+                                    "Subject successfull retrieved")
     return raise_error(404, "Subject not found")
 
 
@@ -59,8 +63,35 @@ def get_subject_by_id(subject_id):
 @jwt_required
 def get_subjects_for_specific_user_by_admission(admission_no):
     """Fetch all subjects for a specific user by admission."""
-    response = SubjectsModel().get_subjects_for_specific_user_by_admission(admission_no)
-    return Serializer.serialize(response, 200, "Subjects successfull retrieved")
+    response = SubjectsModel().\
+        get_subjects_for_specific_user_by_admission(admission_no)
+    return Serializer.serialize(response, 200,
+                                "Subjects successfull retrieved")
+
+
+@portal_v1.route('/subjects/<string:admission_no>/<string:year>',
+                 methods=['GET'])
+@jwt_required
+def get_subjects_for_specific_user_by_year(admission_no, year):
+    """Fetch all subjects for a specific user for specific year."""
+    response = SubjectsModel().\
+        get_subjects_for_specific_user_by_year(
+        admission_no,
+        year)
+    return Serializer.serialize(response, 200,
+                                "Subjects successfull retrieved")
+
+
+@portal_v1.route(
+    '/subjects/<string:admission_no>/<string:year>/<string:semester>',
+    methods=['GET'])
+@jwt_required
+def get_subjects_for_specific_user_by_semester(admission_no, year, semester):
+    """Fetch all subjects for a specific user for specific semester."""
+    response = SubjectsModel().get_subjects_for_specific_user_by_semester(
+        admission_no, year, semester)
+    return Serializer.serialize(response, 200,
+                                "Subjects successfull retrieved")
 
 
 @portal_v1.route('/subjects/<int:subject_id>', methods=['PUT'])
@@ -71,7 +102,8 @@ def update_subject_by_id(subject_id):
     unit_name = details['unit_name']
     response = SubjectsModel().edit_subject_by_id(unit_name, subject_id)
     if response:
-        return Serializer.serialize(response, 200, 'Subject updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Subject updated successfully')
     return raise_error(404, "Subject not found")
 
 
@@ -83,5 +115,6 @@ def delete_subject(subject_id):
     response = SubjectsModel().get_subject_by_id(subject_id)
     if response:
         SubjectsModel().delete(subject_id)
-        return Serializer.serialize(response, 200, "Subject deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Subject deleted successfully")
     return raise_error(404, "Subject not found")

@@ -1,5 +1,3 @@
-import json
-
 from flask import request
 from flask_jwt_extended import jwt_required
 
@@ -9,7 +7,7 @@ from utils.utils import check_notification_keys, raise_error
 from utils.serializer import Serializer
 from utils.authorization import admin_required
 from app.api.v1 import portal_v1
-from app.api.v1.services.mails.mail_services import send_email
+from app.api.v1.services.mail import send_email
 
 
 @portal_v1.route('/notifications', methods=['POST'])
@@ -28,11 +26,13 @@ def send_notification():
     for user in users:
         email = user['email']
         send_email.delay(subject,
-                sender='arrotechdesign@gmail.com',
-                recipients=[email],
-                text_body=description,
-                html_body=description)
-    return Serializer.serialize(response, 201, "Notification sent successfully")
+                         sender='arrotechdesign@gmail.com',
+                         recipients=[email],
+                         text_body=description,
+                         html_body=description)
+    return Serializer.serialize(response, 201,
+                                "Notification sent successfully")
+
 
 @portal_v1.route('/notifications', methods=['GET'])
 @jwt_required
@@ -40,7 +40,9 @@ def send_notification():
 def get_all_notifications():
     """Fetch institution by id."""
     response = NotificationsModel().get_all_notifications()
-    return Serializer.serialize(response, 200, "Notifications retrieved successfully")
+    return Serializer.serialize(response, 200,
+                                "Notifications retrieved successfully")
+
 
 @portal_v1.route('/notifications/<int:notification_id>', methods=['GET'])
 @jwt_required
@@ -49,8 +51,10 @@ def get_notification_by_id(notification_id):
     """Fetch institution by id."""
     response = NotificationsModel().get_notitications_by_id(notification_id)
     if response:
-        return Serializer.serialize(response, 200, "Notification retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Notification retrieved successfully")
     return raise_error(404, "Notification not found")
+
 
 @portal_v1.route('/notifications/<int:notification_id>', methods=['PUT'])
 @jwt_required
@@ -63,9 +67,12 @@ def update_notification_by_id(notification_id):
     details = request.get_json()
     subject = details['subject']
     description = details['description']
-    response = NotificationsModel().update(notification_id, subject, description)
+    response = NotificationsModel().update(notification_id,
+                                           subject,
+                                           description)
     if response:
-        return Serializer.serialize(response, 200, 'Notification updated successfully')
+        return Serializer.serialize(response, 200,
+                                    'Notification updated successfully')
     return raise_error(404, "Notification not found")
 
 
@@ -77,5 +84,6 @@ def delete_notification(notification_id):
     response = NotificationsModel().get_notitications_by_id(notification_id)
     if response:
         NotificationsModel().delete(notification_id)
-        return Serializer.serialize(response, 200, "Notification deleted successfully")
+        return Serializer.serialize(response, 200,
+                                    "Notification deleted successfully")
     return raise_error(404, 'Notification not found')

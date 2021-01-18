@@ -37,7 +37,7 @@ class TestUsersAccount(BaseTest):
             headers=self.get_registrar_token())
         result = json.loads(response.data.decode())
         self.assertEqual(
-            result['message'], 'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!')
+            result['message'], 'Invalid password')
         assert response.status_code == 400
 
     def test_email_exists(self):
@@ -64,7 +64,6 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'Admission number Already Exists!')
         assert response.status_code == 400
 
-
     def test_the_format_of_create_account_json_keys_for_the_accountant(self):
         """Test that an admin cannot create a new account with invalid json keys."""
         response = self.client.post(
@@ -85,7 +84,6 @@ class TestUsersAccount(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Successfully logged in!')
         assert response.status_code == 200
-
 
     def test_accountant_invalid_email_login(self):
         """Test that an admin cannot login with an invalid email."""

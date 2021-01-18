@@ -1,7 +1,4 @@
-import json
-
 from flask import request
-from flask_restful import Resource
 
 from app.api.v1.models.fees_models import FeesModels
 from app.api.v1.models.users_model import UsersModel
@@ -62,7 +59,8 @@ def get_fees_for_one_student_by_admission(admission_no):
     """The students can view their fees by admission."""
     response = FeesModels().get_fee_by_user_admission(admission_no)
     if response:
-        return Serializer.serialize(response, 200, "Fees retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Fees retrieved successfully")
     return raise_error(404, "Student not found")
 
 
@@ -84,6 +82,7 @@ def update_fee_entry(fee_id):
     if response:
         return Serializer.serialize(response, 200, "Fees updated successfully")
     return raise_error(404, "Fees not found")
+
 
 @portal_v1.route('/fees/<int:fee_id>', methods=['DELETE'])
 @jwt_required

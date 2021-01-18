@@ -1,5 +1,4 @@
 import re
-import os
 
 from flask import jsonify, make_response, url_for, current_app
 from itsdangerous import URLSafeTimedSerializer
@@ -10,7 +9,7 @@ def check_register_keys(request):
                 'admission_no', 'gender', 'email', 'password']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -19,7 +18,7 @@ def check_update_user_keys(request):
     res_keys = ['firstname', 'lastname', 'surname']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -28,43 +27,46 @@ def check_campuses_keys(request):
     res_keys = ['campus_name', 'campus_location']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
+
 
 def check_institutions_keys(request):
     res_keys = ['institution_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
 
 def check_apply_course_keys(request):
-    res_keys = ['admission_no', 'institution_name', 'campus_id', 'certificate_id', 'department_name', 'course_name']
+    res_keys = ['admission_no', 'institution_name', 'campus_id',
+                'certificate_id', 'department_name', 'course_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
-    
+
 def check_notification_keys(request):
     res_keys = ['subject', 'description']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
 
 def check_checklist_keys(request):
     res_keys = ['admission_no', 'department_name',
-                'course_name', 'certificate_id', 'year_id', 'campus_id', 'hostel_name']
+                'course_name', 'certificate_id', 'year_id', 'campus_id',
+                'hostel_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -73,7 +75,7 @@ def check_department_keys(request):
     res_keys = ['department_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -82,7 +84,7 @@ def check_courses_keys(request):
     res_keys = ['course_name', 'department_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -91,7 +93,7 @@ def check_promote_student_keys(request):
     res_keys = ['current_year']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -100,7 +102,7 @@ def check_units_keys(request):
     res_keys = ['unit_name', 'unit_code']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -109,15 +111,16 @@ def check_unit_name_key(request):
     res_keys = ['unit_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
+
 
 def check_certificates_keys(request):
     res_keys = ['certificate_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -126,7 +129,7 @@ def check_unit_code_key(request):
     res_keys = ['unit_code']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -137,7 +140,7 @@ def check_staff_keys(request):
                 'username', 'email', 'password']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -147,7 +150,7 @@ def check_accountant_keys(request):
     res_keys = ['firstname', 'lastname', 'username', 'email', 'password']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -157,7 +160,7 @@ def check_login_keys(request):
     res_keys = ['email', 'password']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -166,7 +169,7 @@ def check_exams_keys(request):
     res_keys = ['year_id', 'admission_no', 'unit_name', 'marks', 'exam_type']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -176,7 +179,7 @@ def check_fees_keys(request):
                 'transaction_no', 'description', 'amount']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -186,7 +189,7 @@ def check_edit_fees_keys(request):
                 'transaction_no', 'description', 'amount']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -196,7 +199,7 @@ def check_library_keys(request):
                 'book_no']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -206,7 +209,7 @@ def check_edit_library_keys(request):
                 'book_no']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -215,7 +218,7 @@ def check_hostels_keys(request):
     res_keys = ['hostel_name', 'rooms', 'gender', 'hostel_location']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -224,7 +227,7 @@ def check_accommdation_keys(request):
     res_keys = ['admission_no', 'hostel_name']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -233,15 +236,16 @@ def check_subjects_keys(request):
     res_keys = ['admission_no', 'unit_name', 'year_id']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
+
 
 def check_year_keys(request):
     res_keys = ['year', 'semester']
     errors = []
     for key in res_keys:
-        if not key in request.json:
+        if key not in request.json:
             errors.append(key)
     return errors
 
@@ -263,7 +267,9 @@ def is_valid_email(variable):
 
 def is_valid_password(variable):
     """Check if password is a valid password."""
-    if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", variable):
+    if re.match(
+            r"^ (?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ @$!%*?& ])\
+            [A-Za-z\d @$!%*?& ]{8, }$", variable):
         return True
     return False
 
@@ -276,6 +282,7 @@ def form_restrictions(data):
         return False
     return True
 
+
 def campus_restrictions(data):
     """Restrict user inputs in a list."""
 
@@ -284,10 +291,12 @@ def campus_restrictions(data):
         return False
     return True
 
+
 def certificate_restrictions(data):
     """Restrict user inputs in a list."""
 
-    certificate_name = ["K.C.P.E", "K.C.S.E", "Certificate", "Diploma", "Degree", "Masters", "P.H.D"]
+    certificate_name = ["K.C.P.E", "K.C.S.E", "Certificate",
+                        "Diploma", "Degree", "Masters", "P.H.D"]
     if data not in certificate_name:
         return False
     return True

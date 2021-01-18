@@ -1,4 +1,3 @@
-import json
 from functools import wraps
 
 from flask_jwt_extended import get_jwt_identity
@@ -102,6 +101,7 @@ def accountant_required(func):
 
     return wrapper_function
 
+
 def hostel_manager(func):
     """ Hostel Manager Rights."""
 
@@ -120,6 +120,7 @@ def hostel_manager(func):
             return {"message": e}
 
     return wrapper_function
+
 
 def librarian_required(func):
     """ Library Manager Rights."""
