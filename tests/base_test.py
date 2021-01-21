@@ -2,6 +2,7 @@
 import unittest
 import json
 import os
+from app import mail
 
 from app import exam_app
 from app.api.v1.models.database import Database
@@ -33,6 +34,10 @@ class BaseTest(unittest.TestCase):
         self.app_context = self.app.app_context()
         self.app_context.push()
         Database().create_table()
+
+        # Disable sending emails during unit testing
+        mail.init_app(self.app)
+        self.assertEqual(self.app.debug, True)
 
     def tearDown(self):
         """Tear down the data models after the tests run."""

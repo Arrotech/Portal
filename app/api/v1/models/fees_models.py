@@ -30,10 +30,14 @@ class FeesModels(Database):
     def save(self):
         """Create a new fee entry."""
         self.curr.execute(
-            ''' INSERT INTO fees(student, transaction_type, transaction_no, description, amount, created_on)
+            ''' INSERT INTO fees(student, transaction_type, transaction_no,\
+            description, amount, created_on)
             VALUES('{}','{}','{}','{}','{}','{}')
-            RETURNING student, transaction_type, transaction_no, description, amount, created_on'''
-            .format(self.admission_no, self.transaction_type, self.transaction_no, self.description, self.amount, self.created_on))
+            RETURNING student, transaction_type, transaction_no, description,\
+            amount, created_on'''
+            .format(self.admission_no, self.transaction_type,
+                    self.transaction_no, self.description, self.amount,
+                    self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -42,8 +46,9 @@ class FeesModels(Database):
     def get_all_fees(self):
         """Fetch all fees"""
         query = "SELECT f.transaction_type, f.transaction_no, f.description,\
-                          f.amount, f.created_on, u.admission_no, u.firstname, u.lastname, u.surname FROM fees AS f\
-                          INNER JOIN users AS u ON f.student = u.admission_no"
+                f.amount, f.created_on, u.admission_no, u.firstname,\
+                u.lastname, u.surname FROM fees AS f\
+                INNER JOIN users AS u ON f.student = u.admission_no"
         response = Database().fetch(query)
         return response
 
@@ -57,7 +62,8 @@ class FeesModels(Database):
         """Get fees for a specific student by his/her admission."""
         self.curr.execute(
             """SELECT f.transaction_type, f.transaction_no, f.description,
-            f.amount, f.created_on, u.admission_no, u.firstname, u.lastname, u.surname FROM fees AS f
+            f.amount, f.created_on, u.admission_no, u.firstname, u.lastname,\
+            u.surname FROM fees AS f
             INNER JOIN users AS u ON f.student = u.admission_no
             WHERE admission_no=%s
             """, (admission_no,))
@@ -66,12 +72,17 @@ class FeesModels(Database):
         self.curr.close()
         return response
 
-    def edit_fees(self, fee_id, transaction_type, transaction_no, description, amount):
+    def edit_fees(self, fee_id, transaction_type, transaction_no, description,
+                  amount):
         """Edit fees."""
-        self.curr.execute("""UPDATE fees
-			SET transaction_type='{}', transaction_no='{}', description='{}', amount='{}'
-			WHERE fee_id={} RETURNING transaction_type, transaction_no, description, amount"""
-                          .format(fee_id, transaction_type, transaction_no, description, amount))
+        self.curr.execute("""UPDATE fees\
+                            SET transaction_type='{}', transaction_no='{}',\
+                            description='{}', amount='{}'\
+                            WHERE fee_id={}
+                            RETURNING transaction_type, transaction_no,\
+                            description, amount"""
+                          .format(fee_id, transaction_type, transaction_no,
+                                  description, amount))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -83,4 +94,3 @@ class FeesModels(Database):
             """DELETE FROM fees WHERE fee_id={}""".format(fee_id))
         self.conn.commit()
         self.curr.close()
-

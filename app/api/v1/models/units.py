@@ -1,5 +1,3 @@
-import json
-
 from datetime import datetime
 from app.api.v1.models.database import Database
 
@@ -60,7 +58,9 @@ class UnitsModel(Database):
     def edit(self, unit_id, unit_name, unit_code):
         """Update a unit by id."""
         self.curr.execute(
-            """UPDATE units SET unit_name='{}', unit_code='{}' WHERE unit_id={} RETURNING unit_name, unit_code""".format(unit_id, unit_name, unit_code))
+            """UPDATE units SET unit_name='{}', unit_code='{}' WHERE unit_id={}
+            RETURNING unit_name, unit_code"""
+            .format(unit_id, unit_name, unit_code))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -69,7 +69,8 @@ class UnitsModel(Database):
     def edit_name(self, unit_id, unit_name):
         """Update a unit name by id."""
         self.curr.execute(
-            """UPDATE units SET unit_name='{}' WHERE unit_id={} RETURNING unit_name""".format(unit_id, unit_name))
+            """UPDATE units SET unit_name='{}' WHERE unit_id={}
+            RETURNING unit_name""".format(unit_id, unit_name))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -78,7 +79,8 @@ class UnitsModel(Database):
     def edit_code(self, unit_id, unit_code):
         """Update a unit code by id."""
         self.curr.execute(
-            """UPDATE units SET unit_code='{}' WHERE unit_id={} RETURNING unit_code""".format(unit_id, unit_code))
+            """UPDATE units SET unit_code='{}' WHERE unit_id={}
+            RETURNING unit_code""".format(unit_id, unit_code))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

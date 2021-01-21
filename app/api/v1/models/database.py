@@ -21,7 +21,8 @@ class Database:
         self.db_user = os.getenv('DB_USER')
         self.db_password = os.getenv('DB_PASSWORD')
         self.conn = psycopg2.connect(
-            database=self.db_name, host=self.db_host, user=self.db_user, password=self.db_password)
+            database=self.db_name, host=self.db_host, user=self.db_user,
+            password=self.db_password)
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def __enter__(self):
@@ -118,7 +119,8 @@ class Database:
                 department varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (course_id),
-                FOREIGN KEY (department) REFERENCES departments(department_name) ON DELETE CASCADE
+                FOREIGN KEY (department) REFERENCES\
+                    departments(department_name) ON DELETE CASCADE
             )
             """,
             """
@@ -132,12 +134,18 @@ class Database:
                 course varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (application_id),
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
-                FOREIGN KEY (institution) REFERENCES institutions(institution_name) ON DELETE CASCADE,
-                FOREIGN KEY (campus) REFERENCES campuses(campus_id) ON DELETE CASCADE,
-                FOREIGN KEY (certificate) REFERENCES certificates(certificate_id) ON DELETE CASCADE,
-                FOREIGN KEY (department) REFERENCES departments(department_name) ON DELETE CASCADE,
-                FOREIGN KEY (course) REFERENCES courses(course_name) ON DELETE CASCADE
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (institution) REFERENCES\
+                    institutions(institution_name) ON DELETE CASCADE,
+                FOREIGN KEY (campus) REFERENCES campuses(campus_id)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (certificate) REFERENCES\
+                    certificates(certificate_id) ON DELETE CASCADE,
+                FOREIGN KEY (department) REFERENCES\
+                    departments(department_name) ON DELETE CASCADE,
+                FOREIGN KEY (course) REFERENCES courses(course_name)\
+                    ON DELETE CASCADE
             )
             """,
             """
@@ -148,9 +156,12 @@ class Database:
                 year integer NOT NULL,                                                                                                                                
                 created_on TIMESTAMP,
                 PRIMARY KEY (subject_id),
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
-                FOREIGN KEY (unit) REFERENCES units(unit_name) ON DELETE CASCADE,
-                FOREIGN KEY (year) REFERENCES academic_year(year_id) ON DELETE CASCADE
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (unit) REFERENCES units(unit_name)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (year) REFERENCES academic_year(year_id)\
+                    ON DELETE CASCADE
             )
             """,
             """
@@ -158,14 +169,17 @@ class Database:
                 exam_id serial,
                 year integer NOT NULL,
                 student varchar NOT NULL,
-                unit varchar NOT NULL,   
+                unit varchar NOT NULL,
                 marks integer NOT NULL,
                 exam_type varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (exam_id),
-                FOREIGN KEY (year) REFERENCES academic_year(year_id) ON DELETE CASCADE,
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
-                FOREIGN KEY (unit) REFERENCES units(unit_name) ON DELETE CASCADE
+                FOREIGN KEY (year) REFERENCES academic_year(year_id)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (unit) REFERENCES units(unit_name)\
+                    ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS fees(
@@ -177,7 +191,8 @@ class Database:
                 amount varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (fee_id),
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE
             )
             """,
             """
@@ -189,7 +204,8 @@ class Database:
                 book_no varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (book_id),
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS accommodation(
@@ -198,8 +214,10 @@ class Database:
                 hostel varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (accommodation_id),
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
-                FOREIGN KEY (hostel) REFERENCES hostels(hostel_name) ON DELETE CASCADE
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (hostel) REFERENCES hostels(hostel_name)\
+                    ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS checklist(
@@ -213,13 +231,20 @@ class Database:
                 hostel varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (checklist_id),
-                FOREIGN KEY (student) REFERENCES users(admission_no) ON DELETE CASCADE,
-                FOREIGN KEY (department) REFERENCES departments(department_name) ON DELETE CASCADE,
-                FOREIGN KEY (course) REFERENCES courses(course_name) ON DELETE CASCADE,
-                FOREIGN KEY (certificate) REFERENCES certificates(certificate_id) ON DELETE CASCADE,
-                FOREIGN KEY (year) REFERENCES academic_year(year_id) ON DELETE CASCADE,
-                FOREIGN KEY (campus) REFERENCES campuses(campus_id) ON DELETE CASCADE,
-                FOREIGN KEY (hostel) REFERENCES hostels(hostel_name) ON DELETE CASCADE   
+                FOREIGN KEY (student) REFERENCES users(admission_no)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (department) REFERENCES\
+                    departments(department_name) ON DELETE CASCADE,
+                FOREIGN KEY (course) REFERENCES courses(course_name)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (certificate) REFERENCES\
+                    certificates(certificate_id) ON DELETE CASCADE,
+                FOREIGN KEY (year) REFERENCES academic_year(year_id)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (campus) REFERENCES campuses(campus_id)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (hostel) REFERENCES hostels(hostel_name)\
+                    ON DELETE CASCADE
             )""",
             """
             CREATE TABLE IF NOT EXISTS notifications(
@@ -262,8 +287,10 @@ class Database:
         checklist = "DROP TABLE IF EXISTS checklist CASCADE"
         notifications = "DROP TABLE IF EXISTS notifications CASCADE"
 
-        queries = [exams, users, institutions, campuses, certificates, departments,
-                   courses, academic_year, apply_course, subjects, fees, library, units, hostels, accommodation, checklist, notifications]
+        queries = [exams, users, institutions, campuses, certificates,
+                   departments, courses, academic_year, apply_course, subjects,
+                   fees, library, units, hostels, accommodation, checklist,
+                   notifications]
         try:
             with Database() as conn:
                 curr = conn.cursor(cursor_factory=RealDictCursor)
@@ -277,8 +304,15 @@ class Database:
         """Create default admin."""
         try:
             self.curr.execute(
-                ''' INSERT INTO users(firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed,  created_on)\
-                    VALUES('Peter','Gitundu','Kigo','8511024','male','registrar@admin.com','pbkdf2:sha256:150000$Xlqfm8GS$d8544269c47e1d8f3835d887d3cb4ba4b939f34584f75db043a374a286558cc9','registrar','false','Mon, 14 Dec 2020 00:48:26 GMT') RETURNING firstname, lastname, surname, admission_no, gender, email, password, role, is_confirmed, created_on''')
+                ''' INSERT INTO users(firstname, lastname, surname,\
+                    admission_no, gender, email, password, role, is_confirmed,\
+                    created_on) VALUES('Peter','Gitundu','Kigo','8511024',\
+                    'male','registrar@admin.com',\
+                    'pbkdf2:sha256:150000$Xlqfm8GS$d8544269c47e1d8f3835d887d3cb\
+                    4ba4b939f34584f75db043a374a286558cc9','registrar','false',\
+                    'Mon, 14 Dec 2020 00:48:26 GMT') RETURNING firstname,\
+                    lastname, surname, admission_no, gender, email, password,\
+                    role, is_confirmed, created_on''')
             response = self.curr.fetchone()
             self.conn.commit()
             self.curr.close()

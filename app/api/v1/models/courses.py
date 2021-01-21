@@ -1,6 +1,3 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
 
@@ -8,7 +5,8 @@ from datetime import datetime
 class CoursesModel(Database):
     """Initiallization."""
 
-    def __init__(self, course_name=None, department_name=None, created_on=None):
+    def __init__(self, course_name=None, department_name=None,
+                 created_on=None):
         super().__init__()
         self.course_name = course_name
         self.department_name = department_name
@@ -34,20 +32,26 @@ class CoursesModel(Database):
 
     def get_courses(self):
         """Get all courses."""
-        query = "SELECT d.department_name, c.course_name FROM courses AS c INNER JOIN departments AS d ON c.department = d.department_name"
+        query = "SELECT d.department_name, c.course_name FROM courses AS c\
+                INNER JOIN departments AS d ON\
+                c.department = d.department_name"
         response = Database().fetch(query)
         return response
 
     def get_course_by_id(self, course_id):
         """Get course by id."""
-        query = "SELECT d.department_name, c.course_name FROM courses AS c INNER JOIN departments AS d ON c.department = d.department_name WHERE course_id=%s"
+        query = "SELECT d.department_name, c.course_name FROM courses AS c\
+                INNER JOIN departments AS d ON\
+                c.department = d.department_name WHERE course_id=%s"
         response = Database().fetch_one(query, course_id)
         return response
 
     def edit_course(self, course_id, course_name, department_name):
         """Update course."""
         self.curr.execute(
-            """UPDATE courses SET course_name='{}', department='{}' WHERE course_id={} RETURNING course_name, department""".format(course_id, course_name, department_name))
+            """UPDATE courses SET course_name='{}', department='{}'\
+            WHERE course_id={} RETURNING course_name, department"""
+            .format(course_id, course_name, department_name))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

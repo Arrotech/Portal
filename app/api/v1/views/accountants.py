@@ -87,3 +87,25 @@ def accountant_login():
             }), 200)
         return raise_error(401, "Invalid Email or Password")
     return raise_error(401, "Invalid Email or Password")
+
+
+@portal_v1.route('/accountant/fresh-login', methods=['POST'])
+def fresh_accountant_login():
+    """Already existing user can sign in to their account."""
+    details = request.get_json()
+    email = details['email']
+    password = details['password']
+    user = UsersModel().get_user_by_email(email)
+    if user:
+        password_db = user['password']
+        if check_password_hash(password_db, password):
+            access_token = create_access_token(
+                identity=email, fresh=True)
+            return make_response(jsonify({
+                "status": "200",
+                "message": "Successfully logged in!",
+                "access_token": access_token,
+                "user": user
+            }), 200)
+        return raise_error(401, "Invalid Email or Password")
+    return raise_error(401, "Invalid Email or Password")

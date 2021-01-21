@@ -17,7 +17,8 @@ def registrar_required(func):
             user_role = cur_user[0]['role']
             if user_role != 'registrar':
                 return {
-                    'message': 'This activity can only be completed by the registrar'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return Serializer.serialize("{}".format(e), 500, "Error")
@@ -36,7 +37,8 @@ def college_head(func):
             user_role = cur_user[0]['role']
             if user_role != 'college':
                 return {
-                    'message': 'This activity can only be completed by the college head'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return Serializer.serialize("{}".format(e), 500, "Error")
@@ -55,7 +57,8 @@ def department_head(func):
             user_role = cur_user[0]['role']
             if user_role != 'department':
                 return {
-                    'message': 'This activity can only be completed by the dean of department'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return Serializer.serialize("{}".format(e), 500, "Error")
@@ -74,7 +77,8 @@ def admin_required(func):
             user_role = cur_user[0]['role']
             if user_role != 'admin':
                 return {
-                    'message': 'This activity can only be completed by the admin'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return Serializer.serialize("{}".format(e), 500, "Error")
@@ -94,7 +98,8 @@ def accountant_required(func):
             user_role = cur_user[0]['role']
             if user_role != 'accountant':
                 return {
-                    'message': 'This activity can only be completed by the accountant'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return {"message": e}
@@ -114,7 +119,8 @@ def hostel_manager(func):
             user_role = cur_user[0]['role']
             if user_role != 'hostel':
                 return {
-                    'message': 'This activity can only be completed by the hostel manager'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return {"message": e}
@@ -134,7 +140,8 @@ def librarian_required(func):
             user_role = cur_user[0]['role']
             if user_role != 'librarian':
                 return {
-                    'message': 'This activity can only be completed by the library manager'}, 403  # Forbidden
+                    'message': 'You are forbidden from accessing this route'
+                }, 403  # Forbidden
             return func(*args, **kwargs)
         except Exception as e:
             return {"message": e}

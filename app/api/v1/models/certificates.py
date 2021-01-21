@@ -1,6 +1,3 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
 
@@ -36,19 +33,22 @@ class CertificatesModel(Database):
         query = "SELECT * FROM certificates WHERE certificate_id=%s"
         response = Database().fetch_one(query, certificate_id)
         return response
-    
+
     def edit_certificate(self, certificate_id, certificate_name):
         """Update certificate."""
         self.curr.execute(
-            """UPDATE certificates SET certificate_name='{}' WHERE certificate_id={} RETURNING certificate_name""".format(certificate_id, certificate_name))
+            """UPDATE certificates SET certificate_name='{}'\
+            WHERE certificate_id={} RETURNING certificate_name"""
+            .format(certificate_id, certificate_name))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def delete(self, certificate_id):
         """Delete certificate by id."""
         self.curr.execute(
-            """DELETE FROM certificates WHERE certificate_id={}""".format(certificate_id))
+            """DELETE FROM certificates WHERE certificate_id={}"""
+            .format(certificate_id))
         self.conn.commit()
         self.curr.close()

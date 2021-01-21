@@ -1,6 +1,3 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
 
@@ -46,7 +43,9 @@ class InstitutionsModel(Database):
     def edit_institution(self, institution_id, institution_name):
         """Update institution."""
         self.curr.execute(
-            """UPDATE institutions SET institution_name='{}' WHERE institution_id={} RETURNING institution_name""".format(institution_id, institution_name))
+            """UPDATE institutions SET institution_name='{}'
+            WHERE institution_id={} RETURNING institution_name"""
+            .format(institution_id, institution_name))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -55,6 +54,7 @@ class InstitutionsModel(Database):
     def delete(self, institution_id):
         """Delete institution by id."""
         self.curr.execute(
-            """DELETE FROM institutions WHERE institution_id={}""".format(institution_id))
+            """DELETE FROM institutions WHERE institution_id={}"""
+            .format(institution_id))
         self.conn.commit()
         self.curr.close()

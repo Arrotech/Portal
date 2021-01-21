@@ -17,6 +17,8 @@ class Config:
 
     SESSION_COOKIE_SECURE = True
 
+    JSONIFY_PRETTYPRINT_REGULAR = False
+
     # database
     DB_NAME = os.environ.get('DB_NAME')
     DB_USER = os.environ.get('DB_USER')
@@ -47,6 +49,27 @@ class Config:
     # administrator list
     ADMINS = os.environ.get('ADMINS')
 
+    # chaos monkey
+    CHAOS_MIDDLEWARE_APPLICATION_NAME = os.environ.get(
+        'CHAOS_MIDDLEWARE_APPLICATION_NAME')
+    CHAOS_MIDDLEWARE_APPLICATION_ENV = os.environ.get(
+        'CHAOS_MIDDLEWARE_APPLICATION_ENV')
+    CHAOS_MIDDLEWARE_PROOFDOCK_API_TOKEN = os.environ.get(
+        'CHAOS_MIDDLEWARE_PROOFDOCK_API_TOKEN')
+    JSONIFY_PRETTYPRINT_REGULAR = os.environ.get(
+        'JSONIFY_PRETTYPRINT_REGULAR')
+
+    # google
+    GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
+    GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
+    ACCESS_TOKEN_URI = os.environ.get("ACCESS_TOKEN_URI", default=False)
+    AUTHORIZATION_URL = os.environ.get("AUTHORIZATION_URL", default=False)
+    AUTHORIZATION_SCOPE = os.environ.get("AUTHORIZATION_SCOPE", default=False)
+    AUTH_REDIRECT_URI = os.environ.get("AUTH_REDIRECT_URI", default=False)
+    BASE_URI = os.environ.get("BASE_URI", default=False)
+    AUTH_TOKEN_KEY = os.environ.get("AUTH_TOKEN_KEY", default=False)
+    AUTH_STATE_KEY = os.environ.get("AUTH_STATE_KEY", default=False)
+
 
 class ProductionConfig(Config):
     """Production configurations."""
@@ -62,9 +85,6 @@ class DevelopmentConfig(Config):
     DEBUG_TB_INTERCEPT_REDIRECTS = True
 
     SESSION_COOKIE_SECURE = False
-
-    RABBITMQ_URL = os.environ.get('LOCAL_RABBITMQ_URL')
-    REDISTOGO_URL = os.environ.get('redis://localhost:6379')
 
 
 class TestingConfig(Config):

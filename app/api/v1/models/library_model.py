@@ -1,9 +1,5 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
-from utils.serializer import Serializer
 
 
 class LibraryModel(Database):
@@ -29,7 +25,8 @@ class LibraryModel(Database):
             ''' INSERT INTO library(student, title, author, book_no, created_on)
             VALUES('{}','{}','{}','{}','{}')
             RETURNING student, title, author, book_no, created_on'''
-            .format(self.admission_no, self.title, self.author, self.book_no, self.created_on))
+            .format(self.admission_no, self.title, self.author, self.book_no,
+                    self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -63,8 +60,9 @@ class LibraryModel(Database):
     def edit_books(self, book_id, title, author, book_no):
         """Edit books."""
         self.curr.execute("""UPDATE library
-			SET title='{}', author='{}', book_no='{}'
-			WHERE book_id={} RETURNING title, author, book_no"""
+                            SET title='{}', author='{}', book_no='{}'
+                            WHERE book_id={}
+                            RETURNING title, author, book_no"""
                           .format(book_id, title, author, book_no))
         response = self.curr.fetchone()
         self.conn.commit()

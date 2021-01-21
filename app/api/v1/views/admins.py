@@ -1,5 +1,7 @@
+import os
 from datetime import timedelta
-from flask import make_response, jsonify, request, render_template
+from flask import make_response, jsonify, request, render_template, url_for,\
+    session, redirect
 from flask_jwt_extended import create_access_token, jwt_required,\
     create_refresh_token
 from app.api.v1.models.users_model import UsersModel
@@ -11,6 +13,23 @@ from utils.serializer import Serializer
 from app.api.v1.services.mail import send_email
 from arrotechtools import is_valid_email, is_valid_password, raise_error
 from utils.authorization import admin_required, registrar_required
+from flask_oauth import OAuth
+
+oauth = OAuth()
+google = oauth.remote_app(
+    'google',
+    base_url='https://www.google.com/accounts/',
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    request_token_url=None,
+    request_token_params={
+        'scope': 'https://www.googleapis.com/auth/userinfo.email',
+        'response_type': 'code'},
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_method='POST',
+    access_token_params={
+        'grant_type': 'authorization_code'},
+    consumer_key=os.environ.get('GOOGLE_CLIENT_ID'),
+    consumer_secret=os.environ.get('GOOGLE_CLIENT_SECRET'))
 
 
 @portal_v1.route('/staff/register', methods=['POST', 'GET'])
@@ -88,6 +107,47 @@ def staff_login():
             }), 200)
         return raise_error(401, "Invalid Email or Password")
     return raise_error(401, "Invalid Email or Password")
+
+
+@portal_v1.route('/staff/fresh-login', methods=['POST'])
+def fresh_staff_login():
+    """Already existing user can sign in to their account."""
+    details = request.get_json()
+    email = details['email']
+    password = details['password']
+    user = UsersModel().get_user_by_email(email)
+    if user:
+        password_db = user['password']
+        if check_password_hash(password_db, password):
+            access_token = create_access_token(
+                identity=email, fresh=True)
+            return make_response(jsonify({
+                "status": "200",
+                "message": "Successfully logged in!",
+                "access_token": access_token,
+                "user": user
+            }), 200)
+        return raise_error(401, "Invalid Email or Password")
+    return raise_error(401, "Invalid Email or Password")
+
+
+@portal_v1.route('/google/login')
+def google_login():
+    callback = url_for('portal_v1.authorized', _external=True)
+    return google.authorize(callback=callback)
+
+
+@portal_v1.route("/callback")
+@google.authorized_handler
+def authorized(resp):
+    access_token = resp['access_token']
+    session['access_token'] = access_token, ''
+    return redirect(url_for('/'))
+
+
+@google.tokengetter
+def get_access_token():
+    return session.get('access_token')
 
 
 @portal_v1.route('/staff/users', methods=['GET'])

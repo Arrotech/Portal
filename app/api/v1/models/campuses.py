@@ -1,6 +1,3 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
 
@@ -8,7 +5,8 @@ from datetime import datetime
 class CampusModel(Database):
     """Initiallization."""
 
-    def __init__(self, campus_name=None, campus_location=None, created_on=None):
+    def __init__(self, campus_name=None, campus_location=None,
+                 created_on=None):
         super().__init__()
         self.campus_name = campus_name
         self.campus_location = campus_location
@@ -41,12 +39,14 @@ class CampusModel(Database):
     def edit_campus(self, campus_id, campus_name, campus_location):
         """Update campus."""
         self.curr.execute(
-            """UPDATE campuses SET campus_name='{}', campus_location='{}' WHERE campus_id={} RETURNING campus_name, campus_location""".format(campus_id, campus_name, campus_location))
+            """UPDATE campuses SET campus_name='{}', campus_location='{}'\
+            WHERE campus_id={} RETURNING campus_name, campus_location"""
+            .format(campus_id, campus_name, campus_location))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response
-    
+
     def delete(self, campus_id):
         """Delete campus by id."""
         self.curr.execute(

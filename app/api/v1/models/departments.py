@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 from app.api.v1.models.database import Database
 
@@ -17,7 +16,8 @@ class DepartmentsModel(Database):
         self.curr.execute("""
                           INSERT INTO departments(department_name, created_on)
                           VALUES('{}','{}')
-                          RETURNING department_name, created_on""".format(self.department_name, self.created_on))
+                          RETURNING department_name, created_on"""
+                          .format(self.department_name, self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -44,7 +44,9 @@ class DepartmentsModel(Database):
     def edit_department(self, department_id, department_name):
         """Update department name."""
         self.curr.execute(
-            """UPDATE departments SET department_name='{}' WHERE department_id={} RETURNING department_name""".format(department_id, department_name))
+            """UPDATE departments SET department_name='{}'\
+            WHERE department_id={} RETURNING department_name"""
+            .format(department_id, department_name))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -53,6 +55,7 @@ class DepartmentsModel(Database):
     def delete(self, department_id):
         """Delete department by id."""
         self.curr.execute(
-            """DELETE FROM departments WHERE department_id={}""".format(department_id))
+            """DELETE FROM departments WHERE department_id={}"""
+            .format(department_id))
         self.conn.commit()
         self.curr.close()

@@ -89,7 +89,8 @@ class Campus(db.Model):
     created_on = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
     courses = db.relationship(
-        'ApplyCourse', backref='campus_obj', cascade="all, delete", passive_deletes=True)
+        'ApplyCourse', backref='campus_obj', cascade="all, delete",
+        passive_deletes=True)
 
     def __init__(self, campus_name=None, campus_location=None,
                  created_on=None):
@@ -143,7 +144,8 @@ class Department(db.Model):
     created_on = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
     courses = db.relationship(
-        'Course', backref='department_obj', cascade="all, delete", passive_deletes=True)
+        'Course', backref='department_obj', cascade="all, delete",
+        passive_deletes=True)
 
     def __init__(self, department_name=None, created_on=None):
         super().__init__()
@@ -258,7 +260,8 @@ class Course(db.Model):
     created_on = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
     courses = db.relationship(
-        'ApplyCourse', backref='course_obj', cascade="all, delete", passive_deletes=True)
+        'ApplyCourse', backref='course_obj', cascade="all, delete",
+        passive_deletes=True)
 
     def __init__(self, course_name=None, department_name=None,
                  created_on=None):

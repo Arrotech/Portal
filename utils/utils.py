@@ -353,6 +353,14 @@ def method_not_allowed(e):
     }), 405)
 
 
+def unprocessabe_entity(e):
+    """Capture unprocessable entity."""
+    return make_response(jsonify({
+        "status": "422",
+        "message": "unprocessable entity"
+    }), 500)
+
+
 def internal_server_error(e):
     """Capture internal server error."""
     return make_response(jsonify({

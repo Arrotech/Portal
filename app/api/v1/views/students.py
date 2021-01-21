@@ -1,7 +1,7 @@
-from datetime import timedelta
 from flask import make_response, jsonify, request, render_template, url_for
 from flask_jwt_extended import create_access_token, jwt_required,\
-    get_jwt_identity, create_refresh_token, jwt_refresh_token_required
+    get_jwt_identity, create_refresh_token, jwt_refresh_token_required,\
+    fresh_jwt_required, get_raw_jwt
 from app.api.v1.models.users_model import UsersModel
 from utils.utils import default_decode_token, default_encode_token,\
     generate_url, check_register_keys
@@ -12,7 +12,18 @@ from app.api.v1.services.mail import send_email
 from arrotechtools import is_valid_email, is_valid_password, raise_error
 from utils.authorization import admin_required
 from app.api.v1.forms.forms import PasswordForm
+from app import jwtmanager
 
+
+# A storage engine to save revoked tokens. In production if
+# speed is the primary concern, redis is a good bet. If data
+# persistence is more important for you, postgres is another
+# great option. In this example, we will be using an in memory
+# store, just to show you how this might work. For more
+# complete examples, check out these:
+# https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/redis_blacklist.py
+# https://github.com/vimalloc/flask-jwt-extended/tree/master/examples/database_blacklist
+blacklist = set()
 sr = Serializer
 
 
@@ -67,6 +78,22 @@ def student_signup():
     return sr.serialize(response, 201, "Account created successfully!")
 
 
+# For this example, we are just checking if the tokens jti
+# (unique identifier) is in the blacklist set. This could
+# be made more complex, for example storing all tokens
+# into the blacklist with a revoked status when created,
+# and returning the revoked status in this call. This
+# would allow you to have a list of all created tokens,
+# and to consider tokens that aren't in the blacklist
+# (aka tokens you didn't create) as revoked. These are
+# just two options, and this can be tailored to whatever
+# your application needs.
+@jwtmanager.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    return jti in blacklist
+
+
 @portal_v1.route('/students/login', methods=['POST'])
 def student_login():
     """Already existing user can sign in to their account."""
@@ -77,11 +104,10 @@ def student_login():
     if user:
         password_db = user['password']
         if check_password_hash(password_db, password):
-            expires = timedelta(days=365)
             token = create_access_token(
-                identity=email, expires_delta=expires)
+                identity=email, fresh=True)
             refresh_token = create_refresh_token(
-                identity=email, expires_delta=expires)
+                identity=email)
             return make_response(jsonify({
                 "status": "200",
                 "message": "Successfully logged in!",
@@ -91,6 +117,46 @@ def student_login():
             }), 200)
         return raise_error(401, "Invalid Email or Password")
     return raise_error(401, "Invalid Email or Password")
+
+
+@portal_v1.route('/students/fresh-login', methods=['POST'])
+def fresh_student_login():
+    """Already existing user can sign in to their account."""
+    details = request.get_json()
+    email = details['email']
+    password = details['password']
+    user = UsersModel().get_user_by_email(email)
+    if user:
+        password_db = user['password']
+        if check_password_hash(password_db, password):
+            access_token = create_access_token(
+                identity=email, fresh=True)
+            return make_response(jsonify({
+                "status": "200",
+                "message": "Successfully logged in!",
+                "access_token": access_token,
+                "user": user
+            }), 200)
+        return raise_error(401, "Invalid Email or Password")
+    return raise_error(401, "Invalid Email or Password")
+
+
+# Endpoint for revoking the current users access token
+@portal_v1.route('/logout', methods=['DELETE'])
+@jwt_required
+def logout():
+    jti = get_raw_jwt()['jti']
+    blacklist.add(jti)
+    return jsonify({"msg": "Successfully logged out"}), 200
+
+
+# Endpoint for revoking the current users refresh token
+@portal_v1.route('/refresh/logout', methods=['DELETE'])
+@jwt_refresh_token_required
+def refresh_logout():
+    jti = get_raw_jwt()['jti']
+    blacklist.add(jti)
+    return jsonify({"msg": "Successfully logged out"}), 200
 
 
 @portal_v1.route('/students/confirm/<token>')
@@ -173,8 +239,7 @@ def reset_with_token(token):
 @jwt_refresh_token_required
 def user_refresh_token():
     current_user = get_jwt_identity()
-    expires = timedelta(days=365)
-    access_token = create_access_token(current_user, expires_delta=expires)
+    access_token = create_access_token(current_user, fresh=False)
     ret = {
         'access_token': access_token
     }
@@ -186,6 +251,13 @@ def user_refresh_token():
 def user_protected_route():
     email = get_jwt_identity()
     return jsonify(logged_in_as=email), 200
+
+
+@portal_v1.route('/users/fresh-protected', methods=['GET'])
+@fresh_jwt_required
+def protected_fresh():
+    email = get_jwt_identity()
+    return jsonify(fresh_logged_in_as=email), 200
 
 
 @portal_v1.route('/students/users/<int:user_id>', methods=['GET'])

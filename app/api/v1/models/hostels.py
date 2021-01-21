@@ -8,7 +8,8 @@ from datetime import datetime
 class HostelsModel(Database):
     """Initiallization."""
 
-    def __init__(self, hostel_name=None, rooms=None, gender=None, hostel_location=None, created_on=None):
+    def __init__(self, hostel_name=None, rooms=None, gender=None,
+                 hostel_location=None, created_on=None):
         super().__init__()
         self.hostel_name = hostel_name
         self.rooms = rooms
@@ -19,10 +20,13 @@ class HostelsModel(Database):
     def save(self):
         """Add a new hostel."""
         self.curr.execute(
-            ''' INSERT INTO hostels(hostel_name, rooms, gender, hostel_location, created_on)
-            VALUES('{}','{}','{}','{}','{}')
-            RETURNING hostel_name, rooms, gender, hostel_location, created_on'''
-            .format(self.hostel_name, self.rooms, self.gender, self.hostel_location, self.created_on))
+            ''' INSERT INTO hostels(hostel_name, rooms, gender,\
+                hostel_location, created_on)
+                VALUES('{}','{}','{}','{}','{}')
+                RETURNING hostel_name, rooms, gender, hostel_location,\
+                created_on'''
+            .format(self.hostel_name, self.rooms, self.gender,
+                    self.hostel_location, self.created_on))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -39,7 +43,7 @@ class HostelsModel(Database):
         query = "SELECT * FROM hostels WHERE hostel_id=%s"
         response = Database().fetch_one(query, hostel_id)
         return response
-    
+
     def get_hostel_by_name(self, hostel_name):
         """Fetch hostel by name."""
         query = "SELECT * FROM hostels WHERE hostel_name=%s"
@@ -52,10 +56,14 @@ class HostelsModel(Database):
         response = Database().fetch_one(query, hostel_location)
         return response
 
-    def edit_hostel(self, hostel_id, hostel_name, rooms, gender, hostel_location):
+    def edit_hostel(self, hostel_id, hostel_name, rooms, gender,
+                    hostel_location):
         """Update hostel by id."""
         self.curr.execute(
-            """UPDATE hostels SET hostel_name='{}', rooms='{}', gender='{}', hostel_location='{}' WHERE hostel_id={} RETURNING hostel_name, rooms, gender, hostel_location""".format(hostel_id, hostel_name, rooms, gender, hostel_location))
+            """UPDATE hostels SET hostel_name='{}', rooms='{}', gender='{}',\
+            hostel_location='{}' WHERE hostel_id={} RETURNING hostel_name,\
+            rooms, gender, hostel_location"""
+            .format(hostel_id, hostel_name, rooms, gender, hostel_location))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
