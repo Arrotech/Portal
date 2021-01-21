@@ -7,7 +7,6 @@ from flask import Flask
 from celery import Celery
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
-from authlib.integrations.flask_client import OAuth
 # from pdchaos.middleware.contrib.flask.flask_middleware import FlaskMiddleware
 from instance.config import app_config
 
@@ -18,7 +17,6 @@ jwtmanager = JWTManager()
 cors = CORS()
 mail = Mail()
 # middleware = FlaskMiddleware()
-oauth = OAuth()
 
 
 def exam_app(config_name=None):
@@ -40,7 +38,6 @@ def exam_app(config_name=None):
     mail.init_app(app)
     Celery(app)
     # middleware.init_app(app)
-    oauth.init_app(app)
 
     with app.app_context():
 
