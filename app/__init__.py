@@ -41,24 +41,22 @@ def exam_app(config_name=None):
     Celery(app)
     # middleware.init_app(app)
 
-    with app.app_context():
+    # Include Routes
+    from utils.utils import bad_request, page_not_found,\
+        method_not_allowed, unprocessabe_entity, internal_server_error
+    from app.api.v1 import portal_v1
+    from app.api.v2 import portal_v2
 
-        # Include Routes
-        from utils.utils import bad_request, page_not_found,\
-            method_not_allowed, unprocessabe_entity, internal_server_error
-        from app.api.v1 import portal_v1
-        from app.api.v2 import portal_v2
+    # Register Blueprints and Error Handlers
+    app.register_blueprint(portal_v1, url_prefix='/api/v1/')
+    app.register_blueprint(portal_v2, url_prefix='/api/v2/')
+    app.register_error_handler(400, bad_request)
+    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(405, method_not_allowed)
+    app.register_error_handler(422, unprocessabe_entity)
+    app.register_error_handler(500, internal_server_error)
 
-        # Register Blueprints and Error Handlers
-        app.register_blueprint(portal_v1, url_prefix='/api/v1/')
-        app.register_blueprint(portal_v2, url_prefix='/api/v2/')
-        app.register_error_handler(400, bad_request)
-        app.register_error_handler(404, page_not_found)
-        app.register_error_handler(405, method_not_allowed)
-        app.register_error_handler(422, unprocessabe_entity)
-        app.register_error_handler(500, internal_server_error)
+    basedir = path.abspath(path.dirname(__file__))
+    load_dotenv(path.join(basedir, '.env'))
 
-        basedir = path.abspath(path.dirname(__file__))
-        load_dotenv(path.join(basedir, '.env'))
-
-        return app
+    return app
