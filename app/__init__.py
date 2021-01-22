@@ -1,3 +1,4 @@
+import os
 from os import path
 from dotenv import load_dotenv
 from flask_cors import CORS
@@ -26,6 +27,7 @@ def exam_app(config_name=None):
 
     app.config.from_object(app_config[config_name])
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
     from app.api.v2.models import models  # noqa
     from app.api.v1.models import database  # noqa
