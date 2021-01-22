@@ -8,7 +8,6 @@ from flask import Flask
 from celery import Celery
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
-# from pdchaos.middleware.contrib.flask.flask_middleware import FlaskMiddleware
 from instance.config import app_config
 
 
@@ -17,7 +16,6 @@ db = SQLAlchemy()
 jwtmanager = JWTManager()
 cors = CORS()
 mail = Mail()
-# middleware = FlaskMiddleware()
 
 
 def exam_app(config_name=None):
@@ -26,11 +24,7 @@ def exam_app(config_name=None):
                 template_folder='../../../templates')
 
     app.config.from_object(app_config[config_name])
-    app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-
-    from app.api.v2.models import models  # noqa
-    from app.api.v1.models import database  # noqa
 
     # Initialize Plugins
     db.init_app(app)
@@ -39,7 +33,6 @@ def exam_app(config_name=None):
     cors.init_app(app)
     mail.init_app(app)
     Celery(app)
-    # middleware.init_app(app)
 
     # Include Routes
     from utils.utils import bad_request, page_not_found,\
