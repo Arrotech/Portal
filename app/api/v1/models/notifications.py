@@ -29,6 +29,12 @@ class NotificationsModel(Database):
         response = Database().fetch(query)
         return response
 
+    def get_latest_notifications(self):
+        """Get top 3 notifications notifications."""
+        query = "SELECT * FROM notifications ORDER BY created_on DESC LIMIT 3"
+        response = Database().fetch(query)
+        return response
+
     def get_notitications_by_id(self, notification_id):
         """Get notifications by id."""
         query = "SELECT * FROM notifications WHERE notification_id=%s"

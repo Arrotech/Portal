@@ -44,6 +44,15 @@ def get_all_notifications():
                                 "Notifications retrieved successfully")
 
 
+@portal_v1.route('/notifications/latest', methods=['GET'])
+@jwt_required
+def get_latest_notifications():
+    """Fetch latest notifications."""
+    response = NotificationsModel().get_latest_notifications()
+    return Serializer.serialize(response, 200,
+                                "Notifications retrieved successfully")
+
+
 @portal_v1.route('/notifications/<int:notification_id>', methods=['GET'])
 @jwt_required
 @admin_required
