@@ -401,6 +401,7 @@ class Fee(db.Model):
     transaction_no = db.Column(db.String(), unique=True, nullable=False)
     description = db.Column(db.String(), unique=False, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
+    expected_amount = db.Column(db.Integer, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False,
                            default=datetime.utcnow)
 
@@ -411,6 +412,7 @@ class Fee(db.Model):
             transaction_no=None,
             description=None,
             amount=None,
+            expected_amount=None,
             created_on=None):
         super().__init__()
         self.admission_no = admission_no
@@ -418,6 +420,7 @@ class Fee(db.Model):
         self.transaction_no = transaction_no
         self.description = description
         self.amount = amount
+        self.expected_amount = expected_amount
         self.created_on = datetime.now()
 
     def as_dict(self):

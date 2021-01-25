@@ -23,12 +23,14 @@ def add_fees():
     transaction_no = details['transaction_no']
     description = details['description']
     amount = details['amount']
+    expected_amount = details['expected_amount']
     if UsersModel().get_user_by_admission(admission_no):
         response = FeesModels(admission_no,
                               transaction_type,
                               transaction_no,
                               description,
-                              amount).save()
+                              amount,
+                              expected_amount).save()
         return Serializer.serialize(response, 201, "Entry made successfully")
     return raise_error(404, "Student not found")
 
@@ -49,7 +51,8 @@ def get_fee_by_id(fee_id):
     """Fetch fee by id."""
     response = FeesModels().get_fee_by_id(fee_id)
     if response:
-        return Serializer.serialize(response, 200, "Fee retrieved successfully")
+        return Serializer.serialize(response, 200,
+                                    "Fee retrieved successfully")
     return raise_error(404, "Fee not found")
 
 
@@ -62,6 +65,17 @@ def get_fees_for_one_student_by_admission(admission_no):
         return Serializer.serialize(response, 200,
                                     "Fees retrieved successfully")
     return raise_error(404, "Student not found")
+
+
+@portal_v1.route('/fees/latest/<string:admission_no>', methods=['GET'])
+@jwt_required
+def get_latest_fee(admission_no):
+    """Fetch latest fee by admission number."""
+    response = FeesModels().get_latest_fee_by_admission(admission_no)
+    if response:
+        return Serializer.serialize(response, 200,
+                                    "Fee retrieved successfully")
+    return raise_error(404, "Fee not found")
 
 
 @portal_v1.route('/fees/<int:fee_id>', methods=['PUT'])
@@ -77,8 +91,10 @@ def update_fee_entry(fee_id):
     transaction_no = details['transaction_no']
     description = details['description']
     amount = details['amount']
+    expected_amount = details['expected_amount']
     response = FeesModels().edit_fees(
-        transaction_type, transaction_no, description, amount, fee_id)
+        transaction_type, transaction_no, description, amount, expected_amount,
+        fee_id)
     if response:
         return Serializer.serialize(response, 200, "Fees updated successfully")
     return raise_error(404, "Fees not found")
