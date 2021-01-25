@@ -176,7 +176,7 @@ def check_exams_keys(request):
 
 def check_fees_keys(request):
     res_keys = ['admission_no', 'transaction_type',
-                'transaction_no', 'description', 'amount']
+                'transaction_no', 'description', 'amount', 'expected_amount']
     errors = []
     for key in res_keys:
         if key not in request.json:

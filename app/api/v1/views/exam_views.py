@@ -47,6 +47,16 @@ def get_all_exams_for_a_student_by_admission(admission_no):
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
 
+@portal_v1.route('/exams/aggregate/<string:admission_no>/<string:year>',
+                 methods=['GET'])
+@jwt_required
+def get_aggregated_points(admission_no, year):
+    """Get average marks."""
+    response = ExamsModel().fetch_aggregated_points(admission_no, year)
+    return Serializer.serialize(response, 200,
+                                "Exam Total successfull retrieved")
+
+
 @portal_v1.route('/exams/<int:exam_id>', methods=['GET'])
 @jwt_required
 @admin_required

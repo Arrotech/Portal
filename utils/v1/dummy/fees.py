@@ -5,7 +5,8 @@ add_fees = {
     "transaction_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",
-    "amount": 25640
+    "amount": 25640,
+    "expected_amount": 35500
 }
 
 add_fees_keys = {
@@ -13,19 +14,22 @@ add_fees_keys = {
     "transaction_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",
-    "amount": 25640
+    "amount": 25640,
+    "expected_amount": 35500
 }
 
 edit_fees = {
     "transaction_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",
-    "amount": 25640
+    "amount": 25640,
+    "expected_amount": 35500
 }
 
 edit_fees_keys = {
     "transacti_type": "ADP",
     "transaction_no": "176276",
     "description": "HELB",
-    "amount": 25640
+    "amount": 25640,
+    "expected_amount": 35500
 }

@@ -188,7 +188,8 @@ class Database:
                 transaction_type varchar NOT NULL,
                 transaction_no varchar NOT NULL,
                 description varchar NOT NULL,
-                amount varchar NOT NULL,
+                amount integer NOT NULL,
+                expected_amount integer NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (fee_id),
                 FOREIGN KEY (student) REFERENCES users(admission_no)\

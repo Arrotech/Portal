@@ -1,9 +1,5 @@
-import json
-import psycopg2
-
 from app.api.v1.models.database import Database
 from datetime import datetime
-from utils.serializer import Serializer
 
 
 class ExamsModel(Database):
@@ -76,6 +72,19 @@ class ExamsModel(Database):
                         INNER JOIN units AS un ON e.unit = un.unit_name\
                         WHERE admission_no=%s AND a.year=%s AND\
                             a.semester=%s""", (admission_no, year, semester))
+        response = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def fetch_aggregated_points(self, admission_no, year):
+        """A student can view their aggregated points for a specific year."""
+        self.curr.execute("""SELECT AVG(marks) FROM exams AS e
+                        INNER JOIN academic_year AS a ON e.year = a.year_id
+                        INNER JOIN users AS us ON e.student = us.admission_no
+                        INNER JOIN units AS un ON e.unit = un.unit_name\
+                        WHERE admission_no=%s AND a.year=%s""", (admission_no,
+                                                                 year,))
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
