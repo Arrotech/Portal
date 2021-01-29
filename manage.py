@@ -23,6 +23,13 @@ def destroy_tables_v1():
 
 
 @manager.command
+def destroy_tables_v2():
+    """Drop tables if they exists."""
+    Database().destroy_table()
+    print("Version 1 existing tables destroyed...  OK")
+
+
+@manager.command
 def create_tables_v1():
     """Version 1: Create tables if they do not exists."""
     Database().create_table()

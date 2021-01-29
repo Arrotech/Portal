@@ -19,3 +19,7 @@ book_hostel_not_found = {
     "admission_no": "NJCF1001",
     "hostel_name": "ndovu"
 }
+
+update_accommodation = {
+    "hostel_name": "nyati"
+}

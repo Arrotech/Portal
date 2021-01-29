@@ -35,7 +35,8 @@ def book_hostel():
 def get_all_booked_hostels():
     """Fetch all booked hostels."""
     response = AccommodationModel().get_booked_hostels()
-    return Serializer.serialize(response, 200, "Hostels retrieved successfully")
+    return Serializer.serialize(response, 200,
+                                "Hostels retrieved successfully")
 
 
 @portal_v1.route('/accommodation/<int:accommodation_id>', methods=['GET'])
@@ -78,8 +79,10 @@ def update_hostel_accomodation(accommodation_id):
     hostel_name = details['hostel_name']
     response = AccommodationModel().update(hostel_name, accommodation_id)
     if response:
-        return Serializer.serialize(response, 200,
-                                    'Hostel accommodation updated successfully')
+        return Serializer.serialize(
+            response,
+            200,
+            'Hostel accommodation updated successfully')
     return raise_error(404, "Hostel accommodation not found")
 
 
@@ -90,6 +93,8 @@ def delete_hostel_accomodation(accommodation_id):
     response = AccommodationModel().get_booked_hostel_by_id(accommodation_id)
     if response:
         AccommodationModel().delete(accommodation_id)
-        return Serializer.serialize(response, 200,
-                                    "Hostel accommodation deleted successfully")
+        return Serializer.serialize(
+            response,
+            200,
+            "Hostel accommodation deleted successfully")
     return raise_error(404, 'Hostel accommodation not found')

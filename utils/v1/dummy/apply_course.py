@@ -26,3 +26,11 @@ apply_course_user_not_found = {
     "department_name": "mathematics",
     "course_name": "maths and computer science"
 }
+
+update_course_info = {
+    "institution_name": "Jomokenyatta University of Agriculture and Technology",
+    "campus_id": "1",
+    "certificate_id": "1",
+    "department_name": "mathematics",
+    "course_name": "maths and computer science"
+}

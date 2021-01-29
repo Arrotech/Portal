@@ -1,7 +1,7 @@
 import json
 
 from utils.v1.dummy.apply_course import apply_course, apply_course_keys,\
-    apply_course_user_not_found
+    apply_course_user_not_found, update_course_info
 from utils.v1.dummy.students_accounts import new_student_account
 from utils.v1.dummy.courses import new_course
 from utils.v1.dummy.campuses import new_campus
@@ -83,6 +83,123 @@ class TestApplyCourse(BaseTest):
         self.assertEqual(result['message'],
                          'Invalid admission_no key')
         assert response.status_code == 400
+
+    def test_get_all_applied_courses(self):
+        """Test that a registrar can fetch all applied courses."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.get(
+            '/api/v1/apply_course',
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Applied courses retrieved successfully')
+        assert response.status_code == 200
+
+    def test_get_specific_course_info_by_admission(self):
+        """Test that a student can fetch their course information."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.get(
+            '/api/v1/apply_course/NJCF4001',
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Course retrieved successfully')
+        assert response.status_code == 200
+
+    def test_get_unexisting_course_info_by_admission(self):
+        """Test that a student cannot fetch unexisting course information."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.get(
+            '/api/v1/apply_course/NJCF4012',
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Course not found')
+        assert response.status_code == 404
 
     def test_apply_course_user_not_found(self):
         """Test that a student cannot apply a course if they dont exists."""
@@ -341,4 +458,160 @@ class TestApplyCourse(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'],
                          'Course not found')
+        assert response.status_code == 404
+
+    def test_update_course_info(self):
+        """Test that a student can update their course information."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.put(
+            '/api/v1/apply_course/1', data=json.dumps(update_course_info),
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Applied course updated successfully')
+        assert response.status_code == 200
+
+    def test_update_unexisting_course_info(self):
+        """Test that a student cannot update unexisting course information."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.put(
+            '/api/v1/apply_course/100', data=json.dumps(update_course_info),
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Applied course not found')
+        assert response.status_code == 404
+
+    def test_delete_applied_course(self):
+        """Test that a student can delete existing course application."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.delete(
+            '/api/v1/apply_course/1',
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Applied course deleted successfully')
+        assert response.status_code == 200
+
+    def test_delete_unexisting_applied_course(self):
+        """Test that a student cannot delete unexisting course application."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.delete(
+            '/api/v1/apply_course/100',
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Applied course not found')
         assert response.status_code == 404
