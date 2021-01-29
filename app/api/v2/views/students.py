@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required
 from utils.authorization import admin_required
 from utils.utils import check_register_keys, raise_error, is_valid_email,\
     is_valid_password, default_encode_token, generate_url
-from app.api.v2.models.models import User
+from app.api.v2.models.students import User
 from app.api.v2.services.mail import send_email
 from app.__init__ import db
 

@@ -26,8 +26,6 @@ def exam_app(config_name=None):
     app.config.from_object(app_config[config_name])
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-    from app.api.v2 import models # noqa
-
     # Initialize Plugins
     db.init_app(app)
     toolbar.init_app(app)
