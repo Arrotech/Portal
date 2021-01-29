@@ -30,8 +30,8 @@ class ExamsModel(Database):
 
     def fetch_all_exams_for_specific_student(self, admission_no):
         """A student can fetch all his examinations."""
-        self.curr.execute("""SELECT un.unit_code, a.year, a.semester, e.marks,\
-                            e.exam_type FROM exams AS e
+        self.curr.execute("""SELECT un.unit_code, a.year, a.semester, e.marks\
+                            FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
@@ -51,7 +51,7 @@ class ExamsModel(Database):
     def fetch_all_exams_for_specific_year(self, admission_no, year):
         """A student can fetch all his examinations for the specified year."""
         self.curr.execute("""SELECT un.unit_name, un.unit_code, a.year,\
-                            a.semester, e.marks, e.exam_type FROM exams AS e
+                            a.semester, e.marks FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
@@ -66,7 +66,7 @@ class ExamsModel(Database):
                                               semester):
         """A student can fetch all examinations for the specified semester."""
         self.curr.execute("""SELECT un.unit_name, un.unit_code, a.year,\
-                            a.semester, e.marks, e.exam_type FROM exams AS e
+                            a.semester, e.marks FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
@@ -79,12 +79,13 @@ class ExamsModel(Database):
 
     def fetch_aggregated_points(self, admission_no, year):
         """A student can view their aggregated points for a specific year."""
-        self.curr.execute("""SELECT AVG(marks) FROM exams AS e
+        self.curr.execute("""SELECT a.year, AVG(marks) as aggregate FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
-                        WHERE admission_no=%s AND a.year=%s""", (admission_no,
-                                                                 year,))
+                        WHERE student=%s AND a.year=%s GROUP BY a.year""",
+                          (admission_no,
+                           year,))
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
@@ -106,8 +107,8 @@ class ExamsModel(Database):
         self.curr.execute(
             """UPDATE exams SET year='{}', student='{}', unit='{}', marks='{}',\
             exam_type='{}' WHERE exam_id={} RETURNING year, student, unit,\
-            marks, exam_type""".format(exam_id, year, student, unit, marks,
-                                       exam_type))
+            marks, exam_type"""
+            .format(exam_id, year, student, unit, marks, exam_type))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

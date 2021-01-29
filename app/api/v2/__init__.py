@@ -5,4 +5,4 @@ portal_v2 = Blueprint('portal_v2',
                       template_folder='../../../templates',
                       static_folder='../../../../static')
 
-from app.api.v2.views import users  # noqa
+from app.api.v2.views import students  # noqa
