@@ -45,81 +45,107 @@ class BaseTest(unittest.TestCase):
         Database().destroy_table()
 
     def get_registrar_token(self):
-        self.client.post('/api/v1/registrar/register', data=json.dumps(default_student_account),
+        self.client.post('/api/v1/registrar/register',
+                         data=json.dumps(default_student_account),
                          content_type='application/json')
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_student_login),
+        resp = self.client.post('/api/v1/staff/login',
+                                data=json.dumps(default_student_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_college_head_token(self):
-        self.client.post('/api/v1/college/register', data=json.dumps(default_college_head_account),
-                         content_type='application/json', headers=self.get_registrar_token())
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_college_head_login),
+        self.client.post('/api/v1/college/register',
+                         data=json.dumps(default_college_head_account),
+                         content_type='application/json',
+                         headers=self.get_registrar_token())
+        resp = self.client.post('/api/v1/staff/login',
+                                data=json.dumps(default_college_head_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_department_head_token(self):
-        self.client.post('/api/v1/department/register', data=json.dumps(default_department_head_account),
-                         content_type='application/json', headers=self.get_registrar_token())
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_department_head_login),
+        self.client.post('/api/v1/department/register',
+                         data=json.dumps(default_department_head_account),
+                         content_type='application/json',
+                         headers=self.get_registrar_token())
+        resp = self.client.post('/api/v1/staff/login',
+                                data=json.dumps(default_department_head_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_admin_token(self):
-        self.client.post('/api/v1/staff/register', data=json.dumps(default_admin_account),
-                         content_type='application/json', headers=self.get_registrar_token())
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_admin_login),
+        self.client.post('/api/v1/staff/register',
+                         data=json.dumps(default_admin_account),
+                         content_type='application/json',
+                         headers=self.get_registrar_token())
+        resp = self.client.post('/api/v1/staff/login',
+                                data=json.dumps(default_admin_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_librarian_token(self):
-        self.client.post('/api/v1/library/register', data=json.dumps(default_librarian_account),
-                         content_type='application/json', headers=self.get_registrar_token())
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_librarian_login),
+        self.client.post('/api/v1/library/register',
+                         data=json.dumps(default_librarian_account),
+                         content_type='application/json',
+                         headers=self.get_registrar_token())
+        resp = self.client.post('/api/v1/staff/login',
+                                data=json.dumps(default_librarian_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_accountant_token(self):
-        self.client.post('/api/v1/accountant/register', data=json.dumps(default_accountant_account),
-                         content_type='application/json', headers=self.get_registrar_token())
-        resp = self.client.post('/api/v1/accountant/login', data=json.dumps(default_accountant_login),
+        self.client.post('/api/v1/accountant/register',
+                         data=json.dumps(default_accountant_account),
+                         content_type='application/json',
+                         headers=self.get_registrar_token())
+        resp = self.client.post('/api/v1/accountant/login',
+                                data=json.dumps(default_accountant_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_hostel_manager_token(self):
-        self.client.post('/api/v1/hostel/register', data=json.dumps(default_hostel_manager_account),
-                         content_type='application/json', headers=self.get_registrar_token())
-        resp = self.client.post('/api/v1/staff/login', data=json.dumps(default_hostel_manager_login),
+        self.client.post('/api/v1/hostel/register',
+                         data=json.dumps(default_hostel_manager_account),
+                         content_type='application/json',
+                         headers=self.get_registrar_token())
+        resp = self.client.post('/api/v1/staff/login',
+                                data=json.dumps(default_hostel_manager_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_token(self):
-        self.client.post('/api/v1/students/register', data=json.dumps(default_student_account),
-                         content_type='application/json', headers=self.get_admin_token())
-        resp = self.client.post('/api/v1/students/login', data=json.dumps(default_student_login),
+        self.client.post('/api/v1/students/register',
+                         data=json.dumps(default_student_account),
+                         content_type='application/json',
+                         headers=self.get_admin_token())
+        resp = self.client.post('/api/v1/students/login',
+                                data=json.dumps(default_student_login),
                                 content_type='application/json')
         access_token = json.loads(resp.get_data(as_text=True))['token']
         auth_header = {'Authorization': 'Bearer {}'.format(access_token)}
         return auth_header
 
     def get_refresh_token(self):
-        self.client.post('/api/v1/students/register', data=json.dumps(default_student_account),
-                         content_type='application/json', headers=self.get_admin_token())
-        resp = self.client.post('/api/v1/students/login', data=json.dumps(default_student_login),
+        self.client.post('/api/v1/students/register',
+                         data=json.dumps(default_student_account),
+                         content_type='application/json',
+                         headers=self.get_admin_token())
+        resp = self.client.post('/api/v1/students/login',
+                                data=json.dumps(default_student_login),
                                 content_type='application/json')
         refresh_token = json.loads(resp.get_data(as_text=True))[
             'refresh_token']

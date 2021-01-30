@@ -1,3 +1,4 @@
+import json
 from app.api.v1.models.database import Database
 from datetime import datetime
 
@@ -89,7 +90,7 @@ class ExamsModel(Database):
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return response
+        return json.dumps(response, default=str)
 
     def fetch_total_for_specific_unit(self, admission_no, unit):
         """A student can fetch all examinations for the specified semester."""

@@ -120,6 +120,28 @@ class TestAccommodation(BaseTest):
                          'Hostel retrieved successfully')
         assert response.status_code == 200
 
+    def test_get_unexisting_hostel_by_id(self):
+        """Test that a student cannot view unexisting hostel by id."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/hostels', data=json.dumps(new_hostel),
+            content_type='application/json',
+            headers=self.get_hostel_manager_token())
+        self.client.post(
+            '/api/v1/accommodation', data=json.dumps(book_hostel),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.get(
+            '/api/v1/accommodation/100', content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Hostel not found')
+        assert response.status_code == 404
+
     def test_get_booked_hostel_by_admission(self):
         """Test that a student can view the hostel he/she has booked."""
         self.client.post(

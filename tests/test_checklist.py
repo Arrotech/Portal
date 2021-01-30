@@ -37,25 +37,18 @@ class TestChecklistForm(BaseTest):
     #         content_type='application/json',
     #         headers=self.get_registrar_token())
     #     self.client.post(
-    #         '/api/v1/campuses', data=json.dumps(new_campus),
-    #         content_type='application/json',
-    #         headers=self.get_registrar_token())
-    #     self.client.post(
     #         '/api/v1/year', data=json.dumps(new_academic_year),
     #         content_type='application/json',
     #         headers=self.get_registrar_token())
     #     self.client.post(
+    #         '/api/v1/campuses', data=json.dumps(new_campus),
+    #         content_type='application/json',
+    #         headers=self.get_registrar_token())
+    #     r1 = self.client.post(
     #         '/api/v1/hostels', data=json.dumps(new_hostel),
     #         content_type='application/json',
     #         headers=self.get_hostel_manager_token())
-    #     self.client.post(
-    #         '/api/v1/apply_course', data=json.dumps(apply_course),
-    #         content_type='application/json',
-    #         headers=self.get_token())
-    #     self.client.post(
-    #         '/api/v1/accommodation', data=json.dumps(book_hostel),
-    #         content_type='application/json',
-    #         headers=self.get_token())
+    #     print("@@@@@@@@@@@@@@@@@@@", r1.data)
     #     response = self.client.post(
     #         '/api/v1/checklist', data=json.dumps(fill_checklist),
     #         content_type='application/json',

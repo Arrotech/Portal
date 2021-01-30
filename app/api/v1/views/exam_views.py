@@ -52,7 +52,6 @@ def get_all_exams_for_a_student_by_admission(admission_no):
 @jwt_required
 def get_aggregated_points(admission_no, year):
     """Get average marks."""
-    print("@@@@@@@@@@@@@@@@@@@@@@_-------")
     response = ExamsModel().fetch_aggregated_points(admission_no, year)
     return Serializer.serialize(response, 200,
                                 "Exam Total successfull retrieved")
@@ -64,7 +63,10 @@ def get_aggregated_points(admission_no, year):
 def get_exam_by_id(exam_id):
     """Fetch an exam by Id."""
     response = ExamsModel().fetch_exam_by_id(exam_id)
-    return Serializer.serialize(response, 200, "Exam successfull retrieved")
+    if response:
+        return Serializer.serialize(response, 200,
+                                    "Exam successfull retrieved")
+    return raise_error(404, "Exam not found")
 
 
 @portal_v1.route('/exams/year/<string:admission_no>/<string:year>',
@@ -110,8 +112,9 @@ def update_exam_by_id(exam_id):
     admission_no = details['admission_no']
     unit_name = details['unit_name']
     marks = details['marks']
+    exam_type = details['exam_type']
     response = ExamsModel().update(year_id, admission_no,
-                                   unit_name, marks, exam_id)
+                                   unit_name, marks, exam_type, exam_id)
     if response:
         return Serializer.serialize(response, 200, 'Exam updated successfully')
     return raise_error(404, "Exam not found")
