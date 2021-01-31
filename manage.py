@@ -74,6 +74,24 @@ class WSGIServer(Command):
 manager.add_command('uwsgi', WSGIServer())
 
 
+class GunicornServer(Command):
+    """Run gunicorn server."""
+    name = "gunicorn"
+    capture_all_args = True
+
+    def run(self, argv):
+        ret = subprocess.call(
+            ['venv/bin/gunicorn',
+             '--bind',
+             '0.0.0.0:5000',
+             'wsgi:app'
+             ] + argv)
+        sys.exit(ret)
+
+
+manager.add_command('gunicorn', GunicornServer())
+
+
 @manager.command
 def destroy_tables_v1():
     """Drop tables if they exists."""
