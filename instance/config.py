@@ -70,6 +70,9 @@ class Config:
     AUTH_TOKEN_KEY = os.environ.get("AUTH_TOKEN_KEY", default=False)
     AUTH_STATE_KEY = os.environ.get("AUTH_STATE_KEY", default=False)
 
+    # celery
+    CELERY_CONFIG = {}
+
 
 class ProductionConfig(Config):
     """Production configurations."""
@@ -86,6 +89,10 @@ class DevelopmentConfig(Config):
 
     SESSION_COOKIE_SECURE = False
 
+    # brokers
+    RABBITMQ_URL = os.environ.get('LOCAL_RABBITMQ_URL')
+    REDISTOGO_URL = os.environ.get('LOCAL_REDISTOGO_URL')
+
 
 class TestingConfig(Config):
     """Testing the application."""
@@ -96,8 +103,12 @@ class TestingConfig(Config):
     SESSION_COOKIE_SECURE = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
 
+    # database
     DB_NAME = os.environ.get('TEST_DB_NAME')
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
+
+    # celery
+    CELERY_CONFIG = {'CELERY_ALWAYS_EAGER': True}
 
 
 class StagingConfig(Config):

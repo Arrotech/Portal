@@ -17,6 +17,10 @@ jwtmanager = JWTManager()
 cors = CORS()
 mail = Mail()
 
+# celery = Celery(__name__,
+#                 broker=os.environ.get('RABBITMQ_URL', 'LOCAL_RABBITMQ_URL'),
+#                 backend=os.environ.get('RABBITMQ_URL', 'LOCAL_RABBITMQ_URL'))
+
 
 def exam_app(config_name=None):
     """Create the app."""
@@ -33,6 +37,7 @@ def exam_app(config_name=None):
     cors.init_app(app)
     mail.init_app(app)
     Celery(app)
+    # celery.conf.update(app_config[config_name].CELERY_CONFIG)
 
     # Include Routes
     from utils.utils import bad_request, page_not_found,\

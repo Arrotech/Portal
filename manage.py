@@ -1,18 +1,57 @@
 import os
+import subprocess
+import sys
 import unittest
-from flask_script import Manager
+from flask_script import Manager, Command
 from flask_migrate import Migrate, MigrateCommand
 from app import exam_app, db
 from app.api.v1.models.database import Database
 from flask import redirect, make_response, jsonify
 
 
-app = exam_app(os.environ.get('FLASK_ENV'))
+app = exam_app(os.environ.get('FLASK_ENV', 'production'))
 app.app_context().push()
 
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
+
+
+class CeleryWorker(Command):
+    """Start the celery worker."""
+    name = "celery"
+    capture_all_args = True
+
+    def run(self, argv):
+        ret = subprocess.call(
+            ['venv/bin/celery',
+             '-A',
+             'app.api.v1.services.mail.celery',
+             'worker',
+             '--loglevel=info',
+             '--pool=solo'
+             ] + argv)
+        sys.exit(ret)
+
+
+manager.add_command('celery', CeleryWorker())
+
+
+class Pytest(Command):
+    """Run tests with pytest."""
+    name = "pytest"
+    capture_all_args = True
+
+    def run(self, argv):
+        ret = subprocess.call(
+            ['venv/bin/pytest',
+             '--cov=app',
+             '--cov-report=term-missing',
+             ] + argv)
+        sys.exit(ret)
+
+
+manager.add_command('pytest', Pytest())
 
 
 @manager.command
