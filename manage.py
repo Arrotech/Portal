@@ -54,6 +54,26 @@ class Pytest(Command):
 manager.add_command('pytest', Pytest())
 
 
+class WSGIServer(Command):
+    """Run wisgi server."""
+    name = "uwsgi"
+    capture_all_args = True
+
+    def run(self, argv):
+        ret = subprocess.call(
+            ['venv/bin/uwsgi',
+             '--socket',
+             '0.0.0.0:5000',
+             '--protocol=http',
+             '-w',
+             'wsgi:app'
+             ] + argv)
+        sys.exit(ret)
+
+
+manager.add_command('uwsgi', WSGIServer())
+
+
 @manager.command
 def destroy_tables_v1():
     """Drop tables if they exists."""
