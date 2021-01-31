@@ -1,14 +1,11 @@
-import os
 from threading import Thread
-from flask_mail import Message, Mail
-from app.__init__ import exam_app
+from flask_mail import Message
+from run import app
 from arrotechtools import raise_error
 from app.celery import make_celery
+from app import mail
 
-config_name = os.getenv('FLASK_ENV')
-app = exam_app(config_name)
 celery = make_celery(app)
-mail = Mail(app)
 
 
 def send_async_email(app, msg):

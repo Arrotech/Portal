@@ -2,7 +2,7 @@ import os
 from flask import make_response, jsonify, redirect
 from app import exam_app
 
-app = exam_app(os.environ.get("FLASK_ENV"))
+app = exam_app(os.environ.get("FLASK_ENV", 'production'))
 
 
 @app.route('/')
