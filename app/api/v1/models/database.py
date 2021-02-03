@@ -43,6 +43,7 @@ class Database:
                 firstname varchar NOT NULL,
                 lastname varchar NOT NULL,
                 surname varchar NOT NULL,
+                image_file varchar NOT NULL DEFAULT 'default.jpg',
                 admission_no varchar NOT NULL UNIQUE,
                 gender varchar NOT NULL,
                 email varchar NOT NULL,
@@ -153,7 +154,7 @@ class Database:
                 subject_id serial,
                 student varchar NOT NULL,
                 unit varchar NOT NULL,
-                year integer NOT NULL,                                                                                                                                
+                year integer NOT NULL,                                                                                                
                 created_on TIMESTAMP,
                 PRIMARY KEY (subject_id),
                 FOREIGN KEY (student) REFERENCES users(admission_no)\

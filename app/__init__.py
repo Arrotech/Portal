@@ -29,6 +29,7 @@ def exam_app(config_name=None):
         app.config.from_object(app_config[config_name])
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     # Initialize Plugins
     debugToolbar.init_app(app)
