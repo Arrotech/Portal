@@ -4,20 +4,18 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
+from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask
-from celery import Celery
+from app.celery import make_celery
 from flask_sqlalchemy import SQLAlchemy
 from instance.config import app_config
 
 
+debugToolbar = DebugToolbarExtension()
 db = SQLAlchemy()
 jwtmanager = JWTManager()
 cors = CORS()
 mail = Mail()
-
-# celery = Celery(__name__,
-#                 broker=os.environ.get('RABBITMQ_URL', 'LOCAL_RABBITMQ_URL'),
-#                 backend=os.environ.get('RABBITMQ_URL', 'LOCAL_RABBITMQ_URL'))
 
 
 def exam_app(config_name=None):
@@ -30,13 +28,15 @@ def exam_app(config_name=None):
     else:
         app.config.from_object(app_config[config_name])
 
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
     # Initialize Plugins
+    debugToolbar.init_app(app)
     db.init_app(app)
     jwtmanager.init_app(app)
     cors.init_app(app)
     mail.init_app(app)
-    Celery(app)
-    # celery.conf.update(app_config[config_name].CELERY_CONFIG)
+    make_celery(app)
 
     # Include Routes
     from utils.utils import bad_request, page_not_found,\
