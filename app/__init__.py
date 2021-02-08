@@ -18,15 +18,12 @@ cors = CORS()
 mail = Mail()
 
 
-def exam_app(config_name=None):
+def exam_app(config_name='production'):
     """Create the app."""
     app = Flask(__name__, instance_relative_config=True,
                 template_folder='../../../templates')
 
-    if config_name is None:
-        app.config.from_object(app_config['production'])
-    else:
-        app.config.from_object(app_config[config_name])
+    app.config.from_object(app_config[config_name])
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024

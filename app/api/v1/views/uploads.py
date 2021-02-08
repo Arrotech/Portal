@@ -8,7 +8,9 @@ from app.api.v1 import portal_v1
 basedir = path.abspath(path.dirname('requirements.txt'))
 
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
-ALLOWED_EXTENSIONS = {'pdf', 'txt', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'pdf', 'txt', 'doc', 'docx', 'odt', 'xls',
+                      'xlsx', 'ods', 'ppt', 'pptx', 'png', 'jpg',
+                      'jpeg', 'gif'}
 
 
 def allowed_file(filename):

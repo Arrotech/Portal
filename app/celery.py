@@ -6,12 +6,15 @@ from instance.config import app_config
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker=os.environ.get('REDISTOGO_URL', 'LOCAL_REDISTOGO_URL')
+        broker=os.environ.get('REDISTOGO_URL'),
+        backend=os.environ.get('REDISTOGO_URL')
     )
     celery.conf.update(app_config[os.environ.get(
-        'FLASK_ENV', 'development')].CELERY_CONFIG)
+        'FLASK_ENV')].CELERY_CONFIG)
 
-    class ContextTask(celery.Task):
+    TaskBase = celery.Task
+
+    class ContextTask(TaskBase):
         def __call__(self, *args, **kwargs):
             with app.app_context():
                 return self.run(*args, **kwargs)
