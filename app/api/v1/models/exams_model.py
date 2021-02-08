@@ -80,7 +80,8 @@ class ExamsModel(Database):
 
     def fetch_aggregated_points(self, admission_no, year):
         """A student can view their aggregated points for a specific year."""
-        self.curr.execute("""SELECT a.year, AVG(marks) as aggregate FROM exams AS e
+        self.curr.execute("""SELECT a.year, AVG(Cast(e.marks as Float)) as aggregate
+                        FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
@@ -90,7 +91,7 @@ class ExamsModel(Database):
         response = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return json.dumps(response, default=str)
+        return response
 
     def fetch_total_for_specific_unit(self, admission_no, unit):
         """A student can fetch all examinations for the specified semester."""

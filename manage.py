@@ -9,7 +9,7 @@ from app.api.v1.models.database import Database
 from flask import redirect, make_response, jsonify
 
 
-app = exam_app(os.environ.get('FLASK_ENV', 'production'))
+app = exam_app(os.environ.get('FLASK_ENV'))
 app.app_context().push()
 
 migrate = Migrate(app, db)
