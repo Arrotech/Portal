@@ -1,9 +1,5 @@
-import json
-import psycopg2
-
 from datetime import datetime
 from app.api.v1.models.database import Database
-from utils.serializer import Serializer
 
 Database().create_table()
 
@@ -48,8 +44,8 @@ class FeesModels(Database):
     def get_all_fees(self):
         """Fetch all fees"""
         query = "SELECT f.transaction_type, f.transaction_no, f.description,\
-                f.amount, f.expected_amount, f.created_on, u.admission_no, u.firstname,\
-                u.lastname, u.surname FROM fees AS f\
+                f.amount, f.expected_amount, f.created_on, u.admission_no,\
+                u.firstname, u.lastname, u.surname FROM fees AS f\
                 INNER JOIN users AS u ON f.student = u.admission_no"
         response = Database().fetch(query)
         return response
@@ -64,7 +60,8 @@ class FeesModels(Database):
         """Get fees for a specific student by his/her admission."""
         self.curr.execute(
             """SELECT f.transaction_type, f.transaction_no, f.description,
-            f.amount, f.expected_amount, f.created_on, u.admission_no, u.firstname, u.lastname,\
+            f.amount, f.expected_amount, f.created_on, u.admission_no,\
+            u.firstname, u.lastname,\
             u.surname FROM fees AS f
             INNER JOIN users AS u ON f.student = u.admission_no
             WHERE admission_no=%s
@@ -76,11 +73,26 @@ class FeesModels(Database):
 
     def get_latest_fee_by_admission(self, admission_no):
         """Get the latest fee entry."""
-        query = "SELECT f.transaction_type, f.transaction_no, f.description,\
+        self.curr.execute("""SELECT f.transaction_type, f.transaction_no, f.description,\
                 f.amount, f.expected_amount FROM fees AS f\
                 INNER JOIN users AS u ON f.student = u.admission_no\
-                WHERE admission_no=%s ORDER BY f.created_on DESC"
-        response = Database().fetch_one(query, admission_no)
+                WHERE admission_no=%s ORDER BY f.created_on DESC""",
+                          (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def get_fee_balance_by_admission(self, admission_no):
+        """Get the fee balance."""
+        self.curr.execute("""SELECT f.amount, f.expected_amount,\
+                f.expected_amount - f.amount AS balance FROM fees AS f\
+                INNER JOIN users AS u ON f.student = u.admission_no\
+                WHERE admission_no=%s ORDER BY f.created_on DESC""",
+                          (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
         return response
 
     def edit_fees(self, fee_id, transaction_type, transaction_no, description,
@@ -88,7 +100,8 @@ class FeesModels(Database):
         """Edit fees."""
         self.curr.execute("""UPDATE fees\
                             SET transaction_type='{}', transaction_no='{}',\
-                            description='{}', amount='{}', expected_amount='{}'\
+                            description='{}', amount='{}',\
+                            expected_amount='{}'\
                             WHERE fee_id={}
                             RETURNING transaction_type, transaction_no,\
                             description, amount, expected_amount"""

@@ -78,6 +78,17 @@ def get_latest_fee(admission_no):
     return raise_error(404, "Fee not found")
 
 
+@portal_v1.route('/fees/balance/<string:admission_no>', methods=['GET'])
+@jwt_required
+def get_fee_balance(admission_no):
+    """Fetch fee balance by admission number."""
+    response = FeesModels().get_fee_balance_by_admission(admission_no)
+    if response:
+        return Serializer.serialize(response, 200,
+                                    "Fee retrieved successfully")
+    return raise_error(404, "Fee not found")
+
+
 @portal_v1.route('/fees/<int:fee_id>', methods=['PUT'])
 @jwt_required
 @accountant_required
