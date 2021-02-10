@@ -78,6 +78,20 @@ class ExamsModel(Database):
         self.curr.close()
         return response
 
+    def fetch_all_aggregated_points(self, admission_no):
+        """A student can view their aggregated points."""
+        self.curr.execute("""SELECT AVG(Cast(e.marks as Float)) as aggregate
+                        FROM exams AS e
+                        INNER JOIN academic_year AS a ON e.year = a.year_id
+                        INNER JOIN users AS us ON e.student = us.admission_no
+                        INNER JOIN units AS un ON e.unit = un.unit_name\
+                        WHERE student=%s""",
+                          (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def fetch_aggregated_points(self, admission_no, year):
         """A student can view their aggregated points for a specific year."""
         self.curr.execute("""SELECT a.year, AVG(Cast(e.marks as Float)) as aggregate
@@ -88,7 +102,36 @@ class ExamsModel(Database):
                         WHERE student=%s AND a.year=%s GROUP BY a.year""",
                           (admission_no,
                            year,))
-        response = self.curr.fetchall()
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def fetch_all_supplementaries(self, admission_no):
+        """Fetch all supplementaries for a student."""
+        self.curr.execute("""SELECT COUNT(*)
+                        FROM exams AS e
+                        INNER JOIN academic_year AS a ON e.year = a.year_id
+                        INNER JOIN users AS us ON e.student = us.admission_no
+                        INNER JOIN units AS un ON e.unit = un.unit_name\
+                        WHERE admission_no=%s AND e.marks<50""",
+                          (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def fetch_supplementaries(self, admission_no, year):
+        """Fetch supplementaries for an year."""
+        self.curr.execute("""SELECT COUNT(*)
+                        FROM exams AS e
+                        INNER JOIN academic_year AS a ON e.year = a.year_id
+                        INNER JOIN users AS us ON e.student = us.admission_no
+                        INNER JOIN units AS un ON e.unit = un.unit_name\
+                        WHERE admission_no=%s AND a.year=%s AND e.marks<50""",
+                          (admission_no,
+                           year,))
+        response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
         return response

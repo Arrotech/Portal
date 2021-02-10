@@ -80,6 +80,103 @@ def get_exams_for_specific_year(admission_no, year):
 
 
 @portal_v1.route(
+    '/exams/supplementaries/year/<string:admission_no>/<string:year>',
+    methods=['GET'])
+@jwt_required
+def get_supplementaries_for_an_year(admission_no, year):
+    """Fetch all exams."""
+    response = ExamsModel().fetch_supplementaries(admission_no,
+                                                  year)
+    return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
+
+@portal_v1.route(
+    '/exams/supplementaries/year/all/<string:admission_no>',
+    methods=['GET'])
+@jwt_required
+def get_all_supplementaries(admission_no):
+    """Fetch all supplementaries f                                                                                                                  qwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyiiiiiiiiiiooooooooooppppppppp[[[[[[[[[[[[[[[[[]]]]]]]]]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /==.......................-----00099999999999999999998788888777777766666565454 34   321211``````3nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn]]]]]]]]."""
+    response = ExamsModel().fetch_all_supplementaries(admission_no)
+    return Serializer.serialize(response, 200, "Exams successfull retrieved")
+
+
+@portal_v1.route(
     '/exams/year/<string:admission_no>/<string:year>/<string:semester>',
     methods=['GET'])
 @jwt_required
