@@ -1,10 +1,12 @@
+import os
 from threading import Thread
 from flask_mail import Message
-from run import app
 from arrotechtools import raise_error
 from app.celery import make_celery
 from app import mail
+from app.__init__ import exam_app
 
+app = exam_app(os.environ.get('FLASK_ENV'))
 celery = make_celery(app)
 
 

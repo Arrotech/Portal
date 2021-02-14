@@ -26,11 +26,13 @@ class TestUsersAccount(BaseTest):
     def test_login_password(self):
         """Test that a user cannot login with an invalid password."""
         self.client.post(
-            '/api/v1/staff/register', data=json.dumps(new_admin_account),
+            '/api/v1/staff/register',
+            data=json.dumps(new_admin_account),
             content_type='application/json',
             headers=self.get_registrar_token())
         response = self.client.post(
-            '/api/v1/staff/login', data=json.dumps(invalid_login_password),
+            '/api/v1/staff/login',
+            data=json.dumps(invalid_login_password),
             content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())
@@ -133,6 +135,47 @@ class TestUsersAccount(BaseTest):
         """Test that an admin cannot login with an invalid email."""
         response = self.client.post(
             '/api/v1/staff/login', data=json.dumps(staff_invalid_login_email),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Invalid Email or Password')
+        assert response.status_code == 401
+
+    def test_fresh_staff_login(self):
+        """Test that accountants can login to their account again."""
+        self.client.post(
+            '/api/v1/staff/register',
+            data=json.dumps(new_admin_account),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        response = self.client.post(
+            '/api/v1/staff/fresh-login', data=json.dumps(new_admin_login),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Successfully logged in!')
+        assert response.status_code == 200
+
+    def test_fresh_staff_invalid_email_login(self):
+        """Test that an admin cannot login with an invalid email."""
+        response = self.client.post(
+            '/api/v1/staff/fresh-login', data=json.dumps(staff_invalid_login_email),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'], 'Invalid Email or Password')
+        assert response.status_code == 401
+
+    def test_fresh_login_password(self):
+        """Test that a user cannot login with an invalid password."""
+        self.client.post(
+            '/api/v1/staff/register',
+            data=json.dumps(new_admin_account),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        response = self.client.post(
+            '/api/v1/staff/fresh-login',
+            data=json.dumps(invalid_login_password),
             content_type='application/json',
             headers=self.get_admin_token())
         result = json.loads(response.data.decode())

@@ -6,8 +6,8 @@ from instance.config import app_config
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        broker=os.environ.get('REDISTOGO_URL'),
-        backend=os.environ.get('REDISTOGO_URL')
+        broker=app_config[os.environ.get('FLASK_ENV')].REDISTOGO_URL,
+        backend=app_config[os.environ.get('FLASK_ENV')].REDISTOGO_URL
     )
     celery.conf.update(app_config[os.environ.get(
         'FLASK_ENV')].CELERY_CONFIG)
