@@ -286,7 +286,7 @@ def form_restrictions(data):
 def campus_restrictions(data):
     """Restrict user inputs in a list."""
 
-    campus_name = ["main", "town"]
+    campus_name = ["Main", "Town"]
     if data not in campus_name:
         return False
     return True

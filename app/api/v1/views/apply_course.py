@@ -64,6 +64,15 @@ def get_all_applied_courses():
                         "Applied courses retrieved successfully")
 
 
+@portal_v1.route('/apply_course/total/<string:course>', methods=['GET'])
+@jwt_required
+def get_total_number_of_students_per_course(course):
+    """Fetch the total number of students per course."""
+    response = ApplyCoursesModel().get_total_number_of_students_per_course(course)
+    return sr.serialize(response, 200,
+                        "Total number of students retrieved successfully")
+
+
 @portal_v1.route('/apply_course/<int:application_id>', methods=['GET'])
 @jwt_required
 def get_applied_course_by_id(application_id):

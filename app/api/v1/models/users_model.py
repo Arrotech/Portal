@@ -185,11 +185,12 @@ class UsersModel(Database):
     def get_user_info(self, admission_no):
         """Request a single user with specific Admission Number."""
         query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
-            u.gender, u.role, u.email, a.institution, a.campus, a.course,\
+            u.gender, u.role, u.email, a.institution, cmp.campus_name, a.course,\
                 a.department, c.hostel, s.unit FROM users AS u\
             LEFT JOIN apply_course AS a ON u.admission_no=a.student\
             LEFT JOIN accommodation As c ON u.admission_no=c.student\
             LEFT JOIN subjects As s ON u.admission_no=s.student\
+            LEFT JOIN campuses AS cmp ON a.campus=cmp.campus_id\
             WHERE admission_no=%s"
         response = Database().fetch_one(query, admission_no)
         return response

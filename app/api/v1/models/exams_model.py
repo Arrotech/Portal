@@ -80,7 +80,7 @@ class ExamsModel(Database):
 
     def fetch_all_aggregated_points(self, admission_no):
         """A student can view their aggregated points."""
-        self.curr.execute("""SELECT AVG(Cast(e.marks as Float)) as aggregate
+        self.curr.execute("""SELECT AVG(CAST(e.marks AS FLOAT)) AS aggregate
                         FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
@@ -94,7 +94,7 @@ class ExamsModel(Database):
 
     def fetch_aggregated_points(self, admission_no, year):
         """A student can view their aggregated points for a specific year."""
-        self.curr.execute("""SELECT a.year, AVG(Cast(e.marks as Float)) as aggregate
+        self.curr.execute("""SELECT a.year, AVG(CAST(e.marks AS FLOAT)) AS aggregate
                         FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no

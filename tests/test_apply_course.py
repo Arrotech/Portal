@@ -162,6 +162,45 @@ class TestApplyCourse(BaseTest):
                          'Course retrieved successfully')
         assert response.status_code == 200
 
+    def test_get_total_number_of_students_by_course(self):
+        """Test that a student can view the total number of coursemates."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/institutions', data=json.dumps(new_institution),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/campuses', data=json.dumps(new_campus),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/certificates', data=json.dumps(new_certificate),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/departments', data=json.dumps(new_department),
+            content_type='application/json',
+            headers=self.get_college_head_token())
+        self.client.post(
+            '/api/v1/courses', data=json.dumps(new_course),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
+            '/api/v1/apply_course', data=json.dumps(apply_course),
+            content_type='application/json',
+            headers=self.get_token())
+        response = self.client.get(
+            '/api/v1/apply_course/total/maths and computer science',
+            content_type='application/json',
+            headers=self.get_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Total number of students retrieved successfully')
+        assert response.status_code == 200
+
     def test_get_unexisting_course_info_by_admission(self):
         """Test that a student cannot fetch unexisting course information."""
         self.client.post(

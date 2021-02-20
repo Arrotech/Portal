@@ -62,6 +62,17 @@ class ApplyCoursesModel(Database):
         response = Database().fetch_one(query, admission_no)
         return response
 
+    def get_total_number_of_students_per_course(self, course):
+        """Fetch total number of students per course."""
+        self.curr.execute("""SELECT COUNT(a.course) FROM apply_course AS a
+                          INNER JOIN users AS us ON a.student = us.admission_no
+                          WHERE a.course=%s
+                          """, (course,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
     def update(self, application_id, institution_name, campus_id,
                certificate_id, department_name, course_name):
         """Update applied course by id."""
