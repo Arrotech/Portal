@@ -79,6 +79,17 @@ def get_total_number_of_registered_units_by_admission(admission_no):
                                 "Total registered units")
 
 
+@portal_v1.route('/subjects/total/year/<string:admission_no>', methods=['GET'])
+@jwt_required
+def get_total_number_of_registered_units_by_admission_and_year(admission_no):
+    """Fetch the total number of registered units for a specific year."""
+    response = SubjectsModel().\
+        get_total_number_of_registered_units_by_admission_and_year(
+            admission_no)
+    return Serializer.serialize(response, 200,
+                                "Total registered units")
+
+
 @portal_v1.route('/subjects/<string:admission_no>/<string:year>',
                  methods=['GET'])
 @jwt_required

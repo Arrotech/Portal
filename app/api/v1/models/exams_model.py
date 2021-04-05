@@ -92,16 +92,34 @@ class ExamsModel(Database):
         self.curr.close()
         return response
 
-    def fetch_aggregated_points(self, admission_no, year):
-        """A student can view their aggregated points for a specific year."""
-        self.curr.execute("""SELECT a.year, AVG(CAST(e.marks AS FLOAT)) AS aggregate
+    def fetch_aggregated_points(self, admission_no):
+        """A student can view their aggregated points."""
+        self.curr.execute("""SELECT e.student, AVG(CAST(e.marks AS FLOAT)) AS aggregate
                         FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
-                        WHERE student=%s AND a.year=%s GROUP BY a.year""",
-                          (admission_no,
-                           year,))
+                        WHERE student=%s GROUP BY e.student""",
+                          (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def fetch_latest_aggregated_points(self, admission_no):
+        """A student can view their aggregated points for a specific year."""
+        self.curr.execute("""
+        SELECT e.student, AVG(CAST(e.marks AS FLOAT)) AS aggregate
+                        FROM exams AS e
+                        INNER JOIN academic_year AS a ON e.year = a.year_id
+                        INNER JOIN users AS us ON e.student = us.admission_no
+                        INNER JOIN units AS un ON e.unit = un.unit_name\
+                        WHERE student=%s AND a.year=(SELECT s_a.year FROM exams AS s_e 
+                            INNER JOIN academic_year AS s_a ON s_e.year = s_a.year_id 
+                            INNER JOIN users AS s_us ON s_e.student = s_us.admission_no 
+                            WHERE s_e.student=student ORDER BY s_e.created_on DESC LIMIT 1) 
+                        GROUP BY e.student""",
+                          (admission_no,))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()
@@ -121,16 +139,18 @@ class ExamsModel(Database):
         self.curr.close()
         return response
 
-    def fetch_supplementaries(self, admission_no, year):
+    def fetch_supplementaries(self, admission_no):
         """Fetch supplementaries for an year."""
         self.curr.execute("""SELECT COUNT(*)
                         FROM exams AS e
                         INNER JOIN academic_year AS a ON e.year = a.year_id
                         INNER JOIN users AS us ON e.student = us.admission_no
                         INNER JOIN units AS un ON e.unit = un.unit_name\
-                        WHERE admission_no=%s AND a.year=%s AND e.marks<50""",
-                          (admission_no,
-                           year,))
+                        WHERE admission_no=%s AND a.year=(SELECT s_a.year FROM exams AS s_e 
+                            INNER JOIN academic_year AS s_a ON s_e.year = s_a.year_id 
+                            INNER JOIN users AS s_us ON s_e.student = s_us.admission_no 
+                            WHERE s_e.student=admission_no ORDER BY s_e.created_on DESC LIMIT 1) AND e.marks<50""",
+                          (admission_no,))
         response = self.curr.fetchone()
         self.conn.commit()
         self.curr.close()

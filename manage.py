@@ -121,10 +121,10 @@ def create_tables_v2():
 
 
 @manager.command
-def run():
+def runserver():
 
     @app.route('/')
-    def index():
+    def index(): 
         return make_response(jsonify({
             "message": "Welcome to ATC. Best Tech Best Future.",
             "status": "OK"

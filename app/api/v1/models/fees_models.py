@@ -85,10 +85,14 @@ class FeesModels(Database):
 
     def get_fee_balance_by_admission(self, admission_no):
         """Get the fee balance."""
-        self.curr.execute("""SELECT f.amount, f.expected_amount,\
-                f.expected_amount - f.amount AS balance FROM fees AS f\
-                INNER JOIN users AS u ON f.student = u.admission_no\
-                WHERE admission_no=%s ORDER BY f.created_on DESC""",
+        self.curr.execute("""SELECT (SELECT SUM(f.expected_amount) as total FROM fees as f
+                                        INNER JOIN users AS u ON f.student = u.admission_no 
+                                    WHERE student=admission_no) -
+                                    (SELECT SUM(f.amount) as total FROM fees as f
+                                        INNER JOIN users AS u ON f.student = u.admission_no 
+                                    WHERE f.student=admission_no) AS balance FROM fees AS f
+                                    INNER JOIN users AS u ON f.student = u.admission_no
+                             WHERE admission_no=%s""",
                           (admission_no,))
         response = self.curr.fetchone()
         self.conn.commit()

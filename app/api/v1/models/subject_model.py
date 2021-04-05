@@ -58,10 +58,26 @@ class SubjectsModel(Database):
 
     def get_total_number_of_registered_units_by_admission(self, admission_no):
         """Fetch total number of registered units for a specific student."""
-        self.curr.execute("""SELECT COUNT(admission_no) FROM subjects AS s
+        self.curr.execute("""SELECT COUNT(*) FROM subjects AS s
                           INNER JOIN units AS un ON s.unit = un.unit_name
                           INNER JOIN users AS us ON s.student = us.admission_no
                           WHERE admission_no=%s
+                          """, (admission_no,))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def get_total_number_of_registered_units_by_admission_and_year(self, admission_no):
+        """Fetch total number of registered units for a specific student."""
+        self.curr.execute("""SELECT COUNT(*) FROM subjects AS s
+                          INNER JOIN academic_year AS a ON s.year = a.year_id
+                          INNER JOIN units AS un ON s.unit = un.unit_name
+                          INNER JOIN users AS us ON s.student = us.admission_no
+                          WHERE admission_no=%s AND a.year=(SELECT s_a.year FROM subjects AS s_s 
+                            INNER JOIN academic_year AS s_a ON s_s.year = s_a.year_id 
+                            INNER JOIN users AS s_us ON s_s.student = s_us.admission_no 
+                            WHERE s_s.student=admission_no ORDER BY s_s.created_on DESC LIMIT 1)
                           """, (admission_no,))
         response = self.curr.fetchone()
         self.conn.commit()

@@ -47,12 +47,22 @@ def get_all_exams_for_a_student_by_admission(admission_no):
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
 
-@portal_v1.route('/exams/aggregate/<string:admission_no>/<string:year>',
+@portal_v1.route('/exams/aggregate/<string:admission_no>',
                  methods=['GET'])
 @jwt_required
-def get_aggregated_points(admission_no, year):
+def get_aggregated_points(admission_no):
     """Get average marks."""
-    response = ExamsModel().fetch_aggregated_points(admission_no, year)
+    response = ExamsModel().fetch_aggregated_points(admission_no)
+    return Serializer.serialize(response, 200,
+                                "Exam Total successfull retrieved")
+
+
+@portal_v1.route('/exams/latest/aggregate/<string:admission_no>',
+                 methods=['GET'])
+@jwt_required
+def get_latest_aggregated_points(admission_no):
+    """Get latest average marks."""
+    response = ExamsModel().fetch_latest_aggregated_points(admission_no)
     return Serializer.serialize(response, 200,
                                 "Exam Total successfull retrieved")
 
@@ -80,13 +90,12 @@ def get_exams_for_specific_year(admission_no, year):
 
 
 @portal_v1.route(
-    '/exams/supplementaries/year/<string:admission_no>/<string:year>',
+    '/exams/supplementaries/year/<string:admission_no>',
     methods=['GET'])
 @jwt_required
-def get_supplementaries_for_an_year(admission_no, year):
+def get_supplementaries_for_an_year(admission_no):
     """Fetch all exams."""
-    response = ExamsModel().fetch_supplementaries(admission_no,
-                                                  year)
+    response = ExamsModel().fetch_supplementaries(admission_no)
     return Serializer.serialize(response, 200, "Exams successfull retrieved")
 
 
@@ -151,3 +160,7 @@ def delete_exam(exam_id):
         ExamsModel().delete(exam_id)
         return Serializer.serialize(response, 200, "Exam deleted successfully")
     return raise_error(404, 'Exam not found')
+
+
+def comparator():
+    pass
