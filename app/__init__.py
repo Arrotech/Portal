@@ -18,7 +18,7 @@ cors = CORS()
 mail = Mail()
 
 
-def exam_app(config_name='production'):
+def exam_app(config_name=None):
     """Create the app."""
     app = Flask(__name__, instance_relative_config=True,
                 template_folder='../../../templates')

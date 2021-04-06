@@ -83,6 +83,38 @@ class TestBooks(BaseTest):
                          'Books retrieved successfully')
         assert response.status_code == 200
 
+    def test_get_book_by_id(self):
+        """Test that a librarian can fetch book by id."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/books', data=json.dumps(add_book),
+            content_type='application/json',
+            headers=self.get_librarian_token())
+        response = self.client.get(
+            '/api/v1/books/1', content_type='application/json',
+            headers=self.get_librarian_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Book retrieved successfully')
+        assert response.status_code == 200
+
+    def test_get_non_existing_book_by_id(self):
+        """Test that a librarian cannot fetch non-existing book by id."""
+        self.client.post(
+            '/api/v1/books', data=json.dumps(add_book),
+            content_type='application/json',
+            headers=self.get_librarian_token())
+        response = self.client.get(
+            '/api/v1/books/100', content_type='application/json',
+            headers=self.get_librarian_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Book not found')
+        assert response.status_code == 404
+
     def test_get_books_for_non_existing_user(self):
         """Test that one cannot get books for non existing user"""
         self.client.post(
@@ -149,4 +181,37 @@ class TestBooks(BaseTest):
             headers=self.get_librarian_token())
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], 'Book not found')
+        assert response.status_code == 404
+
+
+    def test_delete_book_by_id(self):
+        """Test that a librarian can delete book by id."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/books', data=json.dumps(add_book),
+            content_type='application/json',
+            headers=self.get_librarian_token())
+        response = self.client.delete(
+            '/api/v1/books/1', content_type='application/json',
+            headers=self.get_librarian_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Book deleted successfully')
+        assert response.status_code == 200
+
+    def test_delete_non_existing_book_by_id(self):
+        """Test that a librarian cannot delete non-existing book by id."""
+        self.client.post(
+            '/api/v1/books', data=json.dumps(add_book),
+            content_type='application/json',
+            headers=self.get_librarian_token())
+        response = self.client.delete(
+            '/api/v1/books/100', content_type='application/json',
+            headers=self.get_librarian_token())
+        result = json.loads(response.data.decode())
+        self.assertEqual(result['message'],
+                         'Book not found')
         assert response.status_code == 404

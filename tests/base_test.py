@@ -27,9 +27,8 @@ class BaseTest(unittest.TestCase):
 
     def setUp(self):
         """Set up the app for testing."""
-        config_name = "testing"
+        config_name = os.environ.get('FLASK_ENV')
         self.app = exam_app(config_name)
-        self.app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()

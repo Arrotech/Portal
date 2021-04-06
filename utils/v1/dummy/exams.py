@@ -31,3 +31,11 @@ update_exam_entry = {
     "marks": 80,
     "exam_type": "MAIN"
 }
+
+update_exam_entry_keys = {
+    "year_id": 1,
+    "admissionno": "NJCF4001",
+    "unit_name": "Calculus 1",
+    "marks": 80,
+    "exam_type": "MAIN"
+}

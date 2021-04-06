@@ -76,9 +76,9 @@ def update_notification_by_id(notification_id):
     details = request.get_json()
     subject = details['subject']
     description = details['description']
-    response = NotificationsModel().update(notification_id,
-                                           subject,
-                                           description)
+    response = NotificationsModel().update(subject,
+                                           description,
+                                           notification_id)
     if response:
         return Serializer.serialize(response, 200,
                                     'Notification updated successfully')

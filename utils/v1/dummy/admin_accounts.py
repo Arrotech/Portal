@@ -22,7 +22,7 @@ new_admin_account = {
 }
 
 invalid_login_password = {
-    "email": "gitundu.kevin@students.jcs.ac.ke",
+    "email": "arrotechdesign@gmail.com",
     "password": "Mercy20930988!"
 }
 

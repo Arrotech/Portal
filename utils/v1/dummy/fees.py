@@ -18,6 +18,15 @@ add_fees_keys = {
     "expected_amount": 35500
 }
 
+add_fees_for_unexisting_student = {
+    "admission_no": "NJCF4023",
+    "transaction_type": "ADP",
+    "transaction_no": "176276",
+    "description": "HELB",
+    "amount": 25640,
+    "expected_amount": 35500
+}
+
 edit_fees = {
     "transaction_type": "ADP",
     "transaction_no": "176276",

@@ -23,7 +23,7 @@ class TestUsersAccount(BaseTest):
         self.assertEqual(result['message'], 'Account created successfully!')
         assert response.status_code == 201
 
-    def test_login_password(self):
+    def test_invalid_login_password(self):
         """Test that a user cannot login with an invalid password."""
         self.client.post(
             '/api/v1/staff/register',

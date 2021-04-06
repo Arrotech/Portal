@@ -1,12 +1,12 @@
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CAMPUSES @@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 new_campus = {
-    "campus_name": "main",
+    "campus_name": "Main",
     "campus_location": "juja"
 }
 
 campus_keys = {
-    "campusname": "main",
+    "campusname": "Main",
     "campus_location": "juja"
 }
 
@@ -16,12 +16,12 @@ campus_name_restrictions = {
 }
 
 update_campus = {
-    "campus_name": "town",
+    "campus_name": "Town",
     "campus_location": "juja"
 }
 
 update_campus_keys = {
-    "campusname": "town",
+    "campusname": "Town",
     "campus_location": "juja"
 }
 

@@ -1,7 +1,7 @@
 import json
 
 from utils.v1.dummy.fees import add_fees, edit_fees, add_fees_keys,\
-    edit_fees_keys
+    edit_fees_keys, add_fees_for_unexisting_student
 from utils.v1.dummy.students_accounts import new_student_account
 from tests.base_test import BaseTest
 
@@ -39,8 +39,12 @@ class TestFees(BaseTest):
 
     def test_add_fees_for_unexisting_student(self):
         """Test that bursar cannot add fees for non existing student."""
+        self.client.post(
+            '/api/v1/students/register', data=json.dumps(new_student_account),
+            content_type='application/json',
+            headers=self.get_admin_token())
         response = self.client.post(
-            '/api/v1/fees', data=json.dumps(add_fees),
+            '/api/v1/fees', data=json.dumps(add_fees_for_unexisting_student),
             content_type='application/json',
             headers=self.get_accountant_token())
         result = json.loads(response.data.decode())

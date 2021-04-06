@@ -52,7 +52,7 @@ def get_all_exams_for_a_student_by_admission(admission_no):
 @jwt_required
 def get_aggregated_points(admission_no):
     """Get average marks."""
-    response = ExamsModel().fetch_aggregated_points(admission_no)
+    response = ExamsModel().fetch_all_aggregated_points(admission_no)
     return Serializer.serialize(response, 200,
                                 "Exam Total successfull retrieved")
 
@@ -160,7 +160,3 @@ def delete_exam(exam_id):
         ExamsModel().delete(exam_id)
         return Serializer.serialize(response, 200, "Exam deleted successfully")
     return raise_error(404, 'Exam not found')
-
-
-def comparator():
-    pass
