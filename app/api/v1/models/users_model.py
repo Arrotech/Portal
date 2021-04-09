@@ -195,6 +195,20 @@ class UsersModel(Database):
         response = Database().fetch_one(query, admission_no)
         return response
 
+    def get_students_for_particular_stream(self, class_stream):
+        """Request a single user with specific Admission Number."""
+        query = "SELECT u.firstname, u.lastname, u.surname, u.admission_no,\
+            u.gender, u.role, u.email, a.institution, cmp.campus_name, a.course,\
+                a.department, c.hostel, s.unit FROM users AS u\
+            LEFT JOIN apply_course AS a ON u.admission_no=a.student\
+            LEFT JOIN accommodation As c ON u.admission_no=c.student\
+            LEFT JOIN subjects As s ON u.admission_no=s.student\
+            LEFT JOIN campuses AS cmp ON a.campus=cmp.campus_id\
+            LEFT JOIN checklist AS chl ON u.admission_no=chl.student\
+            WHERE chl.class_stream=%s"
+        response = Database().fetch_group(query, class_stream)
+        return response
+
     def get_user_by_email(self, email):
         """Request a single user with specific Email Address."""
         query = "SELECT * FROM users WHERE email=%s"
@@ -233,6 +247,23 @@ class UsersModel(Database):
         self.conn.commit()
         self.curr.close()
         return response
+
+    def update_student(self, user_id, firstname, lastname, surname, gender, email):
+        """Update student data."""
+        self.curr.execute(
+            """UPDATE users SET firstname='{}', lastname='{}', surname='{}', gender='{}', email='{}'  WHERE user_id={} RETURNING firstname, lastname, surname, gender, email"""
+            .format(user_id, firstname, lastname, surname, gender, email))
+        response = self.curr.fetchone()
+        self.conn.commit()
+        self.curr.close()
+        return response
+
+    def delete(self, user_id):
+        """Delete student by id."""
+        self.curr.execute(
+            """DELETE FROM users WHERE user_id={}""".format(user_id))
+        self.conn.commit()
+        self.curr.close()
 
     def confirm_user_email(self, user_id, is_confirmed):
         """Confirm user email."""

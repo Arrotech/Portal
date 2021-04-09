@@ -4,6 +4,7 @@ from utils.serializer import Serializer
 from app.api.v1 import portal_v1
 from app.api.v1.models.checklist import ChecklistModel
 from app.api.v1.models.users_model import UsersModel
+from app.api.v1.models.streams import StreamsModel
 from app.api.v1.models.departments import DepartmentsModel
 from app.api.v1.models.courses import CoursesModel
 from app.api.v1.models.certificates import CertificatesModel
@@ -32,6 +33,7 @@ def fill_checklist():
     year_id = details['year_id']
     campus_id = details['campus_id']
     hostel_name = details['hostel_name']
+    stream_name = details['stream_name']
     user = UsersModel().get_user_by_admission(admission_no)
     if user:
         if DepartmentsModel().get_department_name(department_name):
@@ -40,17 +42,20 @@ def fill_checklist():
                     if AcademicYearModel().get_academic_year_by_id(year_id):
                         if CampusModel().get_campus_by_id(campus_id):
                             if HostelsModel().get_hostel_by_name(hostel_name):
-                                response = ChecklistModel(admission_no,
-                                                          department_name,
-                                                          course_name,
-                                                          certificate_id,
-                                                          year_id,
-                                                          campus_id,
-                                                          hostel_name).save()
-                                return sr.serialize(
-                                    response,
-                                    201,
-                                    "Checklist filled successfully")
+                                if StreamsModel().get_stream_by_name(stream_name):
+                                    response = ChecklistModel(admission_no,
+                                                            department_name,
+                                                            course_name,
+                                                            certificate_id,
+                                                            year_id,
+                                                            campus_id,
+                                                            hostel_name,
+                                                            stream_name).save()
+                                    return sr.serialize(
+                                        response,
+                                        201,
+                                        "Checklist filled successfully")
+                                return raise_error(404, "Stream not found")
                             return raise_error(404, "Hostel not found")
                         return raise_error(404, "Campus not found")
                     return raise_error(404, "Year not found")

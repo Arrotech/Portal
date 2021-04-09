@@ -270,6 +270,14 @@ def get_student_by_id(user_id):
     return raise_error(404, "User not found")
 
 
+@portal_v1.route('/students/stream/<string:class_stream>', methods=['GET'])
+@jwt_required
+def get_students_by_stream(class_stream):
+    """Fetch user by id."""
+    user = UsersModel().get_students_for_particular_stream(class_stream)
+    return Serializer.serialize(user, 200, "successfully retrieved")
+
+
 @portal_v1.route('/students/users/<string:admission_no>', methods=['GET'])
 @jwt_required
 def get_user_info(admission_no):
@@ -278,3 +286,29 @@ def get_user_info(admission_no):
     if user:
         return Serializer.serialize(user, 200, "successfully retrieved")
     return raise_error(404, "User Not Found")
+
+@portal_v1.route('/students/<int:user_id>', methods=['PUT'])
+@jwt_required
+def update_student_info(user_id):
+    """Update user by id."""
+    details = request.get_json()
+    firstname = details['firstname']
+    lastname = details['lastname']
+    surname = details['surname']
+    gender = details['gender']
+    email = details['email']
+    response = UsersModel().update_student(firstname, lastname, surname, gender, email, user_id)
+    if response:
+        return Serializer.serialize(response, 200,
+                                    "Student updated successfully")
+    return raise_error(404, "Student not found")
+
+@portal_v1.route('/students/<int:user_id>', methods=['DELETE'])
+@jwt_required
+def delete_student_by_id(user_id):
+    """Delete student by id."""
+    response = UsersModel().get_user_by_id(user_id)
+    if response:
+        UsersModel().delete(user_id)
+        return Serializer.serialize(response, 200, "Student deleted successfully")
+    return raise_error(404, "Student not found")

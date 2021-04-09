@@ -55,6 +55,13 @@ class Database:
                 PRIMARY KEY (admission_no)
             )""",
             """
+            CREATE TABLE IF NOT EXISTS class_streams(
+                stream_id serial,
+                stream_name varchar NOT NULL UNIQUE,
+                created_on TIMESTAMP,
+                PRIMARY KEY (stream_name)
+            )""",
+            """
             CREATE TABLE IF NOT EXISTS institutions(
                 institution_id serial,
                 institution_name varchar NOT NULL UNIQUE,
@@ -231,6 +238,7 @@ class Database:
                 year integer NOT NULL,
                 campus integer NOT NULL,
                 hostel varchar NOT NULL,
+                class_stream varchar NOT NULL,
                 created_on TIMESTAMP,
                 PRIMARY KEY (checklist_id),
                 FOREIGN KEY (student) REFERENCES users(admission_no)\
@@ -246,6 +254,8 @@ class Database:
                 FOREIGN KEY (campus) REFERENCES campuses(campus_id)\
                     ON DELETE CASCADE,
                 FOREIGN KEY (hostel) REFERENCES hostels(hostel_name)\
+                    ON DELETE CASCADE,
+                FOREIGN KEY (class_stream) REFERENCES class_streams(stream_name)\
                     ON DELETE CASCADE
             )""",
             """
@@ -270,8 +280,9 @@ class Database:
     @classmethod
     def destroy_table(cls):
         """Destroy tables"""
-        exams = "DROP TABLE IF EXISTS  exams CASCADE"
-        users = "DROP TABLE IF EXISTS  users CASCADE"
+        class_streams = "DROP TABLE IF EXISTS class_streams CASCADE"
+        exams = "DROP TABLE IF EXISTS exams CASCADE"
+        users = "DROP TABLE IF EXISTS users CASCADE"
         institutions = "DROP TABLE IF EXISTS institutions CASCADE"
         campuses = "DROP TABLE IF EXISTS campuses CASCADE"
         certificates = "DROP TABLE IF EXISTS certificates CASCADE"
@@ -289,7 +300,7 @@ class Database:
         checklist = "DROP TABLE IF EXISTS checklist CASCADE"
         notifications = "DROP TABLE IF EXISTS notifications CASCADE"
 
-        queries = [exams, users, institutions, campuses, certificates,
+        queries = [class_streams, exams, users, institutions, campuses, certificates,
                    departments, courses, academic_year, apply_course, subjects,
                    fees, library, units, hostels, accommodation, checklist,
                    notifications]
