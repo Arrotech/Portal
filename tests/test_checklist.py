@@ -12,6 +12,7 @@ from utils.v1.dummy.accommodation import book_hostel
 from utils.v1.dummy.certificates import new_certificate
 from utils.v1.dummy.campuses import new_campus
 from utils.v1.dummy.academic_year import new_academic_year
+from utils.v1.dummy.streams import add_stream
 from tests.base_test import BaseTest
 
 
@@ -24,6 +25,10 @@ class TestChecklistForm(BaseTest):
     #         '/api/v1/students/register', data=json.dumps(new_student_account),
     #         content_type='application/json',
     #         headers=self.get_admin_token())
+        # self.client.post(
+        #     '/api/v1/streams', data=json.dumps(add_stream),
+        #     content_type='application/json',
+        #     headers=self.get_registrar_token())
     #     self.client.post(
     #         '/api/v1/departments', data=json.dumps(new_department),
     #         content_type='application/json',
@@ -64,6 +69,10 @@ class TestChecklistForm(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account),
             content_type='application/json',
             headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
@@ -111,6 +120,10 @@ class TestChecklistForm(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account),
             content_type='application/json',
             headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
@@ -160,6 +173,10 @@ class TestChecklistForm(BaseTest):
             content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
             headers=self.get_college_head_token())
@@ -207,6 +224,10 @@ class TestChecklistForm(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account),
             content_type='application/json',
             headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
@@ -256,6 +277,10 @@ class TestChecklistForm(BaseTest):
             content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
             headers=self.get_college_head_token())
@@ -304,6 +329,10 @@ class TestChecklistForm(BaseTest):
             content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
             headers=self.get_college_head_token())
@@ -347,6 +376,10 @@ class TestChecklistForm(BaseTest):
             content_type='application/json',
             headers=self.get_admin_token())
         self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
+        self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',
             headers=self.get_college_head_token())
@@ -389,6 +422,10 @@ class TestChecklistForm(BaseTest):
             '/api/v1/students/register', data=json.dumps(new_student_account),
             content_type='application/json',
             headers=self.get_admin_token())
+        self.client.post(
+            '/api/v1/streams', data=json.dumps(add_stream),
+            content_type='application/json',
+            headers=self.get_registrar_token())
         self.client.post(
             '/api/v1/departments', data=json.dumps(new_department),
             content_type='application/json',

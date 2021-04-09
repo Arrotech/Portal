@@ -4,6 +4,14 @@ from flask import jsonify, make_response, url_for, current_app
 from itsdangerous import URLSafeTimedSerializer
 
 
+def check_stream_keys(request):
+    res_keys = ['stream_name']
+    errors = []
+    for key in res_keys:
+        if key not in request.json:
+            errors.append(key)
+    return errors
+
 def check_register_keys(request):
     res_keys = ['firstname', 'lastname', 'surname',
                 'admission_no', 'gender', 'email', 'password']
@@ -63,7 +71,7 @@ def check_notification_keys(request):
 def check_checklist_keys(request):
     res_keys = ['admission_no', 'department_name',
                 'course_name', 'certificate_id', 'year_id', 'campus_id',
-                'hostel_name']
+                'hostel_name', 'stream_name']
     errors = []
     for key in res_keys:
         if key not in request.json:
