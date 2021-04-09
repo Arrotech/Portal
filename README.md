@@ -2,32 +2,7 @@
 
 **SCHOOL PORTAL**
 
-This project is meant to Create a school portal with Python, Flask, HTML, Node, CSS and JavaScript. The project is built on Linux.
-
-Below are the Endpoints that have been created.
-
-| EndPoints                     |           Functionality            | HTTP Method |
-| ----------------------------- | :--------------------------------: | ----------: |
-| /api/v1/auth/register         |            Create user             |        POST |
-| /api/v1/auth/login            |          Login to account          |         GET |
-| /api/v1/exams                 |             Add Exams              |        POST |
-| /api/v1/exams                 |          Fetch all Exams           |         GET |
-| /api/v1/exams/admission_no    |           Fetch one Exam           |         GET |
-| /api/v1/exams/admission_no    |            Edit an Exam            |         PUT |
-| /api/v1/exams/admission_no    |           Delete an Exam           |      DELETE |
-| /api/v1/users/admission_no    |       Fetch a specific user        |         GET |
-| /api/v1/fees                  |              Add Fees              |        POST |
-| /api/v1/fees                  |           Fetch all Fees           |         GET |
-| /api/v1/fees/admission_no     |         Fetch Specific Fee         |         GET |
-| /api/v1/books                 |             Add Books              |        POST |
-| /api/v1/books                 |          Fetch all Books           |         GET |
-| /api/v1/books/admission_no    |        Fetch Specific Book         |         GET |
-| /api/v1/id                    |      Add Student Information       |        POST |
-| /api/v1/id                    |     Fetch Students Information     |         GET |
-| /api/v1/id/admission_no       | Fetch Specific Student Information |         GET |
-| /api/v1/subjects              |         Register Subjects          |        POST |
-| /api/v1/subjects              |         Fetch all Subjects         |         GET |
-| /api/v1/subjects/admission_no |       Fetch Specific Subject       |         GET |
+This project is meant to Create a school portal with oython flask.
 
 **TOOLS TO BE USED IN THE DEVELOPMENT**
 
@@ -59,25 +34,58 @@ Note that this project is meant for linux.
 4.  Navigate to the directory that has been cloned to your machine and open it in a terminal.
 5.  Create virtual environment by typing this in the terminal `virtualenv -p python3 venv`.
 6.  Run `pip install -r requirements.txt` on the terminal to install the dependencies.
-7.  Then type on the terminal `source .env` to activate the environment and also to export all the environment variables.
-8.  Then type on the terminal `flask run` to start and run the server.
-9.  To run the HTML pages, make sure you have node already installed in your machine. Click [Here](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04) and follow the process to install node.
-10. Open another terminal and make sure the environment is activate. If not type `source .env` to activate it.
-11. The type `live-server` to run the pages locally.
-12. You can now interact with the project.
+7.  Create `.env` file, copy the following environment variables and provide all the necessary information.
+
+        source venv/bin/activate
+        export FLASK_APP=run.py
+        export FLASK_ENV=development
+        export DEBUG_TB_INTERCEPT_REDIRECTS=False
+
+        export REQUEST_STATS_WINDOW=15
+
+        # database
+        export DB_NAME=YOUR_DATABASE_NAME
+        export TEST_DB_NAME=YOUR_TEST_DATABASE_NAME
+        export DB_USER=YOUR_DATABASE_USERNAME
+        export DB_HOST=YOUR_DATABASE_HOST
+        export DB_PASSWORD=YOUR_DATABASE_PASSWORD
+
+        # SQLALCHEMY
+        export DATABASE_URL=YOUR_DATABASE_URI
+        export TEST_DATABASE_URL=YOUR_TEST_DATABASE_URI
+        export SQLALCHEMY_TRACK_MODIFICATIONS=False
+
+        # brokers
+        export LOCAL_RABBITMQ_URL=amqps://localhost//
+        export RABBITMQ_URL=YOUR_HOSTED_RABBITQ_URL
+        export LOCAL_REDISTOGO_URL=redis://
+        export REDISTOGO_URL=YOUR_HOSTED_RABBITQ_URL
+
+        # app secret key
+        export SECRET_KEY=YOUR_APP_SECRET_KEY
+        export JWT_SECRET_KEY=YOUR_JWT_SECRET_KEY
+
+        # mail server
+        export MAIL_SERVER=YOUR_MAIL_SERVER
+        export MAIL_PORT=YOUR_MAIL_PORT
+        export MAIL_USERNAME=YOUR_EMAIL
+        export MAIL_PASSWORD=YOUR_EMAIL_PASSWORD
+        export MAIL_USE_TLS=False
+        export MAIL_USE_SSL=True
+
+8.  Then type on the terminal `source .env` to activate the environment and also to export all the environment variables.
+9.  Then type on the terminal `python3 manage.py runserver` to start and run the server.
 
 **HOW TO RUN TESTS**
 
 1.  Open a new terminal and then activate the environment.
-2.  Type `pytest --cov=app --cov-report=term-missing` and hit `enter`. This will run all tests and then give you a Coverage with details.
+2.  Type `python3 manage.py pytest` to run tests. This will run all tests and then give you a Coverage with details.
 
 **OTHER IMPORTANT LINKS**
 
-1.  Heroku deployment of the application: [Heroku](https://arrotech-school-portal.herokuapp.com/)
+1.  Heroku deployment of the application: [Heroku](https://njc-school-portal.herokuapp.com/)
 2.  Test coverage with coveralls: [Coveralls](https://coveralls.io/github/Arrotech/Portal)
 
 **AUTHOR**
 
      Harun Gachanja Gitundu.
-     
-     Esther Waweru.
