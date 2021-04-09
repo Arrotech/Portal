@@ -7,7 +7,8 @@ fill_checklist = {
     "certificate_id": 1,
     "year_id": 1,
     "campus_id": 1,
-    "hostel_name": "nyati"
+    "hostel_name": "nyati",
+    "stream_name": ""
 }
 
 fill_checklist_keys = {
@@ -17,7 +18,8 @@ fill_checklist_keys = {
     "certificate_id": 1,
     "year_id": 1,
     "campus_id": 1,
-    "hostel_name": "nyati"
+    "hostel_name": "nyati",
+    "stream_name": ""
 }
 
 fill_checklist_department_not_found = {
@@ -27,7 +29,8 @@ fill_checklist_department_not_found = {
     "certificate_id": 1,
     "year_id": 1,
     "campus_id": 1,
-    "hostel_name": "nyati"
+    "hostel_name": "nyati",
+    "stream_name": ""
 }
 
 fill_checklist_course_not_found = {
@@ -37,7 +40,8 @@ fill_checklist_course_not_found = {
     "certificate_id": 1,
     "year_id": 1,
     "campus_id": 1,
-    "hostel_name": "nyati"
+    "hostel_name": "nyati",
+    "stream_name": ""
 }
 
 fill_checklist_hostel_not_found = {
@@ -47,7 +51,8 @@ fill_checklist_hostel_not_found = {
     "certificate_id": 1,
     "year_id": 1,
     "campus_id": 1,
-    "hostel_name": "ndovu"
+    "hostel_name": "ndovu",
+    "stream_name": ""
 }
 
 fill_checklist_user_not_found = {
@@ -57,5 +62,6 @@ fill_checklist_user_not_found = {
     "certificate_id": 1,
     "year_id": 1,
     "campus_id": 1,
-    "hostel_name": "nyati"
+    "hostel_name": "nyati",
+    "stream_name": ""
 }
