@@ -111,4 +111,4 @@ vine==5.0.0
 wcwidth==0.2.5
 Werkzeug==0.16.0
 wrapt==1.11.1
-WTForms==2.3.3
+WTForms==3.0.0a1
