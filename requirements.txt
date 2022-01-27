@@ -13,7 +13,7 @@ bidict==0.21.2
 billiard==3.6.3.0
 blinker==1.4
 cachetools==4.2.0
-celery==5.0.2
+celery==5.2.2
 certifi==2020.6.20
 cffi==1.14.4
 chardet==3.0.4
