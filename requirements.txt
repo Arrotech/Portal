@@ -6,7 +6,7 @@ apipkg==1.5
 arrotechtools==0.0.2
 astroid==2.4.2
 attrs==19.3.0
-Authlib==0.15.3
+Authlib==1.1.0
 autopep8==1.5.4
 bcrypt==3.2.0
 bidict==0.21.2
