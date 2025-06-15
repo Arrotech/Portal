@@ -32,7 +32,7 @@ flake8==3.8.4
 Flask==1.1.2
 Flask-Bcrypt==0.7.1
 Flask-Caching==1.9.0
-Flask-Cors==3.0.8
+Flask-Cors==6.0.0
 Flask-DebugToolbar==0.11.0
 Flask-JWT-Extended==3.24.1
 Flask-Mail==0.9.1
@@ -97,7 +97,7 @@ python-engineio==4.0.0
 python-socketio==5.0.4
 pytz==2020.1
 redis==3.5.3
-requests==2.25.1
+requests==2.32.4
 rq==1.7.0
 rsa==4.7
 six==1.15.0
